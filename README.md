@@ -18,8 +18,8 @@ This project is experimental and still under development.
 Clone the repo and open the directory:
 
 ```sh
-git clone https://github.com/iexbase/tron-wallet.git
-cd tron-wallet
+git clone https://github.com/iexbase/iex-wallet.git
+cd iex-wallet
 ```
 
 Ensure you have [Node](https://nodejs.org/) installed, then install and start iEXWallet:
