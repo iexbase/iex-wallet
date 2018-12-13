@@ -1,4 +1,4 @@
-# iEX-Wallet
+# iEXWallet
 This project is experimental and still under development.
 
 ## Main Features
