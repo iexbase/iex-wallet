@@ -31,3 +31,6 @@ Ensure you have [Node](https://nodejs.org/) installed, then install and start iE
 npm install
 npm run start
 ```
+
+## Donations
+**Tron(TRX)**: TRWBqiqoFZysoAeyR1J35ibuyc8EvhUAoY
