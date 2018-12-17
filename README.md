@@ -10,9 +10,10 @@ This project is experimental and still under development.
 - Easy spending proposal flow for shared wallets and group payments
 - Device-based security: all private keys are stored locally, not in the cloud
 - Support for TRON testnet wallets
-- Support for over 150 currency pricing options and unit denomination in TRX
+- Support for over 50 currency pricing options and unit denomination in TRX
 - Mnemonic (BIP39) support for wallet backups
 - Customizable wallet naming and background colors
+- Current market value, along with weekly movements.
 - Multiple languages supported
 
 ## Testing in a Browser
@@ -31,6 +32,10 @@ Ensure you have [Node](https://nodejs.org/) installed, then install and start iE
 npm install
 npm run start
 ```
+
+## Security
+
+If you discover a security vulnerability within this application, please send an e-mail to security@iexbase.com. All security vulnerabilities will be promptly addressed.
 
 ## Donations
 **Tron(TRX)**: TRWBqiqoFZysoAeyR1J35ibuyc8EvhUAoY
