@@ -1,6 +1,8 @@
 # iEXWallet
 This project is experimental and still under development.
 
+**-- Pre-launch date (05.01.2019 г)**
+
 ## Main Features
 
 - TRON coin support
