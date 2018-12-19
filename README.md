@@ -15,6 +15,7 @@ This project is experimental and still under development.
 - Customizable wallet naming and background colors
 - Current market value, along with weekly movements.
 - Multiple languages supported
+- Support sign and verify message
 - Available for [Linux](https://github.com/iexbase/iex-wallet/releases), [Windows](https://github.com/iexbase/iex-wallet/releases) and [OS X](https://github.com/iexbase/iex-wallet/releases) devices
 
 ## Testing in a Browser
