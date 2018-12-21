@@ -1,8 +1,9 @@
 <h1 align="center">
   <img align="center" src="https://raw.githubusercontent.com/iexbase/iex-wallet/master/github-logo.png" />
+  <br>
+  iEXWallet 
+  <br>
 </h1>
-
-# iEXWallet
 This project is experimental and still under development.
 
 ## Main Features
