@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img align="center" src="https://raw.githubusercontent.com/iexbase/iex-wallet/master/github-logo.png" width="400"/>
+  <img align="center" src="https://raw.githubusercontent.com/iexbase/iex-wallet/master/github-logo.png" />
 </h1>
 
 # iEXWallet
