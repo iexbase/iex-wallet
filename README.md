@@ -16,6 +16,8 @@ This project is experimental and still under development.
 - Current market value, along with weekly movements.
 - Multiple languages supported
 - Support sign and verify message
+- Secure login with limited login attempts
+- Freeze and thaw the balance of different types (bandwidth, energy)
 - Available for [Linux](https://github.com/iexbase/iex-wallet/releases), [Windows](https://github.com/iexbase/iex-wallet/releases) and [OS X](https://github.com/iexbase/iex-wallet/releases) devices
 
 ## Testing in a Browser
