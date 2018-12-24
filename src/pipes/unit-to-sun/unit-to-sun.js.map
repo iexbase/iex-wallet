@@ -1,1 +1,0 @@
-{"version":3,"file":"unit-to-sun.js","sourceRoot":"","sources":["unit-to-sun.ts"],"names":[],"mappings":";;;;;;;;;AACA,OAAO,EAAE,IAAI,EAAiB,MAAM,eAAe,CAAC;AAMpD;IAEI;IAAe,CAAC;IAEhB,iCAAS,GAAT,UAAU,MAAc;QACpB,OAAO,MAAM,GAAG,GAAG,CAAC;IACxB,CAAC;IANQ,aAAa;QAJzB,IAAI,CAAC;YACF,IAAI,EAAE,WAAW;YACjB,IAAI,EAAE,KAAK;SACd,CAAC;;OACW,aAAa,CAOzB;IAAD,oBAAC;CAAA,AAPD,IAOC;SAPY,aAAa"}
