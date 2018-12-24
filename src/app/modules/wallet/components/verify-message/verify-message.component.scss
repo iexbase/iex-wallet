@@ -1,0 +1,12 @@
+.status-verified {
+    padding: 10px;
+    margin-bottom: 15px;
+
+    &.success {
+        background: #1f6538;
+    }
+
+    &.failed {
+        background: #9A2520;
+    }
+}

@@ -1,0 +1,39 @@
+:host {
+    display: flex;
+    flex: 1 1 auto;
+    position: relative;
+}
+
+#tron-content-settings {
+    display: flex;
+    flex: 1 1 auto;
+    cursor: default;
+    position: relative;
+}
+
+/deep/.settings-page {
+    padding: 24px 32px 0 32px;
+
+    .settings-page-field {
+        width: 300px;
+    }
+
+    h1 {
+        font-size: 42px;
+        font-weight: 300;
+        color: #ffffff;
+        margin: 0;
+        padding: 36px 0 18px;
+        text-align: left;
+    }
+
+    p.description {
+        font-size: 16px;
+        color: rgba(255, 255, 255, 0.45);
+        text-align: left;
+        margin: 0 0 20px 0;
+        padding: 0;
+        line-height: 1.5;
+        font-weight: 300;
+    }
+}

@@ -1,0 +1,171 @@
+.login-container {
+    width: 100%;
+    height: 100vh;
+    background-image: linear-gradient(40deg, #10101A 0%, #191A2A 100%);
+
+    .particles-load {
+        .particles-container::ng-deep {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            right: 0px;
+            bottom: 0;
+            opacity: .2;
+        }
+    }
+
+    .login-wrapper {
+        z-index: 999;
+        .logo-header {
+            .logo-header-svg {
+                background-image: url("assets/img/logo.svg");
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: contain;
+                width: 110px;
+                height: 110px;
+                margin: 15px auto 0;
+            }
+        }
+
+        .logo-content {
+            padding: 80px 30px 30px;
+
+            .mat-form-field {
+                color: #696a88;
+                width: 500px;
+                text-align: center;
+
+                .mat-form-field-infix::ng-deep {
+                    margin-top: -3px;
+                    margin-bottom: 5px;
+                }
+            }
+
+            .version {
+                text-align: center;
+                color: #424357;
+                font-size: 1.1em;
+            }
+
+            .show-hide-password {
+                position: absolute;
+                right: 5px;
+                top: 13px;
+                color: #51526b;
+                margin-right: 5px;
+                cursor: pointer;
+
+                &:hover {
+                    color: #9798b7;
+                }
+            }
+
+            .failed {
+                text-align: center;
+                color: #b50000;
+            }
+        }
+
+
+        .register-content {
+            padding: 80px 30px 30px;
+            text-align: center;
+
+            .mat-form-field {
+                color: #696a88;
+                width: 500px;
+                text-align: center;
+
+                .mat-form-field-infix::ng-deep {
+                    margin-top: -3px;
+                    margin-bottom: 5px;
+                }
+            }
+
+            .version {
+                text-align: center;
+                color: #424357;
+                font-size: 1.1em;
+            }
+
+            .show-hide-password {
+                position: absolute;
+                right: 5px;
+                top: 13px;
+                color: #51526b;
+                margin-right: 5px;
+                cursor: pointer;
+
+                &:hover {
+                    color: #9798b7;
+                }
+            }
+
+            .failed {
+                text-align: center;
+                color: #b50000;
+            }
+        }
+
+        .logo-actions {
+            text-align: center;
+
+            &.hide-button {
+                opacity: 0;
+            }
+
+            .tron-button-login {
+                background-image: linear-gradient(176deg, rgba(91, 120, 158, 0.9) 0%, rgba(91, 103, 158, 0.7) 100%);
+                transition: transform 100ms ease-in-out;
+                text-transform: uppercase;
+
+                &:hover, &:focus {
+                    transform: scale(1.02);
+                    box-shadow: 0 12px 60px 0 rgba(25,26,42, 0.45);
+                }
+            }
+        }
+    }
+}
+
+
+
+
+:host {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.mat-drawer-container {
+    height: 100%;
+}
+
+mat-sidenav {
+    //background-color: #26293a;
+    background-color: transparent;
+    box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12);
+    width: 90px;
+    border: none;
+
+    .sidenav-bottom {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 10px;
+        background: #191b27;
+        color: #737373;
+        font-size: 13px;
+        text-align: center;
+    }
+
+    .mat-drawer-inner-container::ng-deep {
+        overflow: hidden !important;
+    }
+}
+
+

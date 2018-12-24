@@ -1,0 +1,17 @@
+
+<div class="delete-wallet-container">
+    <div class="delete-wallet">
+        <mat-icon svgIcon="round-delete"></mat-icon>
+        <div class="title-info">{{'Wallet.DeleteWallet.Warning' | translate}}</div>
+        <div class="subtitle-info">{{'Wallet.DeleteWallet.Description' | translate}}</div>
+
+        <div fxLayout="row" fxLayoutAlign="space-evenly center" id="actions">
+            <button mat-stroked-button class="tron-default-button" (click)="onClose()" color="primary">
+                {{'Wallet.DeleteWallet.Cancel' | translate}}
+            </button>
+            <button mat-button class="tron-default-button tron-button" (click)="deleteWallet()" color="primary">
+                {{'Wallet.DeleteWallet.Yes' | translate}}
+            </button>
+        </div>
+    </div>
+</div>

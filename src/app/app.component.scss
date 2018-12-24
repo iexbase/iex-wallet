@@ -1,0 +1,35 @@
+:host {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.mat-drawer-container {
+    height: 100%;
+}
+
+mat-sidenav {
+    //background-color: #26293a;
+    background-color: transparent;
+    box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12);
+    width: 90px;
+    border: none;
+
+    .sidenav-bottom {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 10px;
+        background: #191b27;
+        color: #737373;
+        font-size: 13px;
+        text-align: center;
+    }
+
+    .mat-drawer-inner-container {
+        overflow: hidden !important;
+    }
+}

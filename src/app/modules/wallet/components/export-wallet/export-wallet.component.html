@@ -1,0 +1,28 @@
+<div class="close-dialog">
+    <button mat-icon-button="" (click)="onClose()">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<div mat-dialog-content class="export-wallet-container">
+    <h1 mat-dialog-title>{{'Wallet.ExportWallet.Title' | translate}}</h1>
+
+    <div class="export-wallet-fields">
+        <mat-checkbox [(ngModel)]="isNotIncludePrivateKey">
+            {{'Wallet.ExportWallet.includePrivateKey' | translate}}
+        </mat-checkbox>
+        <div *ngIf="isNotIncludePrivateKey" class="not-include-private-key">
+            <div class="info">{{'Wallet.ExportWallet.privateKeyDescription' | translate}}</div>
+        </div>
+
+        <div id="actions" fxLayout="row" fxLayoutAlign="center center">
+            <button mat-button class="tron-default-button tron-button" (click)="goToClipboard()">
+                {{'Wallet.ExportWallet.Clipboard' | translate}}
+            </button>
+            <button mat-button class="tron-default-button tron-button" (click)="downloadJSON()">
+                {{'Wallet.ExportWallet.DownloadJson' | translate}}
+            </button>
+        </div>
+
+    </div>
+</div>

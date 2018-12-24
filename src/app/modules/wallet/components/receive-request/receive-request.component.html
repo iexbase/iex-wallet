@@ -1,0 +1,18 @@
+
+<div fxLayout="column" fxLayoutAlign="start center">
+    <h2>{{'Wallet.ReceiveRequest.Title' | translate}}</h2>
+
+    <ng-container *ngIf="params.token != 'TRX'">
+        <div class="amount-base">{{ params.amount |formatCurrency:params.token}}</div>
+        <div class="amount-alt">{{ params.amount | fiatToUnit:params.token }} TRX</div>
+    </ng-container>
+
+    <ng-container *ngIf="params.token == 'TRX'">
+        <div class="amount-base">{{ params.amount | formatCurrency:params.token }}</div>
+    </ng-container>
+
+    <div class="address-qr-code-wrapper">
+        <qrcode [allowEmptyString]="true"
+                [qrdata]="{'amount': params.amount | fiatToUnit:params.token:false, 'token': 'TRX', 'address': params.address, 'data': params.data} | jsonIndent" [level]="'M'" [usesvg]="true"></qrcode>
+    </div>
+</div>

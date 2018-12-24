@@ -1,0 +1,53 @@
+<mat-list role="list" class="transaction-details">
+    <mat-list-item role="listitem">
+        <div mat-line="" fxLayout="row" fxLayoutAlign="space-between center">
+            <div class="type">{{'Wallet.ConfirmTx.From' | translate}}</div>
+            <div class="value">{{ txp.ownerAddress | addressFromHex}}</div>
+        </div>
+    </mat-list-item>
+
+    <mat-list-item role="listitem">
+        <div mat-line="" fxLayout="row" fxLayoutAlign="space-between center">
+            <div class="type">{{'Wallet.ConfirmTx.To' | translate}}</div>
+            <div class="">{{ txp.toAddress | addressFromHex}}</div>
+        </div>
+    </mat-list-item>
+
+    <mat-list-item role="listitem">
+        <div mat-line="" fxLayout="row" fxLayoutAlign="space-between center">
+            <div class="type">{{'Wallet.ConfirmTx.Amount' | translate}}</div>
+            <div class="value">
+                {{ txp.amount | sunToUnit:token }} {{token}}
+                <span class="alt-amount" *ngIf="token.toUpperCase() == 'TRX'">({{ txp.amount | sunToFiat: true}})</span>
+            </div>
+        </div>
+    </mat-list-item>
+
+    <mat-list-item role="listitem">
+        <div mat-line="" fxLayout="row" fxLayoutAlign="space-between center">
+            <div class="type">{{'Wallet.ConfirmTx.TransactionType' | translate}}</div>
+            <div class="value">{{ txp.type }}</div>
+        </div>
+    </mat-list-item>
+
+    <mat-list-item role="listitem">
+        <div mat-line="" fxLayout="row" fxLayoutAlign="space-between center">
+            <div class="type">{{'Wallet.ConfirmTx.Data' | translate}}</div>
+            <div class="value">{{ txp.data }}</div>
+        </div>
+    </mat-list-item>
+
+    <mat-list-item role="listitem">
+        <div mat-line="" fxLayout="row" fxLayoutAlign="space-between center">
+            <div class="type">{{'Wallet.ConfirmTx.Token' | translate}}</div>
+            <div class="value">{{ token }}</div>
+        </div>
+    </mat-list-item>
+
+    <mat-list-item role="listitem">
+        <div mat-line="" fxLayout="row" fxLayoutAlign="space-between center">
+            <div class="type">{{'Wallet.ConfirmTx.Time' | translate}}</div>
+            <div class="value"> {{ txp.timestamp / 1000 | amFromUnix | amLocal | amDateFormat: 'DD/MM/YYYY HH:mm:ss' }} </div>
+        </div>
+    </mat-list-item>
+</mat-list>

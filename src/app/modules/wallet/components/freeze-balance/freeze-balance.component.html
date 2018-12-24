@@ -1,0 +1,94 @@
+<div class="close-dialog">
+    <button mat-icon-button="" (click)="onClose()">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<div class="freeze-window">
+
+    <div class="success-transaction" *ngIf="isSuccess" mat-dialog-content fxLayout="column" fxLayoutAlign="center center">
+        <div id="header">
+            <h1>{{'Wallet.FreezeBalance.Success' | translate}}</h1>
+            <p *ngIf="type == 1">{{'Wallet.FreezeBalance.SuccessFreezeBandwidth' | translate}}</p>
+            <p *ngIf="type == 2">{{'Wallet.FreezeBalance.SuccessFreezeEnergy' | translate}}</p>
+            <p *ngIf="type == 3">{{'Wallet.FreezeBalance.SuccessUnfreezeBandwidth' | translate}}</p>
+            <p *ngIf="type == 4">{{'Wallet.FreezeBalance.SuccessUnfreezeEnergy' | translate}}</p>
+        </div>
+        <lottie-animation-view
+            [options]="lottieConfig"
+            [width]="400"
+            [height]="400">
+        </lottie-animation-view>
+
+        <div>
+            <button mat-stroked-button class="tron-button" (click)="onClose()">
+                {{'Wallet.FreezeBalance.Close' | translate}}
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="!isSuccess" mat-dialog-content fxLayout="column" fxLayoutAlign="center center">
+        <div class="header">
+            <div class="balance-label">{{'Wallet.FreezeBalance.Balance' | translate}}</div>
+            <div class="balance-value">{{walletId.balance | sunToUnit}} TRX</div>
+        </div>
+        <div id="content">
+
+            <mat-button-toggle-group
+                #group="matButtonToggleGroup" [value]="fields.resource"
+                (change)="onResourceChange(group.value)"
+                class="select-freeze" appearance="legacy">
+                <mat-button-toggle *ngFor="let fr of freezes" [value]="fr.key">
+                    {{fr.value}}
+                </mat-button-toggle>
+            </mat-button-toggle-group>
+
+
+            <mat-form-field appearance="outline" [style.fontSize]="'14px'">
+                <mat-label>{{'Wallet.FreezeBalance.FreezeAmount' | translate}}</mat-label>
+                <input matInput placeholder="0"
+                       [(ngModel)]="fields.amount"
+                       [dropSpecialCharacters]="false"
+                       [mask]="'0*'"
+                       (ngModelChange)="onChangePower()"
+                       name="amount">
+                <mat-icon matSuffix>lock</mat-icon>
+                <mat-hint *ngIf="fields.resource == 'BANDWIDTH'">Tron Power: {{newTotalPower}}</mat-hint>
+                <mat-hint *ngIf="fields.resource == 'ENERGY'">Energy Balance: {{energyBalance}}</mat-hint>
+            </mat-form-field>
+        </div>
+
+        <div id="action-freeze">
+            <mat-checkbox [(ngModel)]="isConfirm">
+                <span class="account-name"
+                      [innerHtml]="'Wallet.FreezeBalance.ConfirmFreeze' | translate:{amount: (!fields.amount ? 0 : fields.amount)}"></span>
+            </mat-checkbox>
+            <button mat-button class="tron-button red-bg" (click)="goToFreeze()" [disabled]="enabledBalance()">
+                {{'Wallet.FreezeBalance.Freeze' | translate}}
+            </button>
+        </div>
+        <div id="action-unfreeze">
+            <ng-container *ngIf="fields.resource == 'BANDWIDTH'">
+                <p *ngIf="now.getTime() <= expireTime">
+                    {{'Wallet.FreezeBalance.UnfreezeExpire' | translate}}<br />
+                    {{expireTime / 1000 | amFromUnix | amDateFormat:'MMMM Do YYYY, h:mm a'}}
+                </p>
+                <p *ngIf="now.getTime() > expireTime">{{'Wallet.FreezeBalance.UnfreezeEnable' | translate}}</p>
+                <button mat-button class="gray-button-color" (click)="goToUnfreeze('bandwidth')" [disabled]="now.getTime() <= expireTime">
+                    {{'Wallet.FreezeBalance.UnfreezeBandwidth' | translate}}
+                </button>
+            </ng-container>
+
+            <ng-container *ngIf="fields.resource == 'ENERGY'">
+                <p *ngIf="now.getTime() <= expireEnergyTime">
+                    {{'Wallet.FreezeBalance.UnfreezeExpire' | translate}}<br />
+                    {{expireEnergyTime / 1000 | amFromUnix | amDateFormat:'MMMM Do YYYY, h:mm a'}}
+                </p>
+                <p *ngIf="now.getTime() > expireEnergyTime">{{'Wallet.FreezeBalance.UnfreezeEnable' | translate}}</p>
+                <button mat-button class="gray-button-color" (click)="goToUnfreeze('energy')" [disabled]="now.getTime() <= expireEnergyTime">
+                    {{'Wallet.FreezeBalance.UnfreezeEnergy' | translate}}
+                </button>
+            </ng-container>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,214 @@
+<div id="tron-content-wallet" [ngClass]="wallet.color">
+    <div id="wallet-coin-list" class="wallet-menu" fxFlex="18">
+        <mat-list>
+            <ng-container *ngFor="let item of wallets | async">
+                <mat-list-item (click)="openWalletDetails(item)" [ngClass]="{'active': activeAccount == item.address}">
+                    <div matLine class="proper-name">{{item.name}}</div>
+                    <div matLine class="unit">{{item.balance | sunToUnit}} TRX</div>
+                    <div class="market-wallet"></div>
+                </mat-list-item>
+            </ng-container>
+        </mat-list>
+
+        <div class="add-wallet">
+            <button [disableRipple]="true" routerLink="/wallet/add-wallet" mat-button="">
+                <span>{{'Wallet.Index.AddWallet' | translate}}</span>
+            </button>
+        </div>
+
+    </div>
+    <div id="tron-content-right" [ngClass]="wallet.color">
+        <ng-container *ngIf="!wallet.address">
+            <div class="empty-wallet" fxLayout="row" fxLayoutAlign="center center">
+                {{'Wallet.Index.SelectWallet' | translate}}
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="wallet.address">
+            <div class="wallet-options" fxLayout="row" fxLayoutAlign="center">
+                <div class="wallet-option-item">
+                    <div class="label">{{'Wallet.Index.Energy' | translate}}</div>
+                    <div class="value">{{ wallet.energyLimit || 0 }}</div>
+                </div>
+
+                <div class="wallet-option-item">
+                    <div class="label">{{'Wallet.Index.Bandwidth' | translate}}</div>
+                    <div class="value">{{ wallet.bandwidth || 0 | formatCurrency:'TRX':0 }}</div>
+                </div>
+            </div>
+            <div class="wallet-settings">
+                <button mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon svgIcon="preferences"></mat-icon>
+                </button>
+                <mat-menu #menu="matMenu" class="wallet-settings-menu">
+                    <button mat-menu-item (click)="preferenceWallet()">
+                        {{'Wallet.Index.Menu.Preferences' | translate}}
+                    </button>
+                    <button mat-menu-item (click)="exportWalletModal()">
+                        {{'Wallet.Index.Menu.ExportWallet' | translate}}
+                    </button>
+                    <mat-divider></mat-divider>
+                    <button mat-menu-item (click)="signedMessageModal()">
+                        {{'Wallet.Index.Menu.SignedMessage' | translate}}
+                    </button>
+                    <mat-divider></mat-divider>
+                    <button mat-menu-item class="delete" (click)="deleteWalletModal()">
+                        {{'Wallet.Index.Menu.DeleteWallet' | translate}}
+                    </button>
+                </mat-menu>
+            </div>
+
+            <div id="wallet-detail-header" [ngClass]="{'has-scrolling': miniHeader}">
+                <div id="asset-logo-status" (click)="updateWallet()">
+                    <div id="asset-logo-container" [class.on]="enabledOn" (mouseout)="enabledOn=false" (mouseover)="enabledOn=true">
+                        <div id="update-tx">
+                            <mat-icon svgIcon="c-refresh"></mat-icon>
+                        </div>
+                        <div id="logo" class="tron-icon"></div>
+                    </div>
+                </div>
+                <div id="header-balance">
+                    <div class="balance-trx">
+                        <span class="balance">{{wallet.balance | sunToUnit}}</span>
+                        <span class="display-unit">TRX</span>
+                    </div>
+                </div>
+
+                <div id="header-alt-balance">
+                    <div class="currency">
+                        <span class="symbol"></span>
+                        <span class="amount">{{ wallet.balance | sunToFiat }}</span>
+                        <span class="code">{{ config.get('wallet.settings.alternativeIsoCode') }}</span>
+                    </div>
+                </div>
+
+                <div id="actions" fxLayout="row">
+                    <button mat-button="" class="tron-button red-bg" (click)="transferModal()">
+                        {{'Wallet.Index.Send' | translate}}
+                    </button>
+                    <button mat-button="" class="tron-button red-bg" (click)="receiveModal()">
+                        {{'Wallet.Index.Receive' | translate}}
+                    </button>
+                    <button mat-button="" class="tron-button red-bg" (click)="freezeModal()">
+                        {{'Wallet.Index.Freeze' | translate}}
+                    </button>
+                </div>
+
+            </div>
+
+            <div id="wallet-detail-transaction" class="ps"
+                 style="position: relative; max-height: 100vh" [perfectScrollbar]="{}" (scroll)="onScroll($event)">
+                <div infiniteScroll=""
+                     [infiniteScrollDistance]="1"
+                     [infiniteScrollThrottle]="50"
+                     infiniteScrollContainer=".ps"
+                     [infiniteScrollDisabled]="false"
+                     [fromRoot]="true"
+                     (scrolled)="onScrollDown()">
+
+                    <ng-container *ngIf="isLoading">
+                        <mat-spinner class="loading-transaction" [diameter]="48" [strokeWidth]="2"></mat-spinner>
+                    </ng-container>
+
+                    <ng-container *ngIf="!isLoading">
+                        <div class="no-transaction" *ngIf="transactions.length == 0">
+                            {{'Wallet.Index.EmptyTransaction' | translate}}
+                        </div>
+                        <mat-accordion *ngIf="transactions.length > 0" class="transaction-list">
+                            <mat-expansion-panel  matRipple class="transaction-list-item" *ngFor="let tx of transactions">
+                                <mat-expansion-panel-header  [collapsedHeight]="'60px'" [expandedHeight]="'60px'">
+                                    <div fxLayout="row" fxLayoutAlign="start center" style="width: 100%;">
+                                        <div fxFlex="5" class="date">
+                                            <div class="date-month">
+                                                {{ tx.timestamp / 1000 | amFromUnix | amDateFormat:'MMM' }}
+                                            </div>
+                                            <div class="date-day">
+                                                {{ tx.timestamp / 1000 | amFromUnix | amDateFormat:'DD' }}
+                                            </div>
+                                        </div>
+                                        <div fxFlex="7" class="icon">
+                                            <ng-container [ngSwitch]="tx['contractType']">
+                                                <mat-icon *ngSwitchCase="1" svgIcon="trx-send"></mat-icon>
+                                                <mat-icon *ngSwitchCase="2" svgIcon="trx-receive"></mat-icon>
+                                                <mat-icon *ngSwitchCase="11" svgIcon="trx-freeze"></mat-icon>
+                                                <mat-icon *ngSwitchCase="12" svgIcon="trx-unfreeze"></mat-icon>
+                                                <mat-icon *ngSwitchCase="30" svgIcon="trx-contract"></mat-icon>
+                                            </ng-container>
+                                        </div>
+                                        <div fxFlex="30" class="tx-type">
+                                            <div [ngSwitch]="tx['contractType']">
+                                                <div class="tx-status transfer-tx" *ngSwitchCase="1">
+                                                    {{'Wallet.Index.ContractType.Sent' | translate}}
+                                                </div>
+                                                <div class="tx-status create-tx" *ngSwitchCase="2">
+                                                    {{'Wallet.Index.ContractType.Received' | translate}}
+                                                </div>
+                                                <div class="tx-status freeze-tx" *ngSwitchCase="11">
+                                                    {{'Wallet.Index.ContractType.Freeze' | translate}}
+                                                </div>
+                                                <div class="tx-status unfreeze-tx" *ngSwitchCase="12">
+                                                    {{'Wallet.Index.ContractType.Unfreeze' | translate}}
+                                                </div>
+                                                <div class="tx-status contract-tx" *ngSwitchCase="30">
+                                                    {{'Wallet.Index.ContractType.SmartContract' | translate}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span fxFlex=""></span>
+                                        <div class="tx-price">
+                                            <span class="amount" *ngIf="tx | tokenToUnit">{{ tx | tokenToUnit }}</span>
+                                            <span class="unit" *ngIf="tx | tokenToUnit">{{tx['contractData']['asset_name'] | formatAsset}}</span>
+                                            <div class="time-ago">{{ tx.timestamp | timeAgo }}</div>
+                                        </div>
+                                    </div>
+                                </mat-expansion-panel-header>
+
+                                <div class="transaction-item-detail" fxLayout="row wrap" fxLayoutAlign="start center">
+                                    <div fxFlex="33" class="tx-details__item">
+                                        <div class="title">{{'Wallet.Index.Status' | translate}}</div>
+                                        <div class="content">
+                                            <span *ngIf="tx.confirmed == true">{{'Wallet.Index.Confirmed' | translate}}</span>
+                                            <span *ngIf="tx.confirmed == false">{{'Wallet.Index.Unconfirmed' | translate}}</span>
+                                        </div>
+                                    </div>
+                                    <div fxFlex="33" class="tx-details__item">
+                                        <div class="title">{{'Wallet.Index.Hash' | translate}}</div>
+                                        <div class="content link">
+                                            <span (click)="openExternalLink(tx.id, 'transaction')">{{tx.id}}</span>
+                                        </div>
+                                    </div>
+                                    <div fxFlex="33" class="tx-details__item">
+                                        <div class="title">{{'Wallet.Index.Block' | translate}}</div>
+                                        <div class="content link">
+                                            <span (click)="openExternalLink(tx.block, 'block')">{{tx.block}}</span>
+                                        </div>
+                                    </div>
+                                    <div fxFlex="33" class="tx-details__item">
+                                        <div class="title">{{'Wallet.Index.Time' | translate}}</div>
+                                        <div class="content">
+                                            <span>{{tx.timestamp / 1000 | amFromUnix | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}</span>
+                                        </div>
+                                    </div>
+
+                                    <div fxFlex="33" class="tx-details__item">
+                                        <div class="title">{{'Wallet.Index.From' | translate}}</div>
+                                        <div class="content link">
+                                            <span (click)="openExternalLink(tx.ownerAddress, 'address')">{{tx.ownerAddress}}</span>
+                                        </div>
+                                    </div>
+
+                                    <div fxFlex="33" class="tx-details__item" *ngIf="tx.toAddress">
+                                        <div class="title">{{'Wallet.Index.To' | translate}}</div>
+                                        <div class="content link">
+                                            <span (click)="openExternalLink(tx.toAddress, 'address')">{{tx.toAddress}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </ng-container>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>

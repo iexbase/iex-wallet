@@ -1,0 +1,16 @@
+
+<div class="prompt-user-container">
+    <div class="prompt-user">
+        <mat-icon svgIcon="ghost-straight"></mat-icon>
+        <div class="title-info">
+            <span>{{'Wallet.noFundsTrx.Title' | translate}}</span>
+        </div>
+        <div class="subtitle-info">
+            <span>{{'Wallet.noFundsTrx.Description' | translate}}</span>
+        </div>
+
+        <button mat-button class="tron-button transfer-button" (click)="goToReceive()" color="primary">
+            {{'Wallet.noFundsTrx.AddFunds' | translate}}
+        </button>
+    </div>
+</div>

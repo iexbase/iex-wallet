@@ -1,0 +1,11 @@
+<mat-sidenav-container id="tron-window" [ngClass]="selectedSkin.name">
+    <mat-sidenav #sidenav align="start"  [mode]="sidenavMode$ | async"
+                 [opened]="sidenavOpen$ | async" [autoFocus]="false" [fixedInViewport]="true"
+                 class="mat-elevation-z4">
+        <app-sidenav (onMenuToggle)="sidenav.toggle()"></app-sidenav>
+    </mat-sidenav>
+
+    <mat-sidenav-content fxLayout="column" class="scrolling" style="overflow: hidden">
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>

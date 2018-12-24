@@ -1,0 +1,39 @@
+<div class="create-wallet">
+    <div class="create-wallet-wrapper">
+        <ng-container *ngIf="!isSuccess">
+            <mat-form-field appearance="outline" class="account-name-field">
+                <mat-label>{{'Wallet.CreateWallet.Label' | translate}}</mat-label>
+                <input [(ngModel)]="accountName" name="accountName" matInput
+                       [placeholder]="'Wallet.CreateWallet.EnterWalletName' | translate">
+                <mat-hint>{{'Wallet.CreateWallet.Hint' | translate}}</mat-hint>
+            </mat-form-field>
+        </ng-container>
+
+        <ng-container *ngIf="isSuccess">
+            <div class="account-name">
+                {{'Wallet.CreateWallet.YourName' | translate}}
+                <div class="name">{{ accountName }}</div>
+            </div>
+        </ng-container>
+    </div>
+
+    <div class="create-wallet-button" fxLayout="row" fxLayoutAlign="center center">
+        <ng-template [ngIf]="!isSuccess">
+            <mat-spinner *ngIf="isLoading" [strokeWidth]="1" [diameter]="30"></mat-spinner>
+            <button *ngIf="!isLoading" mat-button color="primary" (click)="doCreateWallet()">
+                {{'Wallet.CreateWallet.Create' | translate}}
+            </button>
+        </ng-template>
+
+        <ng-template [ngIf]="isSuccess">
+            <button  mat-button (click)="onDownload(accountData)">
+                {{'Wallet.CreateWallet.DownloadEncryptedKey' | translate}}
+            </button>
+            <span fxFlex=""></span>
+            <button class="right" mat-button color="primary" routerLink="/wallet">
+                {{'Wallet.CreateWallet.Next' | translate}}
+                <mat-icon>chevron_right</mat-icon>
+            </button>
+        </ng-template>
+    </div>
+</div>

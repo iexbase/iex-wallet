@@ -1,0 +1,44 @@
+<div class="import-mnemonic-wrapper" *ngIf="!nextToSelectWallet">
+    <div class="mat-field-wrapper">
+        <mat-form-field appearance="outline">
+            <mat-label>{{'Wallet.ImportMnemonic.Label' | translate}}</mat-label>
+            <textarea [(ngModel)]="mnemonic" name="phrase" (ngModelChange)="onChangeMnemonic()"
+                      matInput [placeholder]="'Wallet.ImportMnemonic.EnterMnemonic' | translate"></textarea>
+        </mat-form-field>
+    </div>
+
+    <div class="mat-field-wrapper" *ngIf="!hideOptional">
+        <mat-form-field appearance="outline" class="account-name-field">
+            <mat-label>{{'Wallet.ImportMnemonic.WalletName' | translate}}</mat-label>
+            <input [(ngModel)]="walletName" name="walletName" matInput
+                   [placeholder]="'Wallet.ImportMnemonic.EnterWalletName' | translate">
+            <mat-hint>{{'Wallet.ImportMnemonic.WalletNameHint' | translate}}</mat-hint>
+        </mat-form-field>
+    </div>
+
+    <div class="actions">
+        <button mat-button color="primary" class="tron-default-button default-theme" [disabled]="disableButton()"
+                (click)="goToImport()">{{'Wallet.ImportMnemonic.ButtonImportMnemonic' | translate}}</button>
+    </div>
+</div>
+
+<div *ngIf="nextToSelectWallet" class="select-wallet-wrapper ps" [perfectScrollbar]="{}">
+    <div class="header-select-wallet">
+        <p>{{'Wallet.ImportMnemonic.SelectAccounts' | translate}}</p>
+    </div>
+
+    <mat-list class="mat-list-wallets ps" [perfectScrollbar]="{}">
+        <mat-list-item *ngFor="let wallet of addresses | async" (click)="isDisabledButton || finishImport(wallet)">
+            <mat-icon mat-list-icon>lens</mat-icon>
+            <p mat-line="">{{wallet.address.base58}}</p>
+        </mat-list-item>
+    </mat-list>
+
+
+    <div class="actions">
+        <button mat-stroked-button color="primary" class="tron-default-button back-color"
+                [disabled]="disableButton()" (click)="onBack()">
+            {{'Wallet.ImportMnemonic.Back' | translate}}
+        </button>
+    </div>
+</div>

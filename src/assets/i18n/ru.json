@@ -1,0 +1,220 @@
+{
+    "Shared": {
+        "Navigation": {
+            "Dashboard": "Главная",
+            "Wallet": "Кошелек",
+            "Settings": "Настройки",
+            "Help": "Помощь"
+        }
+    },
+    "Dashboard": {
+        "Home": {
+            "PriceLabel": "TRX Price",
+            "Rank": "Место",
+            "Volume24h": "Объемы за 24/ч",
+            "MarketCap": "Капитализация",
+            "CirculatingSupply": "Всего выпущено"
+        }
+    },
+    "Wallet": {
+
+        "ConfirmTx": {
+            "From": "От",
+            "To": "Кому",
+            "Amount": "Сумма",
+            "TransactionType": "Тип транзакции",
+            "Data": "Data",
+            "Token": "Токен",
+            "Time": "Время создания"
+        },
+        "CreateWallet": {
+            "Label": "Название кошелька",
+            "EnterWalletName": "Введите название кошелька",
+            "Hint": "Имя кошелька будет известно только вам",
+            "YourName": "Ваше имя",
+            "Create": "Создать кошелек",
+            "DownloadEncryptedKey": "Скачать backup",
+            "Next": "Продолжить"
+        },
+
+        "DeleteWallet": {
+            "Warning": "Внимание",
+            "Description": "Вы уверены, что хотите удалить этот кошелек?",
+            "Cancel": "Отменить",
+            "Yes": "Удалить"
+        },
+
+        "ExportWallet": {
+            "Title": "Бэкап кошелька",
+            "includePrivateKey": "Не включать приватный ключ",
+            "privateKeyDescription": "Отсутствие закрытого ключа позволяет проверить баланс кошелька, историю транзакций и создать предложения по расходам из экспорта. Однако не позволяет утверждать (подписывать) предложения, поэтому средства не будут доступны для экспорта.",
+            "Clipboard": "Скопировать в буффер",
+            "DownloadJson": "Скачать в JSON"
+        },
+        "FreezeBalance": {
+            "Success": "Успешно",
+            "SuccessFreezeBandwidth": "Transaction successfully, Type: FreezeBandwidth",
+            "SuccessFreezeEnergy": "Transaction successfully, Type: FreezeEnergy",
+            "SuccessUnfreezeBandwidth":"Transaction successfully, Type: UnfreezeBandwidth",
+            "SuccessUnfreezeEnergy": "Transaction successfully, Type: UnfreezeEnergy",
+            "Close": "Закрыть",
+            "Balance": "Баланс",
+            "FreezeAmount": "Freeze Amount",
+            "ConfirmFreeze": "Я подтверждаю заморозку Токена <b>{{ amount }} TRX</b> минимум на 3 дня",
+            "Freeze": "Заморозить",
+            "UnfreezeExpire": "Вы можете разморозить свой TRX в",
+            "UnfreezeEnable": "Вы можете разморозить свой TRX сейчас",
+            "UnfreezeBandwidth": "Разморозить bandwidth",
+            "UnfreezeEnergy": "Разморозить energy"
+        },
+        "ImportMnemonic": {
+            "Label": "Mnemonic import",
+            "EnterMnemonic": "Введите mnemonic",
+            "WalletName": "Название кошелька (необязательно)",
+            "EnterWalletName": "Введите название кошелька",
+            "WalletNameHint": "Имя кошелька будет известно только вам",
+            "ButtonImportMnemonic": "Import mnemonic",
+            "SelectAccounts": "Выберите учетные записи, которые вы хотели бы импортировать ниже",
+            "Back": "Назад"
+        },
+        "ImportWallet": {
+            "Label": "Введите свой private key ниже",
+            "EnterPrivateKey": "Введите private key",
+            "PrivateKeyHint": "Шестнадцатеричный private key без шифрования",
+            "WalletName": "Название кошелька (необязательно)",
+            "EnterWalletName": "Введите название кошелька",
+            "WalletNameHint": "Имя кошелька будет известно только вам",
+            "SuccessImport": "Ваш аккаунт <strong>{{walletName}}</strong> успешно импортирован",
+            "ButtonImportWallet": "Import wallet",
+            "Back": "Назад"
+        },
+        "noFundsTrx": {
+            "Title": "Mmm...",
+            "Description": "It appears that you do not have any money to send.",
+            "AddFunds": "Add funds"
+        },
+        "Preferences": {
+            "Title": "Настройки",
+            "WalletName": "Название кошелька",
+            "WalletNameHint": "Вы можете изменить имя, отображаемое на этом устройстве выше.",
+            "WalletColor": "Цвет кошелька",
+            "UpdateSettings": "Сохранить настройки"
+        },
+        "ReceiveAccount": {
+            "Share": "Поделиться",
+            "YourTronAddress": "Ваш TRON адрес",
+            "SelectCurrency": "Выберите валюту",
+            "Amount": "Сумма",
+            "Description": "Описание (необязательно)",
+            "GenerateRequest": "Сгенерировать QRCode",
+            "Back": "Назад"
+        },
+        "ReceiveRequest": {
+            "Title": "Запросить оплату"
+        },
+        "SignedMessage": {
+            "Title": "Signed Message",
+            "Description": "Sign the message through TRON",
+            "Message": "Message",
+            "SignedData": "Signed data",
+            "VerifyMessage": "Verify Message"
+        },
+        "TransactionInfo": {
+            "TransferStatus": "TRANSFER",
+            "Amount": "AMOUNT",
+            "Hash": "Hash",
+            "Status": "Status",
+            "Confirmed": "Confirmed",
+            "UnConfirmed": "UnConfirmed",
+            "Time": "Time",
+            "Block": "Block"
+        },
+        "TransferAsset": {
+            "Success": "Success",
+            "SuccessDescription": "Transaction successfully sent",
+            "ButtonTransactionInfo": "Transaction info",
+            "Token": "Токен",
+            "TokenLabel": "Пожалуйста, выберите токен ниже",
+            "To": "Кому",
+            "ToLabel": "Send to TRON address",
+            "Amount": "Сумма",
+            "AmountHint": "Минимальная сумма для любой транзакции отправки 0.000001",
+            "Send": "Отправить",
+            "TransactionDetails": "Детали транзакции",
+            "SubmitTransaction": "Отправить транзакцию",
+            "Back": "Назад"
+        },
+        "VerifyMessage": {
+            "Description": "Verify the message",
+            "OriginalMessage": "Enter the original message that was signed",
+            "SignatureHash": "Message Signature Hash",
+            "Address": "Tron Address (Base58)",
+            "Success": "Success",
+            "Failed": "Failed",
+            "ButtonVerifyMessage": "Verify Message"
+        },
+        "Index": {
+            "AddWallet": "+ Добавить кошелек",
+            "SelectWallet": "Пожалуйста, выберите кошелек из списка.",
+            "Energy": "Energy",
+            "Bandwidth": "Bandwidth",
+            "Menu": {
+                "Preferences": "Настройки",
+                "ExportWallet": "Backup кошелька",
+                "SignedMessage": "Подписать сообщение",
+                "DeleteWallet": "Удалить кошелек"
+            },
+            "Send": "Отправить",
+            "Receive": "Получить",
+            "Freeze": "Заморозить",
+            "EmptyTransaction": "Нет транзакций",
+            "ContractType": {
+                "Sent": "Передача",
+                "Received": "Получено",
+                "Freeze": "Замораживание",
+                "Unfreeze": "Разморозить",
+                "SmartContract": "Контракт"
+            },
+            "Status": "Статус",
+            "Confirmed": "Подтверждено",
+            "Unconfirmed": "Не подтверждено",
+            "Hash": "Hash",
+            "Block": "Block",
+            "Time": "Time",
+            "From": "От",
+            "To": "Кому"
+        }
+    },
+    "Settings": {
+        "Navigation": {
+            "Currency": "Валюты",
+            "Language": "Язык",
+            "SessionLog": "Лог сессии",
+            "Skins": "Скины"
+        },
+
+        "AltCurrency": {
+            "Title": "Валюты",
+            "Description": "Пожалуйста, выберите валюту, которую вы предпочитаете.",
+            "Label": "Валюта",
+            "Search": "Поиск валюты",
+            "All": "Все валюты"
+        },
+        "Language": {
+            "Title": "Язык",
+            "Description": "Пожалуйста, выберите язык ниже.",
+            "Label": "Язык"
+        },
+        "SessionLog": {
+            "Title": "Лог сессии",
+            "Description": "Здесь вы можете увидеть журнал сеанса, где записаны все необходимые данные.",
+            "DownloadLog": "Скачать лог",
+            "Empty": "Нет записей для этого уровня журнала"
+        },
+
+        "Skins": {
+            "Title": "Скины",
+            "Description": "Выберите скины из списка представленных."
+        }
+    }
+}

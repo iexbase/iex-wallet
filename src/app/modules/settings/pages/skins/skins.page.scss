@@ -1,0 +1,129 @@
+.skins-accordion
+{
+    .mat-expansion-panel
+    {
+        background-color: transparent;
+        margin: 10px 0;
+        box-shadow: none;
+        border-radius: 0 !important;
+        .mat-expansion-panel-header
+        {
+            position: relative;
+            background: rgba(255, 255, 255, 0.04);
+            margin: 0;
+            font-size: 20px;
+            line-height: 1.2em;
+            font-weight: 300;
+            transition: background 200ms ease;
+            z-index: 2;
+            border-radius: 20px;
+
+            .mat-expansion-panel-header-title {
+                text-transform: capitalize;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                display: block;
+                position: relative;
+            }
+        }
+
+        .mat-expansion-panel-content {
+            .mat-expansion-panel-body {
+                padding: 24px 16px !important;
+            }
+        }
+
+        .mat-expansion-indicator::after {
+            transition: 400ms ease;
+            margin-top: -9px;
+        }
+
+        .skins-items
+        {
+            .skins-item
+            {
+                background-color: #2E353B;
+                margin: 12px;
+                color: rgba(255, 255, 255, 0.6);
+                cursor: pointer;
+                height: 64px;
+                width: 164px;
+                text-align: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 15px;
+                position: relative;
+                border-radius: 20px;
+                font-weight: 100;
+                text-transform: capitalize;
+                box-shadow: 0 10px 80px 0 rgba(0, 0, 0, 0.4);
+
+                &:hover {
+                    box-shadow: 0 10px 80px 0 rgba(0, 0, 0, 0.5);
+                    transform: scale(1.05);
+                    color: white;
+                }
+
+                &.skin-default {
+                    background-image: linear-gradient(-177deg, #23292E 0%, #121314 100%);
+                }
+
+                &.skin-barlow {
+                    background-image: linear-gradient(to top, #0f3649, #37516c);
+                }
+
+                &.midnight {
+                    background-color: #212830;
+                    background-image: linear-gradient(-177deg, transparent 30%, rgba(0, 0, 0, 0.4) 99%);
+                }
+
+                &.skin-padded {
+                    background-image: url("assets/images/skins/padded.png");
+                }
+
+                &.skin-mosaic {
+                    background-image: url("assets/images/skins/mosaic.png");
+                }
+
+                &.skin-wood {
+                    background-image: url("assets/images/skins/wood.png");
+                }
+
+                &.skin-argyle {
+                    background-image: url("assets/images/skins/argyle.png");
+                }
+
+                &.skin-jeans {
+                    background-image: url("assets/images/skins/jeans_black.png");
+                }
+
+                &.skin-diagmonds {
+                    background-image: url("assets/images/skins/diagmonds.png");
+                }
+
+                &.skin-woven {
+                    background-image: url("assets/images/skins/woven.png");
+                }
+
+                &.skin-mamba {
+                    background-image: url("assets/images/skins/black_mamba.png");
+                }
+
+                &.skin-darklinen {
+                    background-image: url("assets/images/skins/linen-dark.png");
+                }
+
+
+                .selected-skin {
+                    position: absolute;
+                    top: -4px;
+                    right: -4px;
+                    font-size: 21px;
+                    color: #0c6b01;
+                }
+            }
+        }
+    }
+}

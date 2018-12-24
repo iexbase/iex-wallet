@@ -1,0 +1,64 @@
+<div class="transaction-detail">
+    <div class="status-line" [ngClass]="{'confirmed': detail.status, 'unconfirmed': !detail.status}"></div>
+    <div class="content">
+
+        <div class="progress" *ngIf="!detail.status">
+            <lottie-animation-view
+                [options]="lottieConfig"
+                [width]="150"
+                [height]="150">
+            </lottie-animation-view>
+        </div>
+
+        <div id="header">
+            <div class="tx-status transfer-tx">{{'Wallet.TransactionInfo.TransferStatus' | translate}}</div>
+            <div id="amount">
+                <div class="text-amount">{{'Wallet.TransactionInfo.Amount' | translate}}</div>
+                <div class="amount-value">
+                    {{detail.amount | sunToUnit:token}}
+                    <span>{{token}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="list-detail">
+            <button mat-icon-button (click)="copyId(detail.txID)" class="copy-button">
+                <mat-icon svgIcon="trx-copy"></mat-icon>
+            </button>
+            <mat-list role="list">
+                <mat-list-item role="listitem">
+                    <div mat-line="" fxLayout="column">
+                        <div class="type">{{'Wallet.TransactionInfo.Hash' | translate}}</div>
+                        <div class="value">{{ detail.txID }}</div>
+                    </div>
+                </mat-list-item>
+
+                <mat-divider></mat-divider>
+
+                <mat-list-item role="listitem">
+                    <div mat-line="" fxLayout="row" fxLayoutAlign="space-between center">
+                        <div class="type">{{'Wallet.TransactionInfo.Status' | translate}}</div>
+                        <div class="value">
+                            <span *ngIf="detail.status">Confirmed</span>
+                            <span *ngIf="!detail.status">UnConfirmed</span>
+                        </div>
+                    </div>
+                </mat-list-item>
+
+                <mat-list-item role="listitem">
+                    <div mat-line="" fxLayout="row" fxLayoutAlign="space-between center">
+                        <div class="type">{{'Wallet.TransactionInfo.Time' | translate}}</div>
+                        <div class="value">{{detail.timestamp / 1000 | amFromUnix | amLocal | amDateFormat: 'DD/MM/YYYY HH:mm:ss'}}</div>
+                    </div>
+                </mat-list-item>
+
+                <mat-list-item role="listitem">
+                    <div mat-line="" fxLayout="row" fxLayoutAlign="space-between center">
+                        <div class="type">{{'Wallet.TransactionInfo.Block' | translate}}</div>
+                        <div class="value">{{detail.block}}</div>
+                    </div>
+                </mat-list-item>
+            </mat-list>
+        </div>
+    </div>
+</div>

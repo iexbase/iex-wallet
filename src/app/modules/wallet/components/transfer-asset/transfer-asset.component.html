@@ -1,0 +1,111 @@
+
+<!-- Loading -->
+<div class="progress-loading" *ngIf="isButtonDisabled">
+    <mat-spinner [diameter]="40" [strokeWidth]="1"></mat-spinner>
+</div>
+
+
+<!-- Close Modal -->
+<div class="close-dialog">
+    <button mat-icon-button="" (click)="onClose()">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<ng-container *ngIf="wallet.balance == 0">
+    <no-funds-trx></no-funds-trx>
+</ng-container>
+
+<ng-container *ngIf="wallet.balance > 0">
+    <ng-container *ngIf="isTransactionInfo">
+        <transaction-info [token]="fields.token" [transaction]="signedTransaction"></transaction-info>
+    </ng-container>
+
+    <div *ngIf="!isTransactionInfo" class="transfer-window" [ngClass]="{'confirm': isConfirmed}">
+        <div class="success-transaction" *ngIf="isSuccess">
+            <div id="header">
+                <h1>{{'Wallet.TransferAsset.Success' | translate}}</h1>
+                <p>{{'Wallet.TransferAsset.SuccessDescription' | translate}}</p>
+            </div>
+            <lottie-animation-view
+                [options]="lottieConfig"
+                [width]="400"
+                [height]="400">
+            </lottie-animation-view>
+            <div id="actions">
+                <button mat-button (click)="isTransactionInfo = true" color="primary" class="tron-button">
+                    {{'Wallet.TransferAsset.ButtonTransactionInfo' | translate}}
+                </button>
+            </div>
+        </div>
+        <ng-container *ngIf="!isSuccess">
+            <ng-template [ngIf]="isConfirmed == false">
+                <h1 mat-dialog-title>Send</h1>
+                <div mat-dialog-content>
+                    <div class="transfer-form-fields" fxLayout="column">
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{'Wallet.TransferAsset.Token' | translate}}</mat-label>
+                            <mat-select placeholder="Token" [(ngModel)]="fields.token">
+                                <mat-optgroup [label]="'Wallet.TransferAsset.TokenLabel' | translate">
+                                    <ng-container *ngFor="let asset of listTokens">
+                                        <mat-option [value]="asset.key" fxLayout="row">{{ asset.key }}
+                                            <span fxFlex=""></span>
+                                            <span [style.fontSize]="'13px'">({{asset.value  | sunToUnit:asset.key}} available)</span>
+                                        </mat-option>
+                                    </ng-container>
+                                </mat-optgroup>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{'Wallet.TransferAsset.To' | translate}}</mat-label>
+                            <input matInput
+                                   [placeholder]="'Wallet.TransferAsset.ToLabel' | translate"
+                                   [(ngModel)]="fields.toAddress" name="toAddress">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{'Wallet.TransferAsset.Amount' | translate}}</mat-label>
+                            <input matInput [placeholder]="fields.token == 'TRX' ? '0.0000': '0' "
+                                   [(ngModel)]="fields.amount"
+                                   [dropSpecialCharacters]="false"
+                                   [mask]="fields.token === 'TRX' ? '0*.0000' : '0*'"
+                                   name="amount">
+                            <button mat-button="" (click)="sendMax()" matSuffix>MAX</button>
+                            <mat-hint>{{'Wallet.TransferAsset.AmountHint' | translate}}</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div mat-dialog-actions>
+                    <button mat-button="" (click)="goToConfirm()" color="primary" [disabled]="enabledSend()"
+                            class="tron-button red-bg transfer-button">
+                        {{'Wallet.TransferAsset.Send' | translate}}
+                    </button>
+                </div>
+            </ng-template>
+            <ng-template [ngIf]="isConfirmed == true">
+                <div class="confirm-tx">
+                    <h1 mat-dialog-title>
+                        {{'Wallet.TransferAsset.TransactionDetails' | translate}}
+                    </h1>
+                    <div mat-dialog-content>
+                        <confirm-tx *ngIf="confirmDetails" [txp]="confirmDetails" [token]="fields.token"></confirm-tx>
+                    </div>
+                    <div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-evenly center" >
+                        <button mat-stroked-button (click)="onBack()" color="primary"
+                                class="tron-default-button transfer-button">
+                            {{'Wallet.TransferAsset.Back' | translate}}
+                        </button>
+                        <button mat-button="" (click)="submitTransaction()" color="primary"
+                                [disabled]="isButtonDisabled"
+                                class="tron-button transfer-button">
+                            {{'Wallet.TransferAsset.SubmitTransaction' | translate}}
+                        </button>
+                    </div>
+                </div>
+            </ng-template>
+        </ng-container>
+    </div>
+</ng-container>
+
+

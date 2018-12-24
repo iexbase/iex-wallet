@@ -1,0 +1,21 @@
+<div fxLayout="column">
+    <div id="add-wallet-page">
+        <div id="add-wallet-wrapper">
+            <mat-tab-group mat-stretch-tabs animationDuration="0ms">
+                <!-- Generate Address -->
+                <mat-tab label="Create new wallet">
+                    <create-wallet></create-wallet>
+                </mat-tab>
+
+                <mat-tab label="Import mnemonic">
+                    <import-mnemonic></import-mnemonic>
+                </mat-tab>
+
+
+                <mat-tab label="Import wallet">
+                    <import-wallet></import-wallet>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+</div>

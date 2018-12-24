@@ -1,0 +1,25 @@
+<div id="content">
+    <form [formGroup]="exportWalletForm">
+        <mat-form-field appearance="outline" class="import-wallet-field" >
+            <input matInput placeholder="Set up a password" type="password" formControlName="password">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="import-wallet-field" >
+            <input matInput placeholder="Repeat the password" formControlName="confirmPassword" type="password">
+        </mat-form-field>
+
+        <ng-container *ngIf="exportWalletForm.hasError('mismatchedPasswords') && exportWalletForm.controls.password.valid">
+            <div class="warning-message">Passwords do not match</div>
+        </ng-container>
+    </form>
+</div>
+
+<div id="actions">
+    <button mat-button (click)="goToCheck()"
+            [disabled]="(
+            !exportWalletForm.value.password ||
+            exportWalletForm.value.password !=
+            exportWalletForm.value.confirmPassword) ||
+            !exportWalletForm.valid"
+            class="tron-default-button tron-button-login">Create Account</button>
+</div>

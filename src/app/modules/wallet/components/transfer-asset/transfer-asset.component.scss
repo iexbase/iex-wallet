@@ -1,0 +1,80 @@
+.progress-loading
+{
+    position: absolute;
+    right: 30px;
+    top: 30px;
+
+    .mat-spinner::ng-deep circle {
+        stroke: #7476A2;
+    }
+}
+
+.success-transaction
+{
+    background-size: contain;
+    margin-left: -25px;
+    margin-right: -25px;
+
+    #header {
+        text-align: center;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+
+        h1 {
+            font-weight: 100;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 14px;
+            color: #5c5f86;
+        }
+    }
+
+    #actions {
+        position: absolute;
+        bottom: 15px;
+        left: 0;
+        right: 0;
+        text-align: center;
+    }
+}
+
+.transfer-window
+{
+    position: relative;
+    overflow: hidden;
+    padding: 24px 24px 15px;
+    transition: transform 250ms cubic-bezier(0.25, 0.1, 0.25, 1);
+
+    &.confirm
+    {
+        .confirm-tx {
+            animation-duration: 400ms;
+            animation-name: showSendConfirm;
+            animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+            animation-fill-mode: forwards;
+        }
+    }
+
+    .transfer-form-fields {
+        max-width: 500px;
+        margin: 0 auto;
+
+        mat-form-field.form-input {
+            width: 100%;
+            display: block;
+        }
+
+        .mat-form-field-appearance-outline  {
+            .mat-form-field-suffix {
+                top: -.3em !important;
+            }
+        }
+    }
+
+}

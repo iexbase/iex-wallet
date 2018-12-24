@@ -1,0 +1,22 @@
+<div class="settings-page">
+    <h1>{{'Settings.Skins.Title' | translate}}</h1>
+    <p class="description">{{'Settings.Skins.Description' | translate}}</p>
+
+    <mat-accordion [multi]="true" #skinsaccordion="matAccordion" class="skins-accordion">
+        <mat-expansion-panel *ngFor="let group of skins" [expanded]="expandedOpen(group.name)"
+                             (opened)="openExpansion(group.name)"
+                             (closed)="closeExpansion(group.name)">
+            <mat-expansion-panel-header [expandedHeight]="'48px'">
+                <mat-panel-title>{{group.name}}</mat-panel-title>
+            </mat-expansion-panel-header>
+            <ng-template matExpansionPanelContent>
+                <div class="skins-items" fxLayout="row wrap">
+                    <div class="skins-item" *ngFor="let item of group.themes" [ngClass]="item.class" (click)="save(item.class)">
+                        <mat-icon class="selected-skin" *ngIf="selectedSkin == item.class">check</mat-icon>
+                        <div>{{item.name}}</div>
+                    </div>
+                </div>
+            </ng-template>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

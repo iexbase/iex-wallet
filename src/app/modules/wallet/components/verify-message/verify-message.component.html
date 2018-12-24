@@ -1,0 +1,35 @@
+<div mat-dialog-content class="signed-message-container">
+    <p>{{'Wallet.VerifyMessage.Description' | translate}}</p>
+
+    <div class="signed-fields" fxLayout="column">
+        <mat-form-field  appearance="fill">
+            <mat-label>{{'Wallet.VerifyMessage.OriginalMessage' | translate}}</mat-label>
+            <textarea matInput rows="5" name="verifyMessage" [(ngModel)]="verifyMessage"></textarea>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>{{'Wallet.VerifyMessage.SignatureHash' | translate}}</mat-label>
+            <input matInput  name="verifySignature" [(ngModel)]="verifySignature">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>{{'Wallet.VerifyMessage.Address' | translate}}</mat-label>
+            <input matInput name="accountAddress" [(ngModel)]="accountAddress">
+        </mat-form-field>
+
+        <div class="status-verifed" *ngIf="isButton">
+            <div class="status-verified success" *ngIf="verifiedSignature">
+                {{'Wallet.VerifyMessage.Success' | translate}}
+            </div>
+            <div class="status-verified failed" *ngIf="!verifiedSignature">
+                {{'Wallet.VerifyMessage.Failed' | translate}}
+            </div>
+        </div>
+
+        <div>
+            <button mat-button class="tron-default-button tron-button" [disabled]="isDisabled()" (click)="checkVerify()">
+                {{'Wallet.VerifyMessage.ButtonVerifyMessage' | translate}}
+            </button>
+        </div>
+    </div>
+</div>

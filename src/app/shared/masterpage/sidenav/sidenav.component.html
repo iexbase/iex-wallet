@@ -1,0 +1,25 @@
+<div fxLayout="column" fxLayoutAlign="space-between stretch" class="sidenav-menu">
+    <mat-toolbar class="sidenav-left-toolbar">
+        <div class="logo-wrapper">
+            <div class="sidenav-logo"></div>
+        </div>
+    </mat-toolbar>
+    <mat-nav-list class="menu-mat-list" fxLayout="column">
+        <!--<h3 mat-subheader>Articles</h3>-->
+        <ng-container *ngFor="let nav of navs">
+            <a *ngIf="!nav.external"
+               mat-list-item [routerLink]="nav.link"
+               (click)="(activeMediaQuery ? onMenuToggle.emit() : '')"
+               routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <div fxFlex="column">
+                    <mat-icon matListIcon>{{nav.icon}}</mat-icon>
+                    <div matLine class="text">{{nav.name | translate}}</div>
+                </div>
+            </a>
+            <div *ngIf="nav.wallets == true" fxFlex></div>
+
+        </ng-container>
+
+    </mat-nav-list>
+
+</div>

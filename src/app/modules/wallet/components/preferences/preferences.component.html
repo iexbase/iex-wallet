@@ -1,0 +1,52 @@
+
+<div class="close-dialog">
+    <button mat-icon-button="" (click)="onClose()">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<div class="preferences-window">
+    <h1 mat-dialog-title>{{'Wallet.Preferences.Title' | translate}}</h1>
+    <div mat-dialog-content>
+        <div class="wallet-name-field">
+            <mat-form-field appearance="outline">
+                <mat-label>{{'Wallet.Preferences.WalletName' | translate}}</mat-label>
+                <input matInput placeholder="Name" [(ngModel)]="walletName">
+                <mat-hint>{{'Wallet.Preferences.WalletNameHint' | translate}}</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>{{'Wallet.Preferences.WalletColor' | translate}}</mat-label>
+                <mat-select placeholder="Color" [(ngModel)]="colorIndex" class="settings-list">
+                    <mat-select-trigger>
+                        <div fxLayout="row" fxLayoutAlign="start center">
+                            <div fxFlex="8">
+                                <mat-icon fxFlex="8" [ngStyle]="{'color': colorIndex.color}" aria-disabled="true">fiber_manual_record</mat-icon>
+                            </div>
+                            <div fxFlex="">{{colorIndex.name}}</div>
+                        </div>
+                    </mat-select-trigger>
+
+                    <mat-option *ngFor="let item of colorsList" [value]="item">
+                        <div fxLayout="row" fxLayoutAlign="start center">
+                            <div fxFlex="8">
+                                <mat-icon fxFlex="8" [ngStyle]="{'color': item.color}" aria-disabled="true">fiber_manual_record</mat-icon>
+                            </div>
+                            <div fxFlex="">{{item.name}}</div>
+                            <span fxFlex></span>
+                            <div class="color-checked">
+                                <mat-icon [ngStyle]="{'color': item.color}" *ngIf="colorIndex.id == item.id">check</mat-icon>
+                            </div>
+                        </div>
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-stroked-button (click)="updateSettings()" [disabled]="disabledButton()"
+                color="primary" class="tron-default-button transfer-button">
+            {{'Wallet.Preferences.UpdateSettings' | translate}}
+        </button>
+    </div>
+</div>

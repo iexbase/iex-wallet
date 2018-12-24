@@ -1,0 +1,66 @@
+.import-mnemonic-wrapper
+{
+    .mat-field-wrapper {
+        width: 70%;
+        margin: 0 auto;
+        padding: 30px 0 5px;
+
+        mat-form-field {
+            width: 100%;
+            font-size: 14px;
+            line-height: 1.5;
+            font-weight: 300;
+
+            textarea {
+                overflow: hidden;
+            }
+        }
+
+        .wallet-optional {
+            padding-top: 20px;
+        }
+    }
+    .actions {
+        text-align: center;
+    }
+}
+
+
+.select-wallet-wrapper
+{
+    position: relative;
+    max-height: 400px;
+    .header-select-wallet {
+        text-align: center;
+        padding-top: 15px;
+        border-bottom: 1px solid #4a4a4a40;
+        color: #999bb5;
+        font-size: 14px;
+        padding-bottom: 10px;
+    }
+
+    .mat-list-wallets {
+        //max-height: 50vh;
+        //overflow-y: scroll;
+
+        mat-list-item {
+            height: 45px;
+            font-size: 14px;
+            cursor: pointer;
+
+            .mat-list-icon {
+                width: 22px;
+                height: 12px;
+                font-size: 12px;
+            }
+
+            &:hover {
+                color: #51526b;
+            }
+        }
+    }
+
+    .actions {
+        text-align: center;
+    }
+}

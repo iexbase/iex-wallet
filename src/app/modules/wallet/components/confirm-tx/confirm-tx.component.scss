@@ -1,0 +1,19 @@
+.transaction-details
+{
+    mat-list-item {
+        border-bottom: 1px solid #161621;
+        font-size: 14px;
+    }
+
+    .type {
+        color: #999bb5;
+        text-transform: uppercase;
+    }
+
+    .value {
+        .alt-amount {
+            font-size: 12px;
+            color: #74769a;
+        }
+    }
+}

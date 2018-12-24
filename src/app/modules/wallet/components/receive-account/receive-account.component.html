@@ -1,0 +1,78 @@
+<div class="close-dialog">
+    <button mat-icon-button="" (click)="onClose()">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<div class="receive-window">
+    <mat-tab-group animationDuration="0ms" [dynamicHeight] mat-stretch-tabs>
+        <mat-tab [label]="'Wallet.ReceiveAccount.Share' | translate">
+            <div class="tab-content">
+                <div mat-dialog-content class="address-share">
+                    <div class="address-qr-code-wrapper">
+                        <qrcode [allowEmptyString]="true" [qrdata]="wallet.address" [level]="'M'" [usesvg]="true"></qrcode>
+                    </div>
+                    <p class="address-text-info">{{'Wallet.ReceiveAccount.YourTronAddress' | translate}}</p>
+                    <p class="address-data">{{wallet.address}}</p>
+                    <div id="actions" fxLayout="row">
+                        <button mat-icon-button="" class="button-circle" (click)="copyAddress()">
+                            <mat-icon svgIcon="trx-copy"></mat-icon>
+                        </button>
+
+                        <button mat-icon-button="" class="button-circle" (click)="addressInExplorer()">
+                            <mat-icon svgIcon="trx-link"></mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Request">
+
+            <div class="tab-content">
+                <ng-container *ngIf="isGenerateRequest">
+                    <receive-request [params]="fields"></receive-request>
+                </ng-container>
+
+                <ng-container *ngIf="!isGenerateRequest">
+                    <div mat-dialog-content class="address-request">
+
+                        <p class="default-text">{{'Wallet.ReceiveAccount.SelectCurrency' | translate}}</p>
+                        <mat-button-toggle-group
+                            #group="matButtonToggleGroup" [value]="fields.token"
+                            (change)="onCurrencyChange(group.value)"
+                            class="select-currency" appearance="legacy">
+                            <mat-button-toggle *ngFor="let currency of currencies" [value]="currency.key">
+                                {{currency.value}}
+                            </mat-button-toggle>
+                        </mat-button-toggle-group>
+
+                        <mat-form-field appearance="outline" [style.fontSize]="'13px'">
+                            <mat-label>{{'Wallet.ReceiveAccount.Amount' | translate}}</mat-label>
+                            <input matInput placeholder="0.0000"
+                                   [(ngModel)]="fields.amount"
+                                   [dropSpecialCharacters]="false"
+                                   [mask]="'0*.0000'"
+                                   name="amount">
+                            <div matSuffix>{{fields.token}}</div>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline"  [style.fontSize]="'13px'">
+                            <mat-label>{{'Wallet.ReceiveAccount.Description' | translate}}</mat-label>
+                            <input matInput [(ngModel)]="fields.data" name="description">
+                        </mat-form-field>
+                    </div>
+                </ng-container>
+
+                <div id="actions-request" mat-dialog-actions="">
+                    <button *ngIf="isGenerateRequest" mat-stroked-button class="tron-button" (click)="back()">
+                        {{'Wallet.ReceiveAccount.Back' | translate}}
+                    </button>
+                    <button *ngIf="!isGenerateRequest" mat-button="" class="tron-button red-bg"
+                            [disabled]="fields.amount == 0 || fields.amount == undefined"
+                            (click)="generateRequest()">
+                        {{'Wallet.ReceiveAccount.GenerateRequest' | translate}}
+                    </button>
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>

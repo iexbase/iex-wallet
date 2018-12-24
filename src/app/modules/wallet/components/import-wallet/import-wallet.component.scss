@@ -1,0 +1,66 @@
+
+.import-wallet-wrapper {
+    width: 70%;
+    margin: 0 auto;
+    padding: 30px 0 5px;
+
+    .account-name {
+        padding: 10px 0;
+        color: #999;
+        text-align: center;
+
+        span {
+            font-size: 20px;
+            color: #b50000;
+        }
+    }
+
+    .account-name-field {
+        width: 100%;
+        font-size: 15px;
+    }
+
+    .import-wallet-field {
+        width: 100%;
+        line-height: 1.4;
+        font-size: 14px;
+        font-weight: 300;
+
+        textarea {
+            overflow: hidden;
+        }
+    }
+}
+.create-wallet-button {
+    padding: 5px;
+    border-top: 1px solid #3333338f;
+    text-align: center;
+    margin-top: 20px;
+
+    mat-spinner {
+        margin: 5px auto;
+    }
+
+    mat-icon {
+        font-size: 22px;
+    }
+}
+
+.import-wallet-optional {
+    padding-top: 20px;
+}
+
+
+.wallet-success {
+    position: absolute;
+    bottom: 75px;
+    width: 100%;
+    text-align: center;
+
+    .wallet-success-data {
+        .account-name {
+            font-weight: 500;
+            color: #ed3f21;
+        }
+    }
+}

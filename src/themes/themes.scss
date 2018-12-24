@@ -1,0 +1,138 @@
+@mixin sass-themify-init($scheme-table){
+    @if $scheme-table == null{
+        @error "[sass-themify] sass-themify mixin needs a valid $scheme-table map defined"
+    } @else {
+        @if variable-exists("sass-themify-scheme-table") {
+            @warn "[sass-themify] sass-themify has already been initialized once. Initializing again will replace the previous initialized color scheme"
+        }
+        $sass-themify-scheme-table: $scheme-table !global;
+    }
+}
+
+@mixin sass-themify($element:"html")
+{
+    //determine if global varaible has been declared or not
+    @if not variable-exists("sass-themify-theme-name") {
+        $sass-themify-theme-name: null !global;
+    }
+
+    @each $theme-name, $color-map in $sass-themify-scheme-table{
+        $sass-themify-theme-name: $theme-name !global;
+        @if $theme-name != "default"{
+            .theme-wallet-#{$theme-name}{
+                @content;
+            }
+        } @else {
+            #{$element}{
+                @content;
+            }
+        }
+        $sass-themify-theme-name: null !global;
+    }
+}
+
+@function sass-themify-get-map-deep($map, $keys...) {
+    @each $key in $keys {
+        $map: map-get($map, $key);
+    }
+    @return $map;
+}
+
+
+@function sass-themify-get-color($component){
+    @if $sass-themify-scheme-table == null {
+        @error "[sass-themify] You need to call sass-themify mixin to initialize a theme before you can call the sass-themify-get function.";
+    }
+    @if $sass-themify-theme-name == null {
+        @error "[sass-themify] sass-themify-get function can only be used within the scope of the 'sass-themify' mixin.";
+    }
+    @return sass-themify-get-map-deep($sass-themify-scheme-table,$sass-themify-theme-name,$component);
+}
+
+@function sass-themify-get-theme-name(){
+    @return $sass-themify-theme-name;
+}
+
+
+$themes: (
+    blue-violet: (
+        mainColor: #5D69BD,
+        buttonGrandient: linear-gradient(176deg, rgba(93, 105, 189, 0.9) 0%, rgba(105, 93, 189, 0.7) 100%),
+        mainIcon: 'assets/svg/logo-colors/tron-blue-violet.svg'
+    ),
+    celery: (
+        mainColor: #99c361,
+        buttonGrandient: linear-gradient(176deg, rgba(153, 195, 97, 0.9) 0%, rgba(129, 195, 97, 0.7) 100%),
+        mainIcon: 'assets/svg/logo-colors/tron-celery.svg'
+    ),
+    cerise: (
+        mainColor: #DC2C7E,
+        buttonGrandient: linear-gradient(176deg, rgba(220, 44, 126, 0.9) 0%, rgba(220, 44, 82, 0.7) 100%),
+        mainIcon: 'assets/svg/logo-colors/tron-cerise.svg'
+    ),
+    corn: (
+        mainColor: #ebbf09,
+        buttonGrandient: linear-gradient(178deg, #c7a620 0%, rgba(232, 186, 21, 0.9) 100%),
+        mainIcon: 'assets/svg/logo-colors/tron-corn.svg'
+    ),
+    cornflower-blue: (
+        mainColor: #00aae4,
+        buttonGrandient: linear-gradient(176deg, rgba(0, 170, 228, 0.9) 0%, rgba(0, 113, 228, 0.7) 100%),
+        mainIcon: 'assets/svg/logo-colors/tron-cornflower-blue.svg'
+    ),
+    dull-lavender: (
+        mainColor: #99A4EA,
+        buttonGrandient: linear-gradient(178deg, #6c78b9 0%, rgba(71, 89, 128, 0.9) 100%),
+        mainIcon: 'assets/svg/logo-colors/tron-dull-lavender.svg'
+    ),
+    emerald: (
+        mainColor: #58CD87,
+        buttonGrandient: linear-gradient(176deg, rgba(88, 205, 135, 0.9) 0%, rgba(88, 205, 164, 0.7) 100%),
+        mainIcon: 'assets/svg/logo-colors/tron-emerald.svg'
+    ),
+    fuchsia-blue: (
+        mainColor: #973CC1,
+        buttonGrandient: linear-gradient(176deg, rgba(151, 60, 193, 0.9) 0%, rgba(184, 60, 193, 0.7) 100%),
+        mainIcon: 'assets/svg/logo-colors/tron-fuchsia-blue.svg'
+    ),
+    maroon-flush: (
+        mainColor: #CE235B,
+        buttonGrandient: linear-gradient(176deg, rgba(206, 35, 91, 0.9) 0%, rgba(206, 35, 48, 0.7) 100%),
+        mainIcon: 'assets/svg/logo-colors/tron-maroon-flush.svg'
+    ),
+    silver-chalice: (
+        mainColor: #AEAEAE,
+        buttonGrandient: linear-gradient(176deg, rgba(174, 174, 174, 0.9) 0%, rgba(174, 174, 174, 0.7) 100%),
+        mainIcon: 'assets/svg/logo-colors/tron-silver-chalice.svg'
+    ),
+    tan-hide: (
+        mainColor: #FC8B59,
+        buttonGrandient: linear-gradient(178deg, #e5794c 0%, rgba(244, 128, 75, 0.9) 100%),
+        mainIcon: 'assets/svg/logo-colors/tron-tan-hide.svg'
+    ),
+    terracotta: (
+        mainColor: #E58268,
+        buttonGrandient: linear-gradient(178deg, #bd5a61 0%, rgba(184, 85, 95, 0.9) 100%),
+        mainIcon: 'assets/svg/logo-colors/tron-terracotta.svg'
+    ),
+    thunderbird: (
+        mainColor: #D11E25,
+        buttonGrandient: linear-gradient(179deg, #d11b12 0%, rgba(125, 17, 11, 0.95) 100%),
+        mainIcon: 'assets/svg/logo-colors/tron-thunderbird.svg'
+    ),
+    tulip-tree: (
+        mainColor: #EEAF4A,
+        buttonGrandient: linear-gradient(178deg, #bc8a39 0%, rgba(173, 126, 48, 0.9) 100%),
+        mainIcon: 'assets/svg/logo-colors/tron-tulip-tree.svg'
+    ),
+    turquoise: (
+        mainColor: #26CFD2,
+        buttonGrandient: linear-gradient(176deg, rgba(38, 207, 210, 0.9) 0%, rgba(38, 164, 210, 0.7) 100%),
+        mainIcon: 'assets/svg/logo-colors/tron-turquoise.svg'
+    ),
+    waikawa-gray: (
+        mainColor: #5B789E,
+        buttonGrandient: linear-gradient(176deg, rgba(91, 120, 158, 0.9) 0%, rgba(91, 103, 158, 0.7) 100%),
+        mainIcon: 'assets/svg/logo-colors/tron-waikawa-gray.svg'
+    )
+);

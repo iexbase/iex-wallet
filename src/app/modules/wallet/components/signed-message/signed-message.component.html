@@ -1,0 +1,29 @@
+<div class="close-dialog">
+    <button mat-icon-button="" (click)="onClose()">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<mat-tab-group mat-stretch-tabs>
+    <mat-tab [label]="'Wallet.SignedMessage.Title' | translate">
+        <div mat-dialog-content class="signed-message-container">
+            <p>{{'Wallet.SignedMessage.Description' | translate}}</p>
+
+            <div class="signed-fields" fxLayout="column">
+                <mat-form-field  appearance="fill">
+                    <mat-label>{{'Wallet.SignedMessage.Message' | translate}}</mat-label>
+                    <textarea matInput rows="5" name="messageSigned" [(ngModel)]="messageSigned" (ngModelChange)="encryptedMessage()"></textarea>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>{{'Wallet.SignedMessage.SignedData' | translate}}</mat-label>
+                    <input matInput name="encryptedData" [(ngModel)]="encryptedData" readonly/>
+                </mat-form-field>
+            </div>
+        </div>
+    </mat-tab>
+
+    <mat-tab [label]="'Wallet.SignedMessage.VerifyMessage' | translate">
+        <verify-message></verify-message>
+    </mat-tab>
+</mat-tab-group>

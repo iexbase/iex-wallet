@@ -1,0 +1,218 @@
+:host {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden !important;
+}
+
+
+.master-logo-wrapper {
+    width: 100vw;
+    height: 100vh;
+    background-image: linear-gradient(40deg, #10101A 0%, #191A2A 100%);
+    background-blend-mode: multiply;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    overflow: hidden;
+    -webkit-app-region: drag;
+
+    #header {
+        z-index: 999;
+
+        .header-logo-container
+        {
+            .logo {
+                background: url("assets/img/logo.svg") no-repeat center;
+                background-size: contain;
+                width: 110px;
+                height: 110px;
+                margin: 15px auto 0;
+            }
+        }
+    }
+    #content {
+        padding: 80px 30px 30px;
+        text-align: center;
+
+        .mat-form-field {
+            color: #696a88;
+            width: 500px;
+            text-align: center;
+
+            .mat-form-field-infix {
+                margin-top: -3px;
+                margin-bottom: 5px;
+            }
+
+            .show-hide-password {
+                position: absolute;
+                right: 5px;
+                top: 13px;
+                color: #51526b;
+                margin-right: 5px;
+                cursor: pointer;
+
+                &:hover {
+                    color: #9798b7;
+                }
+            }
+        }
+
+        .info-panel {
+            text-align: center;
+            color: #424357;
+            font-size: 1.1em;
+        }
+
+        .warning-message {
+            text-align: center;
+            color: #9A2520;
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+    }
+    #actions {
+        text-align: center;
+
+        &.hide-button {
+            opacity: 0;
+        }
+
+        button {
+            background-image: linear-gradient(176deg, rgba(91, 120, 158, 0.9) 0%, rgba(91, 103, 158, 0.7) 100%);
+            transition: transform 100ms ease-in-out;
+            text-transform: uppercase;
+            cursor: pointer;
+
+            &:hover, &:focus {
+                transform: scale(1.02);
+                box-shadow: 0 12px 60px 0 rgba(25,26,42, 0.45);
+            }
+
+            &[disabled] {
+                cursor: no-drop;
+                opacity: .2;
+                transform: none;
+                box-shadow: none;
+            }
+        }
+    }
+}
+
+
+.new-update {
+    font-size: 13px;
+    width: 400px;
+    margin: 10px;
+    text-align: center;
+    color: #cacaca;
+
+    h2 {
+        color: #F6CA1D;
+        font-size: 30px;
+        text-align: center;
+        font-weight: 300;
+        text-transform: none;
+        position: relative;
+        margin: 25px 0;
+        padding: 0;
+        line-height: 40px;
+        display: block;
+    }
+
+    p {
+        font-size: 15px;
+        line-height: 1.4;
+        font-weight: 300;
+        color: #7476A2;
+    }
+
+    #update-actions {
+        button {
+            padding: 5px 50px;
+            margin: 10px;
+
+            &.update {
+                background-color: #696A9C;
+            }
+        }
+    }
+}
+
+
+.parallax {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    overflow: hidden; }
+
+.stars {
+    opacity: .6;
+    width: 1px;
+    height: 1px;
+    /* background: transparent; */
+    box-shadow: 409px 448px #FFF , 547px 190px #FFF , 412px 131px #FFF , 438px 180px #FFF , 660px 458px #FFF , 499px 155px #FFF , 245px 299px #FFF , 513px 26px #FFF , 177px 238px #FFF , 757px 344px #FFF , 717px 321px #FFF , 68px 316px #FFF , 144px 358px #FFF , 105px 218px #FFF , 356px 231px #FFF , 75px 30px #FFF , 682px 37px #FFF , 775px 549px #FFF , 355px 269px #FFF , 554px 237px #FFF , 204px 400px #FFF , 78px 248px #FFF , 404px 582px #FFF , 96px 133px #FFF , 677px 164px #FFF , 360px 339px #FFF , 547px 405px #FFF , 31px 65px #FFF , 237px 531px #FFF , 345px 308px #FFF , 416px 112px #FFF , 423px 279px #FFF , 352px 506px #FFF , 480px 337px #FFF , 724px 25px #FFF , 199px 393px #FFF , 775px 463px #FFF , 693px 535px #FFF , 576px 247px #FFF , 755px 199px #FFF , 533px 141px #FFF , 452px 101px #FFF , 300px 434px #FFF , 352px 528px #FFF , 128px 129px #FFF , 781px 478px #FFF , 124px 525px #FFF , 535px 112px #FFF , 728px 484px #FFF , 37px 552px #FFF , 76px 109px #FFF , 78px 44px #FFF , 437px 543px #FFF , 31px 407px #FFF , 756px 115px #FFF , 741px 283px #FFF , 173px 535px #FFF , 26px 217px #FFF , 188px 146px #FFF , 226px 399px #FFF;
+    animation: animationStar 132s linear infinite;
+}
+.stars:after {
+    content: " ";
+    position: absolute;
+    top: 800px;
+    width: 1px;
+    height: 1px;
+    background: transparent;
+    box-shadow: 409px 448px #FFF , 547px 190px #FFF , 412px 131px #FFF , 438px 180px #FFF , 660px 458px #FFF , 499px 155px #FFF , 245px 299px #FFF , 513px 26px #FFF , 177px 238px #FFF , 757px 344px #FFF , 717px 321px #FFF , 68px 316px #FFF , 144px 358px #FFF , 105px 218px #FFF , 356px 231px #FFF , 75px 30px #FFF , 682px 37px #FFF , 775px 549px #FFF , 355px 269px #FFF , 554px 237px #FFF , 204px 400px #FFF , 78px 248px #FFF , 404px 582px #FFF , 96px 133px #FFF , 677px 164px #FFF , 360px 339px #FFF , 547px 405px #FFF , 31px 65px #FFF , 237px 531px #FFF , 345px 308px #FFF , 416px 112px #FFF , 423px 279px #FFF , 352px 506px #FFF , 480px 337px #FFF , 724px 25px #FFF , 199px 393px #FFF , 775px 463px #FFF , 693px 535px #FFF , 576px 247px #FFF , 755px 199px #FFF , 533px 141px #FFF , 452px 101px #FFF , 300px 434px #FFF , 352px 528px #FFF , 128px 129px #FFF , 781px 478px #FFF , 124px 525px #FFF , 535px 112px #FFF , 728px 484px #FFF , 37px 552px #FFF , 76px 109px #FFF , 78px 44px #FFF , 437px 543px #FFF , 31px 407px #FFF , 756px 115px #FFF , 741px 283px #FFF , 173px 535px #FFF , 26px 217px #FFF , 188px 146px #FFF , 226px 399px #FFF; }
+
+.stars2 {
+    opacity: .4;
+    border-radius: 1px;
+    width: 2px;
+    height: 2px;
+    background: transparent;
+    box-shadow: 416px 364px #FFF , 236px 296px #FFF , 279px 519px #FFF , 518px 92px #FFF , 129px 329px #FFF , 324px 269px #FFF , 207px 391px #FFF , 248px 385px #FFF , 551px 106px #FFF , 26px 7px #FFF , 99px 56px #FFF , 466px 336px #FFF , 259px 386px #FFF , 307px 133px #FFF , 59px 50px #FFF , 221px 12px #FFF , 127px 11px #FFF , 77px 565px #FFF , 645px 245px #FFF , 463px 100px #FFF , 619px 172px #FFF , 120px 129px #FFF , 525px 480px #FFF , 10px 422px #FFF , 627px 486px #FFF , 767px 332px #FFF , 549px 214px #FFF , 22px 298px #FFF , 55px 458px #FFF , 795px 209px #FFF;
+    animation: animationStar 80s linear infinite;
+}
+.stars2:after {
+    content: " ";
+    border-radius: 1px;
+    top: 800px;
+    width: 2px;
+    height: 2px;
+    background: transparent;
+    box-shadow: 416px 364px #FFF , 236px 296px #FFF , 279px 519px #FFF , 518px 92px #FFF , 129px 329px #FFF , 324px 269px #FFF , 207px 391px #FFF , 248px 385px #FFF , 551px 106px #FFF , 26px 7px #FFF , 99px 56px #FFF , 466px 336px #FFF , 259px 386px #FFF , 307px 133px #FFF , 59px 50px #FFF , 221px 12px #FFF , 127px 11px #FFF , 77px 565px #FFF , 645px 245px #FFF , 463px 100px #FFF , 619px 172px #FFF , 120px 129px #FFF , 525px 480px #FFF , 10px 422px #FFF , 627px 486px #FFF , 767px 332px #FFF , 549px 214px #FFF , 22px 298px #FFF , 55px 458px #FFF , 795px 209px #FFF;
+}
+
+.stars3 {
+    opacity: .25;
+    border-radius: 2px;
+    width: 4px;
+    height: 4px;
+    background: transparent;
+    box-shadow: 760px 381px #FFF , 50px 280px #FFF , 567px 479px #FFF , 423px 320px #FFF , 24px 492px #FFF , 431px 266px #FFF , 584px 396px #FFF , 480px 279px #FFF , 75px 368px #FFF , 133px 241px #FFF , 714px 79px #FFF , 467px 566px #FFF , 299px 113px #FFF , 313px 159px #FFF , 662px 107px #FFF , 635px 451px #FFF , 749px 140px #FFF , 292px 30px #FFF , 128px 95px #FFF , 580px 128px #FFF;
+    animation: animationStar 50s linear infinite;
+}
+
+.stars3:after {
+    content: " ";
+    border-radius: 2px;
+    top: 800px;
+    width: 3px;
+    height: 3px;
+    background: transparent;
+    box-shadow: 760px 381px #FFF , 50px 280px #FFF , 567px 479px #FFF , 423px 320px #FFF , 24px 492px #FFF , 431px 266px #FFF , 584px 396px #FFF , 480px 279px #FFF , 75px 368px #FFF , 133px 241px #FFF , 714px 79px #FFF , 467px 566px #FFF , 299px 113px #FFF , 313px 159px #FFF , 662px 107px #FFF , 635px 451px #FFF , 749px 140px #FFF , 292px 30px #FFF , 128px 95px #FFF , 580px 128px #FFF;
+}
+
+@keyframes animationStar
+{
+    from {
+        transform: translateY(0px);
+    }
+    to {
+        transform: translateY(-1200px);
+    }
+}

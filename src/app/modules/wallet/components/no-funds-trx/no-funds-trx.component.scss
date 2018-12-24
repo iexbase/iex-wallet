@@ -1,0 +1,23 @@
+.prompt-user-container
+{
+    padding: 30px;
+    text-align: center;
+
+    .prompt-user {
+
+        mat-icon {
+            width: 100px;
+            height: auto;
+        }
+
+        .title-info {
+            font-size: 25px;
+            padding: 20px;
+        }
+
+        .subtitle-info {
+            font-weight: 100;
+            padding-bottom: 20px;
+        }
+    }
+}

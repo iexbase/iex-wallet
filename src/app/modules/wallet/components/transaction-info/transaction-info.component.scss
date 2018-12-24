@@ -1,0 +1,89 @@
+.transaction-detail
+{
+    position: relative;
+
+    .status-line {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 6px;
+        left: 0;
+        right: 0;
+
+        &.confirmed {
+            background-color: #3FE77B;
+        }
+
+        &.unconfirmed {
+            background-color: #FF4465;
+        }
+    }
+
+
+    .content {
+        padding: 40px 24px 24px;
+
+        .progress {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+        }
+
+        .transfer-tx {
+            background-color: #4a69e2;
+        }
+
+        #header {
+            text-align: center;
+            #amount {
+                padding: 15px 0;
+                .text-amount {
+                    color: #9c9eb9;
+                    font-size: 12px;
+                    margin-bottom: 5px;
+                }
+
+                .amount-value {
+                    font-weight: 500;
+                    font-size: 20px;
+                }
+            }
+
+        }
+
+        #list-detail {
+
+            mat-divider {
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
+
+
+            .copy-button {
+                border: 1px solid #2e2f47;
+                border-radius: 10px;
+                position: absolute;
+                right: 30px;
+                margin-top: 15px;
+                z-index: 999;
+
+                mat-icon {
+                    margin-top: -2px;
+                    width: 18px;
+                    height: 18px;
+                }
+            }
+
+            .type {
+                color: #999bb5;
+                font-weight: 100;
+                text-transform: uppercase;
+                margin-bottom: 5px;
+            }
+
+            .value {
+                font-size: 14px;
+            }
+        }
+    }
+}

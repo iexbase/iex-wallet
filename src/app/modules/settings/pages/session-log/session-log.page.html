@@ -1,0 +1,27 @@
+<div class="settings-page">
+    <h1>{{'Settings.SessionLog.Title' | translate}}</h1>
+    <p class="description">{{'Settings.SessionLog.Description' | translate}}.</p>
+
+    <div class="filter-container">
+        <mat-button-toggle-group name="filterValue" [(ngModel)]="filterValue" (valueChange)="setOptionSelected(filterValue)">
+            <mat-button-toggle *ngFor="let option of logOptions | keys"
+                               [ngClass]="{'info-label': option.value.weight==3, 'active-toggle': filterValue == option.value.weight}"
+                               [value]="option.value.weight">{{option.value.label}}</mat-button-toggle>
+        </mat-button-toggle-group>
+
+        <button (click)="download()" class="download-button" mat-stroked-button="">{{'Settings.SessionLog.DownloadLog' | translate}}</button>
+    </div>
+
+    <div *ngIf="filteredLogs && filteredLogs.length == 0" class="no-entries-message">
+        <span>{{'Settings.SessionLog.Empty' | translate}}</span>.
+    </div>
+
+    <div *ngIf="filteredLogs && filteredLogs.length > 0">
+        <div class="log-items" *ngFor="let l of filteredLogs">
+            <div [ngClass]="{'energized': l.level=='warn', 'royal': l.level=='debug', 'info-color': l.level=='info', 'assertive': l.level=='error'}">
+                <span class="log-timestamp">{{l.timestamp  | amDateFormat:'MMM Do YYYY, h:mm:ss a'}}</span>
+                <span class="log-level">&nbsp; [{{l.level}}]</span>&nbsp; {{l.msg}}
+            </div>
+        </div>
+    </div>
+</div>

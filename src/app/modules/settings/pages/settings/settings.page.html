@@ -1,0 +1,18 @@
+
+<div id="tron-content-settings" fxLayout="column">
+
+    <nav mat-tab-nav-bar class="tron-nav-tabs">
+        <a mat-tab-link
+           *ngFor="let nav of navs"
+           [routerLink]="nav.link"
+           routerLinkActive #rla="routerLinkActive"
+           [active]="rla.isActive">
+            {{nav.name | translate}}
+        </a>
+    </nav>
+
+    <div id="tron-content-right" class="ps" [perfectScrollbar]="{}">
+        <router-outlet></router-outlet>
+    </div>
+
+</div>

@@ -1,0 +1,41 @@
+<div class="master-logo-wrapper" fxLayout="column" fxLayoutAlign="center center">
+    <!-- Header logotype -->
+    <div id="header">
+        <div class="header-logo-container">
+            <div class="logo"></div>
+        </div>
+    </div>
+
+    <!-- Update programs -->
+    <ng-container *ngIf="isUpdate == true">
+        <div class="new-update">
+            <h2>New update available!</h2>
+            <p>
+                A new {{appProvider.info.nameCase}} update is available.
+                Would you like to automatically download and update {{appProvider.info.nameCase}} to the latest version?
+            </p>
+
+            <div id="update-actions">
+                <button class="quit" mat-button (click)="quit()">Close</button>
+                <button class="update" mat-button="" (click)="onUpdate()">Update</button>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="isUpdate == false">
+        <!-- Create Account -->
+        <ng-container *ngIf="!walletProvider.isWallet()">
+            <create-account></create-account>
+        </ng-container>
+
+        <!-- Login page -->
+        <ng-container *ngIf="walletProvider.isWallet()">
+            <login-account></login-account>
+        </ng-container>
+    </ng-container>
+</div>
+
+<!-- Animation -->
+<div class="parallax stars"></div>
+<div class="parallax stars2"></div>
+<div class="parallax stars3"></div>

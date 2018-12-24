@@ -1,0 +1,219 @@
+{
+    "Shared": {
+        "Navigation": {
+            "Dashboard": "Dashboard",
+            "Wallet": "Wallet",
+            "Settings": "Settings",
+            "Help": "Help"
+        }
+    },
+    "Dashboard": {
+        "Home": {
+            "PriceLabel": "TRX Price",
+            "Rank": "Rank",
+            "Volume24h": "Volume 24h",
+            "MarketCap": "Market cap",
+            "CirculatingSupply": "Circulating supply"
+        }
+    },
+    "Wallet": {
+        "ConfirmTx": {
+            "From": "From",
+            "To": "To",
+            "Amount": "Amount",
+            "TransactionType": "Transaction Type",
+            "Data": "Data",
+            "Token": "Token",
+            "Time": "Time"
+        },
+        "CreateWallet": {
+            "Label": "Wallet name",
+            "EnterWalletName": "Enter wallet name",
+            "Hint": "The wallet name will be known only to you",
+            "YourName": "Your name",
+            "Create": "Create wallet",
+            "DownloadEncryptedKey": "Download Encrypted Key",
+            "Next": "Next"
+        },
+
+        "DeleteWallet": {
+            "Warning": "Warning",
+            "Description": "Are you sure you want to delete this wallet?",
+            "Cancel": "Cancel",
+            "Yes": "Yes"
+        },
+
+        "ExportWallet": {
+            "Title": "Export wallet",
+            "includePrivateKey": "Do not include private key",
+            "privateKeyDescription": "Not including the private key allows to check the wallet balance, transaction history, and create spend proposals from the export. However, does not allow to approve (sign) proposals, so funds will not be accessible from the export.",
+            "Clipboard": "Copy to clipboard",
+            "DownloadJson": "Download JSON"
+        },
+        "FreezeBalance": {
+            "Success": "Success",
+            "SuccessFreezeBandwidth": "Transaction successfully, Type: FreezeBandwidth",
+            "SuccessFreezeEnergy": "Transaction successfully, Type: FreezeEnergy",
+            "SuccessUnfreezeBandwidth":"Transaction successfully, Type: UnfreezeBandwidth",
+            "SuccessUnfreezeEnergy": "Transaction successfully, Type: UnfreezeEnergy",
+            "Close": "Close",
+            "Balance": "Balance",
+            "FreezeAmount": "Freeze Amount",
+            "ConfirmFreeze": "I confirm to freeze <b>{amount} TRX</b> for at least of 3 days",
+            "Freeze": "Freeze",
+            "UnfreezeExpire": "You can unfreeze your TRX in",
+            "UnfreezeEnable": "You can unfreeze your TRX now",
+            "UnfreezeBandwidth": "Unfreeze bandwidth",
+            "UnfreezeEnergy": "Unfreeze energy"
+        },
+        "ImportMnemonic": {
+            "Label": "Mnemonic import",
+            "EnterMnemonic": "Enter mnemonic",
+            "WalletName": "Wallet name (optional)",
+            "EnterWalletName": "Enter wallet name",
+            "WalletNameHint": "The wallet name will be known only to you",
+            "ButtonImportMnemonic": "Import mnemonic",
+            "SelectAccounts": "Select the accounts you would like to import below",
+            "Back": "Back"
+        },
+        "ImportWallet": {
+            "Label": "Enter your private key below",
+            "EnterPrivateKey": "Enter private key",
+            "PrivateKeyHint": "Hexadecimal private key with no encryption",
+            "WalletName": "Wallet name (optional)",
+            "EnterWalletName": "Enter wallet name",
+            "WalletNameHint": "The wallet name will be known only to you",
+            "SuccessImport": "Your account <strong>{walletName}</strong> has been imported successfully",
+            "ButtonImportWallet": "Import wallet",
+            "Back": "Back to Wallet"
+        },
+        "noFundsTrx": {
+            "Title": "Mmm...",
+            "Description": "It appears that you do not have any money to send.",
+            "AddFunds": "Add funds"
+        },
+        "Preferences": {
+            "Title": "Preferences",
+            "WalletName": "Wallet Name",
+            "WalletNameHint": "You can change the name displayed on this device above.",
+            "WalletColor": "Wallet color",
+            "UpdateSettings": "Update settings"
+        },
+        "ReceiveAccount": {
+            "Share": "Share",
+            "YourTronAddress": "Your TRON Address",
+            "SelectCurrency": "Select the reference currency",
+            "Amount": "Amount",
+            "Description": "Description (optional)",
+            "GenerateRequest": "Generate request",
+            "Back": "Back"
+        },
+        "ReceiveRequest": {
+            "Title": "Request Payment"
+        },
+        "SignedMessage": {
+            "Title": "Signed Message",
+            "Description": "Sign the message through TRON",
+            "Message": "Message",
+            "SignedData": "Signed data",
+            "VerifyMessage": "Verify Message"
+        },
+        "TransactionInfo": {
+            "TransferStatus": "TRANSFER",
+            "Amount": "AMOUNT",
+            "Hash": "Hash",
+            "Status": "Status",
+            "Confirmed": "Confirmed",
+            "UnConfirmed": "UnConfirmed",
+            "Time": "Time",
+            "Block": "Block"
+        },
+        "TransferAsset": {
+            "Success": "Success",
+            "SuccessDescription": "Transaction successfully sent",
+            "ButtonTransactionInfo": "Transaction info",
+            "Token": "Token",
+            "TokenLabel": "Please, choose a token below",
+            "To": "To",
+            "ToLabel": "Send to TRON address",
+            "Amount": "Amount",
+            "AmountHint": "The minimum amount for any send transaction is 0.000001",
+            "Send": "Send",
+            "TransactionDetails": "Transaction Details",
+            "SubmitTransaction": "Submit Transaction",
+            "Back": "Back"
+        },
+        "VerifyMessage": {
+            "Description": "Verify the message",
+            "OriginalMessage": "Enter the original message that was signed",
+            "SignatureHash": "Message Signature Hash",
+            "Address": "Tron Address (Base58)",
+            "Success": "Success",
+            "Failed": "Failed",
+            "ButtonVerifyMessage": "Verify Message"
+        },
+        "Index": {
+            "AddWallet": "+ Add Wallet",
+            "SelectWallet": "Please select a wallet from the list.",
+            "Energy": "Energy",
+            "Bandwidth": "Bandwidth",
+            "Menu": {
+                "Preferences": "Preferences",
+                "ExportWallet": "Export Wallet",
+                "SignedMessage": "Signed message",
+                "DeleteWallet": "Delete Wallet"
+            },
+            "Send": "Send",
+            "Receive": "Receive",
+            "Freeze": "Freeze",
+            "EmptyTransaction": "No Transactions",
+            "ContractType": {
+                "Sent": "Sent",
+                "Received": "Received",
+                "Freeze": "Freeze",
+                "Unfreeze": "Unfreeze",
+                "SmartContract": "Smart Contract"
+            },
+            "Status": "Status",
+            "Confirmed": "Confirmed",
+            "Unconfirmed": "Unconfirmed",
+            "Hash": "Hash",
+            "Block": "Block",
+            "Time": "Time",
+            "From": "From",
+            "To": "To"
+        }
+    },
+    "Settings": {
+        "Navigation": {
+            "Currency": "Currency",
+            "Language": "Language",
+            "SessionLog": "Session Log",
+            "Skins": "Skins"
+        },
+
+        "AltCurrency": {
+            "Title": "Currency",
+            "Description": "Please select the currency you prefer.",
+            "Label": "Alternative currency",
+            "Search": "Search your currency",
+            "All": "All Currency"
+        },
+        "Language": {
+            "Title": "Language",
+            "Description": "Please, choose a Language below.",
+            "Label": "Language"
+        },
+        "SessionLog": {
+            "Title": "Session Log",
+            "Description": "Here you can see the session log, where all the necessary data is written.",
+            "DownloadLog": "Download Log",
+            "Empty": "No entries for this log level"
+        },
+
+        "Skins": {
+            "Title": "Skins",
+            "Description": "Select a skins from the list of submissions."
+        }
+    }
+}

@@ -1,0 +1,59 @@
+/deep/.alt-currency-select {
+    overflow: hidden !important;
+    max-height: none !important;
+}
+
+.alt-currency-search {
+    width: 100%;
+    font-size: 14px;
+    font-weight: 300;
+    color: #f4f4f4;
+    /deep/ .mat-form-field-flex {
+        padding: 0 .75em;
+    }
+
+    button {
+        margin-right: -5px;
+        margin-top: -29px;
+        margin-bottom: -6px;
+        float: right;
+        mat-icon {
+            color: #f4f4f4;
+            font-size: 20px;
+        }
+    }
+}
+
+.empty-currencies {
+    overflow: hidden !important;
+    .loading {
+        margin: 20px auto;
+    }
+}
+
+.alt-currency-list {
+    max-height: 200px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin-top: -18px;
+
+    /deep/.mat-optgroup-label {
+        text-align: center;
+        font-weight: 300;
+        background: #0a0a0a69;
+        font-size: 15px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+
+    &::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+    }
+}

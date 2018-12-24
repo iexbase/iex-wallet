@@ -1,0 +1,24 @@
+.signed-message-container
+{
+    margin: 20px;
+    text-align: center;
+    overflow: hidden;
+
+    p {
+        font-size: 14px;
+        padding-bottom: 10px;
+        color: #7476A2;
+    }
+
+    .signed-fields {
+
+        mat-form-field {
+            line-height: 1.5;
+        }
+
+        mat-radio-group {
+            line-height: 2;
+            padding-bottom: 15px;
+        }
+    }
+}

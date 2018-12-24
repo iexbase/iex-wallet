@@ -1,0 +1,37 @@
+.address-qr-code-wrapper
+{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    padding-bottom: 20px;
+    padding-top: 20px;
+
+    qrcode {
+        margin: 0 auto;
+        border-radius: 5px;
+        display: block;
+        background: #fff;
+        padding: 10px;
+        width: 200px;
+    }
+}
+
+h2 {
+    text-transform: uppercase;
+    font-weight: 100;
+    margin: 0;
+    font-size: 14px;
+}
+
+
+.amount-base {
+    padding-top: 10px;
+    padding-bottom: 5px;
+    font-size: 25px;
+}
+
+.amount-alt {
+    font-size: 13px;
+    color: #7476A2;
+}

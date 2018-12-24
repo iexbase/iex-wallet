@@ -1,0 +1,44 @@
+.preferences-window {
+    position: relative;
+    overflow: hidden;
+    padding: 24px 24px 15px;
+
+    .wallet-name-field {
+        max-width: 500px;
+        margin: 0 auto;
+
+        mat-form-field {
+            width: 100%;
+            display: block;
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+    }
+}
+
+.color-checked .mat-icon {
+    font-size: 20px !important;
+    margin: 5px 0 0 !important;
+}
+
+
+.settings-color-block {
+    display: flex;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    float: left;
+    margin: 1rem;
+    align-items: center;
+}
+
+
+.progress-loading {
+    position: absolute;
+    right: 30px;
+    top: 30px;
+
+    .mat-spinner::ng-deep circle {
+        stroke: #7476A2;
+    }
+}

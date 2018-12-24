@@ -1,0 +1,46 @@
+<div class="settings-page">
+    <h1>{{'Settings.AltCurrency.Title' | translate}}</h1>
+    <p class="description">{{'Settings.AltCurrency.Description' | translate}}</p>
+    <mat-form-field class="settings-page-field" appearance="outline">
+        <mat-label>{{'Settings.AltCurrency.Label' | translate}}</mat-label>
+        <mat-select #select="matSelect" [(value)]="currentCurrency"
+                    [placeholder]="'Settings.AltCurrency.Label' | translate"
+                    panelClass="alt-currency-select">
+            <mat-form-field appearance="fill" class="alt-currency-search">
+                <input matInput
+                       [placeholder]="'Settings.AltCurrency.Search' | translate"
+                       [(ngModel)]="searchedAltCurrency"
+                       (ngModelChange)="findCurrency(searchedAltCurrency)">
+                <!-- Search Icon -->
+                <button mat-icon-button="" *ngIf="!searchedAltCurrency">
+                    <mat-icon matSuffix>search</mat-icon>
+                </button>
+                <!-- Clear search text -->
+                <button mat-icon-button (click)="clearSearch()" *ngIf="searchedAltCurrency && searchedAltCurrency.length > 0">
+                    <mat-icon matSuffix >clear</mat-icon>
+                </button>
+            </mat-form-field>
+
+            <!-- List Alt Currencies -->
+            <mat-selection-list class="alt-currency-list" [ngClass]="{'empty-currencies': altCurrencyList.length == 0}">
+
+                <!-- Last used alt currency -->
+                <ng-container *ngIf="lastUsedAltCurrencyList[0]">
+                    <mat-option *ngFor="let lastUsedAltCurrency of lastUsedAltCurrencyList" (click)="onChangeCurrency(lastUsedAltCurrency)"
+                                [value]="lastUsedAltCurrency.isoCode">
+                        {{ lastUsedAltCurrency.name }}
+                    </mat-option>
+                </ng-container>
+
+                <!-- all currency -->
+                <mat-optgroup *ngIf="altCurrencyList[0]" [label]="'Settings.AltCurrency.All' | translate">
+                    <ng-container *ngIf="altCurrencyList.length == 0">
+                        <mat-spinner class="loading" [diameter]="30" [strokeWidth]="2"></mat-spinner>
+                    </ng-container>
+                    <mat-option *ngFor="let alt of altCurrencyList" [value]="alt.isoCode" (click)="onChangeCurrency(alt)">{{alt.name}}</mat-option>
+                </mat-optgroup>
+            </mat-selection-list>
+
+        </mat-select>
+    </mat-form-field>
+</div>

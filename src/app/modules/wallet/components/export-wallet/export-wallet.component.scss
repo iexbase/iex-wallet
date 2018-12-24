@@ -1,0 +1,52 @@
+/deep/.export-wallet-container
+{
+    margin: 20px;
+    text-align: center;
+    overflow: hidden;
+
+    p {
+        font-size: 14px;
+        padding-bottom: 10px;
+        color: #7476A2;
+    }
+
+    .export-wallet-fields {
+
+        mat-form-field {
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .not-include-private-key {
+            color: #F5FF30;
+            padding: 10px;
+            text-align: center;
+            margin: 0 auto;
+            display: block;
+            width: 500px;
+
+            .title {
+
+            }
+
+            .info {
+                font-size: 13px;
+                margin-top: 10px;
+            }
+        }
+
+        mat-checkbox {
+            line-height: 2;
+            font-size: 13px;
+            padding-bottom: 15px;
+        }
+
+        #actions {
+            padding-top: 20px;
+
+            button {
+                margin: 0 10px;
+            }
+        }
+    }
+}

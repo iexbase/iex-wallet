@@ -1,0 +1,17 @@
+<div class="settings-page">
+    <h1>{{ 'Settings.Language.Title' | translate }}</h1>
+    <p class="description">{{ 'Settings.Language.Description' | translate }}</p>
+    <mat-form-field class="settings-page-field" appearance="outline">
+        <mat-label>{{ 'Settings.Language.Label' | translate }}</mat-label>
+        <mat-select #select="matSelect" [placeholder]="'Settings.Language.Label' | translate"
+                    [(ngModel)]="currentLanguage"
+                    (selectionChange)="save(select.value)"
+                    panelClass="language-select">
+            <mat-selection-list class="language-select-items">
+                <ng-container *ngFor="let language of languages">
+                    <mat-option [value]="language.isoCode">{{language.name}}</mat-option>
+                </ng-container>
+            </mat-selection-list>
+        </mat-select>
+    </mat-form-field>
+</div>

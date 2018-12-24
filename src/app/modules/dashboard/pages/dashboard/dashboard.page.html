@@ -1,0 +1,49 @@
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <div class="dashboard-header-logo"></div>
+        <div class="dashboard-header-text">
+            <div class="label-text">{{'Dashboard.Home.PriceLabel' | translate}}</div>
+            <div class="label-price">{{tronData.price | formatCurrency:'USD':6}}</div>
+        </div>
+    </div>
+
+    <div class="dashboard-content">
+        <div class="statistics-grid">
+            <div class="statistics-grid-item" [fxShow.sm]="false">
+                <div class="label-title">{{'Dashboard.Home.Rank' | translate}}</div>
+                <div class="label-value">{{ tronData.rank }}</div>
+            </div>
+
+            <div class="statistics-grid-item">
+                <div class="label-title">{{'Dashboard.Home.Volume24h' | translate}}</div>
+                <div class="label-value">{{ tronData.volume_24h | formatCurrency:'USD' }}</div>
+            </div>
+
+            <div class="statistics-grid-item">
+                <div class="label-title">{{'Dashboard.Home.MarketCap' | translate}}</div>
+                <div class="label-value">{{ tronData.market_cap | formatCurrency:'USD' }}</div>
+            </div>
+
+            <div class="statistics-grid-item">
+                <div class="label-title">{{'Dashboard.Home.CirculatingSupply' | translate}}</div>
+                <div class="label-value">{{ tronData.market_cap | formatCurrency:'':0:false }}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-button-group">
+        <mat-button-toggle-group #group="matButtonToggleGroup" [value]="filterValue"
+                                 (valueChange)="setOptionSelected(group.value)">
+            <mat-button-toggle [value]="item.name"
+                               [ngClass]="{'active': item.name == filterValue}"
+                               *ngFor="let item of filterTimes">{{item.name}}</mat-button-toggle>
+        </mat-button-toggle-group>
+    </div>
+
+    <div class="dashboard-wrapper">
+        <div class="graph-body">
+            <div [chart]="chart_trx"></div>
+        </div>
+    </div>
+</div>
+

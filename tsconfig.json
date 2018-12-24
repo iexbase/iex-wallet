@@ -1,0 +1,65 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+        "outDir": "./dist",
+        "baseUrl": "src",
+        "paths": {
+            "@shared/*": [
+                "app/shared/*"
+            ],
+            "@redux/*": [
+                "app/redux/*"
+            ],
+            "@providers/*": [
+                "providers/*"
+            ],
+            "@pipes/*": [
+                "pipes/*"
+            ],
+            "@utils/*": [
+                "utils/*"
+            ],
+            "@modules/*": [
+                "app/modules/*"
+            ],
+            "*": [
+                "typings/*",
+                "includes/*"
+            ]
+        },
+        "allowSyntheticDefaultImports": true,
+        "declaration": false,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "moduleResolution": "node",
+        "removeComments": true,
+        "preserveSymlinks": true,
+        "module": "es6",
+        "target": "es5",
+        "importHelpers": true,
+
+        // Strict Type-Checking Options
+        "alwaysStrict": true,
+
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "sourceMap": true,
+        "typeRoots": [
+            "node_modules/@types"
+        ],
+        "lib": [
+            "es2018",
+            "dom"
+        ]
+    },
+    "include": [
+        "main.ts",
+        "src/**/*.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ],
+    "types": ["lodash", "node", "chrome", "electron"]
+}

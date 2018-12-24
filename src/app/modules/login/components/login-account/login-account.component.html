@@ -1,0 +1,28 @@
+<div id="content">
+    <mat-form-field appearance="outline" class="import-wallet-field" >
+        <mat-icon (mouseenter)="isVisibilityPassword = true" (mouseleave)="isVisibilityPassword = false"
+                  class="show-hide-password" (click)="changeInputType = !changeInputType">{{changeInputType ? 'visibility' : 'visibility_off'}}</mat-icon>
+        <input (keydown)="!password || goToLogin()"
+            matInput placeholder="Type Your Password"
+               [type]="!changeInputType ? 'password' : 'text'" name="password"
+               [(ngModel)]="password" (ngModelChange)="isSubmit = false">
+    </mat-form-field>
+
+    <ng-container *ngIf="isVisibilityPassword">
+        <div class="info-panel" *ngIf="!changeInputType">Show Your Password</div>
+        <div class="info-panel" *ngIf="changeInputType">Hide Your Password</div>
+    </ng-container>
+    <ng-container *ngIf="!isVisibilityPassword">
+        <div class="info-panel" *ngIf="!isSubmit && !password">
+            {{ appProvider.info.nameCase }} {{ appProvider.info.version }}
+        </div>
+        <div class="info-panel" *ngIf="!isSubmit && password">Click the arrow of press "ENTER" to lock</div>
+        <div class="warning-message" *ngIf="isSubmit && errorMessage">{{errorMessage}}</div>
+    </ng-container>
+</div>
+
+<div id="actions" [ngClass]="{'hide-button': !password}">
+    <button
+        mat-button (click)="goToLogin()"
+            [disabled]="!password" class="tron-default-button tron-button-login">Decrypt Wallet</button>
+</div>

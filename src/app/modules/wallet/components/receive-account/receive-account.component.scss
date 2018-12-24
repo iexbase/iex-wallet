@@ -1,0 +1,117 @@
+.receive-window {
+    position: relative;
+    overflow: hidden;
+}
+
+.address-qr-code-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+
+    qrcode {
+        margin: 0 auto;
+        border-radius: 5px;
+        display: block;
+        background: #fff;
+        padding: 10px;
+        width: 200px;
+    }
+}
+
+.address-share {
+    .address-text-info {
+        text-transform: uppercase;
+        margin-top: 20px;
+        height: 28px;
+        font-size: 18px;
+        font-weight: 300;
+        color: #3f415d;
+        margin-bottom: 5px;
+    }
+
+    .address-data {
+        font-size: 18px;
+        color: #F0F0F0;
+        font-weight: 400;
+        line-height: 1.2em;
+        margin-top: 0;
+    }
+}
+
+
+.tab-content {
+    padding: 20px;
+    overflow: hidden;
+
+    .mat-dialog-content
+    {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+
+.select-currency
+{
+    background: #1f1f2f;
+    border: none;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+
+
+    .mat-button-toggle
+    {
+        background: #3f415a;
+        margin: 2px 5px;
+        border-radius: 5px;
+        font-size: 12px;
+        border: none;
+
+        /deep/ .mat-button-toggle-button {
+            padding-left: 25px;
+            padding-right: 25px;
+        }
+
+        &.mat-button-toggle-checked {
+            background-color: #696a98;
+        }
+
+        /deep/ .mat-button-toggle-label-content {
+            line-height: 30px !important;
+            padding: 0 12px;
+        }
+    }
+}
+
+
+.address-request
+{
+
+    mat-form-field {
+        width: 52%;
+    }
+
+    /deep/.mat-form-field-suffix{
+        top: -.3em !important;
+        right: 5px;
+        color: #66688F;
+    }
+
+    p.default-text {
+        color: #66688F;
+        font-size: 13px;
+    }
+}
+
+#actions-request {
+    padding-bottom: 20px;
+
+    button {
+        margin: 0 auto;
+    }
+}
