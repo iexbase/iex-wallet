@@ -1,7 +1,10 @@
-# iEXWallet
+<h1 align="center">
+  <img align="center" src="https://raw.githubusercontent.com/iexbase/iex-wallet/master/github-logo.png" />
+  <br>
+  iEXWallet 
+  <br>
+</h1>
 This project is experimental and still under development.
-
-**-- Pre-launch date (05.01.2019 г)**
 
 ## Main Features
 
