@@ -6,14 +6,15 @@
  */
 
 import { Injectable } from "@angular/core";
+import {ec} from 'elliptic';
 
 // Providers
 import {Logger} from '@providers/logger/logger';
 import {TronProvider} from '@providers/tron/tron';
 
 // bcrypto plugin
-const keccak256 = require('bcrypto/lib/keccak256');
-const secp256k1 = require('bcrypto/lib/secp256k1');
+const secp256k1: any = new ec('secp256k1');
+const keccak256 = require('js-sha3').keccak256;
 
 // declare buffer
 declare const Buffer;
@@ -81,10 +82,10 @@ export class AddressProvider
     static getPubKeyFromPrivateKey(privateKey: string | Buffer): string
     {
         if (typeof privateKey == 'string')
-            privateKey = Buffer.from(privateKey, "hex");
+            privateKey = Buffer.from(privateKey, 'hex');
 
-        let pubKey:Buffer = secp256k1.publicKeyCreate(privateKey, false);
-        return pubKey.toString('hex');
+        let keyPair = secp256k1.keyFromPrivate(privateKey, 'hex');
+        return keyPair.getPublic('hex');
     }
 
     /**
@@ -98,16 +99,55 @@ export class AddressProvider
         if (typeof privateKey == 'string')
             privateKey = Buffer.from(privateKey, 'hex');
 
+        let keyPair = secp256k1.keyFromPrivate(privateKey, 'hex');
         // Convert private key to public
-        let pubKey:Buffer = secp256k1.publicKeyCreate(privateKey, false);
+        let publicKey = keyPair.getPublic().encode('hex').slice(2);
 
-        // In case the length of the public key exceeds 64 characters,
-        // delete the invalid ones.
-        if (pubKey.length === 65)
-            pubKey = pubKey.slice(1);
+        // Now apply keccak
+        let address = keccak256(
+            Buffer.from(publicKey, 'hex')
+        ).slice(64 - 40);
+        return `41${address.toString()}`
+    }
 
-        let hash = keccak256.digest(pubKey).toString('hex');
-        return '41' + hash.substring(24)
+
+    /**
+     * compressPublicKey
+     *
+     * @param {string | Buffer} publicKey - 65-byte public key, a point (x, y)
+     * @returns {string}
+     */
+    static compressPublicKey(publicKey: string | Buffer): string {
+        if(typeof publicKey == 'string') {
+            publicKey = Buffer.from(publicKey, 'hex');
+        }
+
+        return secp256k1.keyFromPublic(publicKey, 'hex')
+            .getPublic(true, 'hex');
+    }
+
+    /**
+     * generatePrivateKey
+     *
+     * Generating a new private key
+     *
+     * @returns {any}
+     */
+    generatePrivateKey(): any
+    {
+        let genPair = secp256k1.genKeyPair();
+        let hexAddress = AddressProvider.getAddressFromPrivateKey(
+            genPair.getPrivate('hex')
+        );
+
+        return {
+            privateKey: genPair.getPrivate('hex'),
+            publicKey: genPair.getPublic('hex'),
+            address: {
+                hex: hexAddress,
+                base58: this.toBase58(hexAddress)
+            }
+        }
     }
 
     /**
@@ -120,6 +160,9 @@ export class AddressProvider
     {
         if (typeof privateKey == 'string')
             privateKey = Buffer.from(privateKey, 'hex');
-        return secp256k1.privateKeyVerify(privateKey);
+
+        const keyPair = secp256k1.keyFromPrivate(privateKey, 'hex');
+        const { result } = keyPair.validate();
+        return result;
     }
 }

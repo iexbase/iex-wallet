@@ -13,7 +13,6 @@ import { LocalStorage } from "ngx-webstorage";
 import { Store } from "@ngrx/store";
 
 import { Update } from "@ngrx/entity";
-import { secp256k1 } from "bcrypto";
 import * as bip39 from 'bip39';
 import * as hdkey from 'hdkey';
 import * as lodash from 'lodash';
@@ -262,19 +261,12 @@ export class WalletProvider
     {
         return new Promise((resolve, reject) => {
            try {
-               let privateKey = secp256k1.generatePrivateKey();
-               if(!privateKey) reject('Error creating private key');
-
-               let hexAddress = AddressProvider.getAddressFromPrivateKey(privateKey);
+               let walletDetails = this.addressProvider.generatePrivateKey();
+               if(!walletDetails) reject('Error creating private key');
 
                resolve({
                    balance: 0,
-                   privateKey: privateKey,
-                   publicKey: AddressProvider.getPubKeyFromPrivateKey(privateKey),
-                   address: {
-                       base58: this.addressProvider.toBase58(hexAddress),
-                       hex: hexAddress
-                   }
+                   ...walletDetails
                })
            }catch (e) {
                 reject(e)
