@@ -218,7 +218,7 @@ export class WalletPage implements OnInit
         this.walletProvider.fullUpdateAccount(this.wallet.address).then(() => {});
 
         this.snackBar.open('Account updated successfully', null, {
-            duration: 11112000,
+            duration: 2000,
             panelClass: ['snackbar-theme-dialog']
         })
     }
