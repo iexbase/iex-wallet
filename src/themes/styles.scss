@@ -204,10 +204,15 @@ html {
     }
 }
 
+.mat-snack-bar-handset {
+    width: auto !important;
+}
+
 .snackbar-theme-dialog {
     color: #fff;
     background: #191A2A;
-    font-weight: 100;
+    font-weight: 400;
+
 
     &.custom-width {
         width: 500px !important;
