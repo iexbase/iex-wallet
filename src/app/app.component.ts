@@ -17,8 +17,13 @@ import * as SkinActions from "@redux/skins/skins.actions";
 // Providers
 import { AppProvider } from "@providers/app/app";
 import { ConfigProvider } from "@providers/config/config";
-import {WalletProvider} from "@providers/wallet/wallet";
 
+// As the handleOpenURL handler kicks in before the App is started,
+// declare the handler function at the top of app.component.ts (outside the class definition)
+// to track the passed Url
+(window as any).handleOpenURL = (url: string) => {
+    (window as any).handleOpenURL_LastURL = url;
+};
 
 @Component({
   selector: 'app-root',
@@ -27,26 +32,40 @@ import {WalletProvider} from "@providers/wallet/wallet";
 })
 export class AppComponent implements OnInit
 {
+    /**
+     * Create a new AppComponent object
+     *
+     * @param {Store} store - Reactive provider
+     * @param {ConfigProvider} config - ConfigProvider
+     * @param {AppProvider} appProvider - App provider
+     * @param {Logger} logger - Log provider
+     */
     constructor(
         protected store: Store<AppState>,
-        public wallet: WalletProvider,
         private config: ConfigProvider,
         private appProvider: AppProvider,
-        private logger: Logger
+        private logger: Logger,
+
     ) {
-        if (!AppComponent.isElectronPlatform())
-            throw new Error('Web version is not available');
+        //
     }
 
+    /**
+     * We start object life cycle
+     *
+     * @return void
+     */
     ngOnInit()
     {
-        try {
-            let osPlatform = os.platform();
-            this.onPlatformReady(osPlatform);
-        }catch (e) {
-            this.logger.error('Platform is not ready.', e);
-        }
+        // The project is allowed to run only through "Electron"
+        if (!AppComponent.isElectronPlatform())
+            throw new Error('Web version is not available');
 
+        this.onPlatformReady(
+            os.platform()
+        );
+
+        // Load the active skin
         this.store.dispatch(
             new SkinActions.AddSkin({
                 skin: {
@@ -56,6 +75,11 @@ export class AppComponent implements OnInit
         );
     }
 
+    /**
+     * We load providers
+     *
+     * @param {any} readySource - platform
+     */
     private onPlatformReady(readySource: any): void
     {
         this.appProvider
@@ -74,18 +98,28 @@ export class AppComponent implements OnInit
             });
     }
 
-    onAppLoad(readySource: any) {
+    /**
+     * Write to the log details of the project
+     *
+     * @param {any} readySource - platform
+     */
+    onAppLoad(readySource: any): void
+    {
         this.logger.info(
             'Platform ready (' +
             readySource +
             '): ' +
             this.appProvider.info.nameCase +
             ' - v' +
-            this.appProvider.info.version +
-            ' (' + os.EOL + ')'
+            this.appProvider.info.version
         );
     }
 
+    /**
+     * platform check on agent "electron"
+     *
+     * @returns {boolean | null}
+     */
     private static isElectronPlatform(): boolean | null
     {
         const userAgent =
