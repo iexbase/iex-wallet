@@ -5,10 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { app, BrowserWindow } from 'electron';
+import { app, screen, BrowserWindow } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
-
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -16,22 +15,38 @@ let win, serve;
 const args = process.argv.slice(1);
 serve = args.some(val => val === '--serve');
 
+
 const appConfig = require(path.join(
     __dirname,
     '/dist/assets/appConfig.json'
 ));
+
 console.log('Desktop: ' + appConfig.nameCase + ' v' + appConfig.version);
 
 
-function createWindow() {
+function createWindow()
+{
+    // Get screen size
+    const size = screen.getPrimaryDisplay().workAreaSize;
 
-    // Create the browser window.
-    win = new BrowserWindow({
+    // Distribute screen sizes for production
+    // and for developer mode.
+    const browser: any = (serve ? {
+        width: size.width,
+        height: size.height,
+        x: 0,
+        y: 0
+    }: {
         width: 1064,
         height: 650,
         minWidth: 1064,
         minHeight: 650,
         center: true
+    });
+
+    // Create the browser window.
+    win = new BrowserWindow({
+        ...browser
     });
 
     if (serve) {
