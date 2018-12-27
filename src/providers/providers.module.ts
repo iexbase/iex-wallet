@@ -11,7 +11,7 @@ import { DecimalPipe } from '@angular/common';
 import {
     AddressProvider,
     AppProvider,
-    BackupProvider,
+    BackupProvider, ClipboardProvider,
     ConfigProvider,
     DomProvider,
     DownloadProvider,
@@ -33,6 +33,7 @@ import {
         AddressProvider,
         AppProvider,
         BackupProvider,
+        ClipboardProvider,
         ConfigProvider,
         DomProvider,
         DownloadProvider,

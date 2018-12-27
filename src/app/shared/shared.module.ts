@@ -37,6 +37,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { TranslateModule } from "@ngx-translate/core";
 import { CommonModule } from "@angular/common";
 import { TimeAgoPipe } from "time-ago-pipe";
+import {DirectivesModule} from "@directives/directives.module";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
@@ -51,7 +52,8 @@ const sharedModules = [
     MomentModule,
     TranslateModule,
     RouterModule,
-    PipesModule
+    PipesModule,
+    DirectivesModule
 ];
 
 const sharedMaterialModules = [
@@ -81,7 +83,6 @@ const sharedComponents = [
 const sharedPipes = [
     TimeAgoPipe
 ];
-
 
 @NgModule({
     imports: [

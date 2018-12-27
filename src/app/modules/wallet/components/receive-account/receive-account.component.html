@@ -15,7 +15,7 @@
                     <p class="address-text-info">{{'Wallet.ReceiveAccount.YourTronAddress' | translate}}</p>
                     <p class="address-data">{{wallet.address}}</p>
                     <div id="actions" fxLayout="row">
-                        <button mat-icon-button="" class="button-circle" (click)="copyAddress()">
+                        <button mat-icon-button="" class="button-circle" [copy-to-clipboard]="wallet.address">
                             <mat-icon svgIcon="trx-copy"></mat-icon>
                         </button>
 

@@ -90,7 +90,7 @@ export class MyMissingTranslationHandler implements MissingTranslationHandler {
             }
         }),
         SharedModule,
-        AppRoutingModule,
+        AppRoutingModule
     ],
     providers: [
         AuthGuardService

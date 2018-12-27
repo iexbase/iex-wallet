@@ -20,3 +20,4 @@ export { ReplaceParametersProvider } from '@providers/replace-parameters/replace
 export { TimeProvider } from '@providers/time/time';
 export { TronProvider } from '@providers/tron/tron'
 export { WalletProvider } from '@providers/wallet/wallet';
+export { ClipboardProvider } from '@providers/clipboard/clipboard'
