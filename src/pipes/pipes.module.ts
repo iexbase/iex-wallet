@@ -13,7 +13,6 @@ import { OrderByPipe } from "@pipes/order-by/order-by";
 import { SunToUnitPipe } from "@pipes/sun-to-unit/sun-to-unit";
 import { UnitToSunPipe } from "@pipes/unit-to-sun/unit-to-sun";
 import {SunToFiatPipe} from "@pipes/sun-to-fiat/sun-to-fiat";
-import {TokenToUnitPipe} from "@pipes/token-to-unit/token-to-unit";
 import {FormatAssetPipe} from "@pipes/format-asset/format-asset";
 import {FiatToUnitPipe} from "@pipes/fiat-to-unit/fiat-to-unit";
 import {JsonIndentPipe} from "@pipes/json-indent/json-indent";
@@ -26,7 +25,6 @@ const commonPipes = [
     SunToUnitPipe,
     UnitToSunPipe,
     SunToFiatPipe,
-    TokenToUnitPipe,
     FiatToUnitPipe,
     FormatAssetPipe,
     JsonIndentPipe,

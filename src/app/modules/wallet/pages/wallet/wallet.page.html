@@ -156,8 +156,16 @@
                                         </div>
                                         <span fxFlex=""></span>
                                         <div class="tx-price">
-                                            <span class="amount" *ngIf="tx | tokenToUnit">{{ tx | tokenToUnit }}</span>
-                                            <span class="unit" *ngIf="tx | tokenToUnit">{{tx['contractData']['asset_name'] | formatAsset}}</span>
+                                            <!-- Get price from different types -->
+                                            <ng-container [ngSwitch]="tx.contractType">
+                                                <span class="amount" *ngSwitchCase="1">{{ tx['contractData']['amount'] / 1e6 }}</span>
+                                                <span class="amount" *ngSwitchCase="11">{{ tx['contractData']['frozen_balance'] / 1e6 }}</span>
+                                                <span class="amount" *ngSwitchCase="12">~</span>
+                                                <span class="amount" *ngSwitchDefault>{{ tx['contractData']['amount'] }}</span>
+                                            </ng-container>
+                                            <!-- Get contact code -->
+                                            <span class="unit" *ngIf="tx['contractData']">{{tx['contractData']['asset_name'] | formatAsset}}</span>
+                                            <!-- Timestamp -->
                                             <div class="time-ago">{{ tx.timestamp | timeAgo }}</div>
                                         </div>
                                     </div>
