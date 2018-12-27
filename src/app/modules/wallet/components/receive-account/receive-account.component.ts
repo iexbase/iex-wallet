@@ -97,21 +97,6 @@ export class ReceiveAccountComponent implements OnInit
     }
 
     /**
-     * Copy TRON Address
-     *
-     * @return void
-     */
-    copyAddress(): void
-    {
-        this.electron.writeToClipboard(this.wallet.address);
-        this.snackBar.open('Address copied to clipboard',
-            null, {
-                duration: 2000,
-                panelClass: ['snackbar-theme-dialog', 'custom-width'],
-            });
-    }
-
-    /**
      * Open address in "TronScan"
      *
      * @return void
