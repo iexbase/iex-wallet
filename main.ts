@@ -33,20 +33,18 @@ function createWindow()
     // and for developer mode.
     const browser: any = (serve ? {
         width: size.width,
-        height: size.height,
-        x: 0,
-        y: 0
+        height: size.height
     }: {
         width: 1064,
-        height: 650,
-        minWidth: 1064,
-        minHeight: 650,
-        center: true
+        height: 650
     });
 
     // Create the browser window.
     win = new BrowserWindow({
-        ...browser
+        ...browser,
+        minWidth: 1064,
+        minHeight: 650,
+        center: true
     });
 
     if (serve) {
