@@ -15,7 +15,7 @@ import {TronProvider} from "@providers/tron/tron";
 export class ToSunPipe implements PipeTransform
 {
     /**
-     * Create a new toSunPipe object
+     * Create a new ToSunPipe object
      *
      * @param {TronProvider} tron - Tron provider
      */
