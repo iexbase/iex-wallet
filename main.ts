@@ -11,9 +11,9 @@ import * as url from 'url';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let win, serve;
+let win, isDevMode;
 const args = process.argv.slice(1);
-serve = args.some(val => val === '--serve');
+isDevMode = args.some(val => val === '--serve');
 
 
 const appConfig = require(path.join(
@@ -31,7 +31,7 @@ function createWindow()
 
     // Distribute screen sizes for production
     // and for developer mode.
-    const browser: any = (serve ? {
+    const browser: any = (isDevMode ? {
         width: size.width,
         height: size.height
     }: {
@@ -47,7 +47,7 @@ function createWindow()
         center: true
     });
 
-    if (serve) {
+    if (isDevMode) {
         require('electron-reload')(__dirname, {
             electron: require(`${__dirname}/node_modules/electron`)
         });
@@ -60,8 +60,11 @@ function createWindow()
         }));
     }
 
+    // hide toolbar menu
     win.setMenu(null);
-    if(serve) {
+
+    // Open the DevTools.
+    if(isDevMode) {
         win.webContents.openDevTools();
     }
 
