@@ -32,8 +32,7 @@
         "typeRoots": ["node_modules/@types"],
         "lib": ["es2018", "dom"]
     },
-    "include": ["main.ts", "src/**/*.ts"
-    ],
+    "include": ["main.ts", "src/**/*.ts"],
     "exclude": ["node_modules"],
     "types": ["lodash", "node", "chrome", "electron"]
 }
