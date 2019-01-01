@@ -117,7 +117,7 @@
         font-size: 12px;
         border: none;
 
-        .mat-button-toggle-button {
+        /deep/ .mat-button-toggle-button {
             padding-left: 54px;
             padding-right: 54px;
             line-height: 3;
@@ -128,7 +128,7 @@
             background-color: #696a98;
         }
 
-        .mat-button-toggle-label-content {
+        /deep/ .mat-button-toggle-label-content {
             line-height: 30px !important;
             padding: 0 12px;
         }
