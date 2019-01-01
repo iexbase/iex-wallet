@@ -173,7 +173,8 @@
                 "Received": "Received",
                 "Freeze": "Freeze",
                 "Unfreeze": "Unfreeze",
-                "SmartContract": "Smart Contract"
+                "SmartContract": "Smart Contract",
+                "TriggerSmartContract": "Trigger Smart Contract"
             },
             "Status": "Status",
             "Confirmed": "Confirmed",
