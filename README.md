@@ -44,5 +44,10 @@ npm run start
 
 If you discover a security vulnerability within this application, please send an e-mail to security@iexbase.com. All security vulnerabilities will be promptly addressed.
 
+## License
+
+iEXWallet is released under the MIT License. Please refer to the [LICENSE](https://github.com/iexbase/iex-wallet/blob/master/LICENSE) file that accompanies this project for more information including complete terms and conditions.
+
+
 ## Donations
 **Tron(TRX)**: TRWBqiqoFZysoAeyR1J35ibuyc8EvhUAoY
