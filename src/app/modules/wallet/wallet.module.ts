@@ -8,7 +8,9 @@
 import {SharedModule} from "@shared/shared.module";
 import {
     MatCheckboxModule,
-    MatFormFieldModule, MatMenuModule, MatRadioModule,
+    MatFormFieldModule,
+    MatMenuModule,
+    MatRadioModule,
     MatSelectModule,
     MatSnackBarModule
 } from "@angular/material";

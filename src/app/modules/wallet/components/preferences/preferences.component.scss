@@ -3,6 +3,14 @@
     overflow: hidden;
     padding: 24px 24px 15px;
 
+    .mat-dialog-content {
+        overflow: hidden;
+    }
+
+    .trx-only {
+        padding: 0 0 10px 0;
+    }
+
     .wallet-name-field {
         max-width: 500px;
         margin: 0 auto;

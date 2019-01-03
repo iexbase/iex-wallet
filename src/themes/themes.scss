@@ -1,4 +1,5 @@
-@mixin sass-themify-init($scheme-table){
+@mixin sass-themify-init($scheme-table)
+{
     @if $scheme-table == null{
         @error "[sass-themify] sass-themify mixin needs a valid $scheme-table map defined"
     } @else {
