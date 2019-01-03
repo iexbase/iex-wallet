@@ -150,6 +150,11 @@ export class AppModule
         );
 
         this.matIconRegistry.addSvgIcon(
+            'trx-menu',
+            this.domSanitizer.bypassSecurityTrustResourceUrl('assets/svg/mat-icon/menu.svg')
+        );
+
+        this.matIconRegistry.addSvgIcon(
             'ghost-straight',
             this.domSanitizer.bypassSecurityTrustResourceUrl('assets/svg/mat-icon/ghost.svg')
         );
