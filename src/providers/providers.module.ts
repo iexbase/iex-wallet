@@ -9,9 +9,11 @@ import {NgModule} from "@angular/core";
 import { DecimalPipe } from '@angular/common';
 
 import {
+    AddressBookProvider,
     AddressProvider,
     AppProvider,
-    BackupProvider, ClipboardProvider,
+    BackupProvider,
+    ClipboardProvider,
     ConfigProvider,
     DomProvider,
     DownloadProvider,
@@ -32,6 +34,7 @@ import {
     providers: [
         AddressProvider,
         AppProvider,
+        AddressBookProvider,
         BackupProvider,
         ClipboardProvider,
         ConfigProvider,

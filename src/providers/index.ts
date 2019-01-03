@@ -7,6 +7,7 @@
 
 export { AddressProvider } from '@providers/address/address';
 export { AppProvider } from '@providers/app/app';
+export { AddressBookProvider } from '@providers/address-book/address-book'
 export { BackupProvider } from '@providers/backup/backup';
 export { ConfigProvider } from '@providers/config/config';
 export { DomProvider } from '@providers/dom/dom'
