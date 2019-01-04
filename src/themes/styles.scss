@@ -28,6 +28,12 @@ $candy-app-theme: mat-dark-theme($candy-app-primary, $candy-app-accent, $candy-a
 @import "include/_variable";
 @import 'themes';
 
+// Colors
+$color-success: #01d1a2;
+$color-danger: #df5264;
+$color-fail: #ff5722;
+
+
 body {
     margin: 0;
     padding: 0;
@@ -565,3 +571,13 @@ button.button-circle {
     }
 }
 
+// text error
+
+
+.check-success {
+    color: $color-success
+}
+
+.check-fail {
+    color: $color-fail;
+}

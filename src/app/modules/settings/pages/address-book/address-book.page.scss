@@ -1,0 +1,68 @@
+
+.zero-state {
+    margin-top: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    .zero-state-heading {
+        font-weight: 300;
+        font-size: 24px;
+        opacity: .2;
+    }
+
+    .zero-state-description {
+        font-size: 17px;
+        margin-top: 11px;
+        margin-bottom: 49px;
+        font-weight: 300;
+        opacity: .3;
+    }
+}
+
+.add-contract-button {
+    position: absolute;
+    right: 40px;
+    top: 80px;
+}
+
+.address-book-items {
+    mat-list-item {
+        background: rgba(255, 255, 255, 0.014);
+        border-radius: 8px;
+        width: calc(100% - 15px);
+        height: 80px;
+        transition: background-color 0.2s ease;
+
+        /deep/ gravatar {
+            img {
+                border-radius: 50%;
+            }
+        }
+
+        h4 {
+            font-weight: 300;
+            font-size: 22px;
+        }
+
+        p {
+            font-size: 13px;
+            margin-top: 4px;
+            opacity: .7;
+        }
+
+        .delete-icon {
+            opacity: .5;
+            transition: opacity .3s ease-out;
+            -moz-transition: opacity .3s ease-out;
+            -webkit-transition: opacity .3s ease-out;
+            -o-transition: opacity .3s ease-out;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+}

@@ -16,6 +16,7 @@ import { AltCurrencyPage } from "@modules/settings/pages/alt-currency/alt-curren
 import { LanguagePage } from "@modules/settings/pages/language/language.page";
 import { SessionLogPage } from "@modules/settings/pages/session-log/session-log.page";
 import { SkinsPage } from "@modules/settings/pages/skins/skins.page";
+import {AddressBookPage} from "@modules/settings/pages/address-book/address-book.page";
 
 const routes: Routes = [
     {
@@ -28,6 +29,10 @@ const routes: Routes = [
             {
                 path: 'language',
                 component: LanguagePage
+            },
+            {
+                path: 'address-book',
+                component: AddressBookPage
             },
             {
                 path: 'session-log',

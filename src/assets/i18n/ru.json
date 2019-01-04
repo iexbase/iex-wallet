@@ -192,6 +192,7 @@
             "Currency": "Валюты",
             "Language": "Язык",
             "SessionLog": "Лог сессии",
+            "AddressBook": "Адресная книга",
             "Skins": "Скины"
         },
 
@@ -202,6 +203,26 @@
             "Search": "Поиск валюты",
             "All": "Все валюты"
         },
+
+        "AddressBook": {
+            "Title": "Адресная книга",
+            "Description": "Книга, где хранится список адресов с именами",
+            "NoContacts": "Нет контактов",
+            "NoContractDescription": "Ваша адресная книга поста, добавьте новый контакт.",
+            "AddContract": "Добавить контакт"
+        },
+
+        "AddContract": {
+            "Title": "Добавить контакт",
+            "Name": "Имя",
+            "Email": "Email",
+            "NamePlaceholder": "Пожалуйста введите имя",
+            "EmailPlaceholder": "Пожалуйста введите email адрес",
+            "AddressPlaceholder": "Пожалуйста введите tron адрес",
+            "Address": "Адрес",
+            "Add": "Добавить"
+        },
+
         "Language": {
             "Title": "Язык",
             "Description": "Пожалуйста, выберите язык ниже.",

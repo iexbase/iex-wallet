@@ -65,6 +65,9 @@ export class SettingsPage implements OnInit
             link: '/settings/language',
             name: 'Settings.Navigation.Language'
         }, {
+            link: '/settings/address-book',
+            name: 'Settings.Navigation.AddressBook'
+        }, {
             link: '/settings/session-log',
             name: 'Settings.Navigation.SessionLog'
         }, {

@@ -27,17 +27,22 @@ import { AltCurrencyPage } from "@modules/settings/pages/alt-currency/alt-curren
 import { SkinsPage } from "@modules/settings/pages/skins/skins.page";
 import { SessionLogPage } from "@modules/settings/pages/session-log/session-log.page";
 import { LanguagePage } from "@modules/settings/pages/language/language.page";
+import {AddressBookPage} from "@modules/settings/pages/address-book/address-book.page";
+import {AddContactComponent} from "@modules/settings/components/add-contact/add-contact.component";
+import {GravatarPage} from "@modules/includes/gravatar/gravatar";
 
 const settingsPage = [
     SettingsPage,
     AltCurrencyPage,
+    AddressBookPage,
     LanguagePage,
     SessionLogPage,
-    SkinsPage
+    SkinsPage,
+    GravatarPage
 ];
 
 const settingsComponent = [
-
+    AddContactComponent
 ];
 
 const settingsMaterial = [
@@ -59,6 +64,10 @@ const settingsModules = [
     ],
     declarations: [
         ...settingsPage,
+        ...settingsComponent
+    ],
+
+    entryComponents: [
         ...settingsComponent
     ],
 

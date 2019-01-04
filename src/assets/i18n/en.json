@@ -190,6 +190,7 @@
         "Navigation": {
             "Currency": "Currency",
             "Language": "Language",
+            "AddressBook": "Address book",
             "SessionLog": "Session Log",
             "Skins": "Skins"
         },
@@ -201,6 +202,27 @@
             "Search": "Search your currency",
             "All": "All Currency"
         },
+
+        "AddressBook": {
+            "Title": "Address book",
+            "Description": "The book where the address list is stored with the names",
+            "NoContacts": "No contacts yet",
+            "NoContractDescription": "Get started by adding your first one.",
+            "AddContract": "Add Contract"
+        },
+
+        "AddContract": {
+            "Title": "Add Contract",
+            "Name": "Name",
+            "NameDescription": "Enter any characters",
+            "Email": "Email",
+            "NamePlaceholder": "Please enter your name",
+            "EmailPlaceholder": "Please enter your email address",
+            "AddressPlaceholder": "Please enter your tron address",
+            "Address": "Address",
+            "Add": "Add contract"
+        },
+
         "Language": {
             "Title": "Language",
             "Description": "Please, choose a Language below.",
