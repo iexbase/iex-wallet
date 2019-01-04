@@ -11,6 +11,7 @@
             "@directives/*": ["directives/*"],
             "@utils/*": ["utils/*"],
             "@modules/*": ["app/modules/*"],
+            "@validators/*": ["validators/*"],
             "*": ["typings/*", "includes/*"]
         },
         "allowSyntheticDefaultImports": true,
