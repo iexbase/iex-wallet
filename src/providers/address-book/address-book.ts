@@ -12,6 +12,7 @@ import { AddressProvider } from "@providers/address/address";
 // Interface Address Book
 export interface AddressBookInterface {
     name: string;
+    email: string;
     address: string;
 }
 
@@ -96,9 +97,10 @@ export class AddressBookProvider
             }
 
             // If there are no errors, add a new contact to the list.
-            this.addressBook = JSON.stringify(
-                this.getAddressBooks().push(entry)
-            );
+            let allBooks = this.getAddressBooks();
+            allBooks.push(entry);
+
+            this.addressBook = JSON.stringify(allBooks);
             return resolve(entry);
         });
     }
