@@ -22,6 +22,13 @@
         </button>
     </div>
 
+    <div class="search-filter">
+        <mat-form-field appearance="fill">
+            <mat-label>{{'Settings.AddressBook.SearchLabel' | translate}}</mat-label>
+            <input matInput [placeholder]="'Settings.AddressBook.SearchPlaceholder' | translate" (input)="getItems($event)">
+            <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+    </div>
     <mat-list class="address-book-items" *ngIf="!isEmptyList">
         <mat-list-item *ngFor="let entry of filteredAddressbook">
             <gravatar mat-list-avatar [name]="entry.name" [height]="40" [width]="40" [email]="entry.email"></gravatar>

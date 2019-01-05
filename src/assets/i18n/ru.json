@@ -209,7 +209,9 @@
             "Description": "Книга, где хранится список адресов с именами",
             "NoContacts": "Нет контактов",
             "NoContractDescription": "Ваша адресная книга поста, добавьте новый контакт.",
-            "AddContract": "Добавить контакт"
+            "AddContract": "Добавить контакт",
+            "SearchLabel": "Поиск контакта",
+            "SearchPlaceholder": "Введите текст для поиска..."
         },
 
         "AddContract": {

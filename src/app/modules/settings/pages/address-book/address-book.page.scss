@@ -28,7 +28,21 @@
     top: 80px;
 }
 
-.address-book-items {
+.search-filter
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+
+    mat-form-field {
+        width: 100%;
+        opacity: 0.4;
+    }
+}
+
+.address-book-items
+{
     mat-list-item {
         background: rgba(255, 255, 255, 0.014);
         border-radius: 8px;

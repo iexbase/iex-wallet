@@ -124,4 +124,28 @@ export class AddressBookPage implements OnInit
             this.initAddressbook()
         });
     }
+
+    /**
+     * Search handler
+     *
+     * @param {any} event - event search
+     * @return void
+     */
+    public getItems(event: any): void
+    {
+        // set val to the value of the searchbar
+        let val = event.target.value;
+
+        // if the value is an empty string don't filter the items
+        if (val && val.trim() != '') {
+            let result = _.filter(this.addressbook, item => {
+                let name = item['name'];
+                return _.includes(name.toLowerCase(), val.toLowerCase());
+            });
+            this.filteredAddressbook = result;
+        } else {
+            // Reset items back to all of the items
+            this.initAddressbook();
+        }
+    }
 }
