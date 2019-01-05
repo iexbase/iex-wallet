@@ -10,18 +10,18 @@
         <div mat-dialog-content>
             <div class="contact-name-field">
                 <mat-form-field appearance="outline">
-                    <mat-label>{{ 'Settings.AddContract.Name' | translate }}</mat-label>
-                    <input type="text" matInput [placeholder]="'Settings.AddContract.NamePlaceholder' | translate" formControlName="name">
+                    <mat-label>{{ 'Settings.AddContact.Name' | translate }}</mat-label>
+                    <input type="text" matInput [placeholder]="'Settings.AddContact.NamePlaceholder' | translate" formControlName="name">
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
-                    <mat-label>{{ 'Settings.AddContract.Email' | translate }}</mat-label>
-                    <input type="email" matInput [placeholder]="'Settings.AddContract.EmailPlaceholder' | translate" formControlName="email">
+                    <mat-label>{{ 'Settings.AddContact.Email' | translate }}</mat-label>
+                    <input type="email" matInput [placeholder]="'Settings.AddContact.EmailPlaceholder' | translate" formControlName="email">
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
-                    <mat-label>{{ 'Settings.AddContract.Address' | translate }}</mat-label>
-                    <input type="text" matInput [placeholder]="'Settings.AddContract.AddressPlaceholder' | translate" formControlName="address"
+                    <mat-label>{{ 'Settings.AddContact.Address' | translate }}</mat-label>
+                    <input type="text" matInput [placeholder]="'Settings.AddContact.AddressPlaceholder' | translate" formControlName="address"
                            [value]="addressBookAdd.value.address">
                     <mat-icon matSuffix class="check-success" *ngIf="addressBookAdd.controls.address.status == 'VALID'">check</mat-icon>
                     <mat-icon matSuffix class="check-fail" *ngIf="addressBookAdd.controls.address.status == 'INVALID'">close</mat-icon>
@@ -34,7 +34,7 @@
                     (click)="save()"
                     [disabled]="addressBookAdd.invalid"
                     class="tron-default-button default-theme">
-                {{ 'Settings.AddContract.Add' | translate }}
+                {{ 'Settings.AddContact.Add' | translate }}
             </button>
         </div>
     </div>

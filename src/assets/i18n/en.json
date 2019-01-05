@@ -213,8 +213,8 @@
             "SearchPlaceholder": "Search here..."
         },
 
-        "AddContract": {
-            "Title": "Add Contract",
+        "AddContact": {
+            "Title": "Add Contact",
             "Name": "Name",
             "NameDescription": "Enter any characters",
             "Email": "Email",
