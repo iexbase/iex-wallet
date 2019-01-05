@@ -15,7 +15,7 @@ import { Store } from "@ngrx/store";
 import { Update } from "@ngrx/entity";
 import * as bip39 from 'bip39';
 import * as hdkey from 'hdkey';
-import * as lodash from 'lodash';
+import * as _ from 'lodash';
 import * as CryptoJS from "crypto-js";
 
 // Import from app ngrx
@@ -555,7 +555,7 @@ export class WalletProvider
     {
         return new Promise((resolve, reject) => {
             // Checking important parameters
-            if (lodash.isEmpty(txp)) return reject('MISSING_PARAMETER');
+            if (_.isEmpty(txp)) return reject('MISSING_PARAMETER');
 
             this.tron.createTxProposal(
                 txp.toAddress,
@@ -970,16 +970,16 @@ export class WalletProvider
                     // In case of problems, we don’t continue
                     if (err) return reject(err);
                     // If you received an empty response from the server, do not continue
-                    if (lodash.isEmpty(historyTx['data'])) return resolve(result);
+                    if (_.isEmpty(historyTx['data'])) return resolve(result);
 
                     //Returns all transactions to the address, if the "endingTxID" is filled in,
                     // in this case, we will not receive data beyond this id
-                    res = lodash.takeWhile(historyTx['data'], (tx: any) => {
+                    res = _.takeWhile(historyTx['data'], (tx: any) => {
                         return tx.hash != options.endingTxID;
                     });
 
                     // Turning off unnecessary contractual transactions.
-                    res = lodash.filter(historyTx['data'], (tx: any) => {
+                    res = _.filter(historyTx['data'], (tx: any) => {
                         return ![10,30,31].includes(tx.contractType);
                     });
 
@@ -1014,7 +1014,7 @@ export class WalletProvider
                 // If errors occur, do not skip any further.
                 if(err) return reject(err);
                 // If "hash" is empty, then we consider it as an error
-                if(lodash.isEmpty(txHistory['hash']))
+                if(_.isEmpty(txHistory['hash']))
                     return reject('Could not get transaction');
 
                 resolve(txHistory);
