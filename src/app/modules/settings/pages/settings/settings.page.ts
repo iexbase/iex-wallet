@@ -73,6 +73,12 @@ export class SettingsPage implements OnInit
         }, {
             link: '/settings/skins',
             name: 'Settings.Navigation.Skins'
+        }, {
+            link: '/settings/skins',
+            name: 'Settings.Navigation.Skins'
+        }, {
+            link: '/settings/skins',
+            name: 'Settings.Navigation.Skins'
         }];
 
         if (this.settingsView != undefined) {
