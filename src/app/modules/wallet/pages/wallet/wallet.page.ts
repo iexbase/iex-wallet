@@ -245,11 +245,11 @@ export class WalletPage implements OnInit
     {
         this.walletProvider.getTxsFromServer({
             address: this.wallet.address,
-            limit: 20,
+            limit: 30,
             start: page,
             total: this.totalTransaction
         }).then((data:any) => {
-                this.currentPage += 20;
+                this.currentPage += 30;
                 this.totalTransaction = data['total'];
 
                 saveResultsCallback(data);

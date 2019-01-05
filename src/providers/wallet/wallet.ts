@@ -978,9 +978,21 @@ export class WalletProvider
                         return tx.hash != options.endingTxID;
                     });
 
+                    // Turning off unnecessary contractual transactions.
+                    res = lodash.filter(historyTx['data'], (tx: any) => {
+                        return ![10,30,31].includes(tx.contractType);
+                    });
+
+                    // Set types for transactions
+                    res = res.map(tx =>
+                        tx.contractType <= 2
+                            ? {...tx, contractType: 1, type: 'Transfer'}
+                            : {...tx, type: WalletProvider.getContractType(tx.contractType)});
+
                     result.res = res;
                     result.total = historyTx.total;
                     result.shouldContinue = res.length >= options.limit;
+
                     return resolve(result);
                 })
         })
@@ -1105,5 +1117,35 @@ export class WalletProvider
                 );
             })
         });
+    }
+
+    /**
+     * Getting a list of types
+     *
+     * @param {number} number - Contract type
+     * @returns {string}
+     */
+    private static getContractType(number: number)
+    {
+        switch (number) {
+            case 1:
+                return 'Transfer';
+            case 2:
+                return 'Transfer Asset';
+            case 4:
+                return 'Vote';
+            case 6:
+                return 'Create';
+            case 9:
+                return 'Participate';
+            case 11:
+                return 'Freeze';
+            case 12:
+                return 'Unfreeze';
+            case 44:
+                return 'Exchange';
+            default:
+                return 'Unregistred Name';
+        }
     }
 }

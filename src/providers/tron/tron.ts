@@ -416,36 +416,6 @@ export class TronProvider
     }
 
     /**
-     * List of available contract types
-     *
-     * @param {number} number - Type Contract
-     * @return string
-     */
-    getContractType(number: number): string
-    {
-        switch (number) {
-            case 1:
-                return 'Transfer';
-            case 2:
-                return 'Transfer Asset';
-            case 4:
-                return 'Vote';
-            case 6:
-                return 'Create';
-            case 9:
-                return 'Participate';
-            case 11:
-                return 'Freeze';
-            case 12:
-                return 'Unfreeze';
-            case 44:
-                return 'Exchange';
-            default:
-                return 'Unregistred Name';
-        }
-    }
-
-    /**
      * Convert address from hex to base58
      *
      * @param {string} address - TRON Address
