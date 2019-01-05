@@ -1,4 +1,11 @@
-.signed-message-container
+/deep/ signed-message {
+    // Disable scroll
+    .mat-tab-body-content {
+        overflow: hidden;
+    }
+}
+
+/deep/.signed-message-container
 {
     margin: 20px;
     text-align: center;
@@ -10,8 +17,8 @@
         color: #7476A2;
     }
 
-    .signed-fields {
 
+    .signed-fields {
         mat-form-field {
             line-height: 1.5;
         }
