@@ -5,7 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {SharedModule} from "@shared/shared.module";
 import {
     MatCheckboxModule,
     MatFormFieldModule,
@@ -15,29 +14,37 @@ import {
     MatSnackBarModule
 } from "@angular/material";
 import {NgModule} from "@angular/core";
-import {AddWalletPage} from "./pages/add-wallet/add-wallet.page";
-import {WalletRoutingModule} from "./wallet-routing.module";
-import {WalletPage} from "./pages/wallet/wallet.page";
 import {LottieAnimationViewModule} from "ng-lottie";
-
-
 import {NgxMaskModule} from "ngx-mask";
 import {QRCodeModule} from "angularx-qrcode";
-import {ImportMnemonicComponent} from "@modules/wallet/components/import-mnemonic/import-mnemonic.component";
-import {CreateWalletComponent} from "@modules/wallet/components/create-wallet/create-wallet.component";
-import {ImportWalletComponent} from "@modules/wallet/components/import-wallet/import-wallet.component";
-import {PreferencesComponent} from "@modules/wallet/components/preferences/preferences.component";
-import {ReceiveAccountComponent} from "@modules/wallet/components/receive-account/receive-account.component";
-import {ReceiveRequestComponent} from "@modules/wallet/components/receive-request/receive-request.component";
-import {TransferAssetComponent} from "@modules/wallet/components/transfer-asset/transfer-asset.component";
-import {ExportWalletComponent} from "@modules/wallet/components/export-wallet/export-wallet.component";
-import {FreezeBalanceComponent} from "@modules/wallet/components/freeze-balance/freeze-balance.component";
-import {DeleteWalletComponent} from "@modules/wallet/components/delete-wallet/delete-wallet.component";
-import {SignedMessageComponent} from "@modules/wallet/components/signed-message/signed-message.component";
-import {VerifyMessageComponent} from "@modules/wallet/components/verify-message/verify-message.component";
-import {TransactionInfoComponent} from "@modules/wallet/components/transaction-info/transaction-info.component";
-import {NoFundsTrxComponent} from "@modules/wallet/components/no-funds-trx/no-funds-trx.component";
-import {ConfirmTxComponent} from "@modules/wallet/components/confirm-tx/confirm-tx.component";
+
+// Routers
+import {WalletRoutingModule} from "./wallet-routing.module";
+
+// Pages
+import {AddWalletPage} from "./pages/add-wallet/add-wallet.page";
+import {WalletPage} from "./pages/wallet/wallet.page";
+
+// Shared
+import {SharedModule} from "@shared/shared.module";
+
+// Components
+import {ImportMnemonicComponent} from "./components/import-mnemonic/import-mnemonic.component";
+import {CreateWalletComponent} from "./components/create-wallet/create-wallet.component";
+import {ImportWalletComponent} from "./components/import-wallet/import-wallet.component";
+import {PreferencesComponent} from "./components/preferences/preferences.component";
+import {ReceiveAccountComponent} from "./components/receive-account/receive-account.component";
+import {ReceiveRequestComponent} from "./components/receive-request/receive-request.component";
+import {TransferAssetComponent} from "./components/transfer-asset/transfer-asset.component";
+import {ExportWalletComponent} from "./components/export-wallet/export-wallet.component";
+import {FreezeBalanceComponent} from "./components/freeze-balance/freeze-balance.component";
+import {DeleteWalletComponent} from "./components/delete-wallet/delete-wallet.component";
+import {SignedMessageComponent} from "./components/signed-message/signed-message.component";
+import {VerifyMessageComponent} from "./components/verify-message/verify-message.component";
+import {TransactionInfoComponent} from "./components/transaction-info/transaction-info.component";
+import {NoFundsTrxComponent} from "./components/no-funds-trx/no-funds-trx.component";
+import {ConfirmTxComponent} from "./components/confirm-tx/confirm-tx.component";
+
 const walletPage = [
     WalletPage,
     AddWalletPage
