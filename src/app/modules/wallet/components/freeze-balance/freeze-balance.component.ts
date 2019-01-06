@@ -249,38 +249,38 @@ export class FreezeBalanceComponent implements OnInit
      *  We start the process of defrosting the balance
      *
      *  @param {string} resource - Resource type
-     *  @return void
+     *  @returns {any | void}
      */
-    goToUnfreeze(resource: string)
+    goToUnfreeze(resource: string): any | void
     {
-        console.log(resource.toUpperCase());
-        if(!['ENERGY', 'BANDWIDTH'].indexOf(resource.toUpperCase()))
+        if(!['ENERGY', 'BANDWIDTH'].includes(resource.toUpperCase()))
         {
-            this.snackBar.open('Invalid resource provided: Expected "BANDWIDTH" or "ENERGY"',
+            return this.snackBar.open('Invalid resource provided: Expected "BANDWIDTH" or "ENERGY"',
                 null, {
                     duration: 2000,
                     panelClass: ['snackbar-theme-dialog', 'custom-width'],
                 });
-            return;
         }
 
         this.tron.unfreezeBalance(resource.toUpperCase(), this.data.address).then(unfreeze =>
         {
-            this.walletProvider.signTx(unfreeze).then(signTX => {
-                this.walletProvider.broadcastTx(signTX).then(broadcastTX =>
-                {
-                    if(broadcastTX.result == true) {
-                        // determine the type of freezing
-                        this.type = resource.toUpperCase() == 'BANDWITH'
-                            ? FreezeType.UnfreezeBandwidth : FreezeType.UnfreezeEnergy;
-                        this.isSuccess = true;
-                    }
+            this.walletProvider.signTx(unfreeze)
+                .then(signTX => {
+                    this.walletProvider.broadcastTx(signTX).then(broadcastTX =>
+                    {
+                        if(broadcastTX.result == true) {
+                            // determine the type of freezing
+                            this.type = resource.toUpperCase() == 'BANDWIDTH'
+                                ? FreezeType.UnfreezeBandwidth : FreezeType.UnfreezeEnergy;
+                            this.isSuccess = true;
+                        }
+                    })
                 })
-            }).catch(err => {
-                this.snackBar.open(err, null, {
-                    duration: 2000, panelClass: ['snackbar-theme-dialog', 'custom-width'],
-                });
-            })
+                .catch(err => {
+                    this.snackBar.open(err, null, {
+                        duration: 2000, panelClass: ['snackbar-theme-dialog', 'custom-width'],
+                    });
+                })
         }).catch(err => {
             this.snackBar.open(err,
                 null, {

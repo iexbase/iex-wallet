@@ -74,7 +74,7 @@
                     {{expireTime / 1000 | amFromUnix | amDateFormat:'MMMM Do YYYY, h:mm a'}}
                 </p>
                 <p *ngIf="now.getTime() > expireTime">{{'Wallet.FreezeBalance.UnfreezeEnable' | translate}}</p>
-                <button mat-button class="gray-button-color" (click)="goToUnfreeze('bandwidth')" [disabled]="now.getTime() <= expireTime">
+                <button mat-button class="gray-button-color" (click)="goToUnfreeze('bandwidth')" [disabled]="now.getTime() <= expireTime || !userTotalPower">
                     {{'Wallet.FreezeBalance.UnfreezeBandwidth' | translate}}
                 </button>
             </ng-container>
@@ -85,7 +85,7 @@
                     {{expireEnergyTime / 1000 | amFromUnix | amDateFormat:'MMMM Do YYYY, h:mm a'}}
                 </p>
                 <p *ngIf="now.getTime() > expireEnergyTime">{{'Wallet.FreezeBalance.UnfreezeEnable' | translate}}</p>
-                <button mat-button class="gray-button-color" (click)="goToUnfreeze('energy')" [disabled]="now.getTime() <= expireEnergyTime">
+                <button mat-button class="gray-button-color" (click)="goToUnfreeze('energy')" [disabled]="now.getTime() <= expireEnergyTime || !energyBalance">
                     {{'Wallet.FreezeBalance.UnfreezeEnergy' | translate}}
                 </button>
             </ng-container>
