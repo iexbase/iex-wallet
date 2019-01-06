@@ -22,7 +22,7 @@
         </button>
     </div>
 
-    <div class="search-filter">
+    <div class="search-filter" *ngIf="!isEmptyList">
         <mat-form-field appearance="fill">
             <mat-label>{{'Settings.AddressBook.SearchLabel' | translate}}</mat-label>
             <input matInput [placeholder]="'Settings.AddressBook.SearchPlaceholder' | translate" (input)="getItems($event)">
