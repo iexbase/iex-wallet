@@ -74,21 +74,22 @@ export class AddressBookPage implements OnInit
      */
     private initAddressbook(): void
     {
-        let handlerBook = this.addressbookProvider.getAddressBooks();
-        this.isEmptyList = _.isEmpty(handlerBook);
+        this.addressbookProvider
+            .getAddressBooks()
+            .then(addressBook => {
+                this.isEmptyList = _.isEmpty(addressBook);
 
-        let contacts: object[] = [];
-        _.each(handlerBook, (contact, k: string) =>
-        {
-            contacts.push({
-                id: k,
-                name: _.isObject(contact) ? contact.name : contact,
-                email: _.isObject(contact) ? contact.email : null,
-                address: contact.address
+                let contacts: object[] = [];
+                _.each(addressBook, (contact, k: string) => {
+                    contacts.push({
+                        name: _.isObject(contact) ? contact.name : contact,
+                        email: _.isObject(contact) ? contact.email : null,
+                        address: k
+                    });
+                });
+                this.addressbook = _.clone(contacts);
+                this.filteredAddressbook = _.clone(this.addressbook);
             });
-        });
-        this.addressbook = _.clone(contacts);
-        this.filteredAddressbook = _.clone(this.addressbook);
     }
 
     /**
