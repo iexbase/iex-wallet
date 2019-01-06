@@ -368,6 +368,11 @@
         overflow: hidden;
         color: #FAFAFA;
 
+        &:first-of-type {
+            border-top-right-radius: 0 !important;
+            border-top-left-radius: 0 !important;
+        }
+
         &.mat-expansion-panel-spacing {
             background-position: 0 0px;
             background-image: linear-gradient(-180deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.1) 100%);
