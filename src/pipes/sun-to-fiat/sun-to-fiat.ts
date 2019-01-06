@@ -38,7 +38,7 @@ export class SunToFiatPipe implements PipeTransform
         return (
             this.decimalPipe.transform(amount_ || 0,
                 (this.unit == 'BTC') ? '1.8-8' : '1.2-2'
-            ) + (isoCode == true ? this.unit.toUpperCase() : '')
+            ) + (isoCode == true ? ' ' + this.unit.toUpperCase() : '')
         );
     }
 }

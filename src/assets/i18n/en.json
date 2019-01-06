@@ -183,7 +183,8 @@
             "Block": "Block",
             "Time": "Time",
             "From": "From",
-            "To": "To"
+            "To": "To",
+            "Now": "Now"
         }
     },
     "Settings": {

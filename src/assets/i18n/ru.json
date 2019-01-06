@@ -184,7 +184,8 @@
             "Block": "Block",
             "Time": "Time",
             "From": "От",
-            "To": "Кому"
+            "To": "Кому",
+            "Now": "Сейчас"
         }
     },
     "Settings": {

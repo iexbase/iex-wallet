@@ -187,10 +187,10 @@
                                             <span (click)="openExternalLink(tx.id, 'transaction')">{{tx.id}}</span>
                                         </div>
                                     </div>
-                                    <div fxFlex="33" class="tx-details__item">
-                                        <div class="title">{{'Wallet.Index.Block' | translate}}</div>
-                                        <div class="content link">
-                                            <span (click)="openExternalLink(tx.block, 'block')">{{tx.block}}</span>
+                                    <div fxFlex="33" class="tx-details__item" *ngIf="tx.contractType == 1">
+                                        <div class="title">{{'Wallet.Index.Now' | translate}}</div>
+                                        <div class="content">
+                                            <span>{{tx['contractData']['amount'] | sunToFiat: true }}</span>
                                         </div>
                                     </div>
                                     <div fxFlex="33" class="tx-details__item">
