@@ -984,10 +984,9 @@ export class WalletProvider
                     });
 
                     // Set types for transactions
-                    res = res.map(tx =>
-                        tx.contractType <= 2
-                            ? {...tx, contractType: 1, type: 'Transfer'}
-                            : {...tx, type: WalletProvider.getContractType(tx.contractType)});
+                    res = res.map(tx => {
+                        return {...tx, type: WalletProvider.getContractType(tx.contractType)}
+                    });
 
                     result.res = res;
                     result.total = historyTx.total;
