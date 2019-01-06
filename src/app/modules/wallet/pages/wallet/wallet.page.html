@@ -4,7 +4,10 @@
             <ng-container *ngFor="let item of wallets | async">
                 <mat-list-item (click)="openWalletDetails(item)" [ngClass]="{'active': activeAccount == item.address}">
                     <div matLine class="proper-name">{{item.name}}</div>
-                    <div matLine class="unit">{{item.balance | sunToUnit}} TRX</div>
+                    <div matLine class="unit">
+                        <span *ngIf="item.hideBalance">[{{'Wallet.Index.HideBalance' | translate}}]</span>
+                        <span *ngIf="!item.hideBalance">{{item.balance | sunToUnit}} TRX</span>
+                    </div>
                     <div class="market-wallet"></div>
                 </mat-list-item>
             </ng-container>
@@ -68,13 +71,16 @@
                     </div>
                 </div>
                 <div id="header-balance">
-                    <div class="balance-trx">
+                    <div class="balance-trx" *ngIf="!wallet.hideBalance">
                         <span class="balance">{{wallet.balance | sunToUnit}}</span>
                         <span class="display-unit">TRX</span>
                     </div>
+                    <div class="hide-balance" *ngIf="wallet.hideBalance">
+                        [{{'Wallet.Index.HideBalance' | translate}}]
+                    </div>
                 </div>
 
-                <div id="header-alt-balance">
+                <div id="header-alt-balance" *ngIf="!wallet.hideBalance">
                     <div class="currency">
                         <span class="symbol"></span>
                         <span class="amount">{{ wallet.balance | sunToFiat }}</span>

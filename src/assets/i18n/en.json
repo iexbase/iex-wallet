@@ -98,7 +98,8 @@
             "WalletName": "Wallet Name",
             "WalletNameHint": "You can change the name displayed on this device above.",
             "WalletColor": "Wallet color",
-            "UpdateSettings": "Update settings"
+            "UpdateSettings": "Update settings",
+            "HideBalance": "Hide Balance"
         },
         "ReceiveAccount": {
             "Share": "Share",
@@ -164,6 +165,7 @@
                 "SignedMessage": "Signed message",
                 "DeleteWallet": "Delete Wallet"
             },
+            "HideBalance": "Balance Hidden",
             "Send": "Send",
             "Receive": "Receive",
             "Freeze": "Freeze",

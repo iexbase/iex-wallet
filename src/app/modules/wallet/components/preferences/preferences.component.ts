@@ -71,6 +71,8 @@ export class PreferencesComponent implements OnInit
      */
     public colorIndex: any;
 
+    public hideBalance: boolean;
+
     /**
      * Create a new PreferencesComponent object
      *
@@ -99,6 +101,7 @@ export class PreferencesComponent implements OnInit
         // Account Information
         let getWallet = this.walletProvider.getWallet(this.data.address);
         this.walletName = getWallet.name;
+        this.hideBalance = getWallet.hideBalance;
 
         // Select the previously recorded color
         this.colorIndex = this.colorsList.find(
@@ -116,7 +119,8 @@ export class PreferencesComponent implements OnInit
         this.walletName = this.defaultWalletName();
         this.walletProvider.updateWallet(this.data.address, {
             name: this.walletName,
-            color: this.colorIndex.class
+            color: this.colorIndex.class,
+            hideBalance: this.hideBalance
         }).then(result =>
         {
             // Parameters for update
@@ -124,7 +128,8 @@ export class PreferencesComponent implements OnInit
                 id: result.id,
                 changes: {
                     name: result.name,
-                    color: result.color
+                    color: result.color,
+                    hideBalance: result.hideBalance
                 }
             };
 

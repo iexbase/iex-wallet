@@ -99,7 +99,8 @@
             "WalletName": "Название кошелька",
             "WalletNameHint": "Вы можете изменить имя, отображаемое на этом устройстве выше.",
             "WalletColor": "Цвет кошелька",
-            "UpdateSettings": "Сохранить настройки"
+            "UpdateSettings": "Сохранить настройки",
+            "HideBalance": "Скрыть баланс"
         },
         "ReceiveAccount": {
             "Share": "Поделиться",
@@ -165,6 +166,7 @@
                 "SignedMessage": "Подписать сообщение",
                 "DeleteWallet": "Удалить кошелек"
             },
+            "HideBalance": "Баланс скрыт",
             "Send": "Отправить",
             "Receive": "Получить",
             "Freeze": "Заморозить",

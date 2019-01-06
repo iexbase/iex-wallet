@@ -41,6 +41,12 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
+
+            <div class="trx-only">
+                <mat-slide-toggle [(ngModel)]="hideBalance" color="primary">
+                    {{'Wallet.Preferences.HideBalance' | translate}}
+                </mat-slide-toggle>
+            </div>
         </div>
     </div>
     <div mat-dialog-actions>

@@ -11,7 +11,8 @@ import {
     MatMenuModule,
     MatRadioModule,
     MatSelectModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatSlideToggleModule
 } from "@angular/material";
 import {NgModule} from "@angular/core";
 import {LottieAnimationViewModule} from "ng-lottie";
@@ -80,6 +81,7 @@ const walletMaterial = [
     MatSelectModule,
     MatSnackBarModule,
     MatSnackBarModule,
+    MatSlideToggleModule,
     MatCheckboxModule,
     MatMenuModule,
     MatRadioModule

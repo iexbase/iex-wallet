@@ -300,6 +300,11 @@
         color: #D11E25;
         fill: #D11E25;
 
+        .hide-balance {
+            margin-bottom: 40px;
+            font-size: 45px;
+        }
+
         .balance {
 
         }
@@ -374,9 +379,17 @@
         }
 
         &.mat-expansion-panel-spacing {
-            background-position: 0 0px;
-            background-image: linear-gradient(-180deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.1) 100%);
+            background: linear-gradient(-180deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.1) 100%) 0 0;
             margin: 0;
+        }
+
+        &:hover {
+            .mat-expansion-indicator::after {
+                opacity: 1;
+            }
+        }
+        .mat-expansion-indicator::after {
+            opacity: .4;
         }
 
         .transaction-item-header {
