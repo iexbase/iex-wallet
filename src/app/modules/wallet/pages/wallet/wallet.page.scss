@@ -290,16 +290,13 @@
     #header-balance {
         -webkit-font-smoothing: antialiased;
         font-weight: 300;
-        line-height: 0.75em;
         padding: 0;
         white-space: nowrap;
         letter-spacing: -0.02em;
         margin: 14px 0 0;
-        text-shadow: 0px 3px 16px rgba(0, 0, 0, 0.2);
-
+        text-shadow: 0 3px 16px rgba(0, 0, 0, 0.2);
         font-size: 56px;
         line-height: 0.8em;
-
         color: #D11E25;
         fill: #D11E25;
 
@@ -416,12 +413,8 @@
             fill: #D11E25;
             text-align: right;
 
-            .amount {
-                margin-right: 5px;
-            }
-
             .unit {
-                font-size: 14px;
+                text-transform: lowercase;
             }
 
             .time-ago {

@@ -164,7 +164,9 @@
                                                 <span class="amount" *ngSwitchDefault>{{ tx['contractData']['amount'] }}</span>
                                             </ng-container>
                                             <!-- Get contact code -->
-                                            <span class="unit" *ngIf="tx['contractData']">{{tx['contractData']['asset_name'] | formatAsset}}</span>
+                                            <span class="unit" *ngIf="tx['contractData'] && ![12,31].includes(tx.contractType)">
+                                                {{tx['contractData']['asset_name'] | formatAsset}}
+                                            </span>
                                             <!-- Timestamp -->
                                             <div class="time-ago">{{ tx.timestamp | timeAgo }}</div>
                                         </div>
@@ -200,7 +202,7 @@
 
                                     <div fxFlex="33" class="tx-details__item">
                                         <div class="title">{{'Wallet.Index.From' | translate}}</div>
-                                        <div class="content link" (click)="openExternalLink(tx.ownerAddress, 'address')">
+                                        <div class="content" [copy-to-clipboard]="tx.ownerAddress">
                                             <span *ngIf="(addressbook && tx.ownerAddress && addressbook[tx.ownerAddress])">
                                                 {{addressbook[tx.ownerAddress].name}}
                                             </span>
@@ -212,7 +214,7 @@
 
                                     <div fxFlex="33" class="tx-details__item" *ngIf="tx.toAddress">
                                         <div class="title">{{'Wallet.Index.To' | translate}}</div>
-                                        <div class="content link" (click)="openExternalLink(tx.toAddress, 'address')">
+                                        <div class="content" [copy-to-clipboard]="tx.toAddress">
                                             <span *ngIf="(addressbook && tx.toAddress && addressbook[tx.toAddress])">
                                                 {{addressbook[tx.toAddress].name}}
                                             </span>
