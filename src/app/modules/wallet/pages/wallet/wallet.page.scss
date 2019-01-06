@@ -340,6 +340,8 @@
 }
 
 #wallet-detail-transaction {
+    position: relative;
+    max-height: 100vh;
     overflow-y: auto;
     flex: 1;
 }
@@ -354,8 +356,10 @@
     }
 }
 
-.transaction-list {
-    .transaction-list-item {
+/deep/ .transaction-list
+{
+    .transaction-list-item
+    {
         margin: 0;
         background: transparent;
         border-top: 1px solid rgba(255, 255, 255, 0.075);

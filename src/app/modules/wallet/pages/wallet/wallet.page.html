@@ -93,11 +93,11 @@
                         {{'Wallet.Index.Freeze' | translate}}
                     </button>
                 </div>
-
             </div>
 
-            <div id="wallet-detail-transaction" class="ps"
-                 style="position: relative; max-height: 100vh" [perfectScrollbar]="{}" (scroll)="onScroll($event)">
+            <!-- Transactions -->
+
+            <div id="wallet-detail-transaction" class="ps" [perfectScrollbar]="{}" (scroll)="onScroll($event)">
                 <div infiniteScroll=""
                      [infiniteScrollDistance]="1"
                      [infiniteScrollThrottle]="50"
@@ -106,25 +106,23 @@
                      [fromRoot]="true"
                      (scrolled)="onScrollDown()">
 
+                    <!-- Loading transactions -->
                     <ng-container *ngIf="isLoading">
                         <mat-spinner class="loading-transaction" [diameter]="48" [strokeWidth]="2"></mat-spinner>
                     </ng-container>
+
 
                     <ng-container *ngIf="!isLoading">
                         <div class="no-transaction" *ngIf="transactions.length == 0">
                             {{'Wallet.Index.EmptyTransaction' | translate}}
                         </div>
                         <mat-accordion *ngIf="transactions.length > 0" class="transaction-list">
-                            <mat-expansion-panel  matRipple class="transaction-list-item" *ngFor="let tx of transactions">
-                                <mat-expansion-panel-header  [collapsedHeight]="'60px'" [expandedHeight]="'60px'">
+                            <mat-expansion-panel class="transaction-list-item" *ngFor="let tx of transactions">
+                                <mat-expansion-panel-header [collapsedHeight]="'60px'" [expandedHeight]="'60px'">
                                     <div fxLayout="row" fxLayoutAlign="start center" style="width: 100%;">
                                         <div fxFlex="5" class="date">
-                                            <div class="date-month">
-                                                {{ tx.timestamp / 1000 | amFromUnix | amDateFormat:'MMM' }}
-                                            </div>
-                                            <div class="date-day">
-                                                {{ tx.timestamp / 1000 | amFromUnix | amDateFormat:'DD' }}
-                                            </div>
+                                            <div class="date-month">{{ tx.timestamp / 1000 | amFromUnix | amDateFormat:'MMM' }}</div>
+                                            <div class="date-day">{{ tx.timestamp / 1000 | amFromUnix | amDateFormat:'DD' }}</div>
                                         </div>
                                         <div fxFlex="7" class="icon">
                                             <ng-container [ngSwitch]="tx['contractType']">
@@ -152,10 +150,6 @@
                                                 </div>
                                                 <div class="tx-status contract-tx" *ngSwitchCase="30">
                                                     {{'Wallet.Index.ContractType.SmartContract' | translate}}
-                                                </div>
-
-                                                <div class="tx-status trigger-contract-tx" *ngSwitchCase="31">
-                                                    {{'Wallet.Index.ContractType.TriggerSmartContract' | translate}}
                                                 </div>
                                             </div>
                                         </div>
@@ -206,15 +200,25 @@
 
                                     <div fxFlex="33" class="tx-details__item">
                                         <div class="title">{{'Wallet.Index.From' | translate}}</div>
-                                        <div class="content link">
-                                            <span (click)="openExternalLink(tx.ownerAddress, 'address')">{{tx.ownerAddress}}</span>
+                                        <div class="content link" (click)="openExternalLink(tx.ownerAddress, 'address')">
+                                            <span *ngIf="(addressbook && tx.ownerAddress && addressbook[tx.ownerAddress])">
+                                                {{addressbook[tx.ownerAddress].name}}
+                                            </span>
+                                            <span *ngIf="(addressbook && tx.ownerAddress && !addressbook[tx.ownerAddress])">
+                                                {{tx.ownerAddress}}
+                                            </span>
                                         </div>
                                     </div>
 
                                     <div fxFlex="33" class="tx-details__item" *ngIf="tx.toAddress">
                                         <div class="title">{{'Wallet.Index.To' | translate}}</div>
-                                        <div class="content link">
-                                            <span (click)="openExternalLink(tx.toAddress, 'address')">{{tx.toAddress}}</span>
+                                        <div class="content link" (click)="openExternalLink(tx.toAddress, 'address')">
+                                            <span *ngIf="(addressbook && tx.toAddress && addressbook[tx.toAddress])">
+                                                {{addressbook[tx.toAddress].name}}
+                                            </span>
+                                            <span *ngIf="(addressbook && tx.toAddress && !addressbook[tx.toAddress])">
+                                                {{tx.toAddress}}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>

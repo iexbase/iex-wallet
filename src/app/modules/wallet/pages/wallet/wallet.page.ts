@@ -31,6 +31,8 @@ import { PreferencesComponent } from "@modules/wallet/components/preferences/pre
 import { WalletProvider } from "@providers/wallet/wallet";
 import { ConfigProvider } from "@providers/config/config";
 import { ElectronProvider } from "@providers/electron/electron";
+import {AddressBookProvider} from "@providers/address-book/address-book";
+import {Logger} from "@providers/logger/logger";
 
 @Component({
     selector: 'wallet-page',
@@ -99,6 +101,13 @@ export class WalletPage implements OnInit
     public transactions = [];
 
     /**
+     * List address book
+     *
+     * @var any
+     */
+    public addressbook = {};
+
+    /**
      * Status loading
      *
      * @var boolean
@@ -127,6 +136,8 @@ export class WalletPage implements OnInit
      * @param {WalletProvider} walletProvider - Wallet Provider
      * @param {ConfigProvider} config - Config provider
      * @param {ElectronProvider} electronProvider - Electron provider
+     * @param {AddressBookProvider} addressBookProvider - Address Book provider
+     * @param {Logger} logger - Log provider
      * @param {MatSnackBar} snackBar - Service for displaying snack-bar notifications.
      */
     constructor(
@@ -135,6 +146,8 @@ export class WalletPage implements OnInit
         public walletProvider: WalletProvider,
         public config: ConfigProvider,
         private electronProvider: ElectronProvider,
+        private addressBookProvider: AddressBookProvider,
+        private logger: Logger,
         private snackBar: MatSnackBar
     ) {
         //
@@ -162,6 +175,15 @@ export class WalletPage implements OnInit
                     this.openWalletDetails(selected[0], true):
                     this.wallet = selected[0]);
             }
+        });
+
+        // Initializing the address book list
+        this.addressBookProvider
+            .getAddressBooks()
+            .then(ab => {
+                this.addressbook = ab
+            }).catch(err => {
+                this.logger.error(err);
         })
     }
 
@@ -245,11 +267,11 @@ export class WalletPage implements OnInit
     {
         this.walletProvider.getTxsFromServer({
             address: this.wallet.address,
-            limit: 30,
+            limit: 50,
             start: page,
             total: this.totalTransaction
         }).then((data:any) => {
-                this.currentPage += 30;
+                this.currentPage += 50;
                 this.totalTransaction = data['total'];
 
                 saveResultsCallback(data);
