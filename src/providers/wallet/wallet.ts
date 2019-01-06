@@ -1103,7 +1103,7 @@ export class WalletProvider
             }).map(({ key, value }) => ({ name: key, value }));
 
             this.updateWallet(walletAddress, {
-                balance: account.balance,
+                balance: this.balance,
                 bandwidth: this.bandwidth,
                 energyLimit: this.energy,
                 lastUpdated: this.lastUpdated,

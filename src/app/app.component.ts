@@ -44,8 +44,7 @@ export class AppComponent implements OnInit
         protected store: Store<AppState>,
         private config: ConfigProvider,
         private appProvider: AppProvider,
-        private logger: Logger,
-
+        private logger: Logger
     ) {
         //
     }
