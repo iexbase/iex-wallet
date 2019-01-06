@@ -20,6 +20,7 @@ import {AddressProvider} from "@providers/address/address";
 import {ConfigProvider} from "@providers/config/config";
 import {ElectronProvider} from "@providers/electron/electron";
 import {WalletProvider} from "@providers/wallet/wallet";
+import {LocalStorage} from "ngx-webstorage";
 
 @Component({
     selector: 'transfer-asset',
@@ -28,6 +29,14 @@ import {WalletProvider} from "@providers/wallet/wallet";
 })
 export class TransferAssetComponent implements OnInit
 {
+    /**
+     * Filtered tokens
+     *
+     * @var string
+     */
+    @LocalStorage()
+    filteredTokens: string;
+
     /**
      * Status of sending all balance
      *
@@ -150,16 +159,19 @@ export class TransferAssetComponent implements OnInit
 
         // Balance update
         this.updateBalance();
-        this.walletProvider.getAccount(this.data.address).then((account: any) =>
-        {
-            this.listTokens = account.asset || [];
-            this.listTokens = this.listTokens.filter(filter => filter.key != 'TRX');
 
-            this.listTokens.unshift({
-                'key': 'TRX',
-                'value': account['balance']
-            });
-        })
+        // Get tokens to exclude
+        const userTokens = JSON.parse(this.filteredTokens) || [];
+        // Additional filtering before output
+        this.listTokens = this.data.tokens.filter(
+            asset => userTokens.findIndex(key => key === asset.name) === -1)
+            .filter(filter => filter.name != 'TRX');
+
+        // move "TRX" to the first position
+        this.listTokens.unshift({
+            'name': 'TRX',
+            'value': this.wallet.balance
+        });
     }
 
     /**

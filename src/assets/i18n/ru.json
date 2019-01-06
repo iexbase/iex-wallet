@@ -100,6 +100,7 @@
             "WalletNameHint": "Вы можете изменить имя, отображаемое на этом устройстве выше.",
             "WalletColor": "Цвет кошелька",
             "UpdateSettings": "Сохранить настройки",
+            "FilterTokens": "Фильтр токенов",
             "HideBalance": "Скрыть баланс"
         },
         "ReceiveAccount": {

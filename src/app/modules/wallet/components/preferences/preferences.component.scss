@@ -24,6 +24,16 @@
     }
 }
 
+/deep/ .mat-pseudo-checkbox-checked::after {
+    color: #fff;
+    margin-top: 3px;
+    margin-left: 1px;
+}
+
+/deep/ .mat-pseudo-checkbox.mat-pseudo-checkbox-checked {
+    background-color: #101317;
+}
+
 .color-checked .mat-icon {
     font-size: 20px !important;
     margin: 5px 0 0 !important;

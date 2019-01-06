@@ -87,6 +87,7 @@ export interface WalletOptions
     energyLimit?: number;
     tronPower?: number;
     lastUpdated?: number;
+    tokens?: any;
 
     isTestnet?: boolean;
 }
@@ -104,6 +105,7 @@ export interface UpdateWalletModel
     energyLimit?: number;
     tronPower?: number;
     lastUpdated?: number;
+    tokens?: any;
 
     isTestnet?: boolean;
 }
@@ -1089,16 +1091,23 @@ export class WalletProvider
         // Update bandwidth and energy
         await this.updateAccount(walletAddress);
         // Update account balance
-        await this.getBalance(walletAddress).then(balance => {
-            this.balance = balance;
+        await this.getAccount(walletAddress).then(account => {
+
+            this.balance = account.balance;
             // Fix the update date
             this.lastUpdated = Date.now();
 
+            // Before adding a token, check and change keys
+            let tokens = (account.asset || []).filter(({ value }) => {
+                return value > 0;
+            }).map(({ key, value }) => ({ name: key, value }));
+
             this.updateWallet(walletAddress, {
-                balance: this.balance,
+                balance: account.balance,
                 bandwidth: this.bandwidth,
                 energyLimit: this.energy,
-                lastUpdated: this.lastUpdated
+                lastUpdated: this.lastUpdated,
+                tokens: tokens
             }).then(resultUpdate => {
 
                 const update: Update<any> = {

@@ -48,9 +48,9 @@
                             <mat-select placeholder="Token" [(ngModel)]="fields.token">
                                 <mat-optgroup [label]="'Wallet.TransferAsset.TokenLabel' | translate">
                                     <ng-container *ngFor="let asset of listTokens">
-                                        <mat-option [value]="asset.key" fxLayout="row">{{ asset.key }}
+                                        <mat-option [value]="asset.name" fxLayout="row">{{ asset.name }}
                                             <span fxFlex=""></span>
-                                            <span [style.fontSize]="'13px'">({{asset.value  | sunToUnit:asset.key}} available)</span>
+                                            <span [style.fontSize]="'13px'">({{asset.value  | sunToUnit:asset.name}} available)</span>
                                         </mat-option>
                                     </ng-container>
                                 </mat-optgroup>

@@ -98,6 +98,7 @@
             "WalletName": "Wallet Name",
             "WalletNameHint": "You can change the name displayed on this device above.",
             "WalletColor": "Wallet color",
+            "FilterTokens": "Filter Tokens",
             "UpdateSettings": "Update settings",
             "HideBalance": "Hide Balance"
         },

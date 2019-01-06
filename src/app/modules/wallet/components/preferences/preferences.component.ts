@@ -9,6 +9,7 @@ import { Component, Inject, OnInit } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from "@angular/material";
 import { Store } from "@ngrx/store";
 import { Update } from "@ngrx/entity";
+import { LocalStorage } from "ngx-webstorage";
 
 // Redux
 import * as WalletActions from "@redux/wallet/wallet.actions";
@@ -33,6 +34,14 @@ export interface TronColorInterface {
 })
 export class PreferencesComponent implements OnInit
 {
+    /**
+     * Filtered tokens
+     *
+     * @var string
+     */
+    @LocalStorage()
+    filteredTokens: string;
+
     /**
      * List of all available colors
      *
@@ -71,6 +80,25 @@ export class PreferencesComponent implements OnInit
      */
     public colorIndex: any;
 
+    /**
+     * Selected tokens to exclude
+     *
+     * @return any[]
+     */
+    public selectedTokens: any[];
+
+    /**
+     * List all tokens
+     *
+     * @return any[]
+     */
+    public listTokens: any;
+
+    /**
+     * Balance hidden
+     *
+     * @var boolean
+     */
     public hideBalance: boolean;
 
     /**
@@ -102,6 +130,11 @@ export class PreferencesComponent implements OnInit
         let getWallet = this.walletProvider.getWallet(this.data.address);
         this.walletName = getWallet.name;
         this.hideBalance = getWallet.hideBalance;
+        this.listTokens = getWallet.tokens.filter(({ name }) => name !== 'TRX')
+            .map(({ name }) => ({ id: name, name }));
+
+        // Get all excluded tokens
+        this.selectedTokens = JSON.parse(this.filteredTokens) || [];
 
         // Select the previously recorded color
         this.colorIndex = this.colorsList.find(
@@ -116,6 +149,9 @@ export class PreferencesComponent implements OnInit
      */
     updateSettings(): void
     {
+        this.filteredTokens = JSON.stringify(this.selectedTokens);
+
+
         this.walletName = this.defaultWalletName();
         this.walletProvider.updateWallet(this.data.address, {
             name: this.walletName,

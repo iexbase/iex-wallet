@@ -42,6 +42,13 @@
                 </mat-select>
             </mat-form-field>
 
+            <mat-form-field appearance="outline">
+                <mat-label>{{'Wallet.Preferences.FilterTokens' | translate}}</mat-label>
+                <mat-select [(ngModel)]="selectedTokens" class="settings-list" [multiple]="true">
+                    <mat-option *ngFor="let item of listTokens" [value]="item.id">{{item.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
             <div class="trx-only">
                 <mat-slide-toggle [(ngModel)]="hideBalance" color="primary">
                     {{'Wallet.Preferences.HideBalance' | translate}}
