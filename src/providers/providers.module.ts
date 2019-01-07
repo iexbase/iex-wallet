@@ -25,6 +25,7 @@ import {
     ReplaceParametersProvider,
     TimeProvider,
     TronProvider,
+    VoteProvider,
     WalletProvider
 } from "../providers";
 
@@ -49,6 +50,7 @@ import {
         TimeProvider,
         TronProvider,
         WalletProvider,
+        VoteProvider,
         DecimalPipe
     ]
 })

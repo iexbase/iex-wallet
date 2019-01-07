@@ -4,6 +4,7 @@
         "Navigation": {
             "Dashboard": "Dashboard",
             "Wallet": "Wallet",
+            "Votes": "Votes",
             "Settings": "Settings",
             "Help": "Help"
         }
@@ -17,6 +18,16 @@
             "CirculatingSupply": "Circulating supply"
         }
     },
+
+    "Vote": {
+        "Index": {
+            "Title": "Votes",
+            "Description": "Choose from the list the token for which you want to vote.",
+            "TotalVotes": "Total votes",
+            "TopRating": "Top rating"
+        }
+    },
+
     "Wallet": {
         "ConfirmTx": {
             "From": "From",

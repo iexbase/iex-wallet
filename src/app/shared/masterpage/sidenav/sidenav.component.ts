@@ -55,6 +55,14 @@ export class SidenavComponent implements OnInit, OnDestroy
                 wallets: false
             },
             {
+                icon: 'thumb_up',
+                link: '/vote',
+                name: 'Shared.Navigation.Votes',
+                divider: false,
+                sub_header: null,
+                wallets: false
+            },
+            {
                 icon: 'account_balance_wallet',
                 link: '/wallet',
                 name: 'Shared.Navigation.Wallet',

@@ -4,6 +4,7 @@
         "Navigation": {
             "Dashboard": "Главная",
             "Wallet": "Кошелек",
+            "Votes": "Голоса",
             "Settings": "Настройки",
             "Help": "Помощь"
         }
@@ -17,8 +18,17 @@
             "CirculatingSupply": "Всего выпущено"
         }
     },
-    "Wallet": {
 
+    "Vote": {
+        "Index": {
+            "Title": "Голосование",
+            "Description": "Выберите из списка токен, за который вы хотите проголосовать.",
+            "TotalVotes": "Всего голосов",
+            "TopRating": "Наивысший рейтинг"
+        }
+    },
+
+    "Wallet": {
         "ConfirmTx": {
             "From": "От",
             "To": "Кому",

@@ -1,0 +1,125 @@
+#tron-content-vote
+{
+    display: flex;
+    flex: 1 1 auto;
+    cursor: default;
+    position: relative;
+    padding: 24px 32px 0 32px;
+    will-change: transform;
+    max-height: 100vh;
+
+    h1 {
+        font-size: 42px;
+        font-weight: 300;
+        color: #ffffff;
+        margin: 0;
+        padding: 36px 0 18px;
+        text-align: left;
+    }
+
+    p.description {
+        font-size: 16px;
+        color: rgba(255, 255, 255, 0.45);
+        text-align: left;
+        margin: 0 0 20px 0;
+        padding: 0;
+        line-height: 1.5;
+        font-weight: 300;
+    }
+
+    #vote-header {
+        .vote-header-item {
+            padding: 20px;
+            text-align: center;
+
+            .label {
+                text-transform: uppercase;
+                opacity: .4;
+                font-size: 11px;
+                line-height: 2;
+            }
+
+            .value {
+                font-size: 18px;
+            }
+        }
+    }
+
+    #vote-content {
+        position: relative;
+
+        .vote-items
+        {
+            mat-list-item {
+                height: auto;
+
+                .rank {
+                    opacity: 0.7;
+                    margin-right: 10px;
+                    transition: opacity 0.2s ease;
+                    font-size: 17px;
+                    font-weight: 300;
+                    width: 40px;
+                    height: 40px;
+
+                    .position {
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        cursor: pointer;
+                        background: rgba(255, 255, 255, 0.04);
+                        transition: background 70ms linear, opacity 0.5s ease;
+                    }
+                }
+
+                /deep/ .mat-list-item-content {
+                    width: 100%;
+                }
+
+                /deep/.mat-list-text {
+                    display: flex;
+                    align-items: flex-start;
+                    justify-content: space-between;
+                    background: rgba(255, 255, 255, 0.014);
+                    border-radius: 8px;
+                    padding: 24px 28px;
+                    width: calc(100% - 34px);
+                    transition: background-color 0.2s ease;
+
+                    &:hover {
+                        background: rgba(255, 255, 255, 0.02);
+                    }
+                }
+
+                &:not(:last-child) {
+                    margin-bottom: 20px;
+                }
+
+                &:last-child {
+                    margin-bottom: 80px;
+                }
+
+                h4 {
+                    font-weight: 300;
+                }
+
+                p {
+                    font-size: 13px;
+                    margin-top: 4px;
+                    opacity: .5;
+                }
+
+                .cycle-votes {
+                    position: absolute;
+                    right: 40px;
+                    top: 30px;
+                    font-size: 14px;
+                    font-weight: 100;
+                }
+            }
+        }
+    }
+}

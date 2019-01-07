@@ -396,6 +396,26 @@ export class TronProvider
     }
 
     /**
+     * getVoteHistory
+     *
+     * Request for a list of votes
+     *
+     * @param {any} callback - callback return
+     * @return {Promise} - votes into
+     */
+    async getVoteHistory(callback?: any): Promise<any>
+    {
+        try {
+            return await this.http.get(`${env.explorer.api}/vote/witness`).subscribe(
+                result => callback(null, result),
+                error => callback(error)
+            )
+        }catch (e) {
+            throw new Error(e)
+        }
+    }
+
+    /**
      * Helper function that will convert a value in TRX to SUN
      *
      * @param {number} amount - TRX amount

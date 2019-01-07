@@ -1,0 +1,34 @@
+<div id="tron-content-vote" fxLayout="column" class="ps" [perfectScrollbar]="{}">
+    <h1>{{'Vote.Index.Title' | translate}}</h1>
+    <p class="description">{{'Vote.Index.Description' | translate}}</p>
+
+    <!-- Header -->
+    <div id="vote-header">
+        <div fxLayout="row" fxLayoutAlign="space-around center">
+            <div class="vote-header-item">
+                <div class="label">{{'Vote.Index.TotalVotes' | translate}}</div>
+                <div class="value">{{totalVotes | formatCurrency:'':0}}</div>
+            </div>
+
+            <div class="vote-header-item">
+                <div class="label">{{'Vote.Index.TopRating' | translate}}</div>
+                <div class="value">{{topRating.name || 'NoName'}}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- List votes -->
+    <div id="vote-content">
+        <mat-list class="vote-items">
+            <mat-list-item *ngFor="let item of votes">
+                <div mat-list-icon class="rank">
+                    <span class="position">{{item.realTimeRanking}}</span>
+                </div>
+                <h4 mat-line>{{item.name || 'NoName'}}</h4>
+                <p mat-line [copy-to-clipboard]="item.address">{{item.address}} </p>
+                <p mat-line="" class="cycle-votes">{{item.lastCycleVotes|formatCurrency:'':0}}</p>
+            </mat-list-item>
+        </mat-list>
+    </div>
+
+</div>
