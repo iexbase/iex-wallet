@@ -1,13 +1,12 @@
 import { RouterModule } from "@angular/router";
 import { NgModule } from "@angular/core";
-import {VotePage} from "@modules/vote/pages/vote/vote.page";
+
+// Modules
+import { VotePage } from "@modules/vote/pages/vote/vote.page";
 
 @NgModule({
     imports: [RouterModule.forChild([
-        {
-            path: '',
-            component: VotePage
-        }
+        { path: '',  component: VotePage }
     ])],
     exports: [RouterModule]
 })
