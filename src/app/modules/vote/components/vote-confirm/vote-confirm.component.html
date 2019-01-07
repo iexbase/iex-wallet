@@ -1,0 +1,36 @@
+<mat-list role="list" class="transaction-details">
+    <mat-list-item role="listitem">
+        <div mat-line="" fxLayout="row" fxLayoutAlign="space-between center">
+            <div class="type">{{'Vote.VoteConfirm.From' | translate}}</div>
+            <div class="value">{{ txp.ownerAddress | addressFromHex}}</div>
+        </div>
+    </mat-list-item>
+
+    <mat-list-item role="listitem">
+        <div mat-line="" fxLayout="row" fxLayoutAlign="space-between center">
+            <div class="type">{{'Vote.VoteConfirm.TotalVotes' | translate}}</div>
+            <div class="">{{ txp.vote_count}}</div>
+        </div>
+    </mat-list-item>
+
+    <mat-list-item role="listitem">
+        <div mat-line="" fxLayout="row" fxLayoutAlign="space-between center">
+            <div class="type">{{'Vote.VoteConfirm.TransactionType' | translate}}</div>
+            <div class="value">{{ txp.type }}</div>
+        </div>
+    </mat-list-item>
+
+    <mat-list-item role="listitem">
+        <div mat-line="" fxLayout="row" fxLayoutAlign="space-between center">
+            <div class="type">{{'Vote.VoteConfirm.Data' | translate}}</div>
+            <div class="value">{{ txp.data }}</div>
+        </div>
+    </mat-list-item>
+
+    <mat-list-item role="listitem">
+        <div mat-line="" fxLayout="row" fxLayoutAlign="space-between center">
+            <div class="type">{{'Vote.VoteConfirm.Time' | translate}}</div>
+            <div class="value"> {{ txp.timestamp / 1000 | amFromUnix | amLocal | amDateFormat: 'DD/MM/YYYY HH:mm:ss' }} </div>
+        </div>
+    </mat-list-item>
+</mat-list>

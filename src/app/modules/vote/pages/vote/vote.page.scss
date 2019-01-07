@@ -8,6 +8,13 @@
     will-change: transform;
     max-height: 100vh;
 
+    .loading-transaction {
+        margin: 120px auto 0;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
     h1 {
         font-size: 42px;
         font-weight: 300;
@@ -27,7 +34,8 @@
         font-weight: 300;
     }
 
-    #vote-header {
+    #vote-header
+    {
         .vote-header-item {
             padding: 20px;
             text-align: center;
@@ -45,12 +53,14 @@
         }
     }
 
-    #vote-content {
+    #vote-content
+    {
         position: relative;
 
         .vote-items
         {
             mat-list-item {
+                cursor: pointer;
                 height: auto;
 
                 .rank {

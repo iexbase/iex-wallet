@@ -1,25 +1,30 @@
-import {NgModule} from "@angular/core";
-import {SharedModule} from "@shared/shared.module";
-import {MatFormFieldModule, MatSelectModule} from "@angular/material";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {FlexLayoutModule} from "@angular/flex-layout";
+import { NgModule } from "@angular/core";
+import { SharedModule } from "@shared/shared.module";
+import { FlexLayoutModule } from "@angular/flex-layout";
+import { LottieAnimationViewModule } from "ng-lottie";
 
-import {VotePage} from "@modules/vote/pages/vote/vote.page";
-import {VoteRoutingModule} from "@modules/vote/vote-routing.module";
 
+// Modules
+import { VotePage } from "@modules/vote/pages/vote/vote.page";
+import { VoteRoutingModule } from "@modules/vote/vote-routing.module";
+import { VoteDetailComponent } from "@modules/vote/components/vote-detail/vote-detail.component";
+import { VoteConfirmComponent } from "@modules/vote/components/vote-confirm/vote-confirm.component";
 
 @NgModule({
     imports: [
         SharedModule,
-        MatFormFieldModule,
-        MatSelectModule,
+        LottieAnimationViewModule.forRoot(),
         VoteRoutingModule,
-        FormsModule,
-        ReactiveFormsModule,
         FlexLayoutModule
     ],
     declarations: [
-        VotePage
+        VotePage,
+        VoteDetailComponent,
+        VoteConfirmComponent
+    ],
+
+    entryComponents: [
+        VoteDetailComponent
     ]
 })
 export class VoteModule { }

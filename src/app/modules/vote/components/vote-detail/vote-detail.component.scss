@@ -1,0 +1,73 @@
+.vote-detail-window
+{
+    position: relative;
+    overflow: hidden;
+    padding: 24px 24px 15px;
+
+    h1 {
+        text-transform: uppercase;
+        font-weight: 400;
+    }
+
+    .mat-dialog-content {
+        overflow: hidden;
+    }
+
+    .vote-button {
+        border-width: 1px;
+        margin: 5px;
+        font-weight: 300;
+    }
+
+    .vote-detail-header {
+        .label {
+            font-weight: 100;
+            text-transform: uppercase;
+            font-size: 13px;
+        }
+
+        .amount {
+            line-height: 2.5;
+            font-size: 25px;
+        }
+
+        .remainder {
+            text-transform: uppercase;
+            font-size: 12px;
+            color: #66688F;
+            padding-bottom: 15px;
+
+            span {
+                margin-left: 5px;
+                color: #fff;
+            }
+        }
+    }
+
+    // Success transaction
+    .success-transaction {
+        background-size: contain;
+        margin-left: -25px;
+        margin-right: -25px;
+
+        #header {
+            text-align: center;
+            width: 100%;
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+
+            h1 {
+                font-weight: 100;
+                text-align: center;
+                margin-bottom: 15px;
+            }
+
+            p {
+                font-size: 14px;
+                color: #5c5f86;
+            }
+        }
+    }
+}

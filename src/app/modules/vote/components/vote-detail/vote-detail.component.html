@@ -1,0 +1,79 @@
+<div class="close-dialog">
+    <button mat-icon-button="" (click)="onClose()">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<div class="vote-detail-window">
+    <!-- Notify successful transaction -->
+    <div class="success-transaction" *ngIf="isSuccess">
+        <div id="header">
+            <h1>{{'Vote.VoteDetail.Success' | translate}}</h1>
+            <p>{{'Vote.VoteDetail.SuccessDescription' | translate}}</p>
+        </div>
+        <lottie-animation-view
+            [options]="lottieConfig"
+            [width]="400"
+            [height]="400">
+        </lottie-animation-view>
+    </div>
+
+    <ng-container *ngIf="!isSuccess">
+        <!-- Form to create a transaction -->
+        <ng-template [ngIf]="isConfirmed == false">
+            <h1 mat-dialog-title>{{vote.name || (vote.url | urlToTitle)}}</h1>
+            <div mat-dialog-content>
+
+                <div class="vote-detail-header" fxLayout="column" fxLayoutAlign="center end" >
+                    <div class="label">{{'Vote.VoteDetail.EnterNumberVotes' | translate}}</div>
+                    <div class="amount">{{amountToVote}}</div>
+                    <div class="remainder">
+                        {{'Vote.VoteDetail.VotesLeft' | translate}}
+                        <span>{{totalRemaining}}</span>
+                    </div>
+                </div>
+                <div fxLayout="row wrap" fxLayoutAlign="center center">
+                    <button class="vote-button" fxFlex="20" mat-stroked-button
+                            [disabled]="item > totalRemaining"
+                            *ngFor="let item of voteButton"
+                            (click)="incrementVoteCount(item)">+{{item}}</button>
+                </div>
+
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <button class="vote-button" (click)="clear()" [disabled]="amountToVote === 0" mat-stroked-button fxFlex="42">
+                        {{'Vote.VoteDetail.Clear' | translate}}
+                    </button>
+                    <button class="vote-button" (click)="allVoteCount()" [disabled]="totalRemaining <= 0" mat-stroked-button fxFlex="42">
+                        {{'Vote.VoteDetail.All' | translate}}
+                    </button>
+                </div>
+
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <button mat-button (click)="createVote()" color="primary"
+                            [disabled]="amountToVote === 0"
+                            class="tron-button transfer-button">
+                        {{'Vote.VoteDetail.Vote' | translate}}
+                    </button>
+                </div>
+            </div>
+        </ng-template>
+        <!-- Confirm transaction -->
+        <ng-template [ngIf]="isConfirmed == true">
+            <h1 mat-dialog-title>{{'Vote.VoteDetail.TransactionDetails' | translate}}</h1>
+            <div mat-dialog-content>
+                <vote-confirm [txp]="confirmDetails"></vote-confirm>
+            </div>
+            <div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-evenly center" >
+                <button mat-stroked-button (click)="isConfirmed = false" color="primary"
+                        class="tron-default-button transfer-button">
+                    {{'Vote.VoteDetail.Back' | translate}}
+                </button>
+                <button mat-button="" (click)="submitTransaction()" color="primary"
+                        [disabled]="isButtonDisabled"
+                        class="tron-button transfer-button">
+                    {{'Vote.VoteDetail.SubmitTransaction' | translate}}
+                </button>
+            </div>
+        </ng-template>
+    </ng-container>
+</div>

@@ -396,6 +396,25 @@ export class TronProvider
     }
 
     /**
+     * createVoteProposal
+     *
+     * Send a request to create a transaction
+     *
+     * @param {any} votes - Object votes
+     * @param {string} voterAddress - Sender address
+     * @param {any} callback - callback result
+     * @return {Promise} - return signed transaction
+     */
+    async createVoteProposal(votes: any = {}, voterAddress: string, callback?: any)
+    {
+        //If the sender is not specified, then we take it from the selected.
+        if(voterAddress == null) voterAddress = this.activeAccount;
+
+        return await this.client.transactionBuilder
+            .vote(votes, voterAddress, callback)
+    }
+
+    /**
      * getVoteHistory
      *
      * Request for a list of votes

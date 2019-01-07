@@ -24,7 +24,27 @@
             "Title": "Votes",
             "Description": "Choose from the list the token for which you want to vote.",
             "TotalVotes": "Total votes",
-            "TopRating": "Top rating"
+            "TopRating": "Top rating",
+            "AvailableVotes": "Available votes"
+        },
+        "VoteConfirm": {
+            "From": "From",
+            "TotalVotes": "Total votes",
+            "TransactionType": "Transaction type",
+            "Data": "Data",
+            "Time": "Time of creation"
+        },
+        "VoteDetail": {
+            "Success": "Success",
+            "SuccessDescription": "Transaction successfully sent",
+            "EnterNumberVotes": "Enter the number of votes",
+            "VotesLeft": "Votes left",
+            "Clear": "Clear",
+            "All": "All",
+            "TransactionDetails": "Transaction Details",
+            "Back": "Back",
+            "SubmitTransaction": "Submit transaction",
+            "Vote": "Vote"
         }
     },
 

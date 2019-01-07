@@ -24,7 +24,28 @@
             "Title": "Голосование",
             "Description": "Выберите из списка токен, за который вы хотите проголосовать.",
             "TotalVotes": "Всего голосов",
-            "TopRating": "Наивысший рейтинг"
+            "TopRating": "Наивысший рейтинг",
+            "AvailableVotes": "Доступно голосов"
+        },
+        "VoteConfirm": {
+            "From": "От",
+            "TotalVotes": "Всего голосов",
+            "TransactionType": "Тип транзакции",
+            "Data": "Данные",
+            "Time": "Время создания"
+        },
+
+        "VoteDetail": {
+            "Success": "Успешно",
+            "SuccessDescription": "Транзакция успешно отправлена",
+            "EnterNumberVotes": "Введите количество голосов",
+            "VotesLeft": "Осталось голосов",
+            "Clear": "Очистить",
+            "All": "Все",
+            "TransactionDetails": "Детали транзакции",
+            "Back": "Назад",
+            "SubmitTransaction": "Отправить транзакцию",
+            "Vote": "Проголосовать"
         }
     },
 
