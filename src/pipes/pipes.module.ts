@@ -19,6 +19,7 @@ import { JsonIndentPipe } from "@pipes/json-indent/json-indent";
 import { AddressFromHexPipe } from "@pipes/address-from-hex/address-from-hex";
 import { FromSunPipe } from "@pipes/from-sun/from-sun";
 import { ToSunPipe } from "@pipes/to-sun/to-sun";
+import {UrlToTitlePipe} from "@pipes/url-to-title/url-to-title";
 
 const commonPipes = [
     FormatCurrencyPipe,
@@ -32,7 +33,8 @@ const commonPipes = [
     JsonIndentPipe,
     AddressFromHexPipe,
     FromSunPipe,
-    ToSunPipe
+    ToSunPipe,
+    UrlToTitlePipe
 ];
 
 @NgModule({
