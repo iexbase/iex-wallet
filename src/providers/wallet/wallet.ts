@@ -1107,6 +1107,7 @@ export class WalletProvider
                 bandwidth: this.bandwidth,
                 energyLimit: this.energy,
                 lastUpdated: this.lastUpdated,
+                tronPower: Number(this.tron.fromSun(account['frozen'][0]['frozen_balance'])) || 0,
                 tokens: tokens
             }).then(resultUpdate => {
 
@@ -1116,7 +1117,8 @@ export class WalletProvider
                         balance: resultUpdate.balance,
                         bandwidth: resultUpdate.bandwidth,
                         energyLimit: resultUpdate.energyLimit,
-                        lastUpdated: resultUpdate.lastUpdated
+                        lastUpdated: resultUpdate.lastUpdated,
+                        tronPower: resultUpdate.tronPower
                     }
                 };
 
