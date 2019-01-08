@@ -1097,18 +1097,22 @@ export class WalletProvider
             // Fix the update date
             this.lastUpdated = Date.now();
 
+            // This condition is necessary for new accounts.
+            let tronPower = (account && account['frozen'] ?
+                Number(this.tron.fromSun(account['frozen'][0]['frozen_balance'])) : 0);
+
             // Before adding a token, check and change keys
             let tokens = (account.asset || []).filter(({ value }) => {
                 return value > 0;
             }).map(({ key, value }) => ({ name: key, value }));
 
             this.updateWallet(walletAddress, {
-                balance: this.balance,
-                bandwidth: this.bandwidth,
-                energyLimit: this.energy,
+                balance: this.balance || 0,
+                bandwidth: this.bandwidth || 0,
+                energyLimit: this.energy || 0,
                 lastUpdated: this.lastUpdated,
-                tronPower: Number(this.tron.fromSun(account['frozen'][0]['frozen_balance'])) || 0,
-                tokens: tokens
+                tronPower: tronPower || 0,
+                tokens: tokens || {}
             }).then(resultUpdate => {
 
                 const update: Update<any> = {
