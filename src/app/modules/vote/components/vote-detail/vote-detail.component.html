@@ -4,7 +4,7 @@
     </button>
 </div>
 
-<div class="vote-detail-window" *ngIf="wallet && wallet.address && wallet.tronPower">
+<div class="vote-detail-window" *ngIf="wallet && wallet.address && wallet.tronPower >= 0">
     <!-- Notify successful transaction -->
     <div class="success-transaction" *ngIf="isSuccess">
         <div id="header">
