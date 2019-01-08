@@ -25,7 +25,9 @@
             "Description": "Выберите из списка токен, за который вы хотите проголосовать.",
             "TotalVotes": "Всего голосов",
             "TopRating": "Наивысший рейтинг",
-            "AvailableVotes": "Доступно голосов"
+            "AvailableVotes": "Доступно голосов",
+            "SearchLabel": "Искать команду",
+            "SearchPlaceholder": "Введите текст для поиска..."
         },
         "VoteConfirm": {
             "From": "От",

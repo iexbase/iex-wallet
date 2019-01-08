@@ -57,6 +57,21 @@
     {
         position: relative;
 
+        .search-filter
+        {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+
+            mat-form-field {
+                width: 100%;
+                opacity: 0.4;
+                padding: 0 16px;
+            }
+        }
+
+
         .vote-items
         {
             mat-list-item {

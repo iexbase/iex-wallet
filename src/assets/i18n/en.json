@@ -25,7 +25,9 @@
             "Description": "Choose from the list the token for which you want to vote.",
             "TotalVotes": "Total votes",
             "TopRating": "Top rating",
-            "AvailableVotes": "Available votes"
+            "AvailableVotes": "Available votes",
+            "SearchLabel": "Search a vote",
+            "SearchPlaceholder": "Search here..."
         },
         "VoteConfirm": {
             "From": "From",

@@ -53,6 +53,13 @@ export class VotePage implements OnInit
     public votes: any = [];
 
     /**
+     * Filtered Votes List
+     *
+     * @var object[]
+     */
+    public filteredVotes: any = [];
+
+    /**
      * Vote count
      *
      * @var number
@@ -104,6 +111,7 @@ export class VotePage implements OnInit
         this.voteProvider.getVotesFromServer({})
             .then(vote => {
                 this.votes = vote.res;
+                this.filteredVotes = vote.res;
                 this.totalVotes = vote.totalVotes;
                 this.topRating = vote.topRating;
 
@@ -153,5 +161,29 @@ export class VotePage implements OnInit
             if(selected[0] && !_.isEmpty(selected))
                 this.wallet = selected[0];
         });
+    }
+
+    /**
+     * Search handler
+     *
+     * @param {any} event - event search
+     * @return void
+     */
+    public getItems(event: any): void
+    {
+        // set val to the value of the searchbar
+        let val = event.target.value;
+
+        // if the value is an empty string don't filter the items
+        if (val && val.trim() != '') {
+            let result = _.filter(this.votes, item => {
+                let name = item['name'];
+                return _.includes(name.toLowerCase(), val.toLowerCase());
+            });
+            this.filteredVotes = result;
+        } else {
+            // Reset items back to all of the items
+            this.filteredVotes = this.votes;
+        }
     }
 }

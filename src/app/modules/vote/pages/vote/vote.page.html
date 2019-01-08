@@ -29,10 +29,18 @@
             </div>
         </div>
 
-        <!-- List votes -->
         <div id="vote-content">
+            <!-- Search vote -->
+            <div class="search-filter">
+                <mat-form-field appearance="fill">
+                    <mat-label>{{'Vote.Index.SearchLabel' | translate}}</mat-label>
+                    <input matInput [placeholder]="'Vote.Index.SearchPlaceholder' | translate" (input)="getItems($event)">
+                    <mat-icon matSuffix>search</mat-icon>
+                </mat-form-field>
+            </div>
+            <!-- List votes -->
             <mat-list class="vote-items">
-                <mat-list-item *ngFor="let item of votes" (click)="openDetail(item)">
+                <mat-list-item *ngFor="let item of filteredVotes" (click)="openDetail(item)">
                     <div mat-list-icon class="rank">
                         <span class="position">{{item.realTimeRanking}}</span>
                     </div>
