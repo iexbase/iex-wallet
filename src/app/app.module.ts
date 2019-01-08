@@ -135,6 +135,11 @@ export class AppModule
         );
 
         this.matIconRegistry.addSvgIcon(
+            'trx-vote',
+            this.domSanitizer.bypassSecurityTrustResourceUrl('assets/svg/mat-icon/vote.svg')
+        );
+
+        this.matIconRegistry.addSvgIcon(
             "trx-copy",
             this.domSanitizer.bypassSecurityTrustResourceUrl("assets/svg/mat-icon/copy.svg")
         );

@@ -211,6 +211,7 @@
                 "Freeze": "Замораживание",
                 "Unfreeze": "Разморозить",
                 "SmartContract": "Контракт",
+                "Vote": "Голосовать",
                 "TriggerSmartContract": "Триггер контракта"
             },
             "Status": "Статус",
