@@ -75,10 +75,20 @@ export class SettingsPage implements OnInit
             name: 'Settings.Navigation.Skins'
         }];
 
-        if (this.settingsView != undefined) {
+        if (this.settingsView && this.settingsView.length > 2) {
             this.router.navigate([`/settings/${this.settingsView}`]);
         } else {
             this.router.navigate([`/settings/alt-currency`]);
         }
+    }
+
+    /**
+     * Activate this page
+     *
+     * @param {string} name - path name
+     * @return void
+     */
+    onClick(name: string): void {
+        this.settingsView = name.split('/',3)[2]
     }
 }

@@ -1,5 +1,4 @@
 import {Component, OnInit} from "@angular/core";
-import {LocalStorage} from "ngx-webstorage";
 import {AddressBookProvider} from "@providers/address-book/address-book";
 
 import * as _ from 'lodash';
@@ -13,14 +12,6 @@ import {AddContactComponent} from "@modules/settings/components/add-contact/add-
 })
 export class AddressBookPage implements OnInit
 {
-    /**
-     *  Active page in settings
-     *
-     *  @var string
-     */
-    @LocalStorage()
-    settingsView: string;
-
     /**
      * Address Book List
      *
@@ -54,8 +45,7 @@ export class AddressBookPage implements OnInit
         public dialog: MatDialog,
         private snackBar: MatSnackBar
     ) {
-        // Active this page
-        this.settingsView = 'address-book';
+        //
     }
 
     /**

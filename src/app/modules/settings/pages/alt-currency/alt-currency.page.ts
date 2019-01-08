@@ -22,14 +22,6 @@ import { Logger } from "@providers/logger/logger";
 export class AltCurrencyPage implements OnInit
 {
     /**
-     *  Active page in settings
-     *
-     *  @var string
-     */
-    @LocalStorage()
-    settingsView: string;
-
-    /**
      * Frequently used alternative currencies
      *
      * @var any
@@ -91,8 +83,6 @@ export class AltCurrencyPage implements OnInit
         private rate: RateProvider,
         private logger: Logger
     ) {
-        // Activate this page
-        this.settingsView = 'alt-currency';
         this.completeAlternativeList = [];
         this.altCurrencyList = [];
         this.unusedCurrencyList = [];

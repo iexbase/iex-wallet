@@ -6,7 +6,6 @@
  */
 
 import {Component, OnInit} from "@angular/core";
-import {LocalStorage} from "ngx-webstorage";
 
 import {LanguageProvider} from "@providers/language/language";
 
@@ -17,14 +16,6 @@ import {LanguageProvider} from "@providers/language/language";
 })
 export class LanguagePage implements OnInit
 {
-    /**
-     * Frequently used language
-     *
-     * @var any
-     */
-    @LocalStorage()
-    settingsView: string;
-
     /**
      * Selected language
      *
@@ -47,8 +38,7 @@ export class LanguagePage implements OnInit
     constructor(
         private languageProvider: LanguageProvider,
     ) {
-        // Activate this page
-        this.settingsView = 'language';
+        //
     }
 
     /**

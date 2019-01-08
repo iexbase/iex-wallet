@@ -6,7 +6,6 @@
  */
 
 import { Component, OnInit } from "@angular/core";
-import { LocalStorage } from "ngx-webstorage";
 import * as _ from 'lodash';
 
 // Providers
@@ -22,14 +21,6 @@ import { Logger } from '@providers/logger/logger'
 })
 export class SessionLogPage implements OnInit
 {
-    /**
-     *  Active page in settings
-     *
-     *  @var string
-     */
-    @LocalStorage()
-    settingsView: string;
-
     /**
      * Available log types
      *
@@ -65,9 +56,6 @@ export class SessionLogPage implements OnInit
         private downloadProvider: DownloadProvider,
         private appProvider: AppProvider
     ) {
-        // Active this page
-        this.settingsView = 'session-log';
-
         const logLevels = this.logger.getLevels();
         this.logOptions = _.keyBy(logLevels, 'weight');
     }

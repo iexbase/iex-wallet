@@ -4,6 +4,7 @@
     <nav mat-tab-nav-bar class="tron-nav-tabs">
         <a mat-tab-link
            *ngFor="let nav of navs"
+           (click)="onClick(nav.link)"
            [routerLink]="nav.link"
            routerLinkActive #rla="routerLinkActive"
            [active]="rla.isActive">

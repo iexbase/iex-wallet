@@ -10,7 +10,6 @@ import {
     OnInit,
     ViewChild
 } from "@angular/core";
-import { LocalStorage } from "ngx-webstorage";
 import { MatAccordion } from "@angular/material";
 import { Store } from "@ngrx/store";
 import * as SkinActions from "@redux/skins/skins.actions";
@@ -29,14 +28,6 @@ import {ConfigProvider} from "@providers/config/config";
 export class SkinsPage implements OnInit
 {
     @ViewChild('skinsaccordion') myPanels: MatAccordion;
-
-    /**
-     *  Active page in settings
-     *
-     *  @var string
-     */
-    @LocalStorage()
-    settingsView: string;
 
     /**
      * List of available styles
@@ -62,17 +53,13 @@ export class SkinsPage implements OnInit
         private configProvider: ConfigProvider,
         protected store: Store<fromSkin.State>,
     ) {
-        // Active this page
-        this.settingsView = 'skins';
-        this.skins = [
-            {
+        this.skins = [{
                 name: "colors",
                 themes: [
                     {'name': 'default', 'class': 'skin-default'},
                     {'name': 'barlow', 'class': 'skin-barlow'}
                 ]
-            },
-            {
+            }, {
                 name: "textures",
                 themes: [
                     {'name': 'Mosaic', 'class': 'skin-mosaic'},
