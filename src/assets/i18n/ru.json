@@ -47,7 +47,9 @@
             "TransactionDetails": "Детали транзакции",
             "Back": "Назад",
             "SubmitTransaction": "Отправить транзакцию",
-            "Vote": "Проголосовать"
+            "Vote": "Проголосовать",
+            "WarningTitle": "Предупреждение",
+            "WarningDescription": "Пожалуйста, выберите кошелек в разделе Wallet"
         }
     },
 

@@ -4,6 +4,16 @@
     overflow: hidden;
     padding: 24px 24px 15px;
 
+    &.error {
+
+        .mat-dialog-content {
+            text-align: center;
+            font-size: 13px;
+            padding: 20px;
+            color: #ec3b3b;
+        }
+    }
+
     h1 {
         text-transform: uppercase;
         font-weight: 400;

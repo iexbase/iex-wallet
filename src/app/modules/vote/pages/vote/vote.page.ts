@@ -145,13 +145,12 @@ export class VotePage implements OnInit
      *
      * @return void
      */
-    private initSelectedWallet(): void
-    {
+    private initSelectedWallet(): void {
         // List all accounts
         this.wallets = this.store.pipe(select(fromWallet.selectAllWallets));
         // Check the presence of the recorded wallet
         // and activates the cached wallet
-        this.activeAccount != undefined && this.wallets.subscribe((data: any[]) => {
+        this.activeAccount  && this.wallets.subscribe((data: any[]) => {
             // From the array, select the required
             let selected = data.filter(
                 selected => selected.address == this.activeAccount

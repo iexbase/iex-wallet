@@ -46,7 +46,9 @@
             "TransactionDetails": "Transaction Details",
             "Back": "Back",
             "SubmitTransaction": "Submit transaction",
-            "Vote": "Vote"
+            "Vote": "Vote",
+            "WarningTitle": "Warning",
+            "WarningDescription": "Please select a wallet in the Wallet"
         }
     },
 

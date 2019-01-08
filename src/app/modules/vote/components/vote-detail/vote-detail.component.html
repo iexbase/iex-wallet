@@ -4,7 +4,7 @@
     </button>
 </div>
 
-<div class="vote-detail-window">
+<div class="vote-detail-window" *ngIf="wallet && wallet.address && wallet.tronPower">
     <!-- Notify successful transaction -->
     <div class="success-transaction" *ngIf="isSuccess">
         <div id="header">
@@ -17,7 +17,6 @@
             [height]="400">
         </lottie-animation-view>
     </div>
-
     <ng-container *ngIf="!isSuccess">
         <!-- Form to create a transaction -->
         <ng-template [ngIf]="isConfirmed == false">
@@ -76,4 +75,9 @@
             </div>
         </ng-template>
     </ng-container>
+</div>
+
+<div class="vote-detail-window error" *ngIf="wallet && !wallet.address && !wallet.tronPower">
+    <h1 mat-dialog-title>{{'Vote.VoteDetail.WarningTitle' | translate}}</h1>
+    <div mat-dialog-content>{{'Vote.VoteDetail.WarningDescription' | translate}}</div>
 </div>
