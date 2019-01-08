@@ -60,31 +60,18 @@ export class AppComponent implements OnInit
         if (!AppComponent.isElectronPlatform())
             throw new Error('Web version is not available');
 
-        this.onPlatformReady(
-            os.platform()
-        );
-
-        // Load the active skin
-        this.store.dispatch(
-            new SkinActions.AddSkin({
-                skin: {
-                    id: 1,
-                    name: this.config.get('skins.name')
-                }})
-        );
+        this.onPlatformReady();
     }
 
     /**
      * We load providers
-     *
-     * @param {any} readySource - platform
      */
-    private onPlatformReady(readySource: any): void
+    private onPlatformReady(): void
     {
         this.appProvider
             .load()
             .then(() => {
-                this.onAppLoad(readySource);
+                this.onAppLoad();
             })
             .catch(err => {
                 let message;
@@ -99,18 +86,27 @@ export class AppComponent implements OnInit
 
     /**
      * Write to the log details of the project
-     *
-     * @param {any} readySource - platform
      */
-    onAppLoad(readySource: any): void
+    onAppLoad(): void
     {
+        const deviceInfo = os.platform();
+
         this.logger.info(
             'Platform ready (' +
-            readySource +
+            deviceInfo +
             '): ' +
             this.appProvider.info.nameCase +
             ' - v' +
             this.appProvider.info.version
+        );
+
+        // Load the active skin
+        this.store.dispatch(
+            new SkinActions.AddSkin({
+                skin: {
+                    id: 1,
+                    name: this.config.get('skins.name')
+                }})
         );
     }
 
