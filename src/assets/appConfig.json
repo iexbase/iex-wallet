@@ -7,5 +7,5 @@
     "gitReleases": "https://github.com/iexbase/iex-wallet/releases",
     "gitHubRepoUrl": "git://github.com/iexbase/iex-wallet.git",
     "gitHubRepoBugs": "https://github.com/iexbase/iex-wallet/issues",
-    "version": "0.1.0"
+    "version": "1.0.2"
 }
