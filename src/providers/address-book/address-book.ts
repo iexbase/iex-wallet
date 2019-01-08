@@ -50,7 +50,7 @@ export class AddressBookProvider
         return new Promise((resolve) => {
             // In case storage is empty, create an empty array
             if(!this.addressBook)
-                this.addressBook = JSON.stringify([]); // default data
+                this.addressBook = JSON.stringify({}); // default data
 
             if(this.addressBook && _.isString(this.addressBook))
                 return resolve(JSON.parse(this.addressBook) || {});
