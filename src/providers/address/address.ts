@@ -5,14 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Injectable } from "@angular/core";
+import {Injectable} from "@angular/core";
 import {ec} from 'elliptic';
-
 // Providers
 import {Logger} from '@providers/logger/logger';
 import {TronProvider} from '@providers/tron/tron';
 
-// bcrypto plugin
+// ec plugin
 const secp256k1: any = new ec('secp256k1');
 const keccak256 = require('js-sha3').keccak256;
 
@@ -164,5 +163,16 @@ export class AddressProvider
         const keyPair = secp256k1.keyFromPrivate(privateKey, 'hex');
         const { result } = keyPair.validate();
         return result;
+    }
+
+    /**
+     * Remove unnecessary values
+     *
+     * @param {string} str - address
+     * @returns {string}
+     */
+    extractAddress(str: string): string {
+        return str.replace(/^(tron:)/i, '')
+            .replace(/\?.*/, '');
     }
 }
