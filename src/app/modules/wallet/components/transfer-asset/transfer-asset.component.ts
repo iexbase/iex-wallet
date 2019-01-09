@@ -183,9 +183,9 @@ export class TransferAssetComponent implements OnInit
     {
         this.useSendMax = true;
 
-        let item = this.listTokens.filter(filter =>
-                filter.key == this.fields.token
-            )[0];
+        let item = this.listTokens.find(c =>
+                c.name == this.fields.token
+            );
 
         if(this.fields.token.toUpperCase() == 'TRX')
             this.fields.amount = item.value / 1e6;
