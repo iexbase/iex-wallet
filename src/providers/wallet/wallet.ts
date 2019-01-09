@@ -1069,13 +1069,11 @@ export class WalletProvider
      */
     async updateAccount(account: string)
     {
-        await this.getBandwidth(account).then(bandwidth => {
-            this.bandwidth = bandwidth;
-        });
-
-        await this.getAccountResources(account).then(resources => {
-            this.energy = resources['EnergyLimit'];
-        });
+        await this.getAccountResources(account)
+            .then(({freeNetUsed = 0, freeNetLimit = 0, NetUsed = 0, NetLimit = 0, EnergyLimit = 0}) => {
+                this.bandwidth  = (freeNetLimit - freeNetUsed) + (NetLimit - NetUsed);
+                this.energy = EnergyLimit;
+            });
     }
 
     /**
