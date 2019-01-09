@@ -36,6 +36,7 @@
                             "aot": true,
                             "extractLicenses": true,
                             "vendorChunk": false,
+                            "serviceWorker": true,
                             "buildOptimizer": true,
                             "budgets": [
                                 {
