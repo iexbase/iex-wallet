@@ -12,8 +12,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import env from "./environments";
 import { AppModule } from "./app/app.module";
 
-if (env.name == 'production')
-{
+if (env.name == 'production') {
     enableProdMode();
 } else {
     // Remove the security warnings about Content policy - not imposing security issues for our project anyways.
