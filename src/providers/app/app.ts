@@ -106,7 +106,6 @@ export class AppProvider
         this.language.load();
     }
 
-
     /**
      * Get information from the base file
      *

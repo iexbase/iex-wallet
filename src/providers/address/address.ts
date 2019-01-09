@@ -116,10 +116,11 @@ export class AddressProvider
      * @param {string | Buffer} publicKey - 65-byte public key, a point (x, y)
      * @returns {string}
      */
-    static compressPublicKey(publicKey: string | Buffer): string {
-        if(typeof publicKey == 'string') {
+    static compressPublicKey(publicKey: string | Buffer): string
+    {
+        if(typeof publicKey == 'string')
             publicKey = Buffer.from(publicKey, 'hex');
-        }
+
 
         return secp256k1.keyFromPublic(publicKey, 'hex')
             .getPublic(true, 'hex');
