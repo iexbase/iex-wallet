@@ -8,7 +8,7 @@
 import { Component, HostListener, OnInit } from "@angular/core";
 import { LocalStorage } from "ngx-webstorage";
 import { Observable } from "rxjs";
-import {MatDialog, MatSnackBar} from "@angular/material";
+import {MatDialog} from "@angular/material";
 import { select, Store } from "@ngrx/store";
 import * as _ from 'lodash';
 
@@ -17,15 +17,6 @@ import * as fromWallet from "@redux/wallet/wallet.reducer";
 
 // Env
 import env from "../../../../../environments";
-
-// Modals
-import { ExportWalletComponent } from "@modules/wallet/components/export-wallet/export-wallet.component";
-import { SignedMessageComponent } from "@modules/wallet/components/signed-message/signed-message.component";
-import { DeleteWalletComponent } from "@modules/wallet/components/delete-wallet/delete-wallet.component";
-import { FreezeBalanceComponent } from "@modules/wallet/components/freeze-balance/freeze-balance.component";
-import { ReceiveAccountComponent } from "@modules/wallet/components/receive-account/receive-account.component";
-import { TransferAssetComponent } from "@modules/wallet/components/transfer-asset/transfer-asset.component";
-import { PreferencesComponent } from "@modules/wallet/components/preferences/preferences.component";
 
 // Providers
 import { WalletProvider } from "@providers/wallet/wallet";
@@ -115,13 +106,6 @@ export class WalletPage implements OnInit
     isLoading:boolean = false;
 
     /**
-     * Status hover update
-     *
-     * @var boolean
-     */
-    enabledOn: boolean = false;
-
-    /**
      * Wallet opening
      *
      * @var boolean
@@ -138,7 +122,6 @@ export class WalletPage implements OnInit
      * @param {ElectronProvider} electronProvider - Electron provider
      * @param {AddressBookProvider} addressBookProvider - Address Book provider
      * @param {Logger} logger - Log provider
-     * @param {MatSnackBar} snackBar - Service for displaying snack-bar notifications.
      */
     constructor(
         private store: Store<fromWallet.State>,
@@ -147,8 +130,7 @@ export class WalletPage implements OnInit
         public config: ConfigProvider,
         private electronProvider: ElectronProvider,
         private addressBookProvider: AddressBookProvider,
-        private logger: Logger,
-        private snackBar: MatSnackBar
+        private logger: Logger
     ) {
         //
     }
@@ -214,9 +196,7 @@ export class WalletPage implements OnInit
 
         this.activeAccount = this.wallet.address;
         this.primaryWalletOpening = true;
-
         this.walletProvider.fullUpdateAccount(item.address).then(() => {});
-
 
         this.transactions = [];
         this.currentPage = 0;
@@ -229,21 +209,6 @@ export class WalletPage implements OnInit
             this.transactions = this.transactions.concat(items.res);
             this.isLoading = false;
         });
-    }
-
-    /**
-     *  Update wallet id
-     *
-     *  @return void
-     */
-    updateWallet(): void
-    {
-        this.walletProvider.fullUpdateAccount(this.wallet.address).then(() => {});
-
-        this.snackBar.open('Account updated successfully', null, {
-            duration: 2000,
-            panelClass: ['snackbar-theme-dialog']
-        })
     }
 
     /**
@@ -277,116 +242,6 @@ export class WalletPage implements OnInit
 
                 saveResultsCallback(data);
             });
-    }
-
-    /**
-     * Open settings window
-     *
-     * @return void
-     */
-    preferenceWallet(): void
-    {
-        const dialogRef = this.dialog.open(PreferencesComponent, {
-            width: '650px',
-            panelClass: ['dialog-background', this.wallet.color],
-            data: this.wallet
-        });
-
-        dialogRef.afterClosed().subscribe(() => {});
-    }
-
-    /**
-     * Open transfer window
-     *
-     * @return void
-     */
-    transferModal(): void
-    {
-        const dialogRef = this.dialog.open(TransferAssetComponent, {
-            width: '650px',
-            panelClass: ['dialog-background', this.wallet.color],
-            data: this.wallet
-        });
-
-        dialogRef.afterClosed().subscribe(() => {});
-    }
-
-    /**
-     * Open receive address window
-     *
-     * @return void
-     */
-    receiveModal(): void
-    {
-        const dialogRef = this.dialog.open(ReceiveAccountComponent, {
-            width: '650px',
-            panelClass: ['dialog-background', this.wallet.color],
-            data: this.wallet
-        });
-
-        dialogRef.afterClosed().subscribe(() => {});
-    }
-
-    /**
-     * Open freeze balance window
-     *
-     * @return void
-     */
-    freezeModal(): void
-    {
-        const dialogRef = this.dialog.open(FreezeBalanceComponent, {
-            width: '650px',
-            panelClass: ['dialog-background', this.wallet.color],
-            data: this.wallet
-        });
-        dialogRef.afterClosed().subscribe(() => {});
-    }
-
-    /**
-     * Open delete wallet window
-     *
-     * @return void
-     */
-    deleteWalletModal(): void
-    {
-        const dialogRef = this.dialog.open(DeleteWalletComponent, {
-            width: '650px',
-            panelClass: ['dialog-background', this.wallet.color],
-            data: this.wallet
-        });
-        dialogRef.afterClosed().subscribe(() => {});
-    }
-
-    /**
-     * Open signed message window
-     *
-     * @return void
-     */
-    signedMessageModal(): void
-    {
-        const dialogRef = this.dialog.open(SignedMessageComponent, {
-            width: '650px',
-            panelClass: ['dialog-background', this.wallet.color],
-            data: this.wallet
-        });
-
-        dialogRef.afterClosed().subscribe(() => {});
-    }
-
-    /**
-     * Open backup wallet window
-     *
-     * @return void
-     */
-    exportWalletModal(): void
-    {
-        const dialogRef = this.dialog.open(ExportWalletComponent, {
-            width: '650px',
-            panelClass: ['dialog-background', this.wallet.color],
-            data: this.wallet
-        });
-
-        dialogRef.afterClosed().subscribe(() => {});
     }
 
     /**

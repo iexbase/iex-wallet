@@ -1,0 +1,33 @@
+<div class="wallet-options" fxLayout="row" fxLayoutAlign="center">
+    <div class="wallet-option-item">
+        <div class="label">{{'Wallet.Index.Energy' | translate}}</div>
+        <div class="value">{{ wallet.energyLimit || 0 }}</div>
+    </div>
+
+    <div class="wallet-option-item">
+        <div class="label">{{'Wallet.Index.Bandwidth' | translate}}</div>
+        <div class="value">{{ wallet.bandwidth || 0 | formatCurrency:'TRX':0 }}</div>
+    </div>
+</div>
+
+<div class="wallet-settings">
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon svgIcon="trx-menu"></mat-icon>
+    </button>
+    <mat-menu #menu="matMenu" class="wallet-settings-menu">
+        <button mat-menu-item (click)="preferenceWallet()">
+            {{'Wallet.Index.Menu.Preferences' | translate}}
+        </button>
+        <button mat-menu-item (click)="exportWalletModal()">
+            {{'Wallet.Index.Menu.ExportWallet' | translate}}
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="signedMessageModal()">
+            {{'Wallet.Index.Menu.SignedMessage' | translate}}
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item class="delete" (click)="deleteWalletModal()">
+            {{'Wallet.Index.Menu.DeleteWallet' | translate}}
+        </button>
+    </mat-menu>
+</div>

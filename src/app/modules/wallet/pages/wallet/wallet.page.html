@@ -18,8 +18,8 @@
                 <span>{{'Wallet.Index.AddWallet' | translate}}</span>
             </button>
         </div>
-
     </div>
+
     <div id="tron-content-right" [ngClass]="wallet.color">
         <ng-container *ngIf="!wallet.address">
             <div class="empty-wallet" fxLayout="row" fxLayoutAlign="center center">
@@ -28,81 +28,13 @@
         </ng-container>
 
         <ng-container *ngIf="wallet.address">
-            <div class="wallet-options" fxLayout="row" fxLayoutAlign="center">
-                <div class="wallet-option-item">
-                    <div class="label">{{'Wallet.Index.Energy' | translate}}</div>
-                    <div class="value">{{ wallet.energyLimit || 0 }}</div>
-                </div>
+            <wallet-settings [wallet]="wallet"></wallet-settings>
 
-                <div class="wallet-option-item">
-                    <div class="label">{{'Wallet.Index.Bandwidth' | translate}}</div>
-                    <div class="value">{{ wallet.bandwidth || 0 | formatCurrency:'TRX':0 }}</div>
-                </div>
-            </div>
-            <div class="wallet-settings">
-                <button mat-icon-button [matMenuTriggerFor]="menu">
-                    <mat-icon svgIcon="trx-menu"></mat-icon>
-                </button>
-                <mat-menu #menu="matMenu" class="wallet-settings-menu">
-                    <button mat-menu-item (click)="preferenceWallet()">
-                        {{'Wallet.Index.Menu.Preferences' | translate}}
-                    </button>
-                    <button mat-menu-item (click)="exportWalletModal()">
-                        {{'Wallet.Index.Menu.ExportWallet' | translate}}
-                    </button>
-                    <mat-divider></mat-divider>
-                    <button mat-menu-item (click)="signedMessageModal()">
-                        {{'Wallet.Index.Menu.SignedMessage' | translate}}
-                    </button>
-                    <mat-divider></mat-divider>
-                    <button mat-menu-item class="delete" (click)="deleteWalletModal()">
-                        {{'Wallet.Index.Menu.DeleteWallet' | translate}}
-                    </button>
-                </mat-menu>
-            </div>
-
-            <div id="wallet-detail-header" [ngClass]="{'has-scrolling': miniHeader}">
-                <div id="asset-logo-status" (click)="updateWallet()">
-                    <div id="asset-logo-container" [class.on]="enabledOn" (mouseout)="enabledOn=false" (mouseover)="enabledOn=true">
-                        <div id="update-tx">
-                            <mat-icon svgIcon="c-refresh"></mat-icon>
-                        </div>
-                        <div id="logo" class="tron-icon"></div>
-                    </div>
-                </div>
-                <div id="header-balance">
-                    <div class="balance-trx" *ngIf="!wallet.hideBalance">
-                        <span class="balance">{{wallet.balance | sunToUnit}}</span>
-                        <span class="display-unit">TRX</span>
-                    </div>
-                    <div class="hide-balance" *ngIf="wallet.hideBalance">
-                        [{{'Wallet.Index.HideBalance' | translate}}]
-                    </div>
-                </div>
-
-                <div id="header-alt-balance" *ngIf="!wallet.hideBalance">
-                    <div class="currency">
-                        <span class="symbol"></span>
-                        <span class="amount">{{ wallet.balance | sunToFiat }}</span>
-                        <span class="code">{{ config.get('wallet.settings.alternativeIsoCode') }}</span>
-                    </div>
-                </div>
-
-                <div id="actions" fxLayout="row">
-                    <button mat-button="" class="tron-button red-bg" (click)="transferModal()">
-                        {{'Wallet.Index.Send' | translate}}
-                    </button>
-                    <button mat-button="" class="tron-button red-bg" (click)="receiveModal()">
-                        {{'Wallet.Index.Receive' | translate}}
-                    </button>
-                    <button mat-button="" class="tron-button red-bg" (click)="freezeModal()">
-                        {{'Wallet.Index.Freeze' | translate}}
-                    </button>
-                </div>
-            </div>
+            <paper-wallet [header]="miniHeader" [wallet]="wallet"
+                          [altCode]="config.get('wallet.settings.alternativeIsoCode')">
+            </paper-wallet>
 
             <!-- Transactions -->
-
             <div id="wallet-detail-transaction" class="ps" [perfectScrollbar]="{}" (scroll)="onScroll($event)">
                 <div infiniteScroll=""
                      [infiniteScrollDistance]="1"
