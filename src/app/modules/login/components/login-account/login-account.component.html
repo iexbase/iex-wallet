@@ -2,8 +2,7 @@
     <mat-form-field appearance="outline" class="import-wallet-field" >
         <mat-icon (mouseenter)="isVisibilityPassword = true" (mouseleave)="isVisibilityPassword = false"
                   class="show-hide-password" (click)="changeInputType = !changeInputType">{{changeInputType ? 'visibility' : 'visibility_off'}}</mat-icon>
-        <input (keydown)="!password || goToLogin()"
-            matInput placeholder="Type Your Password"
+        <input (keydown)="!password || goToLogin()" autofocus matInput placeholder="Type Your Password"
                [type]="!changeInputType ? 'password' : 'text'" name="password"
                [(ngModel)]="password" (ngModelChange)="isSubmit = false">
     </mat-form-field>
