@@ -1,0 +1,18 @@
+sudo: required
+language: node_js
+node_js:
+- 10
+install:
+- npm install -g @angular/cli
+- npm install
+script:
+- npm run-script build
+
+cache:
+    yarn: true
+    directories:
+    - node_modules
+
+branches:
+    only:
+    - master
