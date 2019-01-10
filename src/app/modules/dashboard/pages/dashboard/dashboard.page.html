@@ -42,7 +42,10 @@
 
     <div class="dashboard-wrapper">
         <div class="graph-body">
-            <div [chart]="chart_trx"></div>
+            <ng-container *ngIf="isLoadingChart">
+                <mat-spinner class="loading-chart" [diameter]="48" [strokeWidth]="2"></mat-spinner>
+            </ng-container>
+            <div [chart]="chart_trx" *ngIf="!isLoadingChart"></div>
         </div>
     </div>
 </div>

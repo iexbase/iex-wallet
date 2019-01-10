@@ -77,6 +77,17 @@
     position:relative;
 }
 
+.loading-chart {
+    margin: 120px auto 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.mat-spinner::ng-deep circle {
+    stroke: rgba(255,255,255,0.5);
+}
+
 .dashboard-wrapper {
     position: absolute;
     bottom: 0;

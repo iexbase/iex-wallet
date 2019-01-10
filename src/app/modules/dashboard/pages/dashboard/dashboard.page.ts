@@ -9,6 +9,7 @@ import {Component, OnInit} from "@angular/core";
 import { Chart } from "angular-highcharts";
 import { HttpClient } from "@angular/common/http";
 import env from "../../../../../environments";
+import * as _ from "lodash";
 
 @Component({
     selector: 'dashboard-page',
@@ -43,6 +44,8 @@ export class DashboardPage implements OnInit
         market_cap: <number> 0,
         circulating_supply: <number> 0
     };
+
+    public isLoadingChart: boolean = true;
 
     /**
      * Data to filters
@@ -126,8 +129,10 @@ export class DashboardPage implements OnInit
         );
 
         this.httpClient.get(url['link'])
-            .subscribe(result =>
-            {
+            .subscribe((result: any) => {
+                if(_.isEmpty(result['Data'])) return;
+
+                this.isLoadingChart = false;
                 this.loadCharts((result['Data'])
                     .map(data => {
                         return [data.time * 1000, data.close]
