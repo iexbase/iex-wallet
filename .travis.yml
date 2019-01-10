@@ -6,6 +6,7 @@ install:
 - npm install -g @angular/cli
 - npm install
 script:
+- npm run env:prod
 - npm run-script build
 
 cache:
