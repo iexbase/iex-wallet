@@ -6,6 +6,12 @@
 </h1>
 This project is experimental and still under development.
 
+
+[![Build Status](https://travis-ci.org/iexbase/iex-wallet.svg?branch=master)](https://travis-ci.org/iexbase/iex-wallet)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
+[![Issues](https://img.shields.io/github/issues/iexbase/iex-wallet.svg)](https://github.com/iexbase/iex-wallet/issues)
+[![Pull Requests](https://img.shields.io/github/issues-pr/iexbase/iex-wallet.svg)](https://github.com/iexbase/iex-wallet/pulls)
+
 ## Main Features
 
 - TRON coin support
