@@ -37,8 +37,8 @@
             <!-- Transactions -->
             <div id="wallet-detail-transaction" class="ps" [perfectScrollbar]="{}" (scroll)="onScroll($event)">
                 <div infiniteScroll=""
-                     [infiniteScrollDistance]="1"
-                     [infiniteScrollThrottle]="50"
+                     [infiniteScrollDistance]="2"
+                     [infiniteScrollThrottle]="100"
                      infiniteScrollContainer=".ps"
                      [infiniteScrollDisabled]="false"
                      [fromRoot]="true"
@@ -48,6 +48,7 @@
                     <ng-container *ngIf="isLoading">
                         <mat-spinner class="loading-transaction" [diameter]="48" [strokeWidth]="2"></mat-spinner>
                     </ng-container>
+
 
                     <ng-container *ngIf="!isLoading">
                         <div class="no-transaction" *ngIf="transactions.length == 0">
