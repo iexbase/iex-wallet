@@ -2,7 +2,8 @@
     <div id="wallet-coin-list" class="wallet-menu" fxFlex="18">
         <mat-list>
             <ng-container *ngFor="let item of wallets | async">
-                <mat-list-item (click)="openWalletDetails(item)" [ngClass]="{'active': activeAccount == item.address}">
+                <mat-list-item (click)="openWalletDetails(item)"
+                               [ngClass]="{'active': activeAccount == item.address}">
                     <div matLine class="proper-name">{{item.name}}</div>
                     <div matLine class="unit">
                         <span *ngIf="item.hideBalance">[{{'Wallet.Index.HideBalance' | translate}}]</span>
@@ -12,7 +13,6 @@
                 </mat-list-item>
             </ng-container>
         </mat-list>
-
         <div class="add-wallet">
             <button [disableRipple]="true" routerLink="/wallet/add-wallet" mat-button="">
                 <span>{{'Wallet.Index.AddWallet' | translate}}</span>
@@ -48,7 +48,6 @@
                     <ng-container *ngIf="isLoading">
                         <mat-spinner class="loading-transaction" [diameter]="48" [strokeWidth]="2"></mat-spinner>
                     </ng-container>
-
 
                     <ng-container *ngIf="!isLoading">
                         <div class="no-transaction" *ngIf="transactions.length == 0">

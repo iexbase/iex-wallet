@@ -7,7 +7,7 @@
 
 import { Component, HostListener, OnInit } from "@angular/core";
 import { LocalStorage } from "ngx-webstorage";
-import { Observable } from "rxjs";
+import {Observable} from "rxjs";
 import {MatDialog} from "@angular/material";
 import { select, Store } from "@ngrx/store";
 import * as _ from 'lodash';
@@ -233,11 +233,11 @@ export class WalletPage implements OnInit
     {
         this.walletProvider.getTxsFromServer({
             address: this.wallet.address,
-            limit: 50,
+            limit: 25,
             start: page,
             total: this.totalTransaction
         }).then((data:any) => {
-                this.currentPage += 50;
+                this.currentPage += 25;
                 this.totalTransaction = data['total'];
 
                 saveResultsCallback(data);
