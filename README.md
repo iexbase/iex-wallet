@@ -4,13 +4,26 @@
   iEXWallet 
   <br>
 </h1>
-This project is experimental and still under development.
+<p>This project is experimental and still under development.</p>
 
+<p align="center">
+  <a href="https://travis-ci.org/iexbase/iex-wallet">
+    <img src="https://travis-ci.org/iexbase/iex-wallet.svg?branch=master">
+  </a>
+  
+  <a href="https://github.com/iexbase/iex-wallet/blob/master/LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-brightgreen.svg">
+  </a>
+  
+  <a href="https://github.com/iexbase/iex-wallet/issues">
+    <img src="https://img.shields.io/github/issues/iexbase/iex-wallet.svg">
+  </a>
+  
+  <a href="https://github.com/iexbase/iex-wallet/pulls"> 
+    <img src="https://img.shields.io/github/issues-pr/iexbase/iex-wallet.svg">
+  </a>
+</p>
 
-[![Build Status](https://travis-ci.org/iexbase/iex-wallet.svg?branch=master)](https://travis-ci.org/iexbase/iex-wallet)
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
-[![Issues](https://img.shields.io/github/issues/iexbase/iex-wallet.svg)](https://github.com/iexbase/iex-wallet/issues)
-[![Pull Requests](https://img.shields.io/github/issues-pr/iexbase/iex-wallet.svg)](https://github.com/iexbase/iex-wallet/pulls)
 
 ## Main Features
 
