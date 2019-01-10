@@ -7,8 +7,8 @@
 <p>This project is experimental and still under development.</p>
 
 <p align="center">
-  <a href="https://travis-ci.org/iexbase/iex-wallet">
-    <img src="https://travis-ci.org/iexbase/iex-wallet.svg?branch=master">
+  <a href="https://travis-ci.com/iexbase/iex-wallet">
+    <img src="https://travis-ci.com/iexbase/iex-wallet.svg?branch=master">
   </a>
   
   <a href="https://github.com/iexbase/iex-wallet/blob/master/LICENSE">
