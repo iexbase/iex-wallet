@@ -242,7 +242,9 @@
             "AddNode": "Add node",
             "FullNode": "Full node",
             "SolidityNode": "Solidity node",
-            "EventServer": "Event server"
+            "EventServer": "Event server",
+            "SearchLabel": "Search node",
+            "SearchPlaceholder": "Search here..."
         },
 
         "AddNode": {

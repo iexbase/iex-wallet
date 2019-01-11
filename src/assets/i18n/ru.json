@@ -243,7 +243,9 @@
             "AddNode": "Добавить ноду",
             "FullNode": "Full node",
             "SolidityNode": "Solidity node",
-            "EventServer": "Event server"
+            "EventServer": "Event server",
+            "SearchLabel": "Искать ноду",
+            "SearchPlaceholder": "Введите текст для поиска..."
         },
 
         "AddNode": {

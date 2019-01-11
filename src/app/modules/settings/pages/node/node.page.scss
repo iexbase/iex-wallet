@@ -32,6 +32,19 @@
     }
 }
 
+.search-filter
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+
+    mat-form-field {
+        width: 100%;
+        opacity: 0.4;
+    }
+}
+
 .add-node-button {
     position: absolute;
     right: 40px;
