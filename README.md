@@ -7,6 +7,10 @@
 <p>This project is experimental and still under development.</p>
 
 <p align="center">
+  <a href="https://github.com/iexbase/iex-wallet/releases/latest"> 
+    <img src="https://img.shields.io/github/release/iexbase/iex-wallet.svg">
+  </a>
+  
   <a href="https://travis-ci.com/iexbase/iex-wallet">
     <img src="https://travis-ci.com/iexbase/iex-wallet.svg?branch=master">
   </a>
