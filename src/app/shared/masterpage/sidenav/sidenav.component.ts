@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
-import {MediaChange, ObservableMedia} from '@angular/flex-layout';
-import {Subscription} from 'rxjs';
+import { Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
+import { MediaChange, MediaObserver } from '@angular/flex-layout';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-sidenav',
@@ -32,9 +32,9 @@ export class SidenavComponent implements OnInit, OnDestroy
     }[];
 
     constructor(
-        media: ObservableMedia
+        media: MediaObserver
     ) {
-        this.watcher = media.subscribe((change: MediaChange) => {
+        this.watcher = media.media$.subscribe((change: MediaChange) => {
             if (change.mqAlias === 'xs' || change.mqAlias === 'sm') {
                 this.activeMediaQuery = true;
             } else {
