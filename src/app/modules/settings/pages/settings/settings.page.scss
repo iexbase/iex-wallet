@@ -4,6 +4,65 @@
     position: relative;
 }
 
+#settings-navigation {
+    min-width: 152px;
+    border-right: 2px solid #F0F0F0;
+    flex-grow: 0;
+    flex-shrink: 0;
+
+
+    /deep/ .mat-list-item {
+        position: relative;
+        display: block;
+        margin: 8px 0 0 0;
+        text-decoration: none;
+        text-align: right;
+        transition: color 200ms, opacity 300ms;
+        color: rgba(255, 255, 255, 0.5);
+
+        &:hover {
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        &.active {
+            color: #ffffff;
+        }
+
+        &::before {
+            opacity: 1;
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 7px;
+            height: 100%;
+            margin-right: -1px;
+            border-radius: 4px 0 0 4px;
+            transform: scale3d(0, 0, 1);
+            transform-origin: center right;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1), linear;
+            background-color: #F0F0F0;
+        }
+
+        &.active::before {
+            transform: scale3d(1, 1.2, 1);
+            transition-timing-function: cubic-bezier(0, 2, 0.34, 1), linear;
+            transition: transform 500ms, opacity 300ms;
+        }
+
+        .mat-list-item-content {
+            position: relative;
+            display: block;
+            text-align: right;
+            padding: 0.7em 20px 0.7em 0;
+        }
+
+         p {
+             font-weight: 300;
+         }
+    }
+}
+
 #tron-content-settings {
     display: flex;
     flex: 1 1 auto;

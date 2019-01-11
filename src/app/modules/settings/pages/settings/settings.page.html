@@ -1,18 +1,17 @@
 
-<div id="tron-content-settings" fxLayout="column">
-
-    <nav mat-tab-nav-bar class="tron-nav-tabs">
-        <a mat-tab-link
-           *ngFor="let nav of navs"
-           (click)="onClick(nav.link)"
-           [routerLink]="nav.link"
-           routerLinkActive #rla="routerLinkActive"
-           [active]="rla.isActive">
-            {{nav.name | translate}}
-        </a>
+<div id="tron-content-settings" fxLayout="row">
+    <nav id="settings-navigation" fxFlex="15">
+        <mat-list>
+            <a mat-list-item
+               *ngFor="let nav of navs"
+               [routerLink]="nav.link"
+               routerLinkActive="active"
+               (click)="onClick(nav.link)">
+                <p mat-line="">{{nav.name | translate}}</p>
+            </a>
+        </mat-list>
     </nav>
-
-    <div id="tron-content-right" class="ps" [perfectScrollbar]="{}">
+    <div id="tron-content-right" class="ps" [perfectScrollbar]="{}" fxFlex>
         <router-outlet></router-outlet>
     </div>
 
