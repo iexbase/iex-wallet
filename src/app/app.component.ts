@@ -56,14 +56,6 @@ export class AppComponent implements OnInit
      */
     ngOnInit()
     {
-        // const reqBody = {
-        //     '$or': [{ 'toAddress': 'TRWBqiqoFZysoAeyR1J35ibuyc8EvhUAoY' }, { 'ownerAddress': 'TRWBqiqoFZysoAeyR1J35ibuyc8EvhUAoY' }], 'version': 3.0
-        // };
-        //
-        // this.http.post(`https://db.tronwallet.me/rest/transactions/find`, reqBody).subscribe(r => {
-        //     console.log(r)
-        // })
-
         // The project is allowed to run only through "Electron"
         if (!AppComponent.isElectronPlatform())
             throw new Error('Web version is not available');
