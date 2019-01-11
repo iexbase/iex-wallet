@@ -247,7 +247,7 @@
             "Title": "Address book",
             "Description": "The book where the address list is stored with the names",
             "NoContacts": "No contacts yet",
-            "NoContractDescription": "Get started by adding your first one.",
+            "NoContactDescription": "Get started by adding your first one.",
             "AddContact": "Add Contact",
             "SearchLabel": "Search a contact",
             "SearchPlaceholder": "Search here..."
@@ -262,7 +262,7 @@
             "EmailPlaceholder": "Please enter your email address",
             "AddressPlaceholder": "Please enter your tron address",
             "Address": "Address",
-            "Add": "Add contract"
+            "Add": "Add contact"
         },
 
         "Language": {

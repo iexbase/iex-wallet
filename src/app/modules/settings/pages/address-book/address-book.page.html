@@ -2,7 +2,7 @@
     <h1>{{'Settings.AddressBook.Title' | translate}}</h1>
     <p class="description">{{'Settings.AddressBook.Description' | translate}}</p>
 
-    <div *ngIf="!isEmptyList" class="add-contract-button">
+    <div *ngIf="!isEmptyList" class="add-contact-button">
         <button class="tron-default-button" (click)="addEntry()" mat-stroked-button="">
             {{'Settings.AddressBook.AddContact' | translate}}
         </button>
@@ -14,7 +14,7 @@
             {{'Settings.AddressBook.NoContacts' | translate}}
         </div>
         <div class="zero-state-description">
-            {{'Settings.AddressBook.NoContractDescription' | translate}}
+            {{'Settings.AddressBook.NoContactDescription' | translate}}
         </div>
 
         <button mat-stroked-button (click)="addEntry()" class="tron-default-button">
