@@ -11,10 +11,13 @@ const env: EnvironmentSchema = {
     },
 
     explorer: {
-        // url: 'https://explorer.shasta.trongrid.io',
-        // api: 'https://explorer.shasta.trongrid.io/api'
         url: 'https://tronscan.org/#',
         api: 'https://wlcyapi.tronscan.org/api'
+    },
+
+    shasta: {
+        url: 'https://explorer.shasta.trongrid.io',
+        api: 'https://explorer.shasta.trongrid.io/api'
     },
 
     login: {

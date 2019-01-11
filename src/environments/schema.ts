@@ -14,6 +14,11 @@ export interface EnvironmentSchema {
         api: string;
     },
 
+    shasta: {
+        url: string;
+        api: string;
+    }
+
     login: {
         lockedMinutes: number,
         failedLogin: number
