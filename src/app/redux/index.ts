@@ -9,6 +9,8 @@ import * as fromWallet from "./wallet/wallet.reducer";
 import * as fromRate from "./rates/rates.reducer";
 import * as fromSkin from "./skins/skins.reducer";
 import * as fromLanguage from "./language/language.reducer";
+import * as fromNode from "./nodes/nodes.reducer";
+
 import {
     ActionReducer,
     ActionReducerMap,
@@ -23,14 +25,16 @@ export interface AppState {
     readonly wallets: fromWallet.State,
     readonly rates: fromRate.State;
     readonly skins: fromSkin.State,
-    readonly language: fromLanguage.State
+    readonly language: fromLanguage.State,
+    readonly nodes:  fromNode.State
 }
 
 export const appReducer: ActionReducerMap<AppState> = {
     wallets: fromWallet.reducer,
     rates: fromRate.reducer,
     skins: fromSkin.reducer,
-    language: fromLanguage.reducer
+    language: fromLanguage.reducer,
+    nodes: fromNode.reducer
 };
 
 

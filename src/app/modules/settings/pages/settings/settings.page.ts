@@ -73,6 +73,9 @@ export class SettingsPage implements OnInit
         }, {
             link: '/settings/skins',
             name: 'Settings.Navigation.Skins'
+        }, {
+            link: '/settings/node',
+            name: 'Settings.Navigation.Node'
         }];
 
         if (this.settingsView && this.settingsView.length > 2) {

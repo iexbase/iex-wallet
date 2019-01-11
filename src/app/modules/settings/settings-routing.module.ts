@@ -17,6 +17,7 @@ import { LanguagePage } from "@modules/settings/pages/language/language.page";
 import { SessionLogPage } from "@modules/settings/pages/session-log/session-log.page";
 import { SkinsPage } from "@modules/settings/pages/skins/skins.page";
 import { AddressBookPage } from "@modules/settings/pages/address-book/address-book.page";
+import { NodePage } from "@modules/settings/pages/node/node.page";
 
 const routes: Routes = [{
         path: '', component: SettingsPage,
@@ -25,7 +26,8 @@ const routes: Routes = [{
             { path: 'language', component: LanguagePage },
             { path: 'address-book', component: AddressBookPage },
             { path: 'session-log', component: SessionLogPage },
-            { path: 'skins', component: SkinsPage }
+            { path: 'skins', component: SkinsPage },
+            { path: 'node', component: NodePage }
         ]
     }];
 

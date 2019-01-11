@@ -1,0 +1,34 @@
+<div class="settings-page">
+    <h1>{{ 'Settings.Node.Title' | translate }}</h1>
+    <p class="description">{{ 'Settings.Node.Description' | translate }}</p>
+
+    <div *ngIf="!isEmptyList" class="add-node-button">
+        <button class="tron-default-button" (click)="addNode()" mat-stroked-button="">
+            {{'Settings.Node.AddNode' | translate}}
+        </button>
+    </div>
+
+    <mat-list class="nodes" role="list">
+        <mat-list-item role="listitem" [ngClass]="{'active': node.nodeId == tronProvider.selectedNode}"
+                       [ngStyle]="{'pointer-events': node.nodeId != tronProvider.selectedNode ? 'auto':'none'}"
+                       mat-ripple *ngFor="let node of filteredNodes" (click)="selectedNode(node.nodeId)">
+            <h4 mat-line>{{node.name}}</h4>
+            <div mat-line="" fxLayout="row">
+                <div class="node-label" mat-line fxFlex="30">
+                    <p>{{'Settings.Node.FullNode' | translate}}:</p>
+                    <p>{{'Settings.Node.SolidityNode' | translate}}:</p>
+                    <p>{{'Settings.Node.EventServer' | translate}}:</p>
+                </div>
+                <div class="node-value" mat-line="">
+                    <p>{{node.fullNode || ''}}</p>
+                    <p>{{node.solidityNode || ''}}</p>
+                    <p>{{node.eventServer || ''}}</p>
+                </div>
+            </div>
+            <span fxFlex=""></span>
+            <button *ngIf="node.isDelete" class="delete-icon" mat-icon-button (click)="deleteNode(node.nodeId)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </mat-list-item>
+    </mat-list>
+</div>

@@ -1,0 +1,43 @@
+<div class="close-dialog">
+    <button mat-icon-button="" (click)="onClose()">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<form [formGroup]="nodeAdd">
+<div class="add-node-window">
+    <h1 mat-dialog-title>{{ 'Settings.AddNode.Title' | translate }}</h1>
+    <div mat-dialog-content>
+        <div class="node-name-field">
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'Settings.AddNode.Name' | translate }}</mat-label>
+                <input type="text" matInput [placeholder]="'TronGrid' | translate" formControlName="name">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'Settings.AddNode.FullNode' | translate }}</mat-label>
+                <input type="text" matInput [placeholder]="'https://api.trongrid.io' | translate" formControlName="fullNode">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'Settings.AddNode.SolidityNode' | translate }}</mat-label>
+                <input type="text" matInput [placeholder]="'https://api.trongrid.io' | translate" formControlName="solidityNode">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>{{ 'Settings.AddNode.EventServer' | translate }}</mat-label>
+                <input type="text" matInput [placeholder]="'https://api.trongrid.io' | translate" formControlName="eventServer">
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div mat-dialog-actions>
+        <button mat-stroked-button color="primary"
+                (click)="save()"
+                [disabled]="nodeAdd.invalid"
+                class="tron-default-button default-theme">
+            {{ 'Settings.AddNode.Add' | translate }}
+        </button>
+    </div>
+</div>
+</form>

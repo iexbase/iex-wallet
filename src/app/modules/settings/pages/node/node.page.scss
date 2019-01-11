@@ -1,0 +1,39 @@
+.nodes {
+    .mat-list-item {
+        height: 145px;
+        cursor: pointer;
+
+        &.active {
+            background: #00c2ff0f;
+            border-radius: 5px;
+        }
+
+        .node-label {
+            padding-left: 10px;
+            opacity: .6;
+            font-size: 13px;
+        }
+
+        .node-value {
+            font-size: 13px;
+        }
+
+        .delete-icon {
+            opacity: .5;
+            transition: opacity .3s ease-out;
+            -moz-transition: opacity .3s ease-out;
+            -webkit-transition: opacity .3s ease-out;
+            -o-transition: opacity .3s ease-out;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+.add-node-button {
+    position: absolute;
+    right: 40px;
+    top: 80px;
+}

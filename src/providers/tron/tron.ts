@@ -5,9 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {LocalStorage} from "ngx-webstorage";
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { LocalStorage } from "ngx-webstorage";
+import { select, Store } from "@ngrx/store";
+
+import * as _ from "lodash";
+import { v4 as uuid } from 'uuid';
 
 // TronWeb declare module
 import TronWeb from "tronweb";
@@ -16,15 +20,19 @@ import env from "../../environments";
 // Providers
 import { Logger } from "@providers/logger/logger";
 
+// Redux
+import { AppState } from "@redux/index";
+import * as fromNodes from "@redux/nodes/nodes.reducer";
+import * as NodeActions from "@redux/nodes/nodes.actions";
+
 
 // Interface API Nodes
 export interface TronNodesInterface {
+    name: string;
     fullNode: string;
     solidityNode: string;
     eventServer: string;
-    privateKey?: string;
 }
-
 
 @Injectable()
 export class TronProvider
@@ -38,37 +46,46 @@ export class TronProvider
     private readonly activeAccount: string;
 
     /**
-     * Type of network used
+     * Node storage
      *
      * @var string
      */
-    public network: string = 'mainnet';
+    @LocalStorage()
+    nodes: string;
 
     /**
      * Basic methods of 'tronWeb'
      *
      * @var any
      */
-    public readonly client: TronWeb | any;
+    public client: TronWeb | any;
 
     /**
      * Selected node
      *
      * @var any
      */
-    protected selectedNode: any;
+    @LocalStorage()
+    public selectedNode: any;
+
+    /**
+     * Default node ID
+     *
+     * @var string
+     */
+    private readonly defaultNodeID: string = '493e0017-66e5-44d0-9eb2-1f454d13cf3e';
 
     /**
      * List of all available nodes
      *
      * @var any
      */
-    private readonly listNodes: any = {
-
+    public defaultNodes: any = {
         /**
          * Tron MainNet Network
          */
         '493e0017-66e5-44d0-9eb2-1f454d13cf3e': <TronNodesInterface> {
+            name: 'Mainnet',
             fullNode: 'https://api.trongrid.io',
             solidityNode: 'https://api.trongrid.io',
             eventServer: 'https://api.trongrid.io'
@@ -82,6 +99,7 @@ export class TronProvider
          * explorer and services you'll need for your next project.
          */
         '532a9484-31eb-4046-a8a2-3488285e4c1b': <TronNodesInterface> {
+            name: 'Shasta Testnet',
             fullNode: 'https://api.shasta.trongrid.io',
             solidityNode: 'https://api.shasta.trongrid.io',
             eventServer: 'https://api.shasta.trongrid.io'
@@ -93,48 +111,207 @@ export class TronProvider
      *
      * @param {HttpClient} http - Perform HTTP requests.
      * @param {Logger} logger - Log provider
+     * @param {Store} store - Reactive provider
      */
     constructor(
         private http: HttpClient,
-        private logger: Logger
+        private logger: Logger,
+        protected store: Store<AppState>,
     ) {
         this.logger.debug('TronProvider initialized');
 
-        // We get the node with which the project will work
-        this.selectedNode = (this.network == 'mainnet')
-            ? this.listNodes['493e0017-66e5-44d0-9eb2-1f454d13cf3e'] :
-            this.listNodes['532a9484-31eb-4046-a8a2-3488285e4c1b'];
+        // The most important thing:
+        // In the event that there is no default data in the local storage,
+        // we load several nodes
+        if(!this.nodes)
+            this.nodes = JSON.stringify(this.defaultNodes);
 
-        // Establish connections with "TronWeb"
-        this.client = new TronWeb(
-            this.selectedNode.fullNode,
-            this.selectedNode.solidityNode,
-            this.selectedNode.eventServer
-        );
+        // If the node is not selected, manually activate
+        if(!this.selectedNode)
+            this.selectNode(this.defaultNodeID);
+
+        this.startDispatcher();
     }
 
     /**
-     * Getting network type
+     * Client update, for data to take effect
      *
-     * @return any
+     * @return {Promise}
      */
-    public getNetwork(): any {
-        return {
-            network: this.network
-        };
-    }
-
-    /**
-     * List nodes
-     *
-     * @return any
-     */
-    public getNodes(): any
+    updateTronClient(): Promise<any>
     {
-        return {
-            nodes: this.listNodes,
-            selectedNode: this.selectedNode
-        }
+        return new Promise<any>(() => {
+            this.getCurrentNode()
+                .then(n => {
+                    // Establish connections with "TronWeb"
+                    this.client = new TronWeb(
+                        n.fullNode,
+                        n.solidityNode,
+                        n.eventServer
+                    );
+                })
+
+        });
+    }
+
+    /**
+     * Get active node
+     *
+     * @return {Promise}
+     */
+    getCurrentNode(): Promise<any>
+    {
+        return new Promise<any>((resolve, reject) => {
+            this.getNodes()
+                .then(node => {
+                    if (node && node[this.selectedNode])
+                        return resolve(node[this.selectedNode])
+                })
+                .catch(() => {
+                    return reject();
+                });
+        });
+    }
+
+    /**
+     * Getting all available nodes
+     *
+     * @return {Promise}
+     */
+    getNodes(): Promise<any>
+    {
+        return new Promise((resolve) => {
+            if(this.nodes && _.isString(this.nodes))
+                resolve(JSON.parse(this.nodes) || {});
+
+            return resolve({}); // As addition
+        })
+    }
+
+    /**
+     * Adding new nodes
+     *
+     * @param {TronNodesInterface} node - node detail
+     * @return {Promise}
+     */
+    public addNode(node: TronNodesInterface): Promise<any>
+    {
+        return new Promise((resolve, reject) =>
+        {
+            // Check if the address exists in the contact list
+            this.getNodes()
+                .then(n => {
+                    const nameState = Object.values(n).some((item: any) => (
+                        item.name.toLowerCase() == node.name.trim().toLowerCase()
+                    ));
+
+                    // Name verification before adding
+                    if(nameState)
+                        reject('Name is busy, use another');
+
+                    // If "Event Server" is not specified, we write from the default list.
+                    if(!node.eventServer)
+                        node.eventServer = this.defaultNodes[this.defaultNodeID].eventServer;
+
+                    // Add a new nodes to the list
+                    n[uuid()] = node;
+                    this.nodes = JSON.stringify(n);
+
+                    return resolve(n);
+                })
+                .catch(err => {
+                    return reject(err)
+                });
+        });
+    }
+
+    /**
+     * Delete node
+     *
+     * @param {string} nodeId - node id
+     * @return {Promise}
+     */
+    public removeNode(nodeId: string): Promise<any>
+    {
+        return new Promise((resolve, reject) =>
+        {
+            // Check if the id exists in the nodes list
+            this.getNodes()
+                .then(n => {
+                    // Check if there are any nodes in the list.
+                    if(_.isEmpty(n))
+                        return reject('Nodes is empty');
+
+                    // Check if the node exists in the list
+                    if(!n[nodeId])
+                        return reject('Node does not exist');
+
+                    //In case of deleting the active node,
+                    // switch to the node which is available by default.
+                    if(nodeId == this.selectedNode)
+                        this.selectNode(this.defaultNodeID);
+
+                    // Exclude remote node from list
+                    delete n[nodeId];
+
+                    this.nodes = JSON.stringify(n);
+                    return resolve(n)
+                })
+                .catch(err => {
+                    return reject(err)
+                });
+        });
+    }
+
+    /**
+     * Activate new nodes
+     *
+     * @param {string} nodeID - id node
+     * @return void
+     */
+    selectNode(nodeID: string): void {
+        this.selectedNode = nodeID;
+        this.updateTronClient().then(() => {});
+    }
+
+    /**
+     * Get network type
+     *
+     * @returns {boolean}
+     */
+    isShasta(): boolean {
+        return this.selectedNode == '532a9484-31eb-4046-a8a2-3488285e4c1b';
+    }
+
+    /**
+     * Get explorer api
+     *
+     * @returns {string}
+     */
+    getExplorer(): string {
+        return (this.isShasta() ? env.shasta.api : env.explorer.api)
+    }
+
+    /**
+     * Start Dispatcher
+     *
+     * @return void
+     */
+    private startDispatcher(): void
+    {
+        this.store.dispatch((
+            new NodeActions.AddNode({
+                node: {
+                    id: 1,
+                    selectedNode: this.selectedNode
+                }
+            })
+        ));
+
+        this.store.pipe(select(fromNodes.findNodeById(1))).subscribe(result => {
+            if(!result) return this.selectNode(this.defaultNodeID);
+            this.selectNode(result.selectedNode)
+        });
     }
 
     /**
@@ -364,7 +541,7 @@ export class TronProvider
      */
     async getTxHistory(address: string, start: number = 0, limit: number = 20, total: number = 0, callback?: any): Promise<any>
     {
-        let scan = `${env.explorer.api}/transaction?count=true&sort=-timestamp&limit=${limit}&start=${start}&total=${total}&address=${address}`;
+        let scan = `${this.getExplorer()}/transaction?count=true&sort=-timestamp&limit=${limit}&start=${start}&total=${total}&address=${address}`;
         return await this.http.get(scan)
             .subscribe(
                 result => {
@@ -386,7 +563,7 @@ export class TronProvider
     async getTransaction(txHash: string, callback?: any): Promise<any>
     {
         try {
-            return await this.http.get(`${env.explorer.api}/transaction/${txHash}`).subscribe(
+            return await this.http.get(`${this.getExplorer()}/transaction/${txHash}`).subscribe(
                 result => callback(null, result),
                 error => callback(error)
             )
@@ -425,7 +602,7 @@ export class TronProvider
     async getVoteHistory(callback?: any): Promise<any>
     {
         try {
-            return await this.http.get(`${env.explorer.api}/vote/witness`).subscribe(
+            return await this.http.get(`${this.getExplorer()}/vote/witness`).subscribe(
                 result => callback(null, result),
                 error => callback(error)
             )

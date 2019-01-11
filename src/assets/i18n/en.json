@@ -232,7 +232,26 @@
             "Language": "Language",
             "AddressBook": "Address book",
             "SessionLog": "Session Log",
-            "Skins": "Skins"
+            "Skins": "Skins",
+            "Node": "Node"
+        },
+
+        "Node": {
+            "Title": "Node",
+            "Description": "Select the node you want to work with.",
+            "AddNode": "Add node",
+            "FullNode": "Full node",
+            "SolidityNode": "Solidity node",
+            "EventServer": "Event server"
+        },
+
+        "AddNode": {
+            "Title": "Add custom node",
+            "Name": "Node name",
+            "FullNode": "Full node",
+            "SolidityNode": "Solidity node",
+            "EventServer": "Event server",
+            "Add": "Add node"
         },
 
         "AltCurrency": {

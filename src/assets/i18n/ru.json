@@ -233,7 +233,26 @@
             "Language": "Язык",
             "SessionLog": "Лог сессии",
             "AddressBook": "Адресная книга",
-            "Skins": "Скины"
+            "Skins": "Скины",
+            "Node": "Ноды"
+        },
+
+        "Node": {
+            "Title": "Ноды",
+            "Description": "Выберите ноду, с которым вы хотите работать.",
+            "AddNode": "Добавить ноду",
+            "FullNode": "Full node",
+            "SolidityNode": "Solidity node",
+            "EventServer": "Event server"
+        },
+
+        "AddNode": {
+            "Title": "Добавить новую ноду",
+            "Name": "Название ноды",
+            "FullNode": "Full node",
+            "SolidityNode": "Solidity node",
+            "EventServer": "Event server",
+            "Add": "Добавить ноду"
         },
 
         "AltCurrency": {

@@ -27,9 +27,11 @@ import { AltCurrencyPage } from "@modules/settings/pages/alt-currency/alt-curren
 import { SkinsPage } from "@modules/settings/pages/skins/skins.page";
 import { SessionLogPage } from "@modules/settings/pages/session-log/session-log.page";
 import { LanguagePage } from "@modules/settings/pages/language/language.page";
-import {AddressBookPage} from "@modules/settings/pages/address-book/address-book.page";
-import {AddContactComponent} from "@modules/settings/components/add-contact/add-contact.component";
-import {GravatarPage} from "@modules/includes/gravatar/gravatar";
+import { AddressBookPage } from "@modules/settings/pages/address-book/address-book.page";
+import { AddContactComponent } from "@modules/settings/components/add-contact/add-contact.component";
+import { GravatarPage } from "@modules/includes/gravatar/gravatar";
+import { NodePage } from "@modules/settings/pages/node/node.page";
+import { AddNodeComponent } from "@modules/settings/components/add-node/add-node.component";
 
 const settingsPage = [
     SettingsPage,
@@ -38,11 +40,13 @@ const settingsPage = [
     LanguagePage,
     SessionLogPage,
     SkinsPage,
+    NodePage,
     GravatarPage
 ];
 
 const settingsComponent = [
-    AddContactComponent
+    AddContactComponent,
+    AddNodeComponent
 ];
 
 const settingsMaterial = [
