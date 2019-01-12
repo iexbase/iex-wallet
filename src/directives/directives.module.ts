@@ -9,6 +9,7 @@ import { NgModule } from "@angular/core";
 // directives
 import {CopyToClipboard} from "./copy-to-clipboard/copy-to-clipboard";
 import {MatSnackBarModule} from "@angular/material";
+import {OnlyNumber} from "@directives/only-number/only-number";
 
 
 
@@ -17,10 +18,12 @@ import {MatSnackBarModule} from "@angular/material";
         MatSnackBarModule
     ],
     declarations: [
-        CopyToClipboard
+        CopyToClipboard,
+        OnlyNumber
     ],
     exports: [
-        CopyToClipboard
+        CopyToClipboard,
+        OnlyNumber
     ]
 })
 export class DirectivesModule {}
