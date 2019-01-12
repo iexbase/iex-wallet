@@ -65,6 +65,43 @@
         max-width: 500px;
         margin: 0 auto;
 
+        .amount {
+            width: 100%;
+            display: block;
+            padding-bottom: 15px;
+
+            /deep/ .mat-hint {
+                font-size: 19px;
+                width: 100%;
+            }
+
+            /deep/ .mat-form-field-flex {
+                font-size: 19px;
+            }
+
+            /deep/.mat-form-field-hint-spacer {
+                flex: 0;
+            }
+        }
+
+        .send-max {
+            background-color: rgba(255, 255, 255, 0.1);
+            margin-top: 15px;
+            height: 40px;
+            min-width: 55px;
+            margin-left: 12px;
+            border-radius: 4px;
+            font-size: 15px;
+            letter-spacing: 0.04em;
+            text-transform: capitalize;
+            cursor: pointer;
+            z-index: 2;
+            font-weight: 100;
+            transition: opacity 100ms ease-in-out;
+            opacity: .5;
+            padding: 0;
+        }
+
         mat-form-field.form-input {
             width: 100%;
             display: block;
@@ -77,4 +114,16 @@
         }
     }
 
+    .notification
+    {
+        margin: 15px 0 16px 0;
+        .not-funds
+        {
+            font-size: 16px;
+            font-weight: 300;
+            text-align: center;
+            margin-bottom: 4px;
+            color: #f0f0f0d6;
+        }
+    }
 }

@@ -94,7 +94,10 @@ export class PaperWalletComponent
         const dialogRef = this.dialog.open(TransferAssetComponent, {
             width: '650px',
             panelClass: ['dialog-background', this.wallet.color],
-            data: this.wallet
+            data: {
+                ...this.wallet,
+                altCode: this.altCode
+            }
         });
 
         dialogRef.afterClosed().subscribe(() => {});

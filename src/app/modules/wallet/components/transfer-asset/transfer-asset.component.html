@@ -64,16 +64,40 @@
                                    [(ngModel)]="fields.toAddress" name="toAddress">
                         </mat-form-field>
 
-                        <mat-form-field appearance="outline">
-                            <mat-label>{{'Wallet.TransferAsset.Amount' | translate}}</mat-label>
-                            <input matInput [placeholder]="fields.token == 'TRX' ? '0.0000': '0' "
-                                   [(ngModel)]="fields.amount"
-                                   [dropSpecialCharacters]="false"
-                                   [mask]="fields.token === 'TRX' ? '0*.0000' : '0*'"
-                                   name="amount">
-                            <button mat-button="" (click)="sendMax()" matSuffix>MAX</button>
-                            <mat-hint>{{'Wallet.TransferAsset.AmountHint' | translate}}</mat-hint>
-                        </mat-form-field>
+                        <div fxLayout="row" fxLayoutAlign="center center">
+                            <mat-form-field fxFlex class="amount" appearance="legacy" [floatLabel]="'never'">
+                                <input matInput placeholder="0"
+                                       [(ngModel)]="fields.amount"
+                                       (ngModelChange)="processAmount('trx')"
+                                       onlyNumber
+                                       name="amount">
+                                <span matSuffix>TRX</span>
+                                <mat-hint fxLayout="row" *ngIf="fields.token == 'TRX'">
+                                    <input matInput placeholder="0"
+                                           [(ngModel)]="alternativeAmount"
+                                           onlyNumber
+                                           (ngModelChange)="processAmount('fiat')" value="0.00">
+                                    <span matSuffix>{{fiatCode}}</span>
+                                </mat-hint>
+                            </mat-form-field>
+
+                            <!-- Send max balance -->
+                            <button fxFlex="2" class="send-max" mat-button=""
+                                    [disabled]="fields.amount == getTokenAmount(fields.token)"
+                                    (click)="sendMax()">MAX</button>
+                        </div>
+                    </div>
+
+                    <div class="notification">
+                        <!-- Displayed in case of lack of funds. -->
+                        <div class="not-funds" *ngIf="this.fields.amount > this.getTokenAmount(this.fields.token)">
+                            {{'Wallet.TransferAsset.NotFunds' | translate}}
+                        </div>
+
+                        <!-- Initial notice -->
+                        <div class="not-funds" *ngIf="this.fields.amount == 0">
+                            {{'Wallet.TransferAsset.AmountHint' | translate}}
+                        </div>
                     </div>
                 </div>
                 <div mat-dialog-actions>

@@ -7,20 +7,19 @@
 
 import {Component, Inject, OnInit} from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from "@angular/material";
-
-import { Update } from "@ngrx/entity";
+import {LocalStorage} from "ngx-webstorage";
 import { Store } from "@ngrx/store";
 
 // Redux
-import * as WalletActions from "@redux/wallet/wallet.actions";
 import { AppState } from "@redux/index";
 
 // Providers
-import {AddressProvider} from "@providers/address/address";
-import {ConfigProvider} from "@providers/config/config";
-import {ElectronProvider} from "@providers/electron/electron";
-import {WalletProvider} from "@providers/wallet/wallet";
-import {LocalStorage} from "ngx-webstorage";
+import { AddressProvider } from "@providers/address/address";
+import { ConfigProvider } from "@providers/config/config";
+import { ElectronProvider } from "@providers/electron/electron";
+import { WalletProvider } from "@providers/wallet/wallet";
+import { RateProvider } from "@providers/rate/rate";
+import { FilterProvider } from "@providers/filter/filter";
 
 @Component({
     selector: 'transfer-asset',
@@ -43,6 +42,13 @@ export class TransferAssetComponent implements OnInit
      * @var boolean
      */
     useSendMax: boolean;
+
+    /**
+     * Convert to alternative amount
+     *
+     * @var number
+     */
+    alternativeAmount: number;
 
     /**
      * Animation configure (Lottie)
@@ -87,6 +93,13 @@ export class TransferAssetComponent implements OnInit
     isTransactionInfo: boolean = false;
 
     /**
+     * Alternative Unit code
+     *
+     * @var string
+     */
+    fiatCode: string;
+
+    /**
      * Available fields to fill
      *
      * @var any
@@ -94,7 +107,8 @@ export class TransferAssetComponent implements OnInit
     fields: any = {
         token: <string> 'TRX',
         toAddress: <string> '',
-        amount: <number> 0
+        amount: <number> 0,
+        type: <string> 'TRX'
     };
 
     /**
@@ -119,6 +133,20 @@ export class TransferAssetComponent implements OnInit
     listTokens = [];
 
     /**
+     * Convert unit to sun
+     *
+     * @var number
+     */
+    private unitToSun: number = 1e6;
+
+    /**
+     * Convert sun to unit
+     *
+     * @var number
+     */
+    private sunToUnit: number;
+
+    /**
      * Create a new TransferAssetComponent object
      *
      * @param {MatDialogRef} dialogRef - Stream that emits when a dialog has been opened.
@@ -128,6 +156,8 @@ export class TransferAssetComponent implements OnInit
      * @param {ConfigProvider} config - Config provider
      * @param {Store} store - Reactive service
      * @param {AddressProvider} addressProvider - Address provider
+     * @param {RateProvider} rateProvider - Rate provider
+     * @param {FilterProvider} filterProvider - Filter provider
      * @param {any} data - Additional parameters received
      */
     constructor(
@@ -138,6 +168,8 @@ export class TransferAssetComponent implements OnInit
         public config: ConfigProvider,
         protected store: Store<AppState>,
         private addressProvider: AddressProvider,
+        private rateProvider: RateProvider,
+        private filterProvider: FilterProvider,
         @Inject(MAT_DIALOG_DATA) public data: any) {
 
         this.lottieConfig = {
@@ -146,6 +178,7 @@ export class TransferAssetComponent implements OnInit
             autoplay: true,
             loop: false
         };
+        this.sunToUnit = 1 / this.unitToSun;
     }
 
     /**
@@ -156,9 +189,11 @@ export class TransferAssetComponent implements OnInit
     ngOnInit()
     {
         this.wallet = this.data;
+        this.fiatCode = this.data.altCode;
 
         // Balance update
-        this.updateBalance();
+        this.walletProvider.fullUpdateAccount(this.wallet.address)
+            .then(() => {});
 
         // Get tokens to exclude
         const userTokens = JSON.parse(this.filteredTokens) || [];
@@ -175,6 +210,22 @@ export class TransferAssetComponent implements OnInit
     }
 
     /**
+     * Get token balance
+     *
+     * @param {string} token - Token id
+     * @returns {number}
+     */
+    getTokenAmount(token: string): number
+    {
+        let filter = this.listTokens.find(c =>
+            c.name == token
+        );
+
+        if(!filter) return null;
+        return (filter.name.toLowerCase() == 'trx' ? filter.value / 1e6 : filter.value);
+    }
+
+    /**
      * Sending the entire amount
      *
      * @return void
@@ -182,16 +233,72 @@ export class TransferAssetComponent implements OnInit
     public sendMax(): void
     {
         this.useSendMax = true;
-
         let item = this.listTokens.find(c =>
                 c.name == this.fields.token
             );
 
-        if(this.fields.token.toUpperCase() == 'TRX')
+        if(this.fields.token.toUpperCase() == 'TRX') {
             this.fields.amount = item.value / 1e6;
-        else {
+            this.processAmount('trx')
+        } else {
             this.fields.amount = item.value;
         }
+    }
+
+    /**
+     * Processing amount
+     *
+     * @param {string} type - type amount
+     * @return void
+     */
+    processAmount(type: string): void
+    {
+        if(type == 'trx')
+        {
+            return this.alternativeAmount = (
+                this.fiatCode.toLowerCase() != 'btc' ?
+                    this.filterProvider.formatFiatAmount(
+                        this.toFiat(this.fields.amount)
+                    ):
+                    this.toFiat(this.fields.amount)
+            );
+        }
+
+        this.fields.amount = this.fromFiat(this.alternativeAmount)
+    }
+
+    /**
+     * Convert amount to alternative currency
+     *
+     * @param {number} val - amount
+     * @returns {number}
+     */
+    private toFiat(val: number): number
+    {
+        if (!this.rateProvider.getRate(this.fiatCode)) return undefined;
+
+        return parseFloat(
+            this.rateProvider
+                .toFiat(
+                    val * this.unitToSun,
+                    this.fiatCode
+                )
+                .toFixed(8)
+        );
+    }
+
+    /**
+     * Convert amount from alternative currency
+     *
+     * @param {number} val - amount
+     * @returns {number}
+     */
+    private fromFiat(val): number
+    {
+        return parseFloat((
+                this.rateProvider.fromFiat(val, this.fiatCode) * this.sunToUnit
+            ).toFixed(5)
+        );
     }
 
     /**
@@ -246,12 +353,12 @@ export class TransferAssetComponent implements OnInit
             if('signature' in signed)
             {
                 this.walletProvider.broadcastTx(signed).then(broadcast => {
-                    if(broadcast.result == true) {
-                        this.updateBalance();
+                    if(broadcast.result == true)
+                    {
+                        this.walletProvider.fullUpdateAccount(this.wallet.address).then(() => {});
 
                         this.isButtonDisabled = false;
                         this.isSuccess = true;
-
                         setTimeout(() => {
                             this.isTransactionInfo = true;
                         }, 2000)
@@ -266,41 +373,17 @@ export class TransferAssetComponent implements OnInit
     }
 
     /**
-     * Update balance
-     *
-     * @return void
-     */
-    updateBalance(): void
-    {
-        this.walletProvider.getBalance(this.wallet.address).then(result => {
-            this.walletProvider.updateWallet(this.wallet.address, {
-                balance: result
-            }).then(result => {
-
-                const update: Update<any> = {
-                    id: this.wallet.id,
-                    changes: {
-                        balance: result.balance
-                    }
-                };
-
-                this.store.dispatch(
-                    new WalletActions.UpdateWallet({ wallet: update})
-                );
-            })
-        });
-    }
-
-    /**
      * Sent button status
      *
      * @return boolean
      */
-    enabledSend(): boolean {
+    enabledSend(): boolean
+    {
         return this.fields.toAddress.length == 0 ||
             this.isButtonDisabled == true ||
             this.addressProvider.validateAddress(this.fields.toAddress) == false ||
-            this.fields.amount == 0
+            this.fields.amount == 0 ||
+            this.fields.amount > this.getTokenAmount(this.fields.token)
     }
 
     /**
