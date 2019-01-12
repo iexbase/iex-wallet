@@ -11,6 +11,8 @@ import { Store } from "@ngrx/store";
 import { Update } from "@ngrx/entity";
 import { LocalStorage } from "ngx-webstorage";
 
+import * as _ from "lodash";
+
 // Redux
 import * as WalletActions from "@redux/wallet/wallet.actions";
 import * as fromWallet from "@redux/wallet/wallet.reducer";
@@ -92,7 +94,14 @@ export class PreferencesComponent implements OnInit
      *
      * @return any[]
      */
-    public listTokens: any;
+    public listTokens: any[];
+
+    /**
+     * If there are no tokens, disable the block
+     *
+     * @return boolean
+     */
+    isEmptyList: boolean;
 
     /**
      * Balance hidden
@@ -132,6 +141,9 @@ export class PreferencesComponent implements OnInit
         this.hideBalance = getWallet.hideBalance;
         this.listTokens = getWallet.tokens.filter(({ name }) => name !== 'TRX')
             .map(({ name }) => ({ id: name, name }));
+
+        // Check for the existence of tokens
+        this.isEmptyList = _.isEmpty(this.listTokens);
 
         // Get all excluded tokens
         this.selectedTokens = JSON.parse(this.filteredTokens) || [];
