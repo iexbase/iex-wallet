@@ -10,7 +10,7 @@ script:
 - npm run-script build
 
 cache:
-    yarn: true
+    npm: true
     directories:
     - node_modules
 
