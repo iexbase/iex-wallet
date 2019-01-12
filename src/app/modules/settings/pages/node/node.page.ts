@@ -1,12 +1,13 @@
-import {Component, OnInit} from "@angular/core";
-import {TronProvider} from "@providers/tron/tron";
-import {Update} from "@ngrx/entity";
-import * as NodeActions from "@redux/nodes/nodes.actions";
-import {Store} from "@ngrx/store";
-import * as fromNode from "@redux/nodes/nodes.reducer";
-import {MatDialog, MatSnackBar} from "@angular/material";
-import {AddNodeComponent} from "@modules/settings/components/add-node/add-node.component";
+import { Component, OnInit } from "@angular/core";
+import { MatDialog, MatSnackBar } from "@angular/material";
+
 import * as _ from "lodash";
+
+// modules
+import { AddNodeComponent } from "@modules/settings/components/add-node/add-node.component";
+
+// Providers
+import { TronProvider } from "@providers/tron/tron";
 
 @Component({
     selector: 'node-page',
@@ -41,13 +42,11 @@ export class NodePage implements OnInit
      *
      *  @param {TronProvider} tronProvider - Tron Provider
      *  @param {MatDialog} dialog - Service to open Material Design modal dialogs.
-     *  @param {Store} store - Reactive service
      *  @param {MatSnackBar} snackBar - Service to dispatch Material Design snack bar messages.
      */
     constructor(
         public tronProvider: TronProvider,
         public dialog: MatDialog,
-        protected store: Store<fromNode.State>,
         private snackBar: MatSnackBar
     ) {
         //
@@ -116,19 +115,8 @@ export class NodePage implements OnInit
      * @param {string} nodeId - id node
      * @return void
      */
-    selectedNode(nodeId: string): void
-    {
+    selectedNode(nodeId: string): void {
         this.tronProvider.selectNode(nodeId);
-        const update: Update<any> = {
-            id: 1,
-            changes: {
-                selectedNode: nodeId
-            }
-        };
-
-        this.store.dispatch(
-            new NodeActions.UpdateNode({node: update})
-        )
     }
 
     /**

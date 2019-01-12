@@ -8,7 +8,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { LocalStorage } from "ngx-webstorage";
-import { select, Store } from "@ngrx/store";
 
 import * as _ from "lodash";
 import { v4 as uuid } from 'uuid';
@@ -19,12 +18,6 @@ import env from "../../environments";
 
 // Providers
 import { Logger } from "@providers/logger/logger";
-
-// Redux
-import { AppState } from "@redux/index";
-import * as fromNodes from "@redux/nodes/nodes.reducer";
-import * as NodeActions from "@redux/nodes/nodes.actions";
-
 
 // Interface API Nodes
 export interface TronNodesInterface {
@@ -66,7 +59,7 @@ export class TronProvider
      * @var any
      */
     @LocalStorage()
-    public selectedNode: any;
+    public selectedNode: string;
 
     /**
      * Default node ID
@@ -78,9 +71,9 @@ export class TronProvider
     /**
      * List of all available nodes
      *
-     * @var any
+     * @var object
      */
-    public defaultNodes: any = {
+    public defaultNodes: object = {
         /**
          * Tron MainNet Network
          */
@@ -111,12 +104,10 @@ export class TronProvider
      *
      * @param {HttpClient} http - Perform HTTP requests.
      * @param {Logger} logger - Log provider
-     * @param {Store} store - Reactive provider
      */
     constructor(
         private http: HttpClient,
-        private logger: Logger,
-        protected store: Store<AppState>,
+        private logger: Logger
     ) {
         this.logger.debug('TronProvider initialized');
 
@@ -126,11 +117,7 @@ export class TronProvider
         if(!this.nodes)
             this.nodes = JSON.stringify(this.defaultNodes);
 
-        // If the node is not selected, manually activate
-        if(!this.selectedNode)
-            this.selectNode(this.defaultNodeID);
-
-        this.startDispatcher();
+        this.selectNode(this.selectedNode)
     }
 
     /**
@@ -269,7 +256,12 @@ export class TronProvider
      * @param {string} nodeID - id node
      * @return void
      */
-    selectNode(nodeID: string): void {
+    selectNode(nodeID: string): void
+    {
+        // If the node is not selected, manually activate
+        if(!this.selectedNode)
+            nodeID = this.defaultNodeID;
+
         this.selectedNode = nodeID;
         this.updateTronClient().then(() => {});
     }
@@ -290,28 +282,6 @@ export class TronProvider
      */
     getExplorer(): string {
         return (this.isShasta() ? env.shasta.api : env.explorer.api)
-    }
-
-    /**
-     * Start Dispatcher
-     *
-     * @return void
-     */
-    private startDispatcher(): void
-    {
-        this.store.dispatch((
-            new NodeActions.AddNode({
-                node: {
-                    id: 1,
-                    selectedNode: this.selectedNode
-                }
-            })
-        ));
-
-        this.store.pipe(select(fromNodes.findNodeById(1))).subscribe(result => {
-            if(!result) return this.selectNode(this.defaultNodeID);
-            this.selectNode(result.selectedNode)
-        });
     }
 
     /**
