@@ -1,0 +1,88 @@
+#tron-content-help {
+    display: flex;
+    flex: 1 1 auto;
+    cursor: default;
+    position: relative;
+    height: 100vh;
+
+    .help-container {
+        max-width: 85%;
+        margin: 0 auto;
+    }
+    #header {
+        text-align: center;
+        h1 {
+            font-size: 42px;
+            font-weight: 300;
+            color: #ffffff;
+            margin: 0;
+            padding: 15px 0 18px 0;
+        }
+
+        p {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.45);
+            text-align: center;
+            margin: 0 0 20px 0;
+            padding: 0;
+            line-height: 1.5;
+            font-weight: 300;
+        }
+
+        a {
+            cursor: pointer;
+        }
+    }
+
+    #social-link {
+        margin-top: 50px;
+        width: 100%;
+        .social-link-item {
+            background: rgba(216, 216, 216, 0.02);
+            width: 160px;
+            height: 120px;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 400;
+            color: #ffffff;
+            text-decoration: none;
+            position: relative;
+            cursor: pointer;
+
+            &:not(:last-child) {
+                margin-right: 5px;
+            }
+
+            &:before {
+                content: "";
+                position: absolute;
+                left: 0;
+                right: 0;
+                height: 100%;
+                opacity: 0;
+                background-image: linear-gradient(to bottom, #eeeeee, #d8d8d8);
+                transition: all 200ms linear;
+            }
+
+
+            &:hover, &:focus {
+                color: #ffffff;
+                text-decoration: none;
+
+                &:before {
+                    opacity: 0.04;
+                }
+            }
+
+            mat-icon {
+                width: 40px;
+                height: 40px;
+                margin-bottom: 22px;
+            }
+        }
+    }
+}

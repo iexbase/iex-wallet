@@ -40,6 +40,7 @@ const routes: Routes = [{
             { path: 'wallet', loadChildren: './modules/wallet/wallet.module#WalletModule'},
             { path: 'vote', loadChildren: './modules/vote/vote.module#VoteModule'},
             { path: 'settings', loadChildren: './modules/settings/settings.module#SettingsModule'},
+            { path: 'help', loadChildren: './modules/help/help.module#HelpModule'},
             // Fallback when no prior route is matched
             { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
         ]

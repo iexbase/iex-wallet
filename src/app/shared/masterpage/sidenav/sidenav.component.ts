@@ -76,6 +76,13 @@ export class SidenavComponent implements OnInit, OnDestroy
                 divider: false,
                 sub_header: null,
                 wallets: false
+            }, {
+                icon: 'live_help',
+                link: '/help',
+                name: 'Shared.Navigation.Help',
+                divider: false,
+                sub_header: null,
+                wallets: false
             }
         ];
     }

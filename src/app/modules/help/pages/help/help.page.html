@@ -1,0 +1,33 @@
+<div id="tron-content-help">
+    <div class="help-container" fxLayout="column" fxLayoutAlign="center center">
+        <div id="header">
+            <h1>{{app.info.nameCase}} Version {{app.info.version}}</h1>
+            <p>
+                Find release notes and downloads at <a (click)="openExternalLink(app.info.gitReleases)">github.com/iexbase/iex-wallet/releases</a>.
+                <br />Use the buttons below to learn about {{app.info.nameCase}}, solve problems and get in touch. Thank you for using {{app.info.nameCase}}!
+            </p>
+        </div>
+
+        <div id="social-link" fxLayout="row" fxLayoutAlign="center center">
+            <div class="social-link-item" (click)="openExternalLink('https://twitter.com/iexbase')">
+                <mat-icon svgIcon="twitter-icon"></mat-icon>
+                Twitter
+            </div>
+
+            <div class="social-link-item" (click)="openExternalLink('https://t.me/iexbase')">
+                <mat-icon svgIcon="telegram-icon"></mat-icon>
+                Telegram
+            </div>
+
+            <div class="social-link-item" (click)="openExternalLink('https://discord.gg/GsRgsTD')">
+                <mat-icon svgIcon="discord-icon"></mat-icon>
+                Discord
+            </div>
+
+            <div class="social-link-item" (click)="openExternalLink('mailto:iexbase@protonmail.com?subject='+ app.info.nameCase + ' ' + app.info.version)">
+                <mat-icon svgIcon="email-icon"></mat-icon>
+                Email Support
+            </div>
+        </div>
+    </div>
+</div>
