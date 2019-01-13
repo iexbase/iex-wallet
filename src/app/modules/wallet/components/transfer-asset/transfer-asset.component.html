@@ -62,7 +62,17 @@
                             <input matInput
                                    [placeholder]="'Wallet.TransferAsset.ToLabel' | translate"
                                    [(ngModel)]="fields.toAddress" name="toAddress">
+                            <button matSuffix mat-icon-button [matMenuTriggerFor]="menu" *ngIf="filteredContactsList && filteredContactsList[0]">
+                                <mat-icon>assignment_ind</mat-icon>
+                            </button>
                         </mat-form-field>
+
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item *ngFor="let item of filteredContactsList"
+                                    (click)="chooseAddress(item.address)" [disabled]="item.address == fields.toAddress">
+                                {{item.name}}
+                            </button>
+                        </mat-menu>
 
                         <div fxLayout="row" fxLayoutAlign="center center">
                             <mat-form-field fxFlex class="amount" appearance="legacy" [floatLabel]="'never'">

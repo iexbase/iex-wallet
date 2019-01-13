@@ -10,6 +10,8 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from "@angular/material";
 import {LocalStorage} from "ngx-webstorage";
 import { Store } from "@ngrx/store";
 
+import * as _ from "lodash";
+
 // Redux
 import { AppState } from "@redux/index";
 
@@ -20,6 +22,7 @@ import { ElectronProvider } from "@providers/electron/electron";
 import { WalletProvider } from "@providers/wallet/wallet";
 import { RateProvider } from "@providers/rate/rate";
 import { FilterProvider } from "@providers/filter/filter";
+import {AddressBookProvider} from "@providers/address-book/address-book";
 
 @Component({
     selector: 'transfer-asset',
@@ -147,6 +150,20 @@ export class TransferAssetComponent implements OnInit
     private sunToUnit: number;
 
     /**
+     * Get filtered contact list
+     *
+     * @var any[]
+     */
+    public filteredContactsList: any[] = [];
+
+    /**
+     * Check if contact list exists
+     *
+     * @var boolean
+     */
+    public hasContacts: boolean;
+
+    /**
      * Create a new TransferAssetComponent object
      *
      * @param {MatDialogRef} dialogRef - Stream that emits when a dialog has been opened.
@@ -158,6 +175,7 @@ export class TransferAssetComponent implements OnInit
      * @param {AddressProvider} addressProvider - Address provider
      * @param {RateProvider} rateProvider - Rate provider
      * @param {FilterProvider} filterProvider - Filter provider
+     * @param {AddressBookProvider} addressBookProvider - Address book provider
      * @param {any} data - Additional parameters received
      */
     constructor(
@@ -170,6 +188,7 @@ export class TransferAssetComponent implements OnInit
         private addressProvider: AddressProvider,
         private rateProvider: RateProvider,
         private filterProvider: FilterProvider,
+        private addressBookProvider: AddressBookProvider,
         @Inject(MAT_DIALOG_DATA) public data: any) {
 
         this.lottieConfig = {
@@ -207,6 +226,47 @@ export class TransferAssetComponent implements OnInit
             'name': 'TRX',
             'value': this.wallet.balance
         });
+
+        //Getting a list of contact addresses
+        this.updateContactsList();
+    }
+
+    /**
+     * Update contact list
+     *
+     * @return void
+     */
+    private updateContactsList(): void
+    {
+        this.addressBookProvider.getAddressBooks()
+            .then(ab => {
+                this.hasContacts = !_.isEmpty(ab);
+                if (!this.hasContacts) return;
+
+                let contactsList = [];
+                _.each(ab, (v, k: string) =>
+                {
+                    contactsList.push({
+                        name: _.isObject(v) ? v.name : v,
+                        address: k,
+                        email: _.isObject(v) ? v.email : null,
+                        recipientType: 'contact',
+                        getAddress: () => Promise.resolve(k)
+                    });
+                });
+                this.filteredContactsList = _.clone(contactsList);
+            });
+    }
+
+    /**
+     * Choose an address from contacts
+     *
+     * @param {string} address - Address from contact
+     * @return void
+     */
+    chooseAddress(address: string): void {
+        if(!address) return null;
+        this.fields.toAddress = address;
     }
 
     /**
