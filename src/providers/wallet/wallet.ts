@@ -13,8 +13,8 @@ import { LocalStorage } from "ngx-webstorage";
 import { Store } from "@ngrx/store";
 
 import { Update } from "@ngrx/entity";
-import * as bip39 from 'bip39';
-import * as hdkey from 'hdkey';
+import bip39 from 'bip39';
+import hdkey from 'hdkey';
 import * as _ from 'lodash';
 import * as CryptoJS from "crypto-js";
 
@@ -1044,7 +1044,6 @@ export class WalletProvider
 
         return this.addByPrivateKey(privateKey);
     }
-
 
     /**
      * Validation Mnemonic
