@@ -138,28 +138,28 @@ export class ImportWalletComponent implements OnInit
         this.walletProvider.importWallet(this.privateKey).then(result =>
         {
             // Add a new account to the storage of all accounts
-            this.walletProvider.getBalance(result.address.base58).then(account =>
-            {
-                this.walletProvider.addWallet({
-                    name: this.walletName,
-                    privateKey: result.privateKey,
-                    address: result.address.base58,
-                    publicKey: result.publicKey,
-                    balance: account
-                }).then(finish => {
-                    // Add to dispatcher
-                    this.store.dispatch(
-                        new WalletActions.AddWallet({wallet: finish})
-                    );
-                    this.isSuccess = true;
-                }).catch(err => {
-                    this.isSuccess = false;
-                    this.snackBar.open(err,null, {
-                        duration: 3000,
-                        panelClass: ['snackbar-theme-dialog']
-                    });
+            this.walletProvider.addWallet({
+                name: this.walletName,
+                privateKey: result.privateKey,
+                address: result.address.base58,
+                publicKey: result.publicKey,
+                balance: 0
+            }).then(finish => {
+                // Add to dispatcher
+                this.store.dispatch(
+                    new WalletActions.AddWallet({wallet: finish})
+                );
+                this.isSuccess = true;
+            }).catch(err => {
+                this.isSuccess = false;
+                this.snackBar.open(err,null, {
+                    duration: 3000,
+                    panelClass: ['snackbar-theme-dialog']
                 });
             });
+
+            // After the addition, we do a full update.
+            this.walletProvider.fullUpdateAccount(result.address.base58).then(() => {});
         }).catch(err => {
             this.snackBar.open(err,null, {
                 duration: 3000,

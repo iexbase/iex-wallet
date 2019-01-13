@@ -148,6 +148,9 @@ export class ImportMnemonicComponent implements OnInit
                 new WalletActions.AddWallet({wallet: added})
             );
 
+            // After the addition, we do a full update.
+            this.walletProvider.fullUpdateAccount(walletId.address.base58).then(() => {});
+
             // Redirect to Wallet
             this.router.navigate(['/', 'wallet']);
         });

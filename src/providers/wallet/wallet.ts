@@ -1109,7 +1109,7 @@ export class WalletProvider
                 energyLimit: this.energy || 0,
                 lastUpdated: this.lastUpdated,
                 tronPower: tronPower || 0,
-                tokens: tokens || {}
+                tokens: tokens || []
             }).then(resultUpdate => {
 
                 const update: Update<any> = {
@@ -1119,7 +1119,8 @@ export class WalletProvider
                         bandwidth: resultUpdate.bandwidth,
                         energyLimit: resultUpdate.energyLimit,
                         lastUpdated: resultUpdate.lastUpdated,
-                        tronPower: resultUpdate.tronPower
+                        tronPower: resultUpdate.tronPower,
+                        tokens: resultUpdate.tokens
                     }
                 };
 
