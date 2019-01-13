@@ -165,6 +165,26 @@ export class AppModule
         );
 
         this.matIconRegistry.addSvgIcon(
+            'twitter-icon',
+            this.domSanitizer.bypassSecurityTrustResourceUrl('assets/svg/mat-icon/twitter.svg')
+        );
+
+        this.matIconRegistry.addSvgIcon(
+            'discord-icon',
+            this.domSanitizer.bypassSecurityTrustResourceUrl('assets/svg/mat-icon/discord.svg')
+        );
+
+        this.matIconRegistry.addSvgIcon(
+            'email-icon',
+            this.domSanitizer.bypassSecurityTrustResourceUrl('assets/svg/mat-icon/email.svg')
+        );
+
+        this.matIconRegistry.addSvgIcon(
+            'telegram-icon',
+            this.domSanitizer.bypassSecurityTrustResourceUrl('assets/svg/mat-icon/telegram.svg')
+        );
+
+        this.matIconRegistry.addSvgIcon(
             'round-delete',
             this.domSanitizer.bypassSecurityTrustResourceUrl('assets/svg/mat-icon/round-delete-button.svg')
         );
