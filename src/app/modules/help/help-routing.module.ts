@@ -9,12 +9,12 @@ import {RouterModule, Routes} from "@angular/router";
 import {NgModule} from "@angular/core";
 import {HelpPage} from "./pages/help/help.page";
 
-const Routes: Routes = [
+const helpRoutes: Routes = [
     { path: '', component: HelpPage }
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(Routes)],
+    imports: [RouterModule.forChild(helpRoutes)],
     exports: [RouterModule]
 })
 export class HelpRoutingModule { }
