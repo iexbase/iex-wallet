@@ -39,6 +39,7 @@ export interface Config
         options: {
             colors: boolean;
             textures: boolean;
+            themes: boolean;
         }
     }
 
@@ -106,7 +107,8 @@ export class ConfigProvider
                 name: 'skin-default',
                 options: {
                     colors: true,
-                    textures: true
+                    textures: true,
+                    themes: false
                 }
             },
 

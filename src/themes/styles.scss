@@ -26,7 +26,8 @@ $candy-app-theme: mat-dark-theme($candy-app-primary, $candy-app-accent, $candy-a
 
 @import "include/_roboto";
 @import "include/_variable";
-@import 'themes';
+@import 'themes'; // loading themes wallet
+@import "skins"; // loading skins
 
 // Colors
 $color-success: #01d1a2;
@@ -112,97 +113,6 @@ html {
     &::-webkit-scrollbar-thumb {
         background-color: rgba(255, 255, 255, 0.2);
         border-radius: 8px;
-    }
-}
-
-
-.skin-default {
-    background-image: linear-gradient(40deg, #10101A 0%, #191A2A 100%);
-}
-
-.skin-barlow {
-    background-image: linear-gradient(to top, #0f3649, #37516c);
-}
-
-.skin-mosaic {
-    background-image: url("assets/images/skins/mosaic.png");
-
-    .sidenav-menu {
-        .mat-toolbar {
-            background-color: #1b1b1db8 !important;
-        }
-
-        .menu-mat-list {
-            background-color: #1b1b1db8 !important;
-        }
-    }
-}
-
-.skin-wood {
-    background-image: linear-gradient(190deg, transparent 0%, rgba(0, 0, 0, 0.6) 99%), url('assets/images/skins/wood.png');
-}
-
-.skin-padded {
-    background-image: url("assets/images/skins/padded.png");
-}
-
-.skin-argyle {
-    background-image: linear-gradient(-177deg, rgba(255, 255, 255, 0.08) 30%, rgba(255, 255, 255, 0) 99%), url('assets/images/skins/argyle.png');
-}
-
-.skin-jeans {
-    background-image: url("assets/images/skins/jeans_black.png");
-}
-
-.skin-diagmonds {
-    background-image: url("assets/images/skins/diagmonds.png");
-}
-
-.skin-woven {
-    background-image: url("assets/images/skins/woven.png");
-}
-
-.skin-mamba {
-    background-image: url("assets/images/skins/black_mamba.png");
-
-    .sidenav-menu {
-        .mat-toolbar {
-            background-color: #1b1b1db8 !important;
-        }
-
-        .menu-mat-list {
-            background-color: #1b1b1db8 !important;
-        }
-    }
-
-}
-
-.skin-midnight {
-    background-image: linear-gradient(-177deg, transparent 30%, rgba(0, 0, 0, 0.4) 99%);
-}
-
-.skin-darklinen {
-    background-image: linear-gradient(-177deg, transparent 30%, rgba(0, 0, 0, 0.1) 99%), url('assets/images/skins/linen-dark.png');
-
-    .sidenav-menu {
-        .mat-toolbar {
-            background-color: rgba(255, 255, 255, 0.05) !important;
-        }
-
-        .menu-mat-list {
-            background-color: rgba(255, 255, 255, 0.05) !important;
-        }
-
-        .mat-nav-list .mat-list-item {
-            color: #FAFAFA !important;
-            opacity: .5;
-
-            &.active {
-                opacity: 1;
-            }
-        }
-
-
     }
 }
 

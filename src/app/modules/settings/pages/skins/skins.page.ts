@@ -54,25 +54,31 @@ export class SkinsPage implements OnInit
         protected store: Store<fromSkin.State>,
     ) {
         this.skins = [{
-                name: "colors",
-                themes: [
-                    {'name': 'default', 'class': 'skin-default'},
-                    {'name': 'barlow', 'class': 'skin-barlow'}
-                ]
-            }, {
-                name: "textures",
-                themes: [
-                    {'name': 'Mosaic', 'class': 'skin-mosaic'},
-                    {'name': 'Mamba', 'class': 'skin-mamba'},
-                    {'name': 'Dadded', 'class': 'skin-padded'},
-                    {'name': 'Wood', 'class': 'skin-wood'},
-                    {'name': 'Argyle', 'class': 'skin-argyle'},
-                    {'name': 'Jeans', 'class': 'skin-jeans'},
-                    {'name': 'Diagmonds', 'class': 'skin-diagmonds'},
-                    {'name': 'Woven', 'class': 'skin-woven'},
-                    {'name': 'Dark Linen', 'class': 'skin-darklinen'}
-                ]
-            }
+            name: "colors",
+            themes: [
+                {'name': 'default', 'class': 'skin-default'},
+                {'name': 'barlow', 'class': 'skin-barlow'},
+                {'name': 'midnight', 'class': 'skin-midnight'}
+            ]
+        }, {
+            name: "textures",
+            themes: [
+                {'name': 'Mosaic', 'class': 'skin-mosaic'},
+                {'name': 'Mamba', 'class': 'skin-mamba'},
+                {'name': 'Dadded', 'class': 'skin-padded'},
+                {'name': 'Wood', 'class': 'skin-wood'},
+                {'name': 'Argyle', 'class': 'skin-argyle'},
+                {'name': 'Jeans', 'class': 'skin-jeans'},
+                {'name': 'Diagmonds', 'class': 'skin-diagmonds'},
+                {'name': 'Woven', 'class': 'skin-woven'},
+                {'name': 'Dark Linen', 'class': 'skin-darklinen'}
+            ]
+        }, {
+            name: "themes",
+            themes: [
+                {'name': 'Endless Space', 'class': 'skin-endless-space'},
+            ]
+        }
         ];
     }
 
