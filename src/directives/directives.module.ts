@@ -5,28 +5,29 @@
  * LICENSE file in the root directory of this source tree.
  */
 import { NgModule } from "@angular/core";
+import { MatSnackBarModule } from "@angular/material";
 
 // directives
-import {CopyToClipboard} from "./copy-to-clipboard/copy-to-clipboard";
-import {MatSnackBarModule} from "@angular/material";
-import {OnlyNumber} from "@directives/only-number/only-number";
-import {ExternalizeLinks} from "@directives/externalize-links/externalize-links";
+import { CopyToClipboard } from "./copy-to-clipboard/copy-to-clipboard";
+import { OnlyNumber } from "@directives/only-number/only-number";
+import { ExternalizeLinks } from "@directives/externalize-links/externalize-links";
 
 
+export const constDirectives = [
+    CopyToClipboard,
+    OnlyNumber,
+    ExternalizeLinks
+];
 
 @NgModule({
     imports: [
         MatSnackBarModule
     ],
     declarations: [
-        CopyToClipboard,
-        OnlyNumber,
-        ExternalizeLinks
+        ...constDirectives
     ],
     exports: [
-        CopyToClipboard,
-        OnlyNumber,
-        ExternalizeLinks
+        ...constDirectives
     ]
 })
 export class DirectivesModule {}
