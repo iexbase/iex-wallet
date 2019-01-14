@@ -9,16 +9,16 @@
     </div>
 
     <div id="header-balance">
-        <div class="balance-trx" *ngIf="!wallet.hideBalance">
+        <div class="balance-trx" *ngIf="!wallet.balanceHidden">
             <span class="balance">{{wallet.balance | sunToUnit}}</span>
             <span class="display-unit">TRX</span>
         </div>
-        <div class="hide-balance" *ngIf="wallet.hideBalance">
+        <div class="hide-balance" *ngIf="wallet.balanceHidden">
             [{{'Wallet.Index.HideBalance' | translate}}]
         </div>
     </div>
 
-    <div id="header-alt-balance" *ngIf="!wallet.hideBalance">
+    <div id="header-alt-balance" *ngIf="!wallet.balanceHidden">
         <div class="currency">
             <span class="symbol"></span>
             <span class="amount">{{ wallet.balance | sunToFiat }}</span>

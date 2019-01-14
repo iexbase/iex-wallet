@@ -108,7 +108,7 @@ export class PreferencesComponent implements OnInit
      *
      * @var boolean
      */
-    public hideBalance: boolean;
+    public balanceHidden: boolean;
 
     /**
      * Create a new PreferencesComponent object
@@ -138,7 +138,7 @@ export class PreferencesComponent implements OnInit
         // Account Information
         let getWallet = this.walletProvider.getWallet(this.data.address);
         this.walletName = getWallet.name;
-        this.hideBalance = getWallet.hideBalance;
+        this.balanceHidden = getWallet.balanceHidden;
         this.listTokens = getWallet.tokens.filter(({ name }) => name !== 'TRX')
             .map(({ name }) => ({ id: name, name }));
 
@@ -168,7 +168,7 @@ export class PreferencesComponent implements OnInit
         this.walletProvider.updateWallet(this.data.address, {
             name: this.walletName,
             color: this.colorIndex.class,
-            hideBalance: this.hideBalance
+            balanceHidden: this.balanceHidden
         }).then(result =>
         {
             // Parameters for update
@@ -177,7 +177,7 @@ export class PreferencesComponent implements OnInit
                 changes: {
                     name: result.name,
                     color: result.color,
-                    hideBalance: result.hideBalance
+                    balanceHidden: result.balanceHidden
                 }
             };
 

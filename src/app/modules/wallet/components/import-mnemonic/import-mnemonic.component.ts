@@ -137,6 +137,7 @@ export class ImportMnemonicComponent implements OnInit
     {
         this.isDisabledButton = true;
         this.walletProvider.importMnemonic({
+            mnemonic: this.mnemonic,
             name: this.walletName,
             privateKey: walletId.privateKey,
             address: walletId.address.base58
@@ -145,6 +146,8 @@ export class ImportMnemonicComponent implements OnInit
             this.store.dispatch(
                 new WalletActions.AddWallet({wallet: wallet})
             );
+
+            console.log(wallet)
 
             // After the addition, we do a full update.
             this.walletProvider.fullUpdateAccount(walletId.address.base58).then(() => {});

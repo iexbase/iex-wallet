@@ -64,17 +64,19 @@ export class DeleteWalletComponent
     {
         // Get information about a deleted account
         let wallet = this.walletProvider.getWallet(this.data.address);
-        this.walletProvider.deleteWallet(this.data.address);
-        this.store.dispatch(
-            new WalletActions.DeleteWallet({
-                id: wallet.id
-            })
-        );
-        this.activeAccount = '';
+        this.walletProvider.deleteWallet(this.data.address)
+            .then(() => {
+                this.store.dispatch(
+                    new WalletActions.DeleteWallet({
+                        id: wallet.id
+                    })
+                );
+                this.activeAccount = '';
 
-        // Redirect to wallet page
-        this.router.navigate(['/wallet']);
-        this.onClose();
+                // Redirect to wallet page
+                this.router.navigate(['/wallet']);
+                this.onClose();
+            });
     }
 
     /**

@@ -72,6 +72,7 @@ export interface WalletOptions
 {
     id?: number;
     position?: number;
+    mnemonic?: string;
     name: string;
     coin?: Coin;
     balance?: number;
@@ -79,7 +80,7 @@ export interface WalletOptions
     privateKey: string;
     publicKey?: string;
     color?: string;
-    hideBalance?: boolean;
+    balanceHidden?: boolean;
     createdOn?: number;
     updatedOn?: number;
 
@@ -96,9 +97,10 @@ export interface WalletOptions
 export interface UpdateWalletModel
 {
     name?: string;
+    position?: number;
     balance?: number;
     color?: string;
-    hideBalance?: boolean;
+    balanceHidden?: boolean;
     updatedOn?: number;
 
     bandwidth?: number;
@@ -267,21 +269,22 @@ export class WalletProvider
     {
         return new Promise<any>((resolve, reject) =>
         {
-            this.logger.info('Import wallet by mnemonic');
+            this.logger.info('Importing Wallet Mnemonic');
             // wallet adding process
             this.addWallet({
                 name: options.name,
                 privateKey: options.privateKey,
                 address: options.address,
+                mnemonic: options.mnemonic,
                 publicKey: AddressProvider.getPubKeyFromPrivateKey(options.privateKey)
             }).then(walletClient => {
                 const showOpts = _.clone(walletClient);
                 // Delete private key (secure)
-                if(showOpts.privateKey)
-                    delete showOpts['privateKey'];
+                if(showOpts.privateKey) delete showOpts['privateKey'];
                 // Delete public key
-                if(showOpts.publicKey)
-                    delete showOpts['publicKey'];
+                if(showOpts.publicKey) delete showOpts['publicKey'];
+                // hide mnemonic
+                if(showOpts.mnemonic) delete showOpts['mnemonic'];
 
                 return resolve(showOpts);
             }).catch(err => {
@@ -331,7 +334,75 @@ export class WalletProvider
         // Verify password entry
         if (wallets == null && wallets == undefined)
             throw new Error('Invalid password');
+
         return wallets;
+    }
+
+    /**
+     * Sort wallet by address
+     *
+     * @param {string} walletId - Wallet address
+     * @param {number} index - position
+     * @return void
+     */
+    public setWalletPosition(walletId: string, index: number): void
+    {
+        this.updateWallet(walletId, {
+            position: index
+        }).then(() => {
+            this.logger.debug(
+                'Wallet new order stored for ' + walletId + ': ' + index
+            );
+        });
+        if (this.getWallet(walletId)) this.getWallet(walletId)['order'] = index;
+    }
+
+    /**
+     * Get wallet position
+     *
+     * @param {string} walletId - Wallet address
+     * @returns {number}
+     */
+    public getWalletPosition(walletId: string): number {
+        const order = this.getWallet(walletId);
+        return order['position'];
+    }
+
+    /**
+     * Balance availability status
+     *
+     * @param {string} walletId - Wallet address
+     * @returns {boolean}
+     */
+    isBalanceHidden(walletId: string): boolean {
+        return this.getWallet(walletId).balanceHidden;
+    }
+
+    /**
+     * Show and hide balance
+     *
+     * @param {string} walletId - Wallet id
+     * @return void
+     */
+    toggleHideBalanceFlag(walletId: string): void
+    {
+        this.getWallet[walletId].balanceHidden = ! this.getWallet[walletId].balanceHidden;
+        this.updateWallet(walletId, {
+            balanceHidden: this.getWallet[walletId].balanceHidden
+        }).then(() => {});
+    }
+
+    /**
+     * Get a Mnemonic id wallet
+     *
+     * @param {string} walletId - Wallet address
+     * @returns {string}
+     */
+    getWalletMnemonic(walletId: string): string
+    {
+        let wallet = this.listWallets()
+            .find(c => c.address == walletId);
+        return (wallet.mnemonic ? wallet.mnemonic : undefined);
     }
 
     /**
@@ -399,7 +470,7 @@ export class WalletProvider
                 balance: 0,
                 createdOn: Math.round(time / 1000),
                 updatedOn: Math.round(time / 1000),
-                hideBalance: false,
+                balanceHidden: false,
                 color: 'theme-wallet-thunderbird',
                 testNet: false,
                 ...wallet
@@ -407,7 +478,6 @@ export class WalletProvider
             allWallets.push(newWallet);
             // Updating data in the repository
             this.encryptWallet(allWallets, this.password);
-
             resolve(newWallet)
         })
     }
@@ -421,12 +491,8 @@ export class WalletProvider
     getWallet(walletAddress: string): any
     {
         this.logger.debug(`Get Wallet ID ${walletAddress}`);
-        let wallets = this.listWallets().find(c => c.address == walletAddress);
-
-        // Remove private key from the list
-        if(wallets.privateKey) delete wallets['privateKey'];
-
-        return wallets;
+        return this.getWallets()
+            .find(c => c.address == walletAddress);
     }
 
     /**
@@ -462,7 +528,7 @@ export class WalletProvider
         return new Promise((resolve, reject) => {
             // We do not allow the possibility of changing important parameters.
             // If these parameters change, the account will be disrupted.
-            if(options.createdOn || options.privateKey || options.address || options.id) {
+            if(options.createdOn || options.privateKey || options.address || options.id || options.mnemonic) {
                 return reject('Something went wrong');
             }
 
@@ -496,19 +562,25 @@ export class WalletProvider
      * @param {string} walletAddress - TRON Address
      * @return: void
      */
-    deleteWallet(walletAddress: string): void
+    deleteWallet(walletAddress: string): Promise<any>
     {
-        // To begin to check whether the exists selected wallet
-        if (!this.hasWallet(walletAddress))
-            throw new Error('account not found');
+        return new Promise<any>((resolve, reject) =>
+        {
+            // To begin to check whether the exists selected wallet
+            if (!this.hasWallet(walletAddress))
+                return reject('account not found');
 
-        this.logger.info('Deleting Wallet:', walletAddress);
-        // Exclude from the list the purse to be deleted
-        let updatedWallet = this.listWallets().filter(
-            filter => filter.address != walletAddress
-        );
-        // Update the purse store and make new changes
-        this.encryptWallet(updatedWallet, this.password);
+            this.logger.info('Deleting Wallet:', walletAddress);
+
+            // Exclude from the list the purse to be deleted
+            let updatedWallet = this.getWallets().filter(
+                filter => filter.address != walletAddress
+            );
+            // Update the purse store and make new changes
+            this.encryptWallet(updatedWallet, this.password);
+
+            return resolve();
+        });
     }
 
     /**
@@ -527,27 +599,18 @@ export class WalletProvider
      *
      * Get a list of wallets
      *
-     * @param {string} address - TRON address (no required)
-     * @return any | string
+     * @return any[]
      */
-    public getWallets(address?: string): any | string
+    public getWallets(): any[]
     {
-        if(address) {
-            try {
-                let walletID =  this.listWallets().find(
-                    f => f.address === address
-                );
-                // We do not allow the conclusion of a private key
-                delete walletID['privateKey'];
-                return walletID
-            } catch (e) {
-                throw new Error(e);
-            }
-        }
+        let wallets = this.decryptWallet(this.password) || [];
+        // Verify password entry
+        if (wallets == null && wallets == undefined)
+            throw new Error('Invalid password');
 
-        // An array of wallets without a private key
-        return this.listWallets()
-            .filter(filter => delete filter['privateKey']);
+        wallets = wallets.filter(f => delete f['privateKey'])
+            .filter(f => delete f['mnemonic']);
+        return wallets;
     }
 
     /**

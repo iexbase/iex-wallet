@@ -6,8 +6,8 @@
                                [ngClass]="{'active': activeAccount == item.address}">
                     <div matLine class="proper-name">{{item.name}}</div>
                     <div matLine class="unit">
-                        <span *ngIf="item.hideBalance">[{{'Wallet.Index.HideBalance' | translate}}]</span>
-                        <span *ngIf="!item.hideBalance">{{item.balance | sunToUnit}} TRX</span>
+                        <span *ngIf="item.balanceHidden">[{{'Wallet.Index.HideBalance' | translate}}]</span>
+                        <span *ngIf="!item.balanceHidden">{{item.balance | sunToUnit}} TRX</span>
                     </div>
                     <div class="market-wallet"></div>
                 </mat-list-item>
