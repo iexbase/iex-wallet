@@ -48,6 +48,13 @@ export class WalletPage implements OnInit
     wallets: Observable<any[]>;
 
     /**
+     * Check if wallets exist
+     *
+     * @var boolean
+     */
+    isEmptyWallet: boolean;
+
+    /**
      * Hide part of the header
      *
      * @var boolean
@@ -148,6 +155,8 @@ export class WalletPage implements OnInit
         // and activates the cached wallet
         this.activeAccount != undefined && this.wallets.subscribe((data: any[]) =>
         {
+            this.isEmptyWallet = _.isEmpty(data);
+
             // From the array, select the required
             let selected = data.filter(
                 selected => selected.address == this.activeAccount);

@@ -194,6 +194,7 @@
         "Index": {
             "AddWallet": "+ Add Wallet",
             "SelectWallet": "Please select a wallet from the list.",
+            "EmptyWallet": "Create a new wallet to start using this app",
             "Energy": "Energy",
             "Bandwidth": "Bandwidth",
             "Menu": {

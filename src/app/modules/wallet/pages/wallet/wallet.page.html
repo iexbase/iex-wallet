@@ -21,13 +21,26 @@
     </div>
 
     <div id="tron-content-right" [ngClass]="wallet.color">
-        <ng-container *ngIf="!wallet.address">
+
+        <!-- If there are no wallets available -->
+        <ng-container *ngIf="isEmptyWallet">
+            <div class="empty-wallet" fxLayout="column" fxLayoutAlign="center center">
+                {{'Wallet.Index.EmptyWallet' | translate}}
+
+                <button class="tron-default-button" routerLink="/wallet/add-wallet" mat-stroked-button>
+                    <span>{{'Wallet.Index.AddWallet' | translate}}</span>
+                </button>
+            </div>
+        </ng-container>
+
+        <!-- If no wallet is selected from the list -->
+        <ng-container *ngIf="!wallet.address && !isEmptyWallet">
             <div class="empty-wallet" fxLayout="row" fxLayoutAlign="center center">
                 {{'Wallet.Index.SelectWallet' | translate}}
             </div>
         </ng-container>
 
-        <ng-container *ngIf="wallet.address">
+        <ng-container *ngIf="wallet.address && !isEmptyWallet">
             <wallet-settings [wallet]="wallet"></wallet-settings>
 
             <paper-wallet [header]="miniHeader" [wallet]="wallet"
@@ -48,7 +61,6 @@
                     <ng-container *ngIf="isLoading">
                         <mat-spinner class="loading-transaction" [diameter]="48" [strokeWidth]="2"></mat-spinner>
                     </ng-container>
-
 
                     <ng-container *ngIf="!isLoading">
                         <div class="no-transaction" *ngIf="transactions.length == 0">

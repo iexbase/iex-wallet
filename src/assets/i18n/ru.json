@@ -195,6 +195,7 @@
         "Index": {
             "AddWallet": "+ Добавить кошелек",
             "SelectWallet": "Пожалуйста, выберите кошелек из списка.",
+            "EmptyWallet": "Добавьте кошелек, чтобы начать использовать приложение",
             "Energy": "Energy",
             "Bandwidth": "Bandwidth",
             "Menu": {
