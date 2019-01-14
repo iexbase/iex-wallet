@@ -42,7 +42,7 @@ export class CreateWalletComponent
      *
      * @var any
      */
-    public accountData: any;
+    public wallet: any;
 
     /**
      * Object creation CreateWalletComponent
@@ -58,7 +58,7 @@ export class CreateWalletComponent
         private logger: Logger,
         private backupProvider: BackupProvider
     ) {
-        console.log(this.walletProvider.password)
+        //
     }
 
     /**
@@ -68,31 +68,20 @@ export class CreateWalletComponent
      */
     public doCreateWallet(): void
     {
-        this.walletProvider.createWallet().then(account =>
-        {
-            // If we received a private key,
-            // then the account is generated successfully.
-            if('privateKey' in account)
-            {
-                this.accountName = CreateWalletComponent.defaultWalletName(this.accountName);
-                this.walletProvider.addWallet({
-                    name: this.accountName,
-                    privateKey: account.privateKey,
-                    address: account.address.base58
-                }).then(finish =>
-                {
-                    this.store.dispatch(
-                        new WalletActions.AddWallet(
-                            { wallet: finish }
-                        )
-                    );
-                    this.accountData = account;
-                    this.isSuccess = true;
-                });
-            }
+        this.walletProvider.createWallet({
+            name: this.accountName
+        }).then(wallet => {
+            this.store.dispatch(
+                new WalletActions.AddWallet(
+                    { wallet: wallet }
+                )
+            );
+            this.isSuccess = true;
+            this.wallet = wallet;
         }).catch(err => {
             this.logger.error('Create: could not create wallet', err);
-        })
+            this.isSuccess = false;
+        });
     }
 
     /**
@@ -108,16 +97,7 @@ export class CreateWalletComponent
      */
     onDownload(options:any): void {
         this.backupProvider.walletDownload(
-            this.walletProvider.password, {}, options.address.base58
+            this.walletProvider.password, {}, options.address
         ).then(() => {})
-    }
-
-    /**
-     * Set default name
-     *
-     * @return string
-     */
-    private static defaultWalletName(name: string): string {
-        return (name && name.length > 1 ? name : 'Default wallet')
     }
 }

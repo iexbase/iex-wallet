@@ -216,41 +216,77 @@ export class WalletProvider
     /**
      * Import an account wallet from server using a private key
      *
-     * @param {string} privateKey - the private key of the account being imported
+     * @param {any} options - the options of the account being imported
      * @returns {Promise} Promise object containing details - if imported successfully or not
      */
-    importWallet(privateKey: string): Promise<CreateWalletInterface>
+    importWallet(options: any): Promise<any>
     {
-        return new Promise((resolve, reject) => {
-            this.logger.info('Importing Wallet PrivateKey');
-
-            if(!!privateKey.match(/[0-9a-fA-F]{64}/) == false)
-                reject('Invalid private key');
+        return new Promise((resolve, reject) =>
+        {
+            if(options.privateKey.match(/[0-9a-fA-F]{64}/) == false)
+                return reject('Invalid private key');
 
             // check if private key valid
-            try
+            if (AddressProvider.validatePrivateKey(options.privateKey))
             {
-                if (AddressProvider.validatePrivateKey(privateKey))
-                {
-                    let addr = this.addressProvider.fromPrivateKey(privateKey);
-                    this.getBalance(addr).then(balance => {
-                        resolve({
-                            balance: balance,
-                            privateKey: privateKey,
-                            publicKey: AddressProvider.getPubKeyFromPrivateKey(privateKey),
-                            address: {
-                                base58: addr,
-                                hex: AddressProvider.getAddressFromPrivateKey(privateKey)
-                            }
-                        })
-                    });
-                } else {
-                    reject('Invalid private key.');
-                    this.logger.error('Invalid private key.')
-                }
-            }catch (e) {
-                reject(e);
+                let addr = this.addressProvider.fromPrivateKey(options.privateKey);
+                this.logger.info('Importing Wallet:', addr);
+
+                // wallet adding process
+                this.addWallet({
+                    name: options.name,
+                    privateKey: options.privateKey,
+                    address: addr,
+                    publicKey: AddressProvider.getPubKeyFromPrivateKey(options.privateKey)
+                }).then(walletClient => {
+                    const showOpts = _.clone(walletClient);
+                    // Delete private key (secure)
+                    if(showOpts.privateKey)
+                        delete showOpts['privateKey'];
+                    // Delete public key
+                    if(showOpts.publicKey)
+                        delete showOpts['publicKey'];
+
+                    return resolve(showOpts);
+                }).catch(err => {
+                    return reject(err)
+                });
+            } else {
+                return reject('Invalid private key.');
             }
+        });
+    }
+
+    /**
+     * Import an account wallet using a mnemonic
+     *
+     * @param {any} options - the options of the account being imported
+     * @returns {Promise} Promise object containing details - if imported successfully or not
+     */
+    importMnemonic(options: any): Promise<any>
+    {
+        return new Promise<any>((resolve, reject) =>
+        {
+            this.logger.info('Import wallet by mnemonic');
+            // wallet adding process
+            this.addWallet({
+                name: options.name,
+                privateKey: options.privateKey,
+                address: options.address,
+                publicKey: AddressProvider.getPubKeyFromPrivateKey(options.privateKey)
+            }).then(walletClient => {
+                const showOpts = _.clone(walletClient);
+                // Delete private key (secure)
+                if(showOpts.privateKey)
+                    delete showOpts['privateKey'];
+                // Delete public key
+                if(showOpts.publicKey)
+                    delete showOpts['publicKey'];
+
+                return resolve(showOpts);
+            }).catch(err => {
+                return reject(err)
+            });
         });
     }
 
@@ -259,20 +295,28 @@ export class WalletProvider
      *
      * @returns {CreateWalletInterface} details
      */
-    createWallet(): Promise<CreateWalletInterface>
+    createWallet(opts): Promise<CreateWalletInterface>
     {
-        return new Promise((resolve, reject) => {
-           try {
-               let walletDetails = this.addressProvider.generatePrivateKey();
-               if(!walletDetails) reject('Error creating private key');
+        return new Promise((resolve, reject) =>
+        {
+            let wallet = this.addressProvider.generatePrivateKey();
+            if(!wallet) reject('Error creating private key');
 
-               resolve({
-                   balance: 0,
-                   ...walletDetails
-               })
-           }catch (e) {
-                reject(e)
-           }
+            this.addWallet({
+                ...opts,
+                privateKey: wallet.privateKey,
+                address: wallet.address.base58
+            }).then(walletClient => {
+                const showOpts = _.clone(walletClient);
+                // Delete keys
+                if(showOpts.privateKey)
+                    delete showOpts['privateKey'];
+
+                this.logger.debug('Creating Wallet:', JSON.stringify(showOpts));
+                return resolve(showOpts);
+            }).catch(err => {
+                return reject(err);
+            });
         });
     }
 
@@ -336,18 +380,21 @@ export class WalletProvider
      */
     addWallet(wallet: Partial<WalletOptions>): Promise<any>
     {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) =>
+        {
             let allWallets = this.listWallets();
-
             if(this.hasWallet(wallet.address)) {
                 this.logger.error(`Already added: Wallet ${wallet.address}`);
                 return reject('Account already added')
             }
 
+            // If the name is not specified, manually register
+            if(!wallet.name) wallet.name = 'Personal wallet';
+
             let time = new Date().getTime();
             let newWallet = <WalletOptions>{
-                id: Object.keys(this.listWallets()).length + 1,
-                position: Object.keys(this.listWallets()).length + 1,
+                id: Object.keys(allWallets).length + 1,
+                position: Object.keys(allWallets).length + 1,
                 coin: Coin.TRX,
                 balance: 0,
                 createdOn: Math.round(time / 1000),
@@ -377,7 +424,8 @@ export class WalletProvider
         let wallets = this.listWallets().find(c => c.address == walletAddress);
 
         // Remove private key from the list
-        delete wallets['privateKey'];
+        if(wallets.privateKey) delete wallets['privateKey'];
+
         return wallets;
     }
 

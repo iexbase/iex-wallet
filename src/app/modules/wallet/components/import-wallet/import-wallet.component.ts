@@ -134,48 +134,26 @@ export class ImportWalletComponent implements OnInit
      */
     doImportWallet(): void
     {
-        this.walletName = this.defaultWalletName();
-        this.walletProvider.importWallet(this.privateKey).then(result =>
-        {
-            // Add a new account to the storage of all accounts
-            this.walletProvider.addWallet({
-                name: this.walletName,
-                privateKey: result.privateKey,
-                address: result.address.base58,
-                publicKey: result.publicKey,
-                balance: 0
-            }).then(finish => {
-                // Add to dispatcher
-                this.store.dispatch(
-                    new WalletActions.AddWallet({wallet: finish})
-                );
-                this.isSuccess = true;
-            }).catch(err => {
-                this.isSuccess = false;
-                this.snackBar.open(err,null, {
-                    duration: 3000,
-                    panelClass: ['snackbar-theme-dialog']
-                });
-            });
-
+        this.walletProvider.importWallet({
+            privateKey: this.privateKey,
+            name: this.walletName
+        }).then(wallet => {
+            // Add to dispatcher
+            this.store.dispatch(
+                new WalletActions.AddWallet({ wallet: wallet })
+            );
+            this.isSuccess = true;
             // After the addition, we do a full update.
-            this.walletProvider.fullUpdateAccount(result.address.base58).then(() => {});
+            this.walletProvider.fullUpdateAccount(wallet.address).then(() => {});
+
+            console.log(wallet)
         }).catch(err => {
+            this.isSuccess = false;
             this.snackBar.open(err,null, {
                 duration: 3000,
                 panelClass: ['snackbar-theme-dialog']
             });
             this.logger.error('Import: could not wallet', err);
-        })
-    }
-
-    /**
-     * Set default name
-     *
-     * @return string
-     */
-    private defaultWalletName(): string {
-        return (this.walletName && this.walletName.length > 1
-            ? this.walletName : 'Default wallet')
+        });
     }
 }

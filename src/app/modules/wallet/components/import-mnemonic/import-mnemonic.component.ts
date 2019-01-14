@@ -136,21 +136,18 @@ export class ImportMnemonicComponent implements OnInit
     finishImport(walletId: any)
     {
         this.isDisabledButton = true;
-        this.walletName = this.defaultWalletName();
-
-        this.walletProvider.addWallet({
+        this.walletProvider.importMnemonic({
             name: this.walletName,
             privateKey: walletId.privateKey,
             address: walletId.address.base58
-        }).then(added => {
+        }).then(wallet => {
             // Add to dispatcher
             this.store.dispatch(
-                new WalletActions.AddWallet({wallet: added})
+                new WalletActions.AddWallet({wallet: wallet})
             );
 
             // After the addition, we do a full update.
             this.walletProvider.fullUpdateAccount(walletId.address.base58).then(() => {});
-
             // Redirect to Wallet
             this.router.navigate(['/', 'wallet']);
         });
@@ -180,16 +177,6 @@ export class ImportMnemonicComponent implements OnInit
             this.mnemonic.split(' ').length < 12 ||
             this.mnemonic.split(' ').length > 12
         )
-    }
-
-    /**
-     * Set default name
-     *
-     * @return string
-     */
-    private defaultWalletName(): string {
-        return (this.walletName && this.walletName.length > 1
-            ? this.walletName : 'Default wallet')
     }
 
     /**
