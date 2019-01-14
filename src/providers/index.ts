@@ -13,6 +13,7 @@ export { ConfigProvider } from '@providers/config/config';
 export { DomProvider } from '@providers/dom/dom'
 export { DownloadProvider } from '@providers/download/download';
 export { ElectronProvider } from '@providers/electron/electron';
+export { ExternalLinkProvider } from '@providers/external-link/external-link';
 export { FilterProvider } from '@providers/filter/filter';
 export { LanguageProvider } from '@providers/language/language';
 export { Logger } from '@providers/logger/logger';
