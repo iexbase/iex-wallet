@@ -533,7 +533,7 @@ export class TronProvider
     async getTransaction(txHash: string, callback?: any): Promise<any>
     {
         try {
-            return await this.http.get(`${this.getExplorer()}/transaction/${txHash}`).subscribe(
+            return await this.http.get(`${this.getExplorer()}/transaction-info?hash=${txHash}`).subscribe(
                 result => callback(null, result),
                 error => callback(error)
             )

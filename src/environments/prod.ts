@@ -12,7 +12,7 @@ const env: EnvironmentSchema = {
 
     explorer: {
         url: 'https://tronscan.org/#',
-        api: 'https://wlcyapi.tronscan.org/api'
+        api: 'https://apilist.tronscan.org/api'
     },
 
     shasta: {
