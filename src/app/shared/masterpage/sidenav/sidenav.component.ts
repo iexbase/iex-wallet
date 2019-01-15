@@ -21,69 +21,39 @@ export class SidenavComponent implements OnInit, OnDestroy
     watcher: Subscription;
     activeMediaQuery: boolean;
 
-    navs: {
+    navigation: {
         icon: string;
         link: string;
         name: string;
-        external?: boolean;
-        divider: boolean;
-        sub_header: string;
-        wallets: boolean;
+        separator: boolean;
     }[];
 
+    /**
+     * Create a new SidenavComponent object
+     *
+     * @param {MediaObserver} media - Media Observer service
+     */
     constructor(
         media: MediaObserver
     ) {
         this.watcher = media.media$.subscribe((change: MediaChange) => {
-            if (change.mqAlias === 'xs' || change.mqAlias === 'sm') {
-                this.activeMediaQuery = true;
-            } else {
-                this.activeMediaQuery = false;
-            }
+            this.activeMediaQuery = change.mqAlias === 'xs' || change.mqAlias === 'sm';
         });
-
     }
 
+    /**
+     * We start object life cycle
+     *
+     * @return void
+     */
     ngOnInit()
     {
-        this.navs = [{
-                icon: 'home',
-                link: '/dashboard',
-                name: 'Shared.Navigation.Dashboard',
-                divider: false,
-                sub_header: null,
-                wallets: false
-            },
-            {
-                icon: 'thumb_up',
-                link: '/vote',
-                name: 'Shared.Navigation.Votes',
-                divider: false,
-                sub_header: null,
-                wallets: false
-            },
-            {
-                icon: 'account_balance_wallet',
-                link: '/wallet',
-                name: 'Shared.Navigation.Wallet',
-                divider: false,
-                sub_header: null,
-                wallets: true
-            }, {
-                icon: 'settings',
-                link: '/settings',
-                name: 'Shared.Navigation.Settings',
-                divider: false,
-                sub_header: null,
-                wallets: false
-            }, {
-                icon: 'live_help',
-                link: '/help',
-                name: 'Shared.Navigation.Help',
-                divider: false,
-                sub_header: null,
-                wallets: false
-            }
+        this.navigation = [
+            { icon: 'home', link: '/dashboard', name: 'Shared.Navigation.Dashboard', separator: false },
+            { icon: 'thumb_up', link: '/vote', name: 'Shared.Navigation.Votes', separator: false },
+            { icon: 'account_balance_wallet', link: '/wallet', name: 'Shared.Navigation.Wallet', separator: true },
+            { icon: 'settings', link: '/settings', name: 'Shared.Navigation.Settings', separator: false },
+            { icon: 'live_help', link: '/help', name: 'Shared.Navigation.Help', separator: false }
         ];
     }
 
