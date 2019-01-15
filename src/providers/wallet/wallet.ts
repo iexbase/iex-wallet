@@ -609,7 +609,7 @@ export class WalletProvider
         if (wallets == null && wallets == undefined)
             throw new Error('Invalid password');
 
-       // wallets = wallets.filter(f => delete f['privateKey']);
+        wallets = wallets.filter(f => delete f['privateKey']);
         return wallets;
     }
 

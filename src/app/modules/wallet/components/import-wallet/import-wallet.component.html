@@ -1,6 +1,6 @@
 
 <ng-container *ngIf="!isSuccess">
-    <form [formGroup]="createForm">
+    <form [formGroup]="importForm">
         <div class="import-wallet-wrapper">
             <mat-form-field appearance="outline" class="import-wallet-field">
                 <mat-label>{{'Wallet.ImportWallet.Label' | translate}}</mat-label>
@@ -11,7 +11,7 @@
                 <mat-hint>{{'Wallet.ImportWallet.PrivateKeyHint' | translate}}</mat-hint>
             </mat-form-field>
         </div>
-        <div class="import-wallet-optional" *ngIf="createForm.controls['privateKey'].valid">
+        <div class="import-wallet-optional" *ngIf="importForm.controls['privateKey'].valid">
             <mat-divider></mat-divider>
             <div class="import-wallet-wrapper">
                 <mat-form-field appearance="outline" class="account-name-field">
@@ -35,14 +35,14 @@
     <div class="wallet-success">
         <div class="wallet-success-icon"></div>
         <div class="wallet-success-data">
-            <span [innerHtml]="'Wallet.ImportWallet.SuccessImport' | translate:{'walletName': createForm.controls['name'].value}"></span>
+            <span [innerHtml]="'Wallet.ImportWallet.SuccessImport' | translate:{'walletName': importForm.controls['name'].value}"></span>
         </div>
     </div>
 </ng-container>
 
 
 <div class="create-wallet-button" fxLayout="row" fxLayoutAlign="center center">
-    <button *ngIf="!isSuccess" mat-button color="primary" [disabled]="!createForm.valid" (click)="doImportWallet()">
+    <button *ngIf="!isSuccess" mat-button color="primary" [disabled]="!importForm.valid" (click)="doImportWallet()">
         {{'Wallet.ImportWallet.ButtonImportWallet' | translate}}
     </button>
     <button *ngIf="isSuccess" class="right" mat-button color="primary" routerLink="/wallet">

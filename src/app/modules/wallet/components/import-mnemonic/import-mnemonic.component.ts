@@ -32,7 +32,7 @@ export class ImportMnemonicComponent implements OnInit
      *
      * @var string
      */
-    public createForm: FormGroup;
+    public importForm: FormGroup;
 
     /**
      * Go to account selection by "mnemonic"
@@ -81,7 +81,7 @@ export class ImportMnemonicComponent implements OnInit
      */
     ngOnInit(): void
     {
-        this.createForm = this.fb.group({
+        this.importForm = this.fb.group({
             name: [null],
             privateKey: [null],
             address: [null],
@@ -102,7 +102,7 @@ export class ImportMnemonicComponent implements OnInit
         this.nextToSelectWallet = true;
         for (let i = 0; i < 10; i++) {
             const address = this.walletProvider.addByMnemonic(
-                this.createForm.controls['mnemonic'].value, i
+                this.importForm.controls['mnemonic'].value, i
             );
             this.addresses.next(this.addresses.getValue().concat([address]))
         }
@@ -117,10 +117,10 @@ export class ImportMnemonicComponent implements OnInit
     {
         this.isDisabledButton = true;
         // Filling in the remaining positions
-        this.createForm.controls['privateKey'].setValue(walletId.privateKey);
-        this.createForm.controls['address'].setValue(walletId.address.base58);
+        this.importForm.controls['privateKey'].setValue(walletId.privateKey);
+        this.importForm.controls['address'].setValue(walletId.address.base58);
 
-        this.walletProvider.importMnemonic(this.createForm.value)
+        this.walletProvider.importMnemonic(this.importForm.value)
             .then(wallet => {
                 // Add to dispatcher
                 this.store.dispatch(

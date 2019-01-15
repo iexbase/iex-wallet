@@ -32,7 +32,7 @@ export class ImportWalletComponent implements OnInit
      *
      * @var string
      */
-    public createForm: FormGroup;
+    public importForm: FormGroup;
 
     /**
      *  In case of successful import
@@ -79,7 +79,7 @@ export class ImportWalletComponent implements OnInit
      */
     ngOnInit(): void
     {
-        this.createForm = this.fb.group({
+        this.importForm = this.fb.group({
             name: [null],
             privateKey: [null, Validators.compose([
                 Validators.required,
@@ -96,7 +96,7 @@ export class ImportWalletComponent implements OnInit
      */
     doImportWallet(): void
     {
-        this.walletProvider.importWallet(this.createForm.value)
+        this.walletProvider.importWallet(this.importForm.value)
             .then(wallet => {
                 // Add to dispatcher
                 this.store.dispatch(
