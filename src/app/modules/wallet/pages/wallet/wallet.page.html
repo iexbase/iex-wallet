@@ -1,7 +1,7 @@
 <div id="tron-content-wallet" [ngClass]="wallet.color">
     <div id="wallet-coin-list" class="wallet-menu" fxFlex="18">
         <mat-list>
-            <ng-container *ngFor="let item of wallets | async">
+            <ng-container *ngFor="let item of wallets | async | orderBy : ['-balance']">
                 <mat-list-item (click)="openWalletDetails(item)"
                                [ngClass]="{'active': activeAccount == item.address}">
                     <div matLine class="proper-name">{{item.name}}</div>
@@ -11,6 +11,7 @@
                     </div>
                     <div class="market-wallet"></div>
                 </mat-list-item>
+
             </ng-container>
         </mat-list>
         <div class="add-wallet">
@@ -120,10 +121,8 @@
                                             </ng-container>
                                             <!-- Get contact code -->
                                             <span class="unit" *ngIf="tx['contractData'] && ![4,12,31].includes(tx.contractType)">
-                                                {{tx['contractData']['asset_name'] | formatAsset}}
+                                                {{tx['contractData']['asset_name'] || 'TRX'}}
                                             </span>
-                                            <!-- Timestamp -->
-                                            <div class="time-ago">{{ tx.timestamp | timeAgo }}</div>
                                         </div>
                                     </div>
                                 </mat-expansion-panel-header>
@@ -139,7 +138,7 @@
                                     <div fxFlex="33" class="tx-details__item">
                                         <div class="title">{{'Wallet.Index.Hash' | translate}}</div>
                                         <div class="content link">
-                                            <span (click)="openExternalLink(tx.id, 'transaction')">{{tx.id}}</span>
+                                            <span (click)="openExternalLink(tx.hash, 'transaction')">{{tx.hash}}</span>
                                         </div>
                                     </div>
                                     <div fxFlex="33" class="tx-details__item" *ngIf="tx.contractType == 1">
