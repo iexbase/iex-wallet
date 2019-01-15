@@ -328,7 +328,6 @@ export class WalletProvider
         // Verify password entry
         if (wallets == null && wallets == undefined)
             throw new Error('Invalid password');
-
         return wallets;
     }
 
@@ -574,7 +573,7 @@ export class WalletProvider
             this.logger.info('Deleting Wallet:', walletAddress);
 
             // Exclude from the list the purse to be deleted
-            let updatedWallet = this.getWallets().filter(
+            let updatedWallet = this.listWallets().filter(
                 filter => filter.address != walletAddress
             );
 
@@ -610,7 +609,7 @@ export class WalletProvider
         if (wallets == null && wallets == undefined)
             throw new Error('Invalid password');
 
-        wallets = wallets.filter(f => delete f['privateKey']);
+       // wallets = wallets.filter(f => delete f['privateKey']);
         return wallets;
     }
 
@@ -700,10 +699,6 @@ export class WalletProvider
             // We check the received parameters before signing
             if(!this.activeAccount || !transaction)
                 reject('MISSING_PARAMETER');
-
-            // Validation of the private key (For additional confidence)
-            if(!AddressProvider.validatePrivateKey(this.getPrivateKey()))
-                reject('Invalid private key');
 
             // If the main parameters are verified successfully,
             // then proceed to signing the transaction.
@@ -992,7 +987,8 @@ export class WalletProvider
 
             // If the passwords do not match
             if(WalletProvider.encryptPassword(password) != this.hashPassword) {
-                this.countAttempted++; // Authorization Attempt Counter
+                this.countAttempted += 1; // Authorization Attempt Counter
+                this.logger.info('Attempts to unlock: ', this.countAttempted);
                 return reject('Invalid password');
             }
 
@@ -1019,10 +1015,11 @@ export class WalletProvider
             throw new Error('Invalid selected account');
 
         try {
-            let privateKey = this.listWallets().find(
+            let find = this.listWallets().find(
                 f => f.address == this.activeAccount
             );
-            return Buffer.from(privateKey['privateKey'], 'hex');
+
+            return Buffer.from(find['privateKey'], 'hex');
         }catch (e) {
             throw new Error(e)
         }

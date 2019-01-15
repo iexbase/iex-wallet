@@ -76,8 +76,7 @@ export class LoginAccountComponent
         this.errorMessage = null;
         this.walletProvider.hasPassword(this.password)
             .then(password => {
-                if(password.result == true)
-                {
+                if(password.result == true) {
                     this.store.dispatch(
                         new WalletActions.AddWallets({
                             wallets: this.walletProvider.getWallets()

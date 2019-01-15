@@ -57,18 +57,13 @@ export class AuthGuardService implements CanActivate
 
         // check if user wallet is present
         const isLoggedIn = (this.walletProvider.password != undefined);
-
-        if (isLoggedIn) {
-            // logged in so return true
-            return true;
-        }
+        // logged in so return true
+        if (isLoggedIn) return true;
 
         // not logged in so redirect to login page with the return url
         this.router.navigate(['/login'], {
-            queryParams: {
-                returnUrl: state.url
-            }
-        });
+            queryParams: { returnUrl: state.url }
+        }).then(() => {});
         return false;
     }
 }

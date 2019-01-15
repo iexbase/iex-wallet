@@ -139,12 +139,13 @@ export class PreferencesComponent implements OnInit
         let getWallet = this.walletProvider.getWallet(this.data.address);
         this.walletName = getWallet.name;
         this.balanceHidden = getWallet.balanceHidden;
-        this.listTokens = getWallet.tokens.filter(({ name }) => name !== 'TRX')
+
+        let tokens = getWallet.tokens || [];
+        this.listTokens = tokens.filter(({ name }) => name !== 'TRX')
             .map(({ name }) => ({ id: name, name }));
 
         // Check for the existence of tokens
         this.isEmptyList = _.isEmpty(this.listTokens);
-
         // Get all excluded tokens
         this.selectedTokens = JSON.parse(this.filteredTokens) || [];
 

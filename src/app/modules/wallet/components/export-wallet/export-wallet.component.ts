@@ -89,7 +89,8 @@ export class ExportWalletComponent implements OnInit
         {
             this.electron.writeToClipboard(JSON.stringify(result));
             this.snackBar.open('Data copied', null,{
-                duration: 2000
+                duration: 2000,
+                panelClass: ['snackbar-theme-dialog']
             })
         })
     }

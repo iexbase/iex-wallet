@@ -33,12 +33,13 @@
                 </ng-container>
 
                 <!-- all currency -->
-                <mat-optgroup *ngIf="altCurrencyList[0]" [label]="'Settings.AltCurrency.All' | translate">
+                <ng-container *ngIf="altCurrencyList[0]">
+                    <mat-divider></mat-divider>
                     <ng-container *ngIf="altCurrencyList.length == 0">
                         <mat-spinner class="loading" [diameter]="30" [strokeWidth]="2"></mat-spinner>
                     </ng-container>
                     <mat-option *ngFor="let alt of altCurrencyList" [value]="alt.isoCode" (click)="onChangeCurrency(alt)">{{alt.name}}</mat-option>
-                </mat-optgroup>
+                </ng-container>
             </mat-selection-list>
 
         </mat-select>
