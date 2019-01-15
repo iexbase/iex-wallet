@@ -1,31 +1,31 @@
+
 <ng-template [ngIf]="!isSuccess">
-    <div class="import-wallet-wrapper">
-        <mat-form-field appearance="outline" class="import-wallet-field">
-            <mat-label>{{'Wallet.ImportWallet.Label' | translate}}</mat-label>
-            <textarea [(ngModel)]="privateKey" name="privateKey"
-                      matInput
-                      [placeholder]="'Wallet.ImportWallet.EnterPrivateKey' | translate"
-                      cdkTextareaAutosize (ngModelChange)="onChangeImportKey()"></textarea>
-            <mat-hint>{{'Wallet.ImportWallet.PrivateKeyHint' | translate}}</mat-hint>
-        </mat-form-field>
-    </div>
-
-
-    <div class="import-wallet-optional" *ngIf="!hideOptional">
-        <mat-divider></mat-divider>
+    <form [formGroup]="createForm">
         <div class="import-wallet-wrapper">
-            <mat-form-field appearance="outline" class="account-name-field">
-                <mat-label>{{'Wallet.ImportWallet.WalletName' | translate}}</mat-label>
-                <input [(ngModel)]="walletName" name="walletName" matInput
-                       [placeholder]="'Wallet.ImportWallet.EnterWalletName' | translate">
-                <mat-hint>{{'Wallet.ImportWallet.WalletNameHint' | translate}}</mat-hint>
+            <mat-form-field appearance="outline" class="import-wallet-field">
+                <mat-label>{{'Wallet.ImportWallet.Label' | translate}}</mat-label>
+                <textarea formControlName="privateKey" matInput
+                          [placeholder]="'Wallet.ImportWallet.EnterPrivateKey' | translate"
+                          cdkTextareaAutosize>
+                </textarea>
+                <mat-hint>{{'Wallet.ImportWallet.PrivateKeyHint' | translate}}</mat-hint>
             </mat-form-field>
         </div>
-    </div>
+        <div class="import-wallet-optional" *ngIf="createForm.controls['privateKey'].valid">
+            <mat-divider></mat-divider>
+            <div class="import-wallet-wrapper">
+                <mat-form-field appearance="outline" class="account-name-field">
+                    <mat-label>{{'Wallet.ImportWallet.WalletName' | translate}}</mat-label>
+                    <input formControlName="name" matInput
+                           [placeholder]="'Wallet.ImportWallet.EnterWalletName' | translate">
+                    <mat-hint>{{'Wallet.ImportWallet.WalletNameHint' | translate}}</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </form>
 </ng-template>
 
 <ng-template [ngIf]="isSuccess">
-
     <lottie-animation-view
         [options]="lottieConfig"
         [width]="400"
@@ -35,7 +35,7 @@
     <div class="wallet-success">
         <div class="wallet-success-icon"></div>
         <div class="wallet-success-data">
-            <span [innerHtml]="'Wallet.ImportWallet.SuccessImport' | translate:{'walletName': walletName}"></span>
+            <span [innerHtml]="'Wallet.ImportWallet.SuccessImport' | translate:{'walletName': createForm.controls['name'].value}"></span>
         </div>
     </div>
 </ng-template>
@@ -43,7 +43,7 @@
 
 <div class="create-wallet-button" fxLayout="row" fxLayoutAlign="center center">
     <ng-template [ngIf]="!isSuccess">
-        <button mat-button color="primary" [disabled]="disablePrivateKey"
+        <button mat-button color="primary" [disabled]="!createForm.valid"
                 (click)="doImportWallet()">
             {{'Wallet.ImportWallet.ButtonImportWallet' | translate}}
         </button>

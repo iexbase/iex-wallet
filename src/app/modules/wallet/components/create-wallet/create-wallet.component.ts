@@ -16,6 +16,7 @@ import { BackupProvider } from "@providers/backup/backup";
 import { Logger } from '@providers/logger/logger';
 import { WalletProvider } from '@providers/wallet/wallet';
 
+
 @Component({
     selector: 'create-wallet',
     templateUrl: './create-wallet.component.html',

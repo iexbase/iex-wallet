@@ -1,25 +1,28 @@
 <div class="import-mnemonic-wrapper" *ngIf="!nextToSelectWallet">
-    <div class="mat-field-wrapper">
-        <mat-form-field appearance="outline">
-            <mat-label>{{'Wallet.ImportMnemonic.Label' | translate}}</mat-label>
-            <textarea [(ngModel)]="mnemonic" name="phrase" (ngModelChange)="onChangeMnemonic()"
-                      matInput [placeholder]="'Wallet.ImportMnemonic.EnterMnemonic' | translate"></textarea>
-        </mat-form-field>
-    </div>
+    <form [formGroup]="createForm" (ngSubmit)="goToImport()">
+        <div class="mat-field-wrapper">
+            <mat-form-field appearance="outline">
+                <mat-label>{{'Wallet.ImportMnemonic.Label' | translate}}</mat-label>
+                <textarea formControlName="mnemonic" matInput
+                          [placeholder]="'Wallet.ImportMnemonic.EnterMnemonic' | translate"></textarea>
+            </mat-form-field>
+        </div>
 
-    <div class="mat-field-wrapper" *ngIf="!hideOptional">
-        <mat-form-field appearance="outline" class="account-name-field">
-            <mat-label>{{'Wallet.ImportMnemonic.WalletName' | translate}}</mat-label>
-            <input [(ngModel)]="walletName" name="walletName" matInput
-                   [placeholder]="'Wallet.ImportMnemonic.EnterWalletName' | translate">
-            <mat-hint>{{'Wallet.ImportMnemonic.WalletNameHint' | translate}}</mat-hint>
-        </mat-form-field>
-    </div>
+        <div class="mat-field-wrapper" *ngIf="createForm.controls['mnemonic'].valid">
+            <mat-form-field appearance="outline" class="account-name-field">
+                <mat-label>{{'Wallet.ImportMnemonic.WalletName' | translate}}</mat-label>
+                <input formControlName="name" matInput
+                       [placeholder]="'Wallet.ImportMnemonic.EnterWalletName' | translate">
+                <mat-hint>{{'Wallet.ImportMnemonic.WalletNameHint' | translate}}</mat-hint>
+            </mat-form-field>
+        </div>
 
-    <div class="actions">
-        <button mat-button color="primary" class="tron-default-button default-theme" [disabled]="disableButton()"
-                (click)="goToImport()">{{'Wallet.ImportMnemonic.ButtonImportMnemonic' | translate}}</button>
-    </div>
+        <div class="actions">
+            <button mat-button color="primary" class="tron-default-button default-theme" [disabled]="!createForm.valid">
+                {{'Wallet.ImportMnemonic.ButtonImportMnemonic' | translate}}
+            </button>
+        </div>
+    </form>
 </div>
 
 <div *ngIf="nextToSelectWallet" class="select-wallet-wrapper ps" [perfectScrollbar]="{}">
@@ -34,10 +37,8 @@
         </mat-list-item>
     </mat-list>
 
-
     <div class="actions">
-        <button mat-stroked-button color="primary" class="tron-default-button back-color"
-                [disabled]="disableButton()" (click)="onBack()">
+        <button mat-stroked-button color="primary" class="tron-default-button back-color" (click)="onBack()">
             {{'Wallet.ImportMnemonic.Back' | translate}}
         </button>
     </div>

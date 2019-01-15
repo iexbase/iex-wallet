@@ -119,7 +119,7 @@
             "WalletName": "Wallet name (optional)",
             "EnterWalletName": "Enter wallet name",
             "WalletNameHint": "The wallet name will be known only to you",
-            "SuccessImport": "Your account <strong>{walletName}</strong> has been imported successfully",
+            "SuccessImport": "Your account <strong>{{walletName}}</strong> has been imported successfully",
             "ButtonImportWallet": "Import wallet",
             "Back": "Back to Wallet"
         },

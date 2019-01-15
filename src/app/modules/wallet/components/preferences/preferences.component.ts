@@ -161,14 +161,9 @@ export class PreferencesComponent implements OnInit
      */
     updateSettings(): void
     {
-        this.filteredTokens = JSON.stringify(this.selectedTokens);
-
-
-        this.walletName = this.defaultWalletName();
         this.walletProvider.updateWallet(this.data.address, {
             name: this.walletName,
-            color: this.colorIndex.class,
-            balanceHidden: this.balanceHidden
+            color: this.colorIndex.class
         }).then(result =>
         {
             // Parameters for update
@@ -176,8 +171,7 @@ export class PreferencesComponent implements OnInit
                 id: result.id,
                 changes: {
                     name: result.name,
-                    color: result.color,
-                    balanceHidden: result.balanceHidden
+                    color: result.color
                 }
             };
 
@@ -191,6 +185,39 @@ export class PreferencesComponent implements OnInit
                     panelClass: ['snackbar-theme-dialog', 'custom-width'],
                 });
         });
+    }
+
+    /**
+     * Change list tokens
+     *
+     * @return void
+     */
+    filterTokenChanged(): void {
+        this.filteredTokens = JSON.stringify(this.selectedTokens);
+    }
+
+    /**
+     * Show and hide balance
+     *
+     * @return void
+     */
+    toggleBalanceHidden(): void
+    {
+        this.walletProvider.toggleHideBalanceFlag(this.data.address, this.balanceHidden)
+            .then(wallet =>
+            {
+                // Parameters for update
+                const update: Update<any> = {
+                    id: wallet.id,
+                    changes: {
+                        balanceHidden: wallet.balanceHidden
+                    }
+                };
+
+                this.store.dispatch(
+                    new WalletActions.UpdateWallet({ wallet: update})
+                );
+            })
     }
 
     /**
@@ -209,14 +236,5 @@ export class PreferencesComponent implements OnInit
      */
     onClose(): void {
         this.dialogRef.close();
-    }
-
-    /**
-     * Set default name
-     *
-     * @return string
-     */
-    private defaultWalletName(): string {
-        return (this.walletName && this.walletName.length > 1 ? this.walletName : 'Default wallet')
     }
 }

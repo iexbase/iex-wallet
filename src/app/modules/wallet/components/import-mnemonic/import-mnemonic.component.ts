@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Component, OnInit } from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
 
@@ -16,6 +16,9 @@ import * as WalletActions from "@redux/wallet/wallet.actions";
 // Providers
 import { WalletProvider } from "@providers/wallet/wallet";
 import {BehaviorSubject} from "rxjs";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {MnemonicValidator} from "@validators/mnemonic";
+import {MatSnackBar} from "@angular/material";
 
 @Component({
     selector: 'import-mnemonic',
@@ -25,32 +28,11 @@ import {BehaviorSubject} from "rxjs";
 export class ImportMnemonicComponent implements OnInit
 {
     /**
-     * Mnemonic (ngModel)
+     * Wallet Mnemonic Fields
      *
      * @var string
      */
-    mnemonic: string;
-
-    /**
-     * Availability status
-     *
-     * @var boolean
-     */
-    isMnemonic: boolean = true;
-
-    /**
-     * Show advanced options
-     *
-     * @var boolean
-     */
-    hideOptional: boolean = true;
-
-    /**
-     * Account name (Optional)
-     *
-     * @var string
-     */
-    public walletName: string;
+    public createForm: FormGroup;
 
     /**
      * Go to account selection by "mnemonic"
@@ -76,14 +58,18 @@ export class ImportMnemonicComponent implements OnInit
     /**
      * Object creation ImportMnemonicComponent
      *
+     * @param {FormBuilder} fb - Creates an `AbstractControl` from a user-specified configuration.
      * @param {WalletProvider} walletProvider - Wallet provider
      * @param {Router} router - Router service
      * @param {Store} store - Reactive service
+     * @param {MatSnackBar} snackBar - Service to dispatch Material Design snack bar messages.
      */
     constructor(
+        private fb: FormBuilder,
         private walletProvider: WalletProvider,
         private router: Router,
         private store: Store<AppState>,
+        private snackBar: MatSnackBar
     ) {
         //
     }
@@ -93,25 +79,17 @@ export class ImportMnemonicComponent implements OnInit
      *
      * @return void
      */
-    ngOnInit() {
-        // empty
-    }
-
-    /**
-     * On the fly, check the entered data
-     *
-     * @return void | boolean
-     */
-    onChangeMnemonic(): void | boolean
+    ngOnInit(): void
     {
-        if(this.disableButton()) {
-            return this.hideOptional = true;
-        }
-
-        // Show advanced options
-        this.hideOptional = false;
-        // empty wallet name
-        this.walletName = undefined;
+        this.createForm = this.fb.group({
+            name: [null],
+            privateKey: [null],
+            address: [null],
+            mnemonic: [null, Validators.compose([
+                Validators.required,
+                new MnemonicValidator(this.walletProvider).isValid
+            ])],
+        });
     }
 
     /**
@@ -123,7 +101,9 @@ export class ImportMnemonicComponent implements OnInit
     {
         this.nextToSelectWallet = true;
         for (let i = 0; i < 10; i++) {
-            const address = this.walletProvider.addByMnemonic(this.mnemonic, i);
+            const address = this.walletProvider.addByMnemonic(
+                this.createForm.controls['mnemonic'].value, i
+            );
             this.addresses.next(this.addresses.getValue().concat([address]))
         }
     }
@@ -136,24 +116,27 @@ export class ImportMnemonicComponent implements OnInit
     finishImport(walletId: any)
     {
         this.isDisabledButton = true;
-        this.walletProvider.importMnemonic({
-            mnemonic: this.mnemonic,
-            name: this.walletName,
-            privateKey: walletId.privateKey,
-            address: walletId.address.base58
-        }).then(wallet => {
-            // Add to dispatcher
-            this.store.dispatch(
-                new WalletActions.AddWallet({wallet: wallet})
-            );
+        // Filling in the remaining positions
+        this.createForm.controls['privateKey'].setValue(walletId.privateKey);
+        this.createForm.controls['address'].setValue(walletId.address.base58);
 
-            console.log(wallet)
+        this.walletProvider.importMnemonic(this.createForm.value)
+            .then(wallet => {
+                // Add to dispatcher
+                this.store.dispatch(
+                    new WalletActions.AddWallet({wallet: wallet})
+                );
 
-            // After the addition, we do a full update.
-            this.walletProvider.fullUpdateAccount(walletId.address.base58).then(() => {});
-            // Redirect to Wallet
-            this.router.navigate(['/', 'wallet']);
-        });
+                // After the addition, we do a full update.
+                this.walletProvider.fullUpdateAccount(walletId.address.base58).then(() => {});
+                this.router.navigate(['/', 'wallet']);
+            })
+            .catch(err => {
+                this.snackBar.open(err,null, {
+                    duration: 3000,
+                    panelClass: ['snackbar-theme-dialog']
+                });
+            });
     }
 
     /**
@@ -164,33 +147,5 @@ export class ImportMnemonicComponent implements OnInit
     onBack(): void {
         this.addresses.next([]);
         this.nextToSelectWallet = false;
-    }
-
-    /**
-     * Button availability status
-     *
-     * @return boolean
-     */
-    disableButton(): boolean
-    {
-        this.validateMnemonic();
-        return (
-            !this.mnemonic ||
-            !this.isMnemonic ||
-            this.mnemonic.split(' ').length < 12 ||
-            this.mnemonic.split(' ').length > 12
-        )
-    }
-
-    /**
-     * Validation of entered values
-     *
-     * @return boolean | void
-     */
-    private validateMnemonic(): void | boolean {
-        if (/^(\w+\s?)*\s*$/.test(this.mnemonic)) {
-            return this.isMnemonic = true;
-        }
-        this.isMnemonic = false;
     }
 }

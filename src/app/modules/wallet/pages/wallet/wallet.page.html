@@ -34,13 +34,13 @@
         </ng-container>
 
         <!-- If no wallet is selected from the list -->
-        <ng-container *ngIf="!wallet.address && !isEmptyWallet">
+        <ng-container *ngIf="!isEmptyWallet && !activeAccount">
             <div class="empty-wallet" fxLayout="row" fxLayoutAlign="center center">
                 {{'Wallet.Index.SelectWallet' | translate}}
             </div>
         </ng-container>
 
-        <ng-container *ngIf="wallet.address && !isEmptyWallet">
+        <ng-container *ngIf="!isEmptyWallet && activeAccount">
             <wallet-settings [wallet]="wallet"></wallet-settings>
 
             <paper-wallet [header]="miniHeader" [wallet]="wallet"

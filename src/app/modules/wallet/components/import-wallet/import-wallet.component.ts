@@ -18,6 +18,7 @@ import { AppState } from "@redux/index";
 // Providers
 import { Logger } from "@providers/logger/logger";
 import { WalletProvider } from "@providers/wallet/wallet";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
     selector: 'import-wallet',
@@ -27,31 +28,11 @@ import { WalletProvider } from "@providers/wallet/wallet";
 export class ImportWalletComponent implements OnInit
 {
     /**
-     * Private Key (ngModel)
+     * Wallet Import Fields
      *
      * @var string
      */
-    public privateKey: string;
-    /**
-     * Show advanced options
-     *
-     * @var boolean
-     */
-    hideOptional: boolean = true;
-
-    /**
-     * Test button click
-     *
-     * @var boolean
-     */
-    public disablePrivateKey: boolean = true;
-
-    /**
-     * Account name (Optional)
-     *
-     * @var string
-     */
-    public walletName: string = null;
+    public createForm: FormGroup;
 
     /**
      *  In case of successful import
@@ -70,27 +51,19 @@ export class ImportWalletComponent implements OnInit
     /**
      * Object creation ImportWalletComponent
      *
+     * @param {FormBuilder} fb - Creates an `AbstractControl` from a user-specified configuration.
      * @param {WalletProvider} walletProvider - Wallet provider
      * @param {Store} store - Reactive service
      * @param {Logger} logger - Log provider
      * @param {MatSnackBar} snackBar - is a service for displaying snack-bar notifications.
      */
     constructor(
+        private fb: FormBuilder,
         private walletProvider: WalletProvider,
         private store: Store<AppState>,
         private logger: Logger,
         public snackBar: MatSnackBar
     ) {
-        //
-    }
-
-    /**
-     * We start object life cycle
-     *
-     * @return void
-     */
-    ngOnInit(): void
-    {
         this.lottieConfig = {
             path: 'assets/animations/smile/success.json',
             renderer: 'canvas',
@@ -100,31 +73,20 @@ export class ImportWalletComponent implements OnInit
     }
 
     /**
-     * On the fly, check the entered data
+     * We start object life cycle
      *
-     * @return void | boolean
+     * @return void
      */
-    onChangeImportKey(): void | boolean
+    ngOnInit(): void
     {
-        // Blocking the display of additional parameters
-        // in case of an incorrect private key
-        this.hideOptional = true;
-
-        // Lock button in the case of an empty private key
-        if (this.privateKey == undefined)
-            return this.disablePrivateKey = true;
-
-        // Lock the private key in case of exceeding
-        // the length above 64 characters
-        if (this.privateKey.length != 64)
-            return this.disablePrivateKey = true;
-
-        // Show advanced options
-        this.hideOptional = false;
-        // empty wallet name
-        this.walletName = undefined;
-        // Unlock button
-        this.disablePrivateKey = false;
+        this.createForm = this.fb.group({
+            name: [null],
+            privateKey: [null, Validators.compose([
+                Validators.required,
+                Validators.minLength(64),
+                Validators.maxLength(64)
+            ])],
+        });
     }
 
     /**
@@ -134,26 +96,22 @@ export class ImportWalletComponent implements OnInit
      */
     doImportWallet(): void
     {
-        this.walletProvider.importWallet({
-            privateKey: this.privateKey,
-            name: this.walletName
-        }).then(wallet => {
-            // Add to dispatcher
-            this.store.dispatch(
-                new WalletActions.AddWallet({ wallet: wallet })
-            );
-            this.isSuccess = true;
-            // After the addition, we do a full update.
-            this.walletProvider.fullUpdateAccount(wallet.address).then(() => {});
-
-            console.log(wallet)
-        }).catch(err => {
-            this.isSuccess = false;
-            this.snackBar.open(err,null, {
-                duration: 3000,
-                panelClass: ['snackbar-theme-dialog']
+        this.walletProvider.importWallet(this.createForm.value)
+            .then(wallet => {
+                // Add to dispatcher
+                this.store.dispatch(
+                    new WalletActions.AddWallet({ wallet: wallet })
+                );
+                // After the addition, we do a full update.
+                this.walletProvider.fullUpdateAccount(wallet.address).then(() => {});
+                this.isSuccess = true;
+            })
+            .catch(err => {
+                this.snackBar.open(err,null, {
+                    duration: 3000,
+                    panelClass: ['snackbar-theme-dialog']
+                });
+                this.logger.error('Import: could not wallet', err);
             });
-            this.logger.error('Import: could not wallet', err);
-        });
     }
 }

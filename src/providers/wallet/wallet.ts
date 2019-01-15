@@ -70,7 +70,7 @@ export interface CreateWalletInterface
 // Interface Storage wallet ID
 export interface WalletOptions
 {
-    id?: number;
+    id?: string;
     position?: number;
     mnemonic?: string;
     name: string;
@@ -89,8 +89,6 @@ export interface WalletOptions
     tronPower?: number;
     lastUpdated?: number;
     tokens?: any;
-
-    isTestnet?: boolean;
 }
 
 // Interface Update wallet ID data
@@ -108,8 +106,6 @@ export interface UpdateWalletModel
     tronPower?: number;
     lastUpdated?: number;
     tokens?: any;
-
-    isTestnet?: boolean;
 }
 
 // Interface create new transaction
@@ -243,11 +239,9 @@ export class WalletProvider
                 }).then(walletClient => {
                     const showOpts = _.clone(walletClient);
                     // Delete private key (secure)
-                    if(showOpts.privateKey)
-                        delete showOpts['privateKey'];
+                    if(showOpts.privateKey) delete showOpts['privateKey'];
                     // Delete public key
-                    if(showOpts.publicKey)
-                        delete showOpts['publicKey'];
+                    if(showOpts.publicKey) delete showOpts['publicKey'];
 
                     return resolve(showOpts);
                 }).catch(err => {
@@ -354,7 +348,7 @@ export class WalletProvider
                 'Wallet new order stored for ' + walletId + ': ' + index
             );
         });
-        if (this.getWallet(walletId)) this.getWallet(walletId)['order'] = index;
+        if (this.getWallet(walletId)) this.getWallet(walletId)['position'] = index;
     }
 
     /**
@@ -382,14 +376,18 @@ export class WalletProvider
      * Show and hide balance
      *
      * @param {string} walletId - Wallet id
-     * @return void
+     * @param {boolean} balanceHidden - Hidden balance
+     * @returns {Promise}
      */
-    toggleHideBalanceFlag(walletId: string): void
+    toggleHideBalanceFlag(walletId: string, balanceHidden: boolean): Promise<any>
     {
-        this.getWallet[walletId].balanceHidden = ! this.getWallet[walletId].balanceHidden;
-        this.updateWallet(walletId, {
-            balanceHidden: this.getWallet[walletId].balanceHidden
-        }).then(() => {});
+        return new Promise<any>(resolve => {
+            this.updateWallet(walletId, {
+                balanceHidden: balanceHidden
+            }).then(wallet => {
+                return resolve(wallet)
+            });
+        });
     }
 
     /**
@@ -462,17 +460,18 @@ export class WalletProvider
             // If the name is not specified, manually register
             if(!wallet.name) wallet.name = 'Personal wallet';
 
-            let time = new Date().getTime();
-            let newWallet = <WalletOptions>{
-                id: Object.keys(allWallets).length + 1,
-                position: Object.keys(allWallets).length + 1,
+            let lastTime = Math.round(
+                new Date().getTime() / 1000
+            );
+            let newWallet = <WalletOptions> {
+                id: wallet.address,
+                position: 0,
                 coin: Coin.TRX,
                 balance: 0,
-                createdOn: Math.round(time / 1000),
-                updatedOn: Math.round(time / 1000),
+                createdOn: lastTime,
+                updatedOn: lastTime,
                 balanceHidden: false,
                 color: 'theme-wallet-thunderbird',
-                testNet: false,
                 ...wallet
             };
             allWallets.push(newWallet);
@@ -490,9 +489,9 @@ export class WalletProvider
      */
     getWallet(walletAddress: string): any
     {
-        this.logger.debug(`Get Wallet ID ${walletAddress}`);
-        return this.getWallets()
-            .find(c => c.address == walletAddress);
+        return this.getWallets().find(
+            c => c.address == walletAddress
+        ) || {};
     }
 
     /**
@@ -528,9 +527,11 @@ export class WalletProvider
         return new Promise((resolve, reject) => {
             // We do not allow the possibility of changing important parameters.
             // If these parameters change, the account will be disrupted.
-            if(options.createdOn || options.privateKey || options.address || options.id || options.mnemonic) {
+            if(['createdOn','privateKey','address','id','mnemonic'].includes(options))
                 return reject('Something went wrong');
-            }
+
+            // If the name is not specified, manually register
+            if(!options.name) options.name = 'Personal wallet';
 
             try {
                 this.logger.debug(`Update Wallet ID ${walletAddress}`);
@@ -576,6 +577,7 @@ export class WalletProvider
             let updatedWallet = this.getWallets().filter(
                 filter => filter.address != walletAddress
             );
+
             // Update the purse store and make new changes
             this.encryptWallet(updatedWallet, this.password);
 
@@ -608,8 +610,7 @@ export class WalletProvider
         if (wallets == null && wallets == undefined)
             throw new Error('Invalid password');
 
-        wallets = wallets.filter(f => delete f['privateKey'])
-            .filter(f => delete f['mnemonic']);
+        wallets = wallets.filter(f => delete f['privateKey']);
         return wallets;
     }
 
@@ -1145,7 +1146,7 @@ export class WalletProvider
      */
     addByMnemonic(phrase: string, index: number = 0)
     {
-        if (!WalletProvider.isValidMnemonic(phrase))
+        if (!this.isValidMnemonic(phrase))
             throw new Error(`Invalid mnemonic phrase: ${phrase}`);
 
         const seed = bip39.mnemonicToSeed(phrase);
@@ -1162,7 +1163,8 @@ export class WalletProvider
      * @param {string} phrase - Phrase 12 worlds
      * @return boolean
      * */
-    private static isValidMnemonic(phrase: string): boolean {
+    isValidMnemonic(phrase: string): boolean {
+        if(!phrase) return false;
         if (phrase.trim().split(/\s+/g).length < 12) {
             return false;
         }

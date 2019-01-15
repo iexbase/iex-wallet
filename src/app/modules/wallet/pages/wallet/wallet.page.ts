@@ -153,7 +153,7 @@ export class WalletPage implements OnInit
         this.wallets = this.store.pipe(select(fromWallet.selectAllWallets));
         // Check the presence of the recorded wallet
         // and activates the cached wallet
-        this.activeAccount != undefined && this.wallets.subscribe((data: any[]) =>
+        this.activeAccount != null && this.wallets.subscribe((data: any[]) =>
         {
             this.isEmptyWallet = _.isEmpty(data);
 
