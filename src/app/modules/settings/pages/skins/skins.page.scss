@@ -119,6 +119,11 @@
                     background-image: url("assets/images/themes/endless-space.jpg");
                 }
 
+                &.skin-vessel {
+                    background: url("assets/images/themes/vessel.jpg");
+                    background-size: cover;
+                }
+
                 .selected-skin {
                     position: absolute;
                     top: -4px;

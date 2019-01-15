@@ -95,8 +95,6 @@
                 opacity: 1;
             }
         }
-
-
     }
 }
 
@@ -104,3 +102,28 @@
     background-image: linear-gradient(-180deg, rgba(33, 25, 41, 0.8) 0%, rgba(0, 0, 0, 0.7) 100%), url('assets/images/themes/endless-space.jpg');
     background-size: cover;
 }
+
+.skin-vessel {
+    background-size: cover;
+    background-image: linear-gradient(-177deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 100%), url("assets/images/themes/vessel-bg.jpg");
+
+    .sidenav-menu {
+        .mat-toolbar {
+            background-color: rgba(255, 255, 255, 0.05) !important;
+        }
+
+        .menu-mat-list {
+            background-color: rgba(255, 255, 255, 0.05) !important;
+        }
+
+        .mat-nav-list .mat-list-item {
+            color: #FAFAFA !important;
+            opacity: .5;
+
+            &.active {
+                opacity: 1;
+            }
+        }
+    }
+}
+

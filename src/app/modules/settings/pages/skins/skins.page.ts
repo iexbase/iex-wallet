@@ -77,6 +77,7 @@ export class SkinsPage implements OnInit
             name: "themes",
             themes: [
                 {'name': 'Endless Space', 'class': 'skin-endless-space'},
+                {'name': 'Vessel', 'class': 'skin-vessel'},
             ]
         }
         ];
