@@ -22,12 +22,15 @@
                         <button mat-icon-button="" class="button-circle" (click)="addressInExplorer()">
                             <mat-icon svgIcon="trx-link"></mat-icon>
                         </button>
+
+                        <button mat-icon-button="" class="button-circle" (click)="emailAccount()">
+                            <mat-icon svgIcon="email-icon"></mat-icon>
+                        </button>
                     </div>
                 </div>
             </div>
         </mat-tab>
         <mat-tab label="Request">
-
             <div class="tab-content">
                 <ng-container *ngIf="isGenerateRequest">
                     <receive-request [params]="fields"></receive-request>

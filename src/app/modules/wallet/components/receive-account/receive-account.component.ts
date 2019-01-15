@@ -102,7 +102,20 @@ export class ReceiveAccountComponent implements OnInit
      * @return void
      */
     addressInExplorer(): void {
-        this.electron.openExternalLink(env.explorer.url + 'address/' + this.wallet.address);
+        this.electron.openExternalLink(
+            env.explorer.url + 'address/' + this.wallet.address
+        );
+    }
+
+    /**
+     * Send Tron address to Email
+     *
+     * @return void
+     */
+    emailAccount(): void {
+        this.electron.openExternalLink(
+            'mailto:?subject=iEXWallet TRON Address&body=My iEXWallet TRON address is: '+ this.wallet.address
+        )
     }
 
     /**
