@@ -408,23 +408,19 @@ export class TransferAssetComponent implements OnInit
     {
         this.isButtonDisabled = true;
         this.isConfirmed = true;
-        this.walletProvider.signTx(this.signedTransaction).then(signed =>
-        {
-            if('signature' in signed)
-            {
-                this.walletProvider.broadcastTx(signed).then(broadcast => {
-                    if(broadcast.result == true)
-                    {
-                        this.walletProvider.fullUpdateAccount(this.wallet.address).then(() => {});
+        this.walletProvider.signTx(this.signedTransaction).then(signed => {
+            this.walletProvider.broadcastTx(signed).then(broadcast => {
+                if(broadcast.result == true)
+                {
+                    this.walletProvider.fullUpdateAccount(this.wallet.address).then(() => {});
 
-                        this.isButtonDisabled = false;
-                        this.isSuccess = true;
-                        setTimeout(() => {
-                            this.isTransactionInfo = true;
-                        }, 2000)
-                    }
-                })
-            }
+                    this.isButtonDisabled = false;
+                    this.isSuccess = true;
+                    setTimeout(() => {
+                        this.isTransactionInfo = true;
+                    }, 2000)
+                }
+            })
         }).catch(err => {
             this.snackBar.open(err, null, {
                 duration: 2000, panelClass: ['snackbar-theme-dialog', 'custom-width'],
