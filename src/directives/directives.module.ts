@@ -11,12 +11,14 @@ import { MatSnackBarModule } from "@angular/material";
 import { CopyToClipboard } from "./copy-to-clipboard/copy-to-clipboard";
 import { OnlyNumber } from "@directives/only-number/only-number";
 import { ExternalizeLinks } from "@directives/externalize-links/externalize-links";
+import {LongPress} from "@directives/long-press/long-press";
 
 
 export const constDirectives = [
     CopyToClipboard,
     OnlyNumber,
-    ExternalizeLinks
+    ExternalizeLinks,
+    LongPress
 ];
 
 @NgModule({
