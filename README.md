@@ -26,6 +26,10 @@
   <a href="https://github.com/iexbase/iex-wallet/pulls"> 
     <img src="https://img.shields.io/github/issues-pr/iexbase/iex-wallet.svg">
   </a>
+  
+  <a href="https://app.codacy.com/app/serderovsh/iex-wallet?utm_source=github.com&utm_medium=referral&utm_content=iexbase/iex-wallet&utm_campaign=Badge_Grade_Dashboard"> 
+    <img src="https://api.codacy.com/project/badge/Grade/f7fe0bddd52f49dd9c64927c406f66eb">
+  </a>
 </p>
 
 
