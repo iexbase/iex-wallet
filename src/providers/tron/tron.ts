@@ -461,6 +461,24 @@ export class TronProvider
     }
 
     /**
+     * getUnconfirmedAccount
+     *
+     * Request for account information by TRON address
+     *
+     * @param {string} address - TRON Address
+     * @param {any} callback - callback result
+     * @return {Promise} - return account information
+     */
+    async getUnconfirmedAccount(address: string, callback?: any): Promise<any>
+    {
+        try {
+            return await this.client.trx.getUnconfirmedAccount(address, callback);
+        }catch (e) {
+            throw new Error(e)
+        }
+    }
+
+    /**
      * getAccountResources
      *
      * Request for receipt bandwidth and energy by TRON address

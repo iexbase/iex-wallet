@@ -835,7 +835,7 @@ export class WalletProvider
             // Convert to base58
             account = this.addressProvider.toBase58(account);
 
-            this.tron.getAccount(account, (err: any, addrInfo: any) => {
+            this.tron.getUnconfirmedAccount(account, (err: any, addrInfo: any) => {
                 // If you're having trouble checking your account
                 if(err) reject(err);
                 resolve(addrInfo)

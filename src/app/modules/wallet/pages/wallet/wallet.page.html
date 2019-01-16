@@ -1,5 +1,5 @@
 <div id="tron-content-wallet" [ngClass]="wallet.color">
-    <div id="wallet-coin-list" class="wallet-menu" fxFlex="18">
+    <div id="wallet-coin-list" class="wallet-menu" [fxFlex]="18">
         <mat-list>
             <ng-container *ngFor="let item of wallets | async | orderBy : ['-balance']">
                 <mat-list-item (click)="openWalletDetails(item)"
@@ -44,9 +44,46 @@
         <ng-container *ngIf="!isEmptyWallet && activeAccount">
             <wallet-settings [wallet]="wallet"></wallet-settings>
 
-            <paper-wallet [header]="miniHeader" [wallet]="wallet"
-                          [altCode]="config.get('wallet.settings.alternativeIsoCode')">
-            </paper-wallet>
+            <div id="wallet-detail-header" [ngClass]="{'has-scrolling': miniHeader}">
+                <div id="asset-logo-status" (click)="updateWallet()">
+                    <div id="asset-logo-container" [class.on]="enabledOn" (mouseout)="enabledOn=false" (mouseover)="enabledOn=true">
+                        <div id="update-tx">
+                            <mat-icon svgIcon="c-refresh"></mat-icon>
+                        </div>
+                        <div id="logo" class="tron-icon"></div>
+                    </div>
+                </div>
+
+                <div id="header-balance" [longPress] (onRelease)="toggleBalance()">
+                    <div class="balance-trx" *ngIf="!wallet.balanceHidden">
+                        <span class="balance">{{wallet.balance | sunToUnit}}</span>
+                        <span class="display-unit">TRX</span>
+                    </div>
+                    <div class="hide-balance" *ngIf="wallet.balanceHidden">
+                        [{{'Wallet.Index.HideBalance' | translate}}]
+                    </div>
+                </div>
+
+                <div id="header-alt-balance" *ngIf="!wallet.balanceHidden">
+                    <div class="currency">
+                        <span class="symbol"></span>
+                        <span class="amount">{{ wallet.balance | sunToFiat }}</span>
+                        <span class="code">{{ config.get('wallet.settings.alternativeIsoCode') }}</span>
+                    </div>
+                </div>
+
+                <div id="actions" fxLayout="row">
+                    <button mat-button="" class="tron-button red-bg" (click)="transferModal()">
+                        {{'Wallet.Index.Send' | translate}}
+                    </button>
+                    <button mat-button="" class="tron-button red-bg" (click)="receiveModal()">
+                        {{'Wallet.Index.Receive' | translate}}
+                    </button>
+                    <button mat-button="" class="tron-button red-bg" (click)="freezeModal()">
+                        {{'Wallet.Index.Freeze' | translate}}
+                    </button>
+                </div>
+            </div>
 
             <!-- Transactions -->
             <div id="wallet-detail-transaction" class="ps" [perfectScrollbar]="{}" (scroll)="onScroll($event)">

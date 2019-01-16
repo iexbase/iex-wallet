@@ -111,6 +111,161 @@
 }
 
 
+#asset-logo-status {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 1;
+
+    #asset-logo-container {
+        position: relative;
+        cursor: pointer;
+        width: 84px;
+        height: 84px;
+
+        &.on {
+            #update-tx {
+                opacity: 1;
+                transform: scale(1, 1);
+            }
+
+            #logo {
+                transform: scale(0.5, 0.5);
+                opacity: 0;
+                transition: opacity 350ms cubic-bezier(0.25, 0.1, 0.25, 1), transform 250ms ease-in-out;
+            }
+        }
+
+        #logo {
+            position: absolute;
+            opacity: 1;
+            width: 100%;
+            height: 100%;
+            z-index: 100;
+            transition: opacity 200ms cubic-bezier(0.25, 0.1, 0.25, 1),
+            background 350ms cubic-bezier(0.25, 0.1, 0.25, 1),
+            transform 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .tron-icon {
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+
+        #update-tx {
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: auto;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            opacity: 0;
+            z-index: 99;
+            transition: opacity 300ms cubic-bezier(0.25, 0.1, 0.25, 1), transform 500ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: scale(0.85, 0.85);
+            box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.35);
+            background-image: linear-gradient(179deg, #d11b12 0%, rgba(125, 17, 11, 0.95) 100%);
+            border-color: #D11E25;
+
+            mat-icon {
+                display: block;
+                width: 40px;
+                height: 40px;
+                margin: 20px auto 0 20px;
+            }
+        }
+    }
+}
+
+#wallet-detail-header
+{
+    z-index: 2;
+    transition: margin-top 250ms cubic-bezier(0.25, 0.1, 0.25, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    flex-shrink: 0;
+    padding-top: 16px;
+
+    &.has-scrolling {
+        box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.4);
+        margin-top: -100px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    @media (min-width: 769px) {
+        & {
+            height: 280px;
+        }
+    }
+    @media (min-width: 1180px) {
+        & {
+            height: 288px; }
+
+    }
+    @media (min-width: 1600px) {
+        & {
+            height: 312px;
+        }
+    }
+
+    #header-balance {
+        -webkit-font-smoothing: antialiased;
+        font-weight: 300;
+        padding: 0;
+        white-space: nowrap;
+        letter-spacing: -0.02em;
+        margin: 14px 0 0;
+        text-shadow: 0 3px 16px rgba(0, 0, 0, 0.2);
+        font-size: 56px;
+        line-height: 0.8em;
+        color: #D11E25;
+        fill: #D11E25;
+
+        .hide-balance {
+            margin-bottom: 40px;
+            font-size: 45px;
+        }
+
+        .balance {
+
+        }
+
+        .display-unit {
+            letter-spacing: normal;
+            font-size: 0.5em;
+            margin-left: 4px;
+            font-weight: 100;
+        }
+    }
+
+    #header-alt-balance {
+        color: #FAFAFA;
+        font-size: 26px;
+        font-weight: 300;
+        line-height: 1em;
+        margin: 0;
+
+        .symbol {
+            font-size: 0.7em;
+            opacity: 0.6;
+        }
+
+        .amount {
+            margin-right: 5px;
+            margin-left: 5px;
+        }
+
+        .code {
+            font-size: 0.6em;
+            opacity: 0.75;
+        }
+    }
+}
+
 #actions {
     margin-top: 8px;
     button {
@@ -119,6 +274,7 @@
         margin: 14px 12px !important;
     }
 }
+
 
 /deep/ .transaction-list
 {
@@ -231,6 +387,7 @@
         }
     }
 }
+
 
 
 .no-transaction {

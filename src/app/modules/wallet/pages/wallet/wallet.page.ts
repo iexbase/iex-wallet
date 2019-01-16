@@ -8,7 +8,7 @@
 import { Component, HostListener, OnInit } from "@angular/core";
 import { LocalStorage } from "ngx-webstorage";
 import {Observable} from "rxjs";
-import {MatDialog} from "@angular/material";
+import {MatDialog, MatSnackBar} from "@angular/material";
 import { select, Store } from "@ngrx/store";
 import * as _ from 'lodash';
 
@@ -24,6 +24,11 @@ import { ConfigProvider } from "@providers/config/config";
 import { ElectronProvider } from "@providers/electron/electron";
 import {AddressBookProvider} from "@providers/address-book/address-book";
 import {Logger} from "@providers/logger/logger";
+import {TransferAssetComponent} from "@modules/wallet/components/transfer-asset/transfer-asset.component";
+import {ReceiveAccountComponent} from "@modules/wallet/components/receive-account/receive-account.component";
+import {FreezeBalanceComponent} from "@modules/wallet/components/freeze-balance/freeze-balance.component";
+import {Update} from "@ngrx/entity";
+import * as WalletActions from "@redux/wallet/wallet.actions";
 
 @Component({
     selector: 'wallet-page',
@@ -120,6 +125,13 @@ export class WalletPage implements OnInit
     private primaryWalletOpening:boolean = false;
 
     /**
+     * Status hover update
+     *
+     * @var boolean
+     */
+    enabledOn: boolean = false;
+
+    /**
      * Create a new PreferencesComponent object
      *
      * @param {Store} store - Reactive service
@@ -128,6 +140,7 @@ export class WalletPage implements OnInit
      * @param {ConfigProvider} config - Config provider
      * @param {ElectronProvider} electronProvider - Electron provider
      * @param {AddressBookProvider} addressBookProvider - Address Book provider
+     * @param {MatSnackBar} snackBar - Service to dispatch Material Design snack bar messages.
      * @param {Logger} logger - Log provider
      */
     constructor(
@@ -137,6 +150,7 @@ export class WalletPage implements OnInit
         public config: ConfigProvider,
         private electronProvider: ElectronProvider,
         private addressBookProvider: AddressBookProvider,
+        private snackBar: MatSnackBar,
         private logger: Logger
     ) {
         //
@@ -251,6 +265,102 @@ export class WalletPage implements OnInit
 
                 saveResultsCallback(data);
             });
+    }
+
+    /**
+     * Show and hide balance
+     *
+     * @return void
+     */
+    toggleBalance()
+    {
+        this.wallet.balanceHidden = !this.wallet.balanceHidden;
+        this.walletProvider.toggleHideBalanceFlag(this.wallet.address, this.wallet.balanceHidden)
+            .then(wallet => {
+                // Parameters for update
+                const update: Update<any> = {
+                    id: wallet.id,
+                    changes: { balanceHidden: wallet.balanceHidden }
+                };
+
+                this.store.dispatch(
+                    new WalletActions.UpdateWallet({ wallet: update})
+                );
+            })
+    }
+
+    /**
+     *  Update wallet id
+     *
+     *  @return void
+     */
+    updateWallet(): void
+    {
+        this.walletProvider.fullUpdateAccount(this.wallet.address).then(() => {
+
+            this.currentPage = 0;
+            //this.transactions = [];
+            this.getTransactions(this.currentPage, (items:any) => {
+                this.transactions = items.res;
+                this.isLoading = false;
+            });
+
+        });
+
+        this.snackBar.open('Account updated successfully', null, {
+            duration: 2000,
+            panelClass: ['snackbar-theme-dialog']
+        })
+    }
+
+    /**
+     * Open transfer window
+     *
+     * @return void
+     */
+    transferModal(): void
+    {
+        const dialogRef = this.dialog.open(TransferAssetComponent, {
+            width: '650px',
+            panelClass: ['dialog-background', this.wallet.color],
+            data: {
+                ...this.wallet,
+                altCode: this.config.get('wallet.settings.alternativeIsoCode')
+            }
+        });
+
+        dialogRef.afterClosed().subscribe(() => {});
+    }
+
+    /**
+     * Open receive address window
+     *
+     * @return void
+     */
+    receiveModal(): void
+    {
+        const dialogRef = this.dialog.open(ReceiveAccountComponent, {
+            width: '650px',
+            panelClass: ['dialog-background', this.wallet.color],
+            data: this.wallet
+        });
+
+        dialogRef.afterClosed().subscribe(() => {});
+    }
+
+    /**
+     * Open freeze balance window
+     *
+     * @return void
+     */
+    freezeModal(): void
+    {
+        const dialogRef = this.dialog.open(FreezeBalanceComponent, {
+            width: '650px',
+            panelClass: ['dialog-background', this.wallet.color],
+            data: this.wallet
+        });
+        dialogRef.afterClosed().subscribe(() => {});
     }
 
     /**

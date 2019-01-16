@@ -45,7 +45,6 @@ import {VerifyMessageComponent} from "./components/verify-message/verify-message
 import {TransactionInfoComponent} from "./components/transaction-info/transaction-info.component";
 import {NoFundsTrxComponent} from "./components/no-funds-trx/no-funds-trx.component";
 import {ConfirmTxComponent} from "./components/confirm-tx/confirm-tx.component";
-import {PaperWalletComponent} from "@modules/wallet/components/paper-wallet/paper-wallet.component";
 import {WalletSettingsComponent} from "@modules/wallet/components/wallet-settings/wallet-settings.component";
 
 const walletPage = [
@@ -60,7 +59,6 @@ const walletComponent = [
     TransactionInfoComponent,
     NoFundsTrxComponent,
     ConfirmTxComponent,
-    PaperWalletComponent,
     WalletSettingsComponent
 ];
 
