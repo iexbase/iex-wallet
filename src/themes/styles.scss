@@ -399,6 +399,14 @@ button.button-circle {
     }
 }
 
+.mat-slide-toggle.mat-primary.mat-checked .mat-slide-toggle-thumb,
+.mat-slide-toggle.mat-primary.mat-checked .mat-ripple-element{
+    background-color: #01d1a2;
+}
+
+.mat-slide-toggle.mat-primary.mat-checked .mat-slide-toggle-bar {
+    background-color: rgba(255, 255, 255, 0.22);
+}
 
 .tron-nav-tabs
 {

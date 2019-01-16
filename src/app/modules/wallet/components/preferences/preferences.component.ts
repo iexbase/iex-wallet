@@ -160,31 +160,21 @@ export class PreferencesComponent implements OnInit
      *
      * @return void
      */
-    updateSettings(): void
+    nameChanged(): void
     {
         this.walletProvider.updateWallet(this.data.address, {
-            name: this.walletName,
-            color: this.colorIndex.class
+            name: this.walletName
         }).then(result =>
         {
             // Parameters for update
             const update: Update<any> = {
                 id: result.id,
-                changes: {
-                    name: result.name,
-                    color: result.color
-                }
+                changes: { name: result.name }
             };
 
             this.store.dispatch(
                 new WalletActions.UpdateWallet({ wallet: update})
             );
-
-            this.snackBar.open('Data successfully updated',
-                null, {
-                    duration: 2000,
-                    panelClass: ['snackbar-theme-dialog', 'custom-width'],
-                });
         });
     }
 
@@ -195,6 +185,29 @@ export class PreferencesComponent implements OnInit
      */
     filterTokenChanged(): void {
         this.filteredTokens = JSON.stringify(this.selectedTokens);
+    }
+
+    /**
+     * Change wallet theme
+     *
+     * @return void
+     */
+    colorChanged(): void
+    {
+        this.walletProvider.updateWallet(this.data.address, {
+            color: this.colorIndex.class
+        }).then(result =>
+        {
+            // Parameters for update
+            const update: Update<any> = {
+                id: result.id,
+                changes: { color: result.color }
+            };
+
+            this.store.dispatch(
+                new WalletActions.UpdateWallet({ wallet: update})
+            );
+        });
     }
 
     /**

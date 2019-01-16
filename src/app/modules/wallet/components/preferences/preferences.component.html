@@ -11,12 +11,12 @@
         <div class="wallet-name-field">
             <mat-form-field appearance="outline">
                 <mat-label>{{'Wallet.Preferences.WalletName' | translate}}</mat-label>
-                <input matInput placeholder="Name" [(ngModel)]="walletName">
+                <input matInput placeholder="Name" [(ngModel)]="walletName" (ngModelChange)="nameChanged()">
             </mat-form-field>
 
             <mat-form-field appearance="outline">
                 <mat-label>{{'Wallet.Preferences.WalletColor' | translate}}</mat-label>
-                <mat-select placeholder="Color" [(ngModel)]="colorIndex" class="settings-list">
+                <mat-select placeholder="Color" [(ngModel)]="colorIndex" (selectionChange)="colorChanged()" class="settings-list">
                     <mat-select-trigger>
                         <div fxLayout="row" fxLayoutAlign="start center">
                             <div fxFlex="8">
@@ -54,11 +54,5 @@
                 </mat-slide-toggle>
             </div>
         </div>
-    </div>
-    <div mat-dialog-actions>
-        <button mat-stroked-button (click)="updateSettings()" [disabled]="disabledButton()"
-                color="primary" class="tron-default-button transfer-button">
-            {{'Wallet.Preferences.UpdateSettings' | translate}}
-        </button>
     </div>
 </div>
