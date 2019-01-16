@@ -60,9 +60,8 @@
                                     </button>
                                 </mat-form-field>
 
-                                <!-- List Alt Currencies -->
+                                <!-- List tokens -->
                                 <mat-selection-list class="token-select-list">
-                                    <!-- all currency -->
                                     <ng-container *ngFor="let asset of filteredListTokens">
                                         <mat-option [value]="asset.name" fxLayout="row">{{ asset.name }}
                                             <span fxFlex=""></span>
@@ -70,15 +69,6 @@
                                         </mat-option>
                                     </ng-container>
                                 </mat-selection-list>
-
-                                <!--<mat-optgroup [label]="'Wallet.TransferAsset.TokenLabel' | translate">-->
-                                    <!--<ng-container *ngFor="let asset of listTokens">-->
-                                        <!--<mat-option [value]="asset.name" fxLayout="row">{{ asset.name }}-->
-                                            <!--<span fxFlex=""></span>-->
-                                            <!--<span [style.fontSize]="'13px'">({{asset.value  | sunToUnit:asset.name}} available)</span>-->
-                                        <!--</mat-option>-->
-                                    <!--</ng-container>-->
-                                <!--</mat-optgroup>-->
                             </mat-select>
                         </mat-form-field>
 
@@ -93,7 +83,7 @@
                         </mat-form-field>
 
                         <mat-menu #menu="matMenu">
-                            <button mat-menu-item *ngFor="let item of filteredContactsList"
+                            <button mat-menu-item *ngFor="let item of filteredContactsList | orderBy : ['name']"
                                     (click)="chooseAddress(item.address)" [disabled]="item.address == fields.toAddress">
                                 {{item.name}}
                             </button>

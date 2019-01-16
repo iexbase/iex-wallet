@@ -19,6 +19,7 @@ import { AddressBookProvider } from "@providers/address-book/address-book";
 
 // Modules
 import { AddressBookPage } from "@modules/settings/pages/address-book/address-book.page";
+import {AppProvider} from "@providers/app/app";
 
 @Component({
     selector: 'add-contact',
@@ -34,6 +35,8 @@ export class AddContactComponent implements OnInit
      */
     addressBookAdd: FormGroup;
 
+    public appName: string;
+
     /**
      * Object creation AddContactComponent
      *
@@ -46,6 +49,7 @@ export class AddContactComponent implements OnInit
      */
     constructor(
         public dialogRef: MatDialogRef<AddressBookPage>,
+        private appProvider: AppProvider,
         public addressBookProvider: AddressBookProvider,
         public addressProvider: AddressProvider,
         private formBuilder: FormBuilder,
@@ -76,6 +80,7 @@ export class AddContactComponent implements OnInit
      */
     ngOnInit() {
         this.logger.info('Loaded: AddressbookAddPage');
+        this.appName = this.appProvider.info.nameCase;
     }
 
     /**
@@ -114,11 +119,11 @@ export class AddContactComponent implements OnInit
     /**
      * Remove unnecessary values
      *
-     * @param {string} address - tron address
+     * @param {string} str - tron address
      * @returns {string}
      */
-    private parseAddress(address: string): string {
-        return address.replace(/^(tron:|tronix:)/i, '');
+    private parseAddress(str: string): string {
+        return this.addressProvider.extractAddress(str)
     }
 
     /**

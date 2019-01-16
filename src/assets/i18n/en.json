@@ -286,6 +286,7 @@
             "EmailPlaceholder": "Please enter your email address",
             "AddressPlaceholder": "Please enter your tron address",
             "Address": "Address",
+            "WarningAddress": "This field only accepts addresses supported by {appName} wallet",
             "Add": "Add contact"
         },
 

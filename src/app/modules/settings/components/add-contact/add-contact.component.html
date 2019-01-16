@@ -25,6 +25,9 @@
                            [value]="addressBookAdd.value.address">
                     <mat-icon matSuffix class="check-success" *ngIf="addressBookAdd.controls.address.status == 'VALID'">check</mat-icon>
                     <mat-icon matSuffix class="check-fail" *ngIf="addressBookAdd.controls.address.status == 'INVALID'">close</mat-icon>
+                    <mat-hint class="warning-hint-field" *ngIf="addressBookAdd.value.address && addressBookAdd.controls.address.status == 'INVALID'">
+                        {{'Settings.AddContact.WarningAddress' | translate:{appName: appName} }}
+                    </mat-hint>
                 </mat-form-field>
             </div>
         </div>

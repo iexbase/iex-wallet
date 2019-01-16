@@ -286,6 +286,7 @@
             "EmailPlaceholder": "Пожалуйста введите email адрес",
             "AddressPlaceholder": "Пожалуйста введите tron адрес",
             "Address": "Адрес",
+            "WarningAddress": "Это поле принимает только адреса, поддерживаемые кошельком {appName}",
             "Add": "Добавить"
         },
 

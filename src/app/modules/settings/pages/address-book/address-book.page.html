@@ -30,7 +30,7 @@
         </mat-form-field>
     </div>
     <mat-list class="address-book-items" *ngIf="!isEmptyList">
-        <mat-list-item *ngFor="let entry of filteredAddressbook">
+        <mat-list-item *ngFor="let entry of filteredAddressbook | orderBy : ['name']">
             <gravatar mat-list-avatar [name]="entry.name" [height]="40" [width]="40" [email]="entry.email"></gravatar>
             <h4 mat-line>{{entry.name}}</h4>
             <p mat-line [copy-to-clipboard]="entry.address"> {{entry.address}} </p>
