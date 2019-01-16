@@ -45,15 +45,40 @@
                     <div class="transfer-form-fields" fxLayout="column">
                         <mat-form-field appearance="outline">
                             <mat-label>{{'Wallet.TransferAsset.Token' | translate}}</mat-label>
-                            <mat-select placeholder="Token" [(ngModel)]="fields.token">
-                                <mat-optgroup [label]="'Wallet.TransferAsset.TokenLabel' | translate">
-                                    <ng-container *ngFor="let asset of listTokens">
+                            <mat-select #select="matSelect" [placeholder]="'Wallet.TransferAsset.Token' | translate"
+                                        [(value)]="fields.token" panelClass="token-select">
+
+                                <mat-form-field appearance="fill" class="token-select-search">
+                                    <input matInput [placeholder]="'Wallet.TransferAsset.SearchToken' | translate"
+                                           [(ngModel)]="filterSearch" (input)="getItems($event)">
+
+                                    <button mat-icon-button="" matSuffix  *ngIf="!filterSearch">
+                                        <mat-icon>search</mat-icon>
+                                    </button>
+                                    <button mat-icon-button="" (click)="clearFilter()" matSuffix *ngIf="filterSearch && filterSearch.length > 0">
+                                        <mat-icon>clear</mat-icon>
+                                    </button>
+                                </mat-form-field>
+
+                                <!-- List Alt Currencies -->
+                                <mat-selection-list class="token-select-list">
+                                    <!-- all currency -->
+                                    <ng-container *ngFor="let asset of filteredListTokens">
                                         <mat-option [value]="asset.name" fxLayout="row">{{ asset.name }}
                                             <span fxFlex=""></span>
                                             <span [style.fontSize]="'13px'">({{asset.value  | sunToUnit:asset.name}} available)</span>
                                         </mat-option>
                                     </ng-container>
-                                </mat-optgroup>
+                                </mat-selection-list>
+
+                                <!--<mat-optgroup [label]="'Wallet.TransferAsset.TokenLabel' | translate">-->
+                                    <!--<ng-container *ngFor="let asset of listTokens">-->
+                                        <!--<mat-option [value]="asset.name" fxLayout="row">{{ asset.name }}-->
+                                            <!--<span fxFlex=""></span>-->
+                                            <!--<span [style.fontSize]="'13px'">({{asset.value  | sunToUnit:asset.name}} available)</span>-->
+                                        <!--</mat-option>-->
+                                    <!--</ng-container>-->
+                                <!--</mat-optgroup>-->
                             </mat-select>
                         </mat-form-field>
 

@@ -133,7 +133,14 @@ export class TransferAssetComponent implements OnInit
      *
      * @var any[]
      */
-    listTokens = [];
+    listTokens: any = <any>[];
+
+    /**
+     * Filtered List available tokens
+     *
+     * @var any[]
+     */
+    filteredListTokens: any = <any>[];
 
     /**
      * Convert unit to sun
@@ -162,6 +169,13 @@ export class TransferAssetComponent implements OnInit
      * @var boolean
      */
     public hasContacts: boolean;
+
+    /**
+     * Search input (ngModel)
+     *
+     * @var string
+     */
+    filterSearch: string;
 
     /**
      * Create a new TransferAssetComponent object
@@ -227,6 +241,7 @@ export class TransferAssetComponent implements OnInit
             'value': this.wallet.balance
         });
 
+        this.filteredListTokens = _.clone(this.listTokens);
         //Getting a list of contact addresses
         this.updateContactsList();
     }
@@ -426,6 +441,40 @@ export class TransferAssetComponent implements OnInit
                 duration: 2000, panelClass: ['snackbar-theme-dialog', 'custom-width'],
             });
         });
+    }
+
+    /**
+     * Search handler
+     *
+     * @param {any} event - event search
+     * @return void
+     */
+    public getItems(event: any): void
+    {
+        // set val to the value of the searchbar
+        let val = event.target.value;
+
+        // if the value is an empty string don't filter the items
+        if (val && val.trim() != '') {
+            let result = _.filter(this.listTokens, item => {
+                let name = item['name'];
+                return _.includes(name.toLowerCase(), val.toLowerCase());
+            });
+            this.filteredListTokens = result;
+        } else {
+            // Reset items back to all of the items
+            this.filteredListTokens = this.listTokens;
+        }
+    }
+
+    /**
+     * Clear Search Tokens
+     *
+     * @return void
+     */
+    clearFilter(): void {
+        this.filterSearch = '';
+        this.filteredListTokens = this.listTokens;
     }
 
     /**

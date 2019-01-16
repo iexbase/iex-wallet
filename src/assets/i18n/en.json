@@ -171,6 +171,7 @@
             "SuccessDescription": "Transaction successfully sent",
             "ButtonTransactionInfo": "Transaction info",
             "Token": "Token",
+            "SearchToken": "Search token by name...",
             "TokenLabel": "Please, choose a token below",
             "To": "To",
             "ToLabel": "Send to TRON address",
