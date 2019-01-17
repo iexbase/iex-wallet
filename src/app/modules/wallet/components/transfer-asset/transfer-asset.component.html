@@ -65,7 +65,8 @@
                                     <button matPrefix mat-icon-button (click)="clearFilter()" *ngIf="filterSearch && filterSearch.length > 0">
                                         <mat-icon>clear</mat-icon>
                                     </button>
-                                    <input matInput [placeholder]="'Wallet.TransferAsset.SearchToken' | translate" [(ngModel)]="filterSearch" (input)="getItems($event)">
+                                    <input matInput [placeholder]="'Wallet.TransferAsset.SearchToken' | translate"
+                                           [(ngModel)]="filterSearch" (input)="getItems($event)">
                                 </mat-form-field>
 
                                 <!-- List tokens -->
@@ -73,7 +74,9 @@
                                     <ng-container *ngFor="let asset of filteredListTokens">
                                         <mat-option [value]="asset.key" fxLayout="row">{{ asset.name }}
                                             <span fxFlex></span>
-                                            <span [style.fontSize]="'12px'" [style.color]="'#ffffff8c'">{{asset.value  | sunToUnit:asset.name}} available</span>
+                                            <span [style.fontSize]="'12px'" [style.color]="'#ffffff8c'">
+                                                {{asset.value  | sunToUnit:asset.name}} available
+                                            </span>
                                         </mat-option>
                                     </ng-container>
                                 </mat-selection-list>
@@ -81,39 +84,48 @@
                         </mat-form-field>
                         <mat-form-field appearance="outline">
                             <mat-label>{{'Wallet.TransferAsset.To' | translate}}</mat-label>
-                            <input matInput [placeholder]="'Wallet.TransferAsset.ToLabel' | translate" [(ngModel)]="fields.toAddress" name="toAddress">
-                            <mat-hint class="warning-hint-field" *ngIf="wallet.address === fields.toAddress">{{'Wallet.TransferAsset.AddressWarning' | translate}}</mat-hint>
+                            <input matInput [placeholder]="'Wallet.TransferAsset.ToLabel' | translate"
+                                   [(ngModel)]="fields.toAddress" name="toAddress">
+                            <mat-hint class="warning-hint-field" *ngIf="wallet.address === fields.toAddress">
+                                {{'Wallet.TransferAsset.AddressWarning' | translate}}
+                            </mat-hint>
                             <button matSuffix mat-icon-button [matMenuTriggerFor]="menu" *ngIf="filteredContactsList && filteredContactsList[0]">
                                 <mat-icon>assignment_ind</mat-icon>
                             </button>
                         </mat-form-field>
                         <div fxLayout="row" fxLayoutAlign="center center">
                             <mat-form-field fxFlex class="amount" appearance="legacy" [floatLabel]="'never'">
-                                <input matInput placeholder="0" [(ngModel)]="fields.amount" (ngModelChange)="processAmount('trx')" onlyNumber name="amount">
+                                <input matInput placeholder="0" [(ngModel)]="fields.amount"
+                                       (ngModelChange)="processAmount('trx')" onlyNumber name="amount">
                                 <span matSuffix>{{ tokenName }}</span>
                                 <mat-hint fxLayout="row" *ngIf="fields.token == '0'">
-                                    <input matInput placeholder="0" [(ngModel)]="alternativeAmount" onlyNumber (ngModelChange)="processAmount('fiat')" value="0.00">
+                                    <input matInput placeholder="0" [(ngModel)]="alternativeAmount" onlyNumber
+                                           (ngModelChange)="processAmount('fiat')" value="0.00">
                                     <span matSuffix>{{fiatCode}}</span>
                                 </mat-hint>
                             </mat-form-field>
 
                             <!-- Send max balance -->
-                            <button fxFlex="2" class="send-max" mat-button="" [disabled]="fields.amount == tokenBalance" (click)="sendMax()">MAX</button>
+                            <button fxFlex="2" class="send-max" mat-button
+                                    [disabled]="fields.amount == tokenBalance" (click)="sendMax()">MAX</button>
                         </div>
                     </div>
 
                     <!-- Additional notifications when sending -->
                     <div class="notification">
                         <!-- Displayed in case of lack of funds. -->
-                        <div class="warning-notify" *ngIf="fields.amount > tokenBalance">{{'Wallet.TransferAsset.NotFunds' | translate}}</div>
+                        <div class="warning-notify" *ngIf="fields.amount > tokenBalance">
+                            {{'Wallet.TransferAsset.NotFunds' | translate}}
+                        </div>
                         <!-- Initial notice -->
-                        <div class="warning-notify" *ngIf="fields.amount == 0">{{'Wallet.TransferAsset.AmountHint' | translate}}</div>
+                        <div class="warning-notify" *ngIf="fields.amount == 0">
+                            {{'Wallet.TransferAsset.AmountHint' | translate}}
+                        </div>
                     </div>
                 </div>
                 <div mat-dialog-actions>
-                    <button mat-button="" (click)="goToConfirm()" color="primary" [disabled]="enabledSend()" class="tron-button transfer-button">
-                        {{'Wallet.TransferAsset.Send' | translate}}
-                    </button>
+                    <button mat-button="" (click)="goToConfirm()" color="primary" [disabled]="enabledSend()"
+                            class="tron-button transfer-button">{{'Wallet.TransferAsset.Send' | translate}}</button>
                 </div>
             </div>
         </ng-container>
