@@ -67,7 +67,7 @@ declare module "tronweb"
             function listNodes(callback?: any): Promise<any>;
             function getBlockRange(start: number, end: number, callback?: any): Promise<any>;
             function listSuperRepresentatives(callback?: any): Promise<any>;
-            function listTokens(limit: number, offset: number, callback?: any): Promise<any>;
+            function listTokens(limit?: number, offset?: number, callback?: any): Promise<any>;
             function timeUntilNextVoteCycle(callback?: any): Promise<any>;
             function getContract(contractAddress: any, callback?: any): Promise<any>;
             function verifyMessage(message: any, signature: any, address: any, useTronHeader: any, callback?: any): Promise<any>;
