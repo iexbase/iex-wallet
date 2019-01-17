@@ -17,12 +17,8 @@ import {SharedModule} from "@shared/shared.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NgxWebstorageModule} from "ngx-webstorage";
 import {
-    MissingTranslationHandler,
-    MissingTranslationHandlerParams,
-    TranslateDefaultParser,
     TranslateLoader,
-    TranslateModule,
-    TranslateParser
+    TranslateModule
 } from '@ngx-translate/core';
 
 import {HttpClient, HttpClientModule} from "@angular/common/http";
@@ -36,24 +32,10 @@ import {ProvidersModule} from "@providers/providers.module";
 import {MatIconRegistry} from "@angular/material";
 import env from "../environments";
 
-export function translateLoaderFactory(http: HttpClient) {
+export function httpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
 }
 
-export function translateParserFactory() {
-    return new InterpolatedTranslateParser();
-}
-
-export class InterpolatedTranslateParser extends TranslateDefaultParser {
-    public templateMatcher: RegExp = /{\s?([^{}\s]*)\s?}/g;
-}
-
-export class MyMissingTranslationHandler implements MissingTranslationHandler {
-    public parser: TranslateParser = translateParserFactory();
-    public handle(params: MissingTranslationHandlerParams) {
-        return this.parser.interpolate(params.key, params.interpolateParams);
-    }
-}
 
 @NgModule({
     declarations: [
@@ -75,17 +57,9 @@ export class MyMissingTranslationHandler implements MissingTranslationHandler {
             caseSensitive:true
         }),
         TranslateModule.forRoot({
-            parser: {
-                provide: TranslateParser,
-                useFactory: translateParserFactory
-            },
-            missingTranslationHandler: {
-                provide: MissingTranslationHandler,
-                useClass: MyMissingTranslationHandler
-            },
             loader: {
                 provide: TranslateLoader,
-                useFactory: translateLoaderFactory,
+                useFactory: httpLoaderFactory,
                 deps: [HttpClient]
             }
         }),
