@@ -32,9 +32,7 @@
         <ng-container *ngIf="!isSuccess">
             <!-- Transaction confirmation -->
             <div *ngIf="isConfirmed" class="confirm-tx">
-                <h1 mat-dialog-title>
-                    {{'Wallet.TransferAsset.TransactionDetails' | translate}}
-                </h1>
+                <h1 mat-dialog-title>{{'Wallet.TransferAsset.TransactionDetails' | translate}}</h1>
                 <div mat-dialog-content>
                     <confirm-tx *ngIf="confirmDetails" [txp]="confirmDetails" [token]="tokenName"></confirm-tx>
                 </div>
@@ -57,27 +55,25 @@
                     <div class="transfer-form-fields" fxLayout="column">
                         <mat-form-field appearance="outline">
                             <mat-label>{{'Wallet.TransferAsset.Token' | translate}}</mat-label>
-                            <mat-select #select="matSelect" (selectionChange)="onTokenChange()" [placeholder]="'Wallet.TransferAsset.Token' | translate"
+                            <mat-select (selectionChange)="onTokenChange()" [placeholder]="'Wallet.TransferAsset.Token' | translate"
                                         [(value)]="fields.token" panelClass="token-select">
 
                                 <mat-form-field appearance="fill" class="token-select-search">
-                                    <input matInput [placeholder]="'Wallet.TransferAsset.SearchToken' | translate"
-                                           [(ngModel)]="filterSearch" (input)="getItems($event)">
-
-                                    <button mat-icon-button="" matSuffix  *ngIf="!filterSearch">
+                                    <button matPrefix mat-icon-button *ngIf="!filterSearch">
                                         <mat-icon>search</mat-icon>
                                     </button>
-                                    <button mat-icon-button="" (click)="clearFilter()" matSuffix *ngIf="filterSearch && filterSearch.length > 0">
+                                    <button matPrefix mat-icon-button (click)="clearFilter()" *ngIf="filterSearch && filterSearch.length > 0">
                                         <mat-icon>clear</mat-icon>
                                     </button>
+                                    <input matInput [placeholder]="'Wallet.TransferAsset.SearchToken' | translate" [(ngModel)]="filterSearch" (input)="getItems($event)">
                                 </mat-form-field>
 
                                 <!-- List tokens -->
                                 <mat-selection-list class="token-select-list">
                                     <ng-container *ngFor="let asset of filteredListTokens">
                                         <mat-option [value]="asset.key" fxLayout="row">{{ asset.name }}
-                                            <span fxFlex=""></span>
-                                            <span [style.fontSize]="'13px'">({{asset.value  | sunToUnit:asset.name}} available)</span>
+                                            <span fxFlex></span>
+                                            <span [style.fontSize]="'12px'" [style.color]="'#ffffff8c'">{{asset.value  | sunToUnit:asset.name}} available</span>
                                         </mat-option>
                                     </ng-container>
                                 </mat-selection-list>
@@ -85,34 +81,24 @@
                         </mat-form-field>
                         <mat-form-field appearance="outline">
                             <mat-label>{{'Wallet.TransferAsset.To' | translate}}</mat-label>
-                            <input matInput
-                                   [placeholder]="'Wallet.TransferAsset.ToLabel' | translate"
-                                   [(ngModel)]="fields.toAddress" name="toAddress">
+                            <input matInput [placeholder]="'Wallet.TransferAsset.ToLabel' | translate" [(ngModel)]="fields.toAddress" name="toAddress">
+                            <mat-hint class="warning-hint-field" *ngIf="wallet.address === fields.toAddress">{{'Wallet.TransferAsset.AddressWarning' | translate}}</mat-hint>
                             <button matSuffix mat-icon-button [matMenuTriggerFor]="menu" *ngIf="filteredContactsList && filteredContactsList[0]">
                                 <mat-icon>assignment_ind</mat-icon>
                             </button>
                         </mat-form-field>
                         <div fxLayout="row" fxLayoutAlign="center center">
                             <mat-form-field fxFlex class="amount" appearance="legacy" [floatLabel]="'never'">
-                                <input matInput placeholder="0"
-                                       [(ngModel)]="fields.amount"
-                                       (ngModelChange)="processAmount('trx')"
-                                       onlyNumber
-                                       name="amount">
+                                <input matInput placeholder="0" [(ngModel)]="fields.amount" (ngModelChange)="processAmount('trx')" onlyNumber name="amount">
                                 <span matSuffix>{{ tokenName }}</span>
                                 <mat-hint fxLayout="row" *ngIf="fields.token == '0'">
-                                    <input matInput placeholder="0"
-                                           [(ngModel)]="alternativeAmount"
-                                           onlyNumber
-                                           (ngModelChange)="processAmount('fiat')" value="0.00">
+                                    <input matInput placeholder="0" [(ngModel)]="alternativeAmount" onlyNumber (ngModelChange)="processAmount('fiat')" value="0.00">
                                     <span matSuffix>{{fiatCode}}</span>
                                 </mat-hint>
                             </mat-form-field>
 
                             <!-- Send max balance -->
-                            <button fxFlex="2" class="send-max" mat-button=""
-                                    [disabled]="fields.amount == tokenBalance"
-                                    (click)="sendMax()">MAX</button>
+                            <button fxFlex="2" class="send-max" mat-button="" [disabled]="fields.amount == tokenBalance" (click)="sendMax()">MAX</button>
                         </div>
                     </div>
 
@@ -122,13 +108,10 @@
                         <div class="warning-notify" *ngIf="fields.amount > tokenBalance">{{'Wallet.TransferAsset.NotFunds' | translate}}</div>
                         <!-- Initial notice -->
                         <div class="warning-notify" *ngIf="fields.amount == 0">{{'Wallet.TransferAsset.AmountHint' | translate}}</div>
-                        <!-- Warning: Address match -->
-                        <div class="warning-notify" *ngIf="wallet.address === fields.toAddress">{{'Wallet.TransferAsset.AddressWarning' | translate}}</div>
                     </div>
                 </div>
                 <div mat-dialog-actions>
-                    <button mat-button="" (click)="goToConfirm()" color="primary" [disabled]="enabledSend()"
-                            class="tron-button red-bg transfer-button">
+                    <button mat-button="" (click)="goToConfirm()" color="primary" [disabled]="enabledSend()" class="tron-button transfer-button">
                         {{'Wallet.TransferAsset.Send' | translate}}
                     </button>
                 </div>

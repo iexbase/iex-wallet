@@ -38,12 +38,17 @@
 
     input {
         line-height: 3.4;
+        height: 3.4em;
+        font-size: 15px;
+        padding: 14px 10px 10px 40px;
+        color: #f4f4f4;
     }
 
     button {
         position: absolute;
-        top: -35px;
-        right: 0;
+        top: -38px;
+        left: 0;
+        z-index: 1;
     }
 }
 
