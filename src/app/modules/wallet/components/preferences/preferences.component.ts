@@ -142,7 +142,7 @@ export class PreferencesComponent implements OnInit
 
         let tokens = getWallet.tokens || [];
         this.listTokens = tokens.filter(({ name }) => name !== 'TRX')
-            .map(({ name }) => ({ id: name, name }));
+            .map(({ key, name }) => ({ id: key, name }));
 
         // Check for the existence of tokens
         this.isEmptyList = _.isEmpty(this.listTokens);

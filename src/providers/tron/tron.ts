@@ -54,6 +54,13 @@ export class TronProvider
     public client: TronWeb | any;
 
     /**
+     * List of loaded tokens
+     *
+     * @var any
+     */
+    private listTokens: any;
+
+    /**
      * Selected node
      *
      * @var any
@@ -285,6 +292,24 @@ export class TronProvider
     }
 
     /**
+     * Get List of loaded tokens
+     *
+     * @return any[]
+     */
+    getListTokens(): any[] {
+        return this.listTokens;
+    }
+
+    /**
+     * Loading tokens
+     *
+     * @return {Promise}
+     */
+    async loadListTokens(limit?, offset?, callback?: any): Promise<any> {
+        this.listTokens = await this.client.trx.listTokens(limit, offset, callback);
+    }
+
+    /**
      * Creates an unsigned freeze TRX transaction.
      *
      * @param {number} amount - Amount of TRX (in SUN) to freeze.
@@ -340,7 +365,7 @@ export class TronProvider
         //If the sender is not specified, then we take it from the selected.
         if(fromAddress == null) fromAddress = this.activeAccount;
 
-        if(tokenID == 'TRX') {
+        if(tokenID == 'TRX' || tokenID == '0') {
             return await this.client.transactionBuilder.sendTrx(
                 toAddress,
                 this.toSun(amount),
@@ -349,9 +374,11 @@ export class TronProvider
             )
         }
 
+
+
         return await this.client.transactionBuilder.sendToken(
             toAddress,
-            this.toSun(amount),
+            amount,
             tokenID,
             fromAddress,
             callback

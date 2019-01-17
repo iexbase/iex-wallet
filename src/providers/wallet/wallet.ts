@@ -1090,7 +1090,15 @@ export class WalletProvider
                     });
 
                     // Turning off unnecessary contractual transactions.
-                    res = _.filter(historyTx['data'], (tx: any) => {
+                    res = _.filter(historyTx['data'], (tx: any) =>
+                    {
+                        // If the token is an integer, then convert it to the name of the token
+                        if(Number(tx['contractData']['asset_name'])) {
+                            const filter = this.tron.getListTokens().filter(
+                                v => v.id === tx['contractData']['asset_name']
+                            );
+                            if (filter.length) tx['contractData']['asset_name'] = filter[ 0 ].name
+                        }
                         return ![10,30,31].includes(tx.contractType);
                     });
 
@@ -1209,9 +1217,25 @@ export class WalletProvider
                 Number(this.tron.fromSun(account['frozen'][0]['frozen_balance'])) : 0);
 
             // Before adding a token, check and change keys
-            let tokens = (account.asset || []).filter(({ value }) => {
-                return value > 0;
-            }).map(({ key, value }) => ({ name: key, value }));
+            let tokens = (account.assetV2 || []).filter(({ value }) => {
+                return value > 0
+            }).map(({ key, value }) => {
+                // We are looking for a token in the list of all downloaded
+                const filter = this.tron.getListTokens().filter(
+                    v => v.id === key
+                );
+
+                // In case the token is found
+                if(filter.length > 0) {
+                    const name = filter[ 0 ].name;
+                    const precision = filter[ 0 ].precision ? filter[ 0 ].precision : 0;
+                    const v = value / Math.pow(10, precision);
+
+                    return { key, name, value: v, precision };
+                }
+                // Elimination of errors
+                return {};
+            });
 
             this.updateWallet(walletAddress, {
                 balance: this.balance || 0,

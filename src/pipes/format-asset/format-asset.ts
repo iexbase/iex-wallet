@@ -6,16 +6,24 @@
  */
 
 import {Pipe, PipeTransform} from "@angular/core";
-import {Base64} from "js-base64";
+import {TronProvider} from "@providers/tron/tron";
 
 @Pipe({
     name: 'formatAsset',
     pure: false
 })
 export class FormatAssetPipe implements PipeTransform {
-    constructor() {}
+    constructor(
+        private tron: TronProvider
+    ) {}
 
-    transform(asset?: string) {
-        return (asset == undefined ? 'TRX' : Base64.decode(asset));
+    transform(key?: string) {
+        let filter = this.tron.getListTokens().filter(c =>
+            c.id == key
+        ) || [];
+
+        if (filter.length > 0)
+            return (key == '0' ? 'TRX' : filter[ 0 ].name);
+        return 'NaN';
     }
 }

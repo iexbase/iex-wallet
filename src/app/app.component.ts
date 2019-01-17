@@ -17,6 +17,7 @@ import * as SkinActions from "@redux/skins/skins.actions";
 // Providers
 import { AppProvider } from "@providers/app/app";
 import { ConfigProvider } from "@providers/config/config";
+import {TronProvider} from "@providers/tron/tron";
 
 // As the handleOpenURL handler kicks in before the App is started,
 // declare the handler function at the top of app.component.ts (outside the class definition)
@@ -38,12 +39,14 @@ export class AppComponent implements OnInit
      * @param {Store} store - Reactive provider
      * @param {ConfigProvider} config - ConfigProvider
      * @param {AppProvider} appProvider - App provider
+     * @param {TronProvider} tron - Tron provider
      * @param {Logger} logger - Log provider
      */
     constructor(
         protected store: Store<AppState>,
         private config: ConfigProvider,
         private appProvider: AppProvider,
+        private tron: TronProvider,
         private logger: Logger
     ) {
         //
@@ -108,6 +111,17 @@ export class AppComponent implements OnInit
                     name: this.config.get('skins.name')
                 }})
         );
+
+        this.onLoadListTokens();
+    }
+
+    /**
+     * Loading all tokens
+     *
+     * @return {Promise}
+     */
+    private async onLoadListTokens(): Promise<any> {
+        this.tron.loadListTokens().then(() => {});
     }
 
     /**

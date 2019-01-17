@@ -108,7 +108,7 @@ export class TransferAssetComponent implements OnInit
      * @var any
      */
     fields: any = {
-        token: <string> 'TRX',
+        token: <string> '0',
         toAddress: <string> '',
         amount: <number> 0,
         type: <string> 'TRX'
@@ -133,7 +133,7 @@ export class TransferAssetComponent implements OnInit
      *
      * @var any[]
      */
-    listTokens: any = <any>[];
+    listTokens = [];
 
     /**
      * Filtered List available tokens
@@ -141,6 +141,27 @@ export class TransferAssetComponent implements OnInit
      * @var any[]
      */
     filteredListTokens: any = <any>[];
+
+    /**
+     * Search input (ngModel)
+     *
+     * @var string
+     */
+    filterSearch: string;
+
+    /**
+     * Get token balance
+     *
+     * @var number
+     */
+    tokenBalance: number;
+
+    /**
+     * Get token name
+     *
+     * @var string
+     */
+    tokenName: string;
 
     /**
      * Convert unit to sun
@@ -169,13 +190,6 @@ export class TransferAssetComponent implements OnInit
      * @var boolean
      */
     public hasContacts: boolean;
-
-    /**
-     * Search input (ngModel)
-     *
-     * @var string
-     */
-    filterSearch: string;
 
     /**
      * Create a new TransferAssetComponent object
@@ -232,11 +246,12 @@ export class TransferAssetComponent implements OnInit
         const userTokens = JSON.parse(this.filteredTokens) || [];
         // Additional filtering before output
         this.listTokens = this.data.tokens.filter(
-            asset => userTokens.findIndex(key => key === asset.name) === -1)
-            .filter(filter => filter.name != 'TRX');
+            asset => userTokens.findIndex(key => key === asset.key) === -1
+        ).filter(filter => filter.name.toUpperCase() != 'TRX');
 
         // move "TRX" to the first position
         this.listTokens.unshift({
+            'key': '0',  // default key
             'name': 'TRX',
             'value': this.wallet.balance
         });
@@ -244,6 +259,7 @@ export class TransferAssetComponent implements OnInit
         this.filteredListTokens = _.clone(this.listTokens);
         //Getting a list of contact addresses
         this.updateContactsList();
+        this.onTokenChange();
     }
 
     /**
@@ -274,6 +290,15 @@ export class TransferAssetComponent implements OnInit
     }
 
     /**
+     * Update parameters for token
+     *
+     * @return void
+     */
+    onTokenChange(): void {
+        this.getTokenAmount()
+    }
+
+    /**
      * Choose an address from contacts
      *
      * @param {string} address - Address from contact
@@ -287,17 +312,15 @@ export class TransferAssetComponent implements OnInit
     /**
      * Get token balance
      *
-     * @param {string} token - Token id
-     * @returns {number}
+     * @return void
      */
-    getTokenAmount(token: string): number
+    getTokenAmount(): void
     {
         let filter = this.listTokens.find(c =>
-            c.name == token
+            c.key == this.fields.token
         );
-
-        if(!filter) return null;
-        return (filter.name.toLowerCase() == 'trx' ? filter.value / 1e6 : filter.value);
+        this.tokenBalance = (filter.name.toLowerCase() == 'trx' ? filter.value / 1e6 : filter.value);
+        this.tokenName = (filter.name.toLowerCase() == 'trx' ? 'TRX' : filter.name)
     }
 
     /**
@@ -309,10 +332,10 @@ export class TransferAssetComponent implements OnInit
     {
         this.useSendMax = true;
         let item = this.listTokens.find(c =>
-                c.name == this.fields.token
+                c.key == this.fields.token
             );
 
-        if(this.fields.token.toUpperCase() == 'TRX') {
+        if(this.fields.token == '0') {
             this.fields.amount = item.value / 1e6;
             this.processAmount('trx')
         } else {
@@ -328,8 +351,8 @@ export class TransferAssetComponent implements OnInit
      */
     processAmount(type: string): void
     {
-        if(type == 'trx')
-        {
+        if(this.fields.token != '0') return;
+        if(type == 'trx') {
             return this.alternativeAmount = (
                 this.fiatCode.toLowerCase() != 'btc' ?
                     this.filterProvider.formatFiatAmount(
@@ -487,8 +510,8 @@ export class TransferAssetComponent implements OnInit
         return this.fields.toAddress.length == 0 ||
             this.isButtonDisabled == true ||
             this.addressProvider.validateAddress(this.fields.toAddress) == false ||
-            this.fields.amount == 0 ||
-            this.fields.amount > this.getTokenAmount(this.fields.token)
+            this.fields.amount == 0
+            //this.fields.amount > this.getTokenAmount(this.fields.token)
     }
 
     /**
