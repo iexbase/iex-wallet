@@ -407,33 +407,31 @@ export class TransferAssetComponent implements OnInit
     public goToConfirm(): void
     {
         this.isButtonDisabled = true;
-
         this.walletProvider.createTx({
             tokenID: this.fields.token,
             amount: this.fields.amount,
             toAddress: this.fields.toAddress,
-        }, this.wallet.address).then(result =>
-        {
-            this.signedTransaction = result;
-            // confirmed data
-            this.confirmDetails = {
-                id: result.txID,
-                timestamp: result.raw_data.timestamp,
-                type: result.raw_data.contract[0].type,
-                amount: result.raw_data.contract[0].parameter.value.amount,
-                toAddress: result.raw_data.contract[0].parameter.value.to_address,
-                ownerAddress: result.raw_data.contract[0].parameter.value.owner_address,
-                token: this.fields.token,
-                data: '~'
-            };
-            this.isButtonDisabled = false;
-            this.isConfirmed = true;
-        }).catch(err => {
+        }, this.wallet.address)
+            .then(result => {
+                this.signedTransaction = result;
+                // confirmed data
+                this.confirmDetails = {
+                    id: result.txID,
+                    timestamp: result.raw_data.timestamp,
+                    type: result.raw_data.contract[0].type,
+                    amount: result.raw_data.contract[0].parameter.value.amount,
+                    toAddress: result.raw_data.contract[0].parameter.value.to_address,
+                    ownerAddress: result.raw_data.contract[0].parameter.value.owner_address,
+                    token: this.fields.token,
+                    data: '~'
+                };
+                this.isButtonDisabled = false;
+                this.isConfirmed = true;
+            }).catch(err => {
             this.snackBar.open(err, null, {
                 duration: 2000, panelClass: ['snackbar-theme-dialog', 'custom-width'],
             });
             this.isButtonDisabled = false;
-            this.isConfirmed = false;
         })
     }
 
@@ -446,24 +444,27 @@ export class TransferAssetComponent implements OnInit
     {
         this.isButtonDisabled = true;
         this.isConfirmed = true;
-        this.walletProvider.signTx(this.signedTransaction).then(signed => {
-            this.walletProvider.broadcastTx(signed).then(broadcast => {
-                if(broadcast.result == true)
-                {
-                    this.walletProvider.fullUpdateAccount(this.wallet.address).then(() => {});
+        this.walletProvider.signTx(this.signedTransaction)
+            .then(signed => {
+                this.walletProvider.broadcastTx(signed)
+                    .then(broadcast => {
+                        // If the transaction is successfully sent to the network
+                        if(broadcast.result == true) {
+                            this.walletProvider.fullUpdateAccount(this.wallet.address).then(() => {});
 
-                    this.isButtonDisabled = false;
-                    this.isSuccess = true;
-                    setTimeout(() => {
-                        this.isTransactionInfo = true;
-                    }, 2000)
-                }
+                            this.isButtonDisabled = false;
+                            this.isSuccess = true;
+                            setTimeout(() => {
+                                this.isTransactionInfo = true;
+                            }, 2000)
+                        }
+                    })
             })
-        }).catch(err => {
-            this.snackBar.open(err, null, {
-                duration: 2000, panelClass: ['snackbar-theme-dialog', 'custom-width'],
+            .catch(err => {
+                this.snackBar.open(err, null, {
+                    duration: 2000, panelClass: ['snackbar-theme-dialog', 'custom-width'],
+                });
             });
-        });
     }
 
     /**
@@ -507,11 +508,10 @@ export class TransferAssetComponent implements OnInit
      */
     enabledSend(): boolean
     {
-        return this.fields.toAddress.length == 0 ||
-            this.isButtonDisabled == true ||
-            this.addressProvider.validateAddress(this.fields.toAddress) == false ||
-            this.fields.amount == 0
-            //this.fields.amount > this.getTokenAmount(this.fields.token)
+        return this.isButtonDisabled == true ||
+            !this.addressProvider.validateAddress(this.fields.toAddress) ||
+            this.fields.amount == 0 ||
+            this.fields.amount > this.tokenBalance
     }
 
     /**

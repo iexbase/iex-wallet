@@ -168,6 +168,7 @@
             "Block": "Block"
         },
         "TransferAsset": {
+            "Title": "Отправить",
             "Success": "Success",
             "SuccessDescription": "Transaction successfully sent",
             "ButtonTransactionInfo": "Transaction info",
@@ -178,6 +179,7 @@
             "ToLabel": "Send to TRON address",
             "Amount": "Сумма",
             "AmountHint": "Минимальная сумма для отправки составляет 0,000001.",
+            "AddressWarning": "Невозможно перевести TRX на тот же аккаунт",
             "NotFunds": "Недостаточно средств.",
             "Send": "Отправить",
             "TransactionDetails": "Детали транзакции",

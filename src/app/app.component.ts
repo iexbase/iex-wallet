@@ -17,7 +17,7 @@ import * as SkinActions from "@redux/skins/skins.actions";
 // Providers
 import { AppProvider } from "@providers/app/app";
 import { ConfigProvider } from "@providers/config/config";
-import {TronProvider} from "@providers/tron/tron";
+import { TronProvider } from "@providers/tron/tron";
 
 // As the handleOpenURL handler kicks in before the App is started,
 // declare the handler function at the top of app.component.ts (outside the class definition)

@@ -1,46 +1,58 @@
 
-<!-- Loading -->
+<!-- Process loading -->
 <div class="progress-loading" *ngIf="isButtonDisabled">
     <mat-spinner [diameter]="40" [strokeWidth]="1"></mat-spinner>
 </div>
 
-
-<!-- Close Modal -->
+<!-- Close modal -->
 <div class="close-dialog">
-    <button mat-icon-button="" (click)="onClose()">
+    <button mat-icon-button (click)="onClose()">
         <mat-icon>close</mat-icon>
     </button>
 </div>
 
-<ng-container *ngIf="wallet.balance == 0">
-    <no-funds-trx></no-funds-trx>
-</ng-container>
+<!-- If the balance is empty -->
+<no-funds-trx *ngIf="wallet.balance == 0"></no-funds-trx>
 
+<!-- If everything is fine with the balances, we create a transaction -->
 <ng-container *ngIf="wallet.balance > 0">
-    <ng-container *ngIf="isTransactionInfo">
-        <transaction-info [token]="tokenName" [transaction]="signedTransaction"></transaction-info>
-    </ng-container>
 
-    <div *ngIf="!isTransactionInfo" class="transfer-window" [ngClass]="{'confirm': isConfirmed}">
+    <!-- Transaction Details -->
+    <transaction-info *ngIf="isTransactionInfo" [token]="tokenName" [transaction]="signedTransaction"></transaction-info>
+
+    <div *ngIf="!isTransactionInfo" class="transfer-window" [ngClass]="{ 'confirm': isConfirmed }">
+        <!-- If the transaction is successful -->
         <div class="success-transaction" *ngIf="isSuccess">
             <div id="header">
                 <h1>{{'Wallet.TransferAsset.Success' | translate}}</h1>
                 <p>{{'Wallet.TransferAsset.SuccessDescription' | translate}}</p>
             </div>
-            <lottie-animation-view
-                [options]="lottieConfig"
-                [width]="400"
-                [height]="400">
-            </lottie-animation-view>
-            <div id="actions">
-                <button mat-button (click)="isTransactionInfo = true" color="primary" class="tron-button">
-                    {{'Wallet.TransferAsset.ButtonTransactionInfo' | translate}}
-                </button>
-            </div>
+            <lottie-animation-view [options]="lottieConfig" [width]="400" [height]="400"></lottie-animation-view>
         </div>
         <ng-container *ngIf="!isSuccess">
-            <ng-template [ngIf]="isConfirmed == false">
-                <h1 mat-dialog-title>Send</h1>
+            <!-- Transaction confirmation -->
+            <div *ngIf="isConfirmed" class="confirm-tx">
+                <h1 mat-dialog-title>
+                    {{'Wallet.TransferAsset.TransactionDetails' | translate}}
+                </h1>
+                <div mat-dialog-content>
+                    <confirm-tx *ngIf="confirmDetails" [txp]="confirmDetails" [token]="tokenName"></confirm-tx>
+                </div>
+                <div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-evenly center" >
+                    <button mat-stroked-button (click)="onBack()" color="primary"
+                            class="tron-default-button transfer-button">
+                        {{'Wallet.TransferAsset.Back' | translate}}
+                    </button>
+                    <button mat-button="" (click)="submitTransaction()" color="primary"
+                            [disabled]="isButtonDisabled"
+                            class="tron-button transfer-button">
+                        {{'Wallet.TransferAsset.SubmitTransaction' | translate}}
+                    </button>
+                </div>
+            </div>
+            <!-- Transaction creation form -->
+            <div class="create-tx-form" *ngIf="!isConfirmed">
+                <h1 mat-dialog-title>{{'Wallet.TransferAsset.Title' | translate}}</h1>
                 <div mat-dialog-content>
                     <div class="transfer-form-fields" fxLayout="column">
                         <mat-form-field appearance="outline">
@@ -71,7 +83,6 @@
                                 </mat-selection-list>
                             </mat-select>
                         </mat-form-field>
-
                         <mat-form-field appearance="outline">
                             <mat-label>{{'Wallet.TransferAsset.To' | translate}}</mat-label>
                             <input matInput
@@ -81,14 +92,6 @@
                                 <mat-icon>assignment_ind</mat-icon>
                             </button>
                         </mat-form-field>
-
-                        <mat-menu #menu="matMenu">
-                            <button mat-menu-item *ngFor="let item of filteredContactsList | orderBy : ['name']"
-                                    (click)="chooseAddress(item.address)" [disabled]="item.address == fields.toAddress">
-                                {{item.name}}
-                            </button>
-                        </mat-menu>
-
                         <div fxLayout="row" fxLayoutAlign="center center">
                             <mat-form-field fxFlex class="amount" appearance="legacy" [floatLabel]="'never'">
                                 <input matInput placeholder="0"
@@ -113,16 +116,14 @@
                         </div>
                     </div>
 
+                    <!-- Additional notifications when sending -->
                     <div class="notification">
                         <!-- Displayed in case of lack of funds. -->
-                        <div class="not-funds" *ngIf="this.fields.amount > tokenBalance">
-                            {{'Wallet.TransferAsset.NotFunds' | translate}}
-                        </div>
-
+                        <div class="warning-notify" *ngIf="fields.amount > tokenBalance">{{'Wallet.TransferAsset.NotFunds' | translate}}</div>
                         <!-- Initial notice -->
-                        <div class="not-funds" *ngIf="this.fields.amount == 0">
-                            {{'Wallet.TransferAsset.AmountHint' | translate}}
-                        </div>
+                        <div class="warning-notify" *ngIf="fields.amount == 0">{{'Wallet.TransferAsset.AmountHint' | translate}}</div>
+                        <!-- Warning: Address match -->
+                        <div class="warning-notify" *ngIf="wallet.address === fields.toAddress">{{'Wallet.TransferAsset.AddressWarning' | translate}}</div>
                     </div>
                 </div>
                 <div mat-dialog-actions>
@@ -131,30 +132,14 @@
                         {{'Wallet.TransferAsset.Send' | translate}}
                     </button>
                 </div>
-            </ng-template>
-            <ng-template [ngIf]="isConfirmed == true">
-                <div class="confirm-tx">
-                    <h1 mat-dialog-title>
-                        {{'Wallet.TransferAsset.TransactionDetails' | translate}}
-                    </h1>
-                    <div mat-dialog-content>
-                        <confirm-tx *ngIf="confirmDetails" [txp]="confirmDetails" [token]="tokenName"></confirm-tx>
-                    </div>
-                    <div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-evenly center" >
-                        <button mat-stroked-button (click)="onBack()" color="primary"
-                                class="tron-default-button transfer-button">
-                            {{'Wallet.TransferAsset.Back' | translate}}
-                        </button>
-                        <button mat-button="" (click)="submitTransaction()" color="primary"
-                                [disabled]="isButtonDisabled"
-                                class="tron-button transfer-button">
-                            {{'Wallet.TransferAsset.SubmitTransaction' | translate}}
-                        </button>
-                    </div>
-                </div>
-            </ng-template>
+            </div>
         </ng-container>
     </div>
 </ng-container>
 
 
+<!-- List contracts -->
+<mat-menu #menu="matMenu">
+    <button mat-menu-item *ngFor="let item of filteredContactsList | orderBy : ['name']"
+            (click)="chooseAddress(item.address)" [disabled]="item.address == fields.toAddress">{{item.name}}</button>
+</mat-menu>
