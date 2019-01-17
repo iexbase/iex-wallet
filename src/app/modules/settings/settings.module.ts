@@ -32,6 +32,7 @@ import { AddContactComponent } from "@modules/settings/components/add-contact/ad
 import { GravatarPage } from "@includes/gravatar/gravatar";
 import { NodePage } from "@modules/settings/pages/node/node.page";
 import { AddNodeComponent } from "@modules/settings/components/add-node/add-node.component";
+import {EditContactComponent} from "@modules/settings/components/edit-contact/edit-contact.component";
 
 const settingsPage = [
     SettingsPage,
@@ -46,6 +47,7 @@ const settingsPage = [
 
 const settingsComponent = [
     AddContactComponent,
+    EditContactComponent,
     AddNodeComponent
 ];
 

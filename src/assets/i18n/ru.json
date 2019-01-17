@@ -292,6 +292,15 @@
             "Add": "Добавить"
         },
 
+        "EditContact": {
+            "Title": "Изменить контакт",
+            "Name": "Имя",
+            "Email": "Email",
+            "NamePlaceholder": "Пожалуйста введите имя",
+            "EmailPlaceholder": "Пожалуйста введите email адрес",
+            "Edit": "Изменить"
+        },
+
         "Language": {
             "Title": "Язык",
             "Description": "Пожалуйста, выберите язык ниже.",

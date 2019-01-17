@@ -11,6 +11,7 @@ import {AddressBookProvider} from "@providers/address-book/address-book";
 import * as _ from 'lodash';
 import {MatDialog, MatSnackBar} from "@angular/material";
 import {AddContactComponent} from "@modules/settings/components/add-contact/add-contact.component";
+import {EditContactComponent} from "@modules/settings/components/edit-contact/edit-contact.component";
 
 @Component({
     selector: 'address-book-page',
@@ -99,6 +100,24 @@ export class AddressBookPage implements OnInit
         const dialogRef = this.dialog.open(AddContactComponent, {
             width: '650px',
             panelClass: ['dialog-background']
+        });
+
+        dialogRef.afterClosed().subscribe(() => {
+            this.initAddressbook();
+        });
+    }
+
+    /**
+     * Edit contact
+     *
+     * @return void
+     */
+    editEntry(item: any): void
+    {
+        const dialogRef = this.dialog.open(EditContactComponent, {
+            width: '650px',
+            panelClass: ['dialog-background'],
+            data: item
         });
 
         dialogRef.afterClosed().subscribe(() => {

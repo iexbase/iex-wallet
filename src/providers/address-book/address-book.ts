@@ -110,6 +110,32 @@ export class AddressBookProvider
     }
 
     /**
+     * Edit existing contact
+     *
+     * @param {AddressBookInterface} entry - data to add
+     * @returns {Promise} details of the added contact
+     */
+    public edit(entry: AddressBookInterface): Promise<any>
+    {
+        return new Promise((resolve, reject) =>
+        {
+            // Validate TRON Address
+            if(!this.addressProvider.validateAddress(entry.address))
+                return reject('Invalid Tron address');
+
+            // Check if the address exists in the contact list
+            this.getAddressBooks()
+                .then(ab => {
+                    // Change data to address
+                    ab[entry.address] = entry;
+                    this.addressBook = JSON.stringify(ab);
+
+                    resolve(entry);
+                });
+        });
+    }
+
+    /**
      * Delete contact at
      *
      * @param {string} address - tron address

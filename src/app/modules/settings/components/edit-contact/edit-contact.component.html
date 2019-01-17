@@ -1,0 +1,33 @@
+<div class="close-dialog">
+    <button mat-icon-button="" (click)="onClose()">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<form [formGroup]="addressBookEdit">
+    <div class="edit-contact-window">
+        <h1 mat-dialog-title>{{ 'Settings.EditContact.Title' | translate }}</h1>
+        <div mat-dialog-content>
+            <div class="contact-name-field">
+                <mat-form-field appearance="outline">
+                    <mat-label>{{ 'Settings.EditContact.Name' | translate }}</mat-label>
+                    <input type="text" matInput [placeholder]="'Settings.EditContact.NamePlaceholder' | translate" formControlName="name">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>{{ 'Settings.EditContact.Email' | translate }}</mat-label>
+                    <input type="email" matInput [placeholder]="'Settings.EditContact.EmailPlaceholder' | translate" formControlName="email">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div mat-dialog-actions>
+            <button mat-stroked-button color="primary"
+                    (click)="save()"
+                    [disabled]="addressBookEdit.invalid"
+                    class="tron-default-button default-theme">
+                {{ 'Settings.EditContact.Edit' | translate }}
+            </button>
+        </div>
+    </div>
+</form>

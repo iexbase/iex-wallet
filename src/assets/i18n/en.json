@@ -292,6 +292,16 @@
             "Add": "Add contact"
         },
 
+        "EditContact": {
+            "Title": "Edit Contact",
+            "Name": "Name",
+            "NameDescription": "Enter any characters",
+            "Email": "Email",
+            "NamePlaceholder": "Please enter your name",
+            "EmailPlaceholder": "Please enter your email address",
+            "Edit": "Edit contact"
+        },
+
         "Language": {
             "Title": "Language",
             "Description": "Please, choose a Language below.",
