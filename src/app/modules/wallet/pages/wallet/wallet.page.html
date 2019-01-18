@@ -54,7 +54,7 @@
                     </div>
                 </div>
 
-                <div id="header-balance" [longPress] (onRelease)="toggleBalance()">
+                <div id="header-balance" [longPress]="2000" (onRelease)="toggleBalance()">
                     <div class="balance-trx" *ngIf="!wallet.balanceHidden">
                         <span class="balance">{{wallet.balance | sunToUnit}}</span>
                         <span class="display-unit">TRX</span>
@@ -64,8 +64,12 @@
                     </div>
                 </div>
 
-                <div id="header-alt-balance" *ngIf="!wallet.balanceHidden">
-                    <div class="currency">
+                <div id="header-alt-balance" [longPress]="2000" (onRelease)="toggleBalance()">
+                    <!-- Tap and hold to show -->
+                    <div class="hide-balance-notify" *ngIf="wallet.balanceHidden">
+                        {{'Wallet.Index.HideBalanceNotify' | translate}}
+                    </div>
+                    <div class="currency" *ngIf="!wallet.balanceHidden">
                         <span class="symbol"></span>
                         <span class="amount">{{ wallet.balance | sunToFiat }}</span>
                         <span class="code">{{ config.get('wallet.settings.alternativeIsoCode') }}</span>

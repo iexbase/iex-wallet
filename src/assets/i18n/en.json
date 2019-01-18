@@ -207,6 +207,7 @@
                 "DeleteWallet": "Delete Wallet"
             },
             "HideBalance": "Balance Hidden",
+            "HideBalanceNotify": "Tap and hold to show",
             "Send": "Send",
             "Receive": "Receive",
             "Freeze": "Freeze",

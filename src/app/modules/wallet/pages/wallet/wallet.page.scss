@@ -226,7 +226,7 @@
         fill: #D11E25;
 
         .hide-balance {
-            margin-bottom: 40px;
+            margin-bottom: 15px;
             font-size: 45px;
         }
 
@@ -248,6 +248,10 @@
         font-weight: 300;
         line-height: 1em;
         margin: 0;
+
+        .hide-balance-notify {
+            font-size: 16px;
+        }
 
         .symbol {
             font-size: 0.7em;
