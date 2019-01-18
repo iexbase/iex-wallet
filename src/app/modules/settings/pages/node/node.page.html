@@ -8,15 +8,18 @@
         </button>
     </div>
 
-    <div class="search-filter" *ngIf="!isEmptyList">
-        <mat-form-field appearance="fill">
-            <mat-label>{{'Settings.Node.SearchLabel' | translate}}</mat-label>
+    <div class="search-filter">
+        <mat-form-field floatLabel="never" class="filter-search">
             <input matInput [placeholder]="'Settings.Node.SearchPlaceholder' | translate" (input)="getItems($event)">
             <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
     </div>
 
-    <mat-list class="nodes" role="list">
+    <div class="empty-search-section" *ngIf="!isEmptyList && !filteredNodes.length">
+        {{ 'NoSearchResult' | translate }}
+    </div>
+
+    <mat-list class="nodes" role="list" *ngIf="!isEmptyList">
         <mat-list-item role="listitem" [ngClass]="{'active': node.nodeId == tronProvider.selectedNode}"
                        [ngStyle]="{'pointer-events': node.nodeId != tronProvider.selectedNode ? 'auto':'none'}"
                        mat-ripple *ngFor="let node of filteredNodes" (click)="selectedNode(node.nodeId)">

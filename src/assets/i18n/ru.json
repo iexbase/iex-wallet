@@ -1,5 +1,6 @@
 {
     "copyToClipboard": "Скопировано в буфер обмена",
+    "NoSearchResult": "По вашему запросу ничего не найдено.",
     "Shared": {
         "Navigation": {
             "Dashboard": "Главная",

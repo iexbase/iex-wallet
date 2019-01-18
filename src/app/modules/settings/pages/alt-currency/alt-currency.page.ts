@@ -117,7 +117,7 @@ export class AltCurrencyPage implements OnInit
 
         // Sort currencies
         this.altCurrencyList = this.rate.listAlternatives(true);
-        this.currentCurrency = this.configProvider.get('wallet.settings.alternativeIsoCode').toLowerCase();
+        this.currentCurrency = this.configProvider.get('wallet.settings.alternativeIsoCode').toUpperCase();
         this.lastUsedAltCurrencyList = this.lastUsedAltCurrency
             ? JSON.parse(this.lastUsedAltCurrency)
             : [];

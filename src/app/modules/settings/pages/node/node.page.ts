@@ -35,14 +35,14 @@ export class NodePage implements OnInit
      *
      * @var any[]
      */
-    public filteredNodes: any[];
+    public filteredNodes: any[] = [];
 
     /**
      * Empty nodes list
      *
      * @var boolean
      */
-    public isEmptyList: boolean;
+    public isEmptyList: boolean = false;
 
     /**
      *  Object creation NodePage
@@ -78,8 +78,6 @@ export class NodePage implements OnInit
         this.tronProvider
             .getNodes()
             .then(n => {
-                this.isEmptyList = _.isEmpty(n);
-
                 let nodes: object[] = [];
                 _.each(n, (node, k: string) =>
                 {
@@ -93,6 +91,7 @@ export class NodePage implements OnInit
                     });
                 });
 
+                this.isEmptyList = _.isEmpty(nodes);
                 this.nodes = _.clone(nodes);
                 this.filteredNodes = _.clone(this.nodes);
             });

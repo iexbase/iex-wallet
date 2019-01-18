@@ -3,14 +3,13 @@
     <p class="description">{{'Settings.AltCurrency.Description' | translate}}</p>
     <mat-form-field class="settings-page-field" appearance="outline">
         <mat-label>{{'Settings.AltCurrency.Label' | translate}}</mat-label>
-        <mat-select #select="matSelect" [(value)]="currentCurrency" [placeholder]="'Settings.AltCurrency.Label' | translate">
+        <mat-select [(value)]="currentCurrency"  [placeholder]="'Settings.AltCurrency.Label' | translate">
             <mat-form-field class="mat-select-search" floatLabel="never">
-                <input matInput
-                       [placeholder]="'Settings.AltCurrency.Search' | translate"
+                <input matInput [placeholder]="'Settings.AltCurrency.Search' | translate"
                        [(ngModel)]="searchedAltCurrency"
                        (ngModelChange)="findCurrency(searchedAltCurrency)">
                 <!-- Search Icon -->
-                <button mat-button matSuffix mat-icon-button *ngIf="!searchedAltCurrency">
+                <button matSuffix mat-icon-button *ngIf="!searchedAltCurrency">
                     <mat-icon>search</mat-icon>
                 </button>
                 <!-- Clear search text -->

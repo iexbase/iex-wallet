@@ -28,6 +28,11 @@
             <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
     </div>
+
+    <div class="empty-search-section" *ngIf="!isEmptyList && !filteredAddressbook.length">
+        {{ 'NoSearchResult' | translate }}
+    </div>
+
     <mat-list class="address-book-items" *ngIf="!isEmptyList">
         <mat-list-item *ngFor="let entry of filteredAddressbook | orderBy : ['name']">
             <gravatar mat-list-avatar [name]="entry.name" [height]="40" [width]="40" [email]="entry.email"></gravatar>

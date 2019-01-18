@@ -573,3 +573,23 @@ button.button-circle {
         }
     }
 }
+
+.empty-search-section {
+    font-weight: 300;
+    font-size: 15px;
+    padding: 10px 20px;
+    text-align: center;
+    border-radius: 8px;
+    background: #00000057;
+    max-width: 400px;
+    margin: 40px auto 0;
+}
+
+.mat-select-empty {
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+    padding-bottom: 20px;
+    opacity: .4;
+    font-weight: 300;
+}

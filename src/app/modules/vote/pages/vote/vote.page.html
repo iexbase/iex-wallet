@@ -37,8 +37,13 @@
                     <mat-icon matSuffix>search</mat-icon>
                 </mat-form-field>
             </div>
+
+            <div class="empty-search-section" *ngIf="!isEmptyList && !filteredVotes.length">
+                {{ 'NoSearchResult' | translate }}
+            </div>
+
             <!-- List votes -->
-            <mat-list class="vote-items">
+            <mat-list class="vote-items" *ngIf="!isEmptyList">
                 <mat-list-item *ngFor="let item of filteredVotes" (click)="openDetail(item)">
                     <div mat-list-icon class="rank">
                         <span class="position">{{item.realTimeRanking}}</span>

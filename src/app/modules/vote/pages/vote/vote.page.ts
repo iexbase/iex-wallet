@@ -74,6 +74,13 @@ export class VotePage implements OnInit
     public totalVotes: number = 0;
 
     /**
+     * Empty votes list
+     *
+     * @var boolean
+     */
+    public isEmptyList: boolean;
+
+    /**
      * Top-rated Token Information
      *
      * @var any
@@ -117,6 +124,8 @@ export class VotePage implements OnInit
 
         this.voteProvider.getVotesFromServer({})
             .then(vote => {
+                this.isEmptyList = _.isEmpty(vote);
+
                 this.votes = vote.res;
                 this.filteredVotes = vote.res;
                 this.totalVotes = vote.totalVotes;

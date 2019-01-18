@@ -72,6 +72,10 @@
 
                                 <!-- List tokens -->
                                 <mat-selection-list class="token-select-list">
+                                    <div *ngIf="listTokens && !filteredListTokens.length" class="mat-select-empty">
+                                        {{ 'NoSearchResult' | translate }}
+                                    </div>
+
                                     <ng-container *ngFor="let asset of filteredListTokens">
                                         <mat-option [value]="asset.key" fxLayout="row">{{ asset.name }}
                                             <span fxFlex></span>
