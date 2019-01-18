@@ -508,6 +508,48 @@ button.button-circle {
     margin-left: -10px;
 }
 
+
+.filter-search {
+    width: 100%;
+    font-weight: 300;
+    padding: 0 15px;
+    border-radius: 10px;
+    color: #f4f4f4;
+    opacity: 0.4;
+    background: rgba(255, 255, 255, 0.07);
+    transition: all 200ms linear;
+    will-change: opacity;
+    margin-bottom: 10px;
+
+    /deep/ .mat-form-field-underline {
+        display: none;
+    }
+
+    /deep/ .mat-form-field-wrapper {
+        padding-bottom: .8em;
+    }
+
+    /deep/ .mat-form-field-suffix {
+        mat-icon {
+            float: right;
+            padding-top: 5px;
+        }
+    }
+
+    &.mat-focused {
+        .mat-form-field-label {
+            color: #e0e4e9;
+        }
+    }
+
+    &.filter-search:hover {
+        opacity: 0.6;
+    }
+    &.filter-search:focus {
+        opacity: 1;
+    }
+}
+
 .mat-select-search {
     width: 100%;
     font-size: 14px;

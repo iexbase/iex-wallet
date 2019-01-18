@@ -32,8 +32,7 @@
         <div id="vote-content">
             <!-- Search vote -->
             <div class="search-filter">
-                <mat-form-field appearance="fill">
-                    <mat-label>{{'Vote.Index.SearchLabel' | translate}}</mat-label>
+                <mat-form-field floatLabel="never" class="filter-search">
                     <input matInput [placeholder]="'Vote.Index.SearchPlaceholder' | translate" (input)="getItems($event)">
                     <mat-icon matSuffix>search</mat-icon>
                 </mat-form-field>

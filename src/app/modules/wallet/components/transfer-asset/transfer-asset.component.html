@@ -56,17 +56,18 @@
                         <mat-form-field appearance="outline">
                             <mat-label>{{'Wallet.TransferAsset.Token' | translate}}</mat-label>
                             <mat-select (selectionChange)="onTokenChange()" [placeholder]="'Wallet.TransferAsset.Token' | translate"
-                                        [(value)]="fields.token" panelClass="token-select">
+                                        [(value)]="fields.token">
 
-                                <mat-form-field appearance="fill" class="token-select-search">
-                                    <button matPrefix mat-icon-button *ngIf="!filterSearch">
-                                        <mat-icon>search</mat-icon>
-                                    </button>
-                                    <button matPrefix mat-icon-button (click)="clearFilter()" *ngIf="filterSearch && filterSearch.length > 0">
-                                        <mat-icon>clear</mat-icon>
-                                    </button>
+                                <mat-form-field class="mat-select-search" floatLabel="never">
                                     <input matInput [placeholder]="'Wallet.TransferAsset.SearchToken' | translate"
                                            [(ngModel)]="filterSearch" (input)="getItems($event)">
+
+                                    <button matSuffix mat-icon-button *ngIf="!filterSearch">
+                                        <mat-icon>search</mat-icon>
+                                    </button>
+                                    <button matSuffix mat-icon-button (click)="clearFilter()" *ngIf="filterSearch && filterSearch.length > 0">
+                                        <mat-icon>clear</mat-icon>
+                                    </button>
                                 </mat-form-field>
 
                                 <!-- List tokens -->
