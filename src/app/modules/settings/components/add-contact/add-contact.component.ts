@@ -35,12 +35,18 @@ export class AddContactComponent implements OnInit
      */
     addressBookAdd: FormGroup;
 
+    /**
+     * Project name
+     *
+     * @var string
+     */
     public appName: string;
 
     /**
      * Object creation AddContactComponent
      *
      * @param {MatDialogRef} dialogRef - Reference to a dialog opened via the MatDialog service
+     * @param {AppProvider} appProvider - App provider
      * @param {AddressBookProvider} addressBookProvider - Address book provider
      * @param {AddressProvider} addressProvider - Address provider
      * @param {FormBuilder} formBuilder - Creates an `AbstractControl` from a user-specified configuration.

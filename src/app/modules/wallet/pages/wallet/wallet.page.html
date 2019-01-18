@@ -157,7 +157,7 @@
                                                 <span class="amount" *ngSwitchDefault>{{ tx['contractData']['amount'] }}</span>
                                             </ng-container>
                                             <!-- Get contact code -->
-                                            <span class="unit" *ngIf="tx['contractData'] && ![4,12,31].includes(tx.contractType)">
+                                            <span class="unit" *ngIf="tx['contractData'] && ![4, 12, 31].includes(tx.contractType)">
                                                 {{tx['contractData']['asset_name'] || 'TRX'}}
                                             </span>
                                         </div>
@@ -168,8 +168,8 @@
                                     <div fxFlex="33" class="tx-details__item">
                                         <div class="title">{{'Wallet.Index.Status' | translate}}</div>
                                         <div class="content">
-                                            <span *ngIf="tx.confirmed == true">{{'Wallet.Index.Confirmed' | translate}}</span>
-                                            <span *ngIf="tx.confirmed == false">{{'Wallet.Index.Unconfirmed' | translate}}</span>
+                                            <span *ngIf="tx.confirmed">{{'Wallet.Index.Confirmed' | translate}}</span>
+                                            <span *ngIf="!tx.confirmed">{{'Wallet.Index.Unconfirmed' | translate}}</span>
                                         </div>
                                     </div>
                                     <div fxFlex="33" class="tx-details__item">
