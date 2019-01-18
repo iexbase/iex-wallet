@@ -3,27 +3,6 @@
     max-height: none !important;
 }
 
-.alt-currency-search {
-    width: 100%;
-    font-size: 14px;
-    font-weight: 300;
-    color: #f4f4f4;
-    /deep/ .mat-form-field-flex {
-        padding: 0 .75em;
-    }
-
-    button {
-        margin-right: -5px;
-        margin-top: -29px;
-        margin-bottom: -6px;
-        float: right;
-        mat-icon {
-            color: #f4f4f4;
-            font-size: 20px;
-        }
-    }
-}
-
 .empty-currencies {
     overflow: hidden !important;
     .loading {

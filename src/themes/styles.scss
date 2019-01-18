@@ -507,3 +507,27 @@ button.button-circle {
     color: #ff5722;
     margin-left: -10px;
 }
+
+.mat-select-search {
+    width: 100%;
+    font-size: 14px;
+    font-weight: 300;
+    color: #f4f4f4;
+    background: rgba(255, 255, 255, 0.07);
+    height: 45px;
+    margin-bottom: 18px;
+    /deep/ .mat-form-field-flex {
+        padding: 0 .75em;
+    }
+
+    /deep/ .mat-form-field-underline {
+        display: none;
+    }
+
+
+    /deep/ &.mat-focused {
+        .mat-form-field-label {
+            color: rgba(255, 255, 255, 0.3);
+        }
+    }
+}

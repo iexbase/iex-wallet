@@ -3,21 +3,19 @@
     <p class="description">{{'Settings.AltCurrency.Description' | translate}}</p>
     <mat-form-field class="settings-page-field" appearance="outline">
         <mat-label>{{'Settings.AltCurrency.Label' | translate}}</mat-label>
-        <mat-select #select="matSelect" [(value)]="currentCurrency"
-                    [placeholder]="'Settings.AltCurrency.Label' | translate"
-                    panelClass="alt-currency-select">
-            <mat-form-field appearance="fill" class="alt-currency-search">
+        <mat-select #select="matSelect" [(value)]="currentCurrency" [placeholder]="'Settings.AltCurrency.Label' | translate">
+            <mat-form-field class="mat-select-search" floatLabel="never">
                 <input matInput
                        [placeholder]="'Settings.AltCurrency.Search' | translate"
                        [(ngModel)]="searchedAltCurrency"
                        (ngModelChange)="findCurrency(searchedAltCurrency)">
                 <!-- Search Icon -->
-                <button mat-icon-button="" *ngIf="!searchedAltCurrency">
-                    <mat-icon matSuffix>search</mat-icon>
+                <button mat-button matSuffix mat-icon-button *ngIf="!searchedAltCurrency">
+                    <mat-icon>search</mat-icon>
                 </button>
                 <!-- Clear search text -->
-                <button mat-icon-button (click)="clearSearch()" *ngIf="searchedAltCurrency && searchedAltCurrency.length > 0">
-                    <mat-icon matSuffix >clear</mat-icon>
+                <button matSuffix mat-icon-button (click)="clearSearch()" *ngIf="searchedAltCurrency && searchedAltCurrency.length > 0">
+                    <mat-icon>clear</mat-icon>
                 </button>
             </mat-form-field>
 
@@ -30,11 +28,11 @@
                                 [value]="lastUsedAltCurrency.isoCode">
                         {{ lastUsedAltCurrency.name }}
                     </mat-option>
+                    <mat-divider></mat-divider>
                 </ng-container>
 
                 <!-- all currency -->
                 <ng-container *ngIf="altCurrencyList[0]">
-                    <mat-divider></mat-divider>
                     <ng-container *ngIf="altCurrencyList.length == 0">
                         <mat-spinner class="loading" [diameter]="30" [strokeWidth]="2"></mat-spinner>
                     </ng-container>
