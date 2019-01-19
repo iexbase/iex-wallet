@@ -28,9 +28,9 @@ export class ExternalLinkProvider {
     public open(url: string): void {
         const old = (window as any).handleOpenURL;
 
-        (window as any).handleOpenURL = url => {
+        (window as any).handleOpenURL = (u: any) => {
             // Ignore external URLs
-            this.logger.debug('Skip: ' + url);
+            this.logger.debug('Skip: ' + u);
         };
 
         this.electronProvider.openExternalLink(url);

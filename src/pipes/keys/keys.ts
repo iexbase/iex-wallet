@@ -16,7 +16,7 @@ export class KeysPipe implements PipeTransform {
      *  Simple: *ngFor="let item of giftCards | keys"
      *	With an object with objects: *ngFor="let item of (itemsObject | keys : 'date') | orderBy : ['-order']"
      */
-    transform(value, orderBy?: string) {
+    transform(value: any[], orderBy?: string) {
         const keys = [];
         for (const key in value) {
             keys.push({
@@ -28,4 +28,3 @@ export class KeysPipe implements PipeTransform {
         return keys;
     }
 }
-

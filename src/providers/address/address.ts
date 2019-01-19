@@ -6,14 +6,17 @@
  */
 
 import {Injectable} from '@angular/core';
+
 // Providers
-import {Logger} from '@providers/logger/logger';
-import {TronProvider} from '@providers/tron/tron';
-import {ec} from 'elliptic';
+import { Logger } from '@providers/logger/logger';
+import { TronProvider } from '@providers/tron/tron';
+
+import { ec } from 'elliptic';
+import { keccak256 } from 'js-sha3'
 
 // ec plugin
 const secp256k1: any = new ec('secp256k1');
-const keccak256 = require('js-sha3').keccak256;
+
 
 // declare buffer
 declare const Buffer;

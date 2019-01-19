@@ -115,7 +115,7 @@ export class RateProvider {
                 .then(dataTRX => {
                     this.rates = dataTRX;
                     _.each(dataTRX, (rate, code) => {
-                        this.alternatives.map((maps) => {
+                        this.alternatives.map(maps => {
                             if (maps.isoCode === code) {
                                 maps.rate = rate;
                             }

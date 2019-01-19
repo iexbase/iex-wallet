@@ -44,7 +44,8 @@
         "build:mac-release": "npm run build:prod && npx electron-builder build --mac",
         "test": "npm run postinstall:web && ng test",
         "e2e": "npm run postinstall:web && ng e2e",
-        "fix:tslint": "tslint --fix --project . && tslint --fix '{test,electron,src}/**/*.ts'",
+        "tslint-check": "tslint-config-prettier-check ./tslint.json",
+        "fix:tslint": "tslint --fix --project . && tslint --fix '{src}/**/*.ts'",
         "fix:prettier": "prettier --write '{*,**/*}.{js,ts,md,json,scss}'",
         "extract": "ngx-translate-extract -i ./src -o ./src/assets/i18n/{ru,en}.json",
         "env:prod": "rm -f src/environments/index.ts && cp src/environments/prod.ts src/environments/index.ts \n\n# Environment set to: prod\n\n",
@@ -143,6 +144,7 @@
         "ts-node": "~7.0.1",
         "tslint": "~5.12.0",
         "tslint-config-prettier": "^1.17.0",
+        "tslint-plugin-prettier": "^2.0.1",
         "typescript": "~3.2.2",
         "wait-on": "^3.2.0"
     },

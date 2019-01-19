@@ -48,7 +48,7 @@ function createWindow() {
 
     if (isDevMode) {
         require('electron-reload')(__dirname, {
-            electron: require(`${__dirname}/node_modules/electron`)
+            electron: require(`${__dirname}/node_modules/electron`),
         });
         win.loadURL('http://localhost:4200');
     } else {

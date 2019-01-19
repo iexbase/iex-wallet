@@ -88,7 +88,7 @@ export class TronProvider {
             fullNode: 'https://api.trongrid.io',
             solidityNode: 'https://api.trongrid.io',
             eventServer: 'https://api.trongrid.io'
-        } as TronNodesInterface,
+        },
 
         /**
          * Test Network
@@ -102,7 +102,7 @@ export class TronProvider {
             fullNode: 'https://api.shasta.trongrid.io',
             solidityNode: 'https://api.shasta.trongrid.io',
             eventServer: 'https://api.shasta.trongrid.io'
-        } as TronNodesInterface,
+        },
     };
 
     /**
@@ -415,7 +415,7 @@ export class TronProvider {
      * @param {any} callback - Callback result
      * @return {Promise} - If successful that "result: true"
      */
-    async broadcastTxProposal(transaction: any, options: Object = {}, callback?: any): Promise<any> {
+    async broadcastTxProposal(transaction: any, options: object = {}, callback?: any): Promise<any> {
         try {
             return await this.client.trx.sendRawTransaction(transaction, options, callback);
         } catch (e) {

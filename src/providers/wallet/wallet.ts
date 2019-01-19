@@ -513,7 +513,7 @@ export class WalletProvider {
                 balanceHidden: false,
                 color: 'theme-wallet-thunderbird',
                 ...wallet
-            } as WalletOptions;
+            } as any;
             allWallets.push(newWallet);
             // Updating data in the repository
             this.encryptWallet(allWallets, this.password);
@@ -1143,7 +1143,7 @@ export class WalletProvider {
      *
      * @param {string} phrase - Phrase 12 worlds
      * @return boolean
-     * */
+     */
     isValidMnemonic(phrase: string): boolean {
         if (!phrase) { return false; }
         if (phrase.trim().split(/\s+/g).length < 12) {

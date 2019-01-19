@@ -24,7 +24,7 @@ export class FileStorage {
      *
      *  @param dir - local directory project
      *  @param storeName - file name
-     * */
+     */
     constructor(
         public dir: string,
         @Inject('storeName') storeName: string
@@ -57,7 +57,7 @@ export class FileStorage {
      *  Set an item.
      *
      *  @return void
-     * */
+     */
     set(key: any, value?: any ): void {
         if (typeof(key) == 'object') {
             return this.store.set(key);

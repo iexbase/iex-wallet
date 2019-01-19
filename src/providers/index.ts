@@ -18,7 +18,6 @@ export { FilterProvider } from '@providers/filter/filter';
 export { LanguageProvider } from '@providers/language/language';
 export { Logger } from '@providers/logger/logger';
 export { RateProvider } from '@providers/rate/rate';
-export { ReplaceParametersProvider } from '@providers/replace-parameters/replace-parameters';
 export { TimeProvider } from '@providers/time/time';
 export { TronProvider } from '@providers/tron/tron';
 export { WalletProvider } from '@providers/wallet/wallet';

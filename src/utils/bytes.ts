@@ -81,6 +81,17 @@ export const hexToByteArray = (hex: string): Uint8Array => {
 };
 
 /**
+ * isHex
+ *
+ * @param {string} str - string to be tested
+ * @returns {boolean}
+ */
+export const isHex = (str: string): boolean => {
+    const plain = str.replace('0x', '');
+    return /[0-9a-f]*$/i.test(plain);
+};
+
+/**
  * hexToIntArray
  *
  * @param {string} hex
@@ -127,15 +138,4 @@ export const isEqual = (a: string, b: string): boolean => {
     }
 
     return result === 0;
-};
-
-/**
- * isHex
- *
- * @param {string} str - string to be tested
- * @returns {boolean}
- */
-export const isHex = (str: string): boolean => {
-    const plain = str.replace('0x', '');
-    return /[0-9a-f]*$/i.test(plain);
 };
