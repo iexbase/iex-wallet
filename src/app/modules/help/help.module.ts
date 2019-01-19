@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {NgModule} from "@angular/core";
+import {NgModule} from '@angular/core';
 
-import { SharedModule } from "@shared/shared.module";
-import { ChartModule } from "angular-highcharts";
+import { SharedModule } from '@shared/shared.module';
+import { ChartModule } from 'angular-highcharts';
 
 // Routing
-import { HelpRoutingModule } from "./help-routing.module";
+import { HelpRoutingModule } from './help-routing.module';
 
 // Pages
-import { HelpPage } from "./pages/help/help.page";
+import { HelpPage } from './pages/help/help.page';
 
 @NgModule({
     imports: [

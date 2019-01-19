@@ -11,8 +11,7 @@ import { Pipe, PipeTransform } from '@angular/core';
     name: 'unitToSun',
     pure: false
 })
-export class UnitToSunPipe implements PipeTransform
-{
+export class UnitToSunPipe implements PipeTransform {
     constructor() {}
 
     transform(amount: number) {

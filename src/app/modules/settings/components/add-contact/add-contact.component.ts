@@ -5,29 +5,28 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Component, OnInit } from "@angular/core";
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from "@angular/forms";
-import { MatDialogRef, MatSnackBar } from "@angular/material";
+import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { MatDialogRef, MatSnackBar } from '@angular/material';
 
 // Validators
-import { AddressValidator } from "@validators/address";
+import { AddressValidator } from '@validators/address';
 
 // Providers
-import { Logger } from "@providers/logger/logger";
-import { AddressProvider } from "@providers/address/address";
-import { AddressBookProvider } from "@providers/address-book/address-book";
+import { AddressBookProvider } from '@providers/address-book/address-book';
+import { AddressProvider } from '@providers/address/address';
+import { Logger } from '@providers/logger/logger';
 
 // Modules
-import { AddressBookPage } from "@modules/settings/pages/address-book/address-book.page";
-import {AppProvider} from "@providers/app/app";
+import { AddressBookPage } from '@modules/settings/pages/address-book/address-book.page';
+import {AppProvider} from '@providers/app/app';
 
 @Component({
     selector: 'add-contact',
     templateUrl: './add-contact.component.html',
     styleUrls: ['./add-contact.component.scss'],
 })
-export class AddContactComponent implements OnInit
-{
+export class AddContactComponent implements OnInit {
     /**
      * Create a form group
      *
@@ -104,8 +103,7 @@ export class AddContactComponent implements OnInit
      *
      * @return void
      */
-    save(): void
-    {
+    save(): void {
         this.addressBookAdd.controls['address'].setValue(
             this.parseAddress(this.addressBookAdd.value.address)
         );
@@ -117,7 +115,7 @@ export class AddContactComponent implements OnInit
             .catch(err => {
                 this.snackBar.open(err, null, {
                     duration: 2000
-                })
+                });
             });
 
     }
@@ -129,7 +127,7 @@ export class AddContactComponent implements OnInit
      * @returns {string}
      */
     private parseAddress(str: string): string {
-        return this.addressProvider.extractAddress(str)
+        return this.addressProvider.extractAddress(str);
     }
 
     /**

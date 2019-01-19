@@ -5,32 +5,32 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import 'reflect-metadata';
 import 'polyfills';
+import 'reflect-metadata';
 
-import {BrowserModule, DomSanitizer} from '@angular/platform-browser';
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
+import {BrowserModule, DomSanitizer} from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import {SharedModule} from "@shared/shared.module";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {NgxWebstorageModule} from "ngx-webstorage";
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
     TranslateLoader,
     TranslateModule
 } from '@ngx-translate/core';
+import {SharedModule} from '@shared/shared.module';
+import {NgxWebstorageModule} from 'ngx-webstorage';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 
-import {HttpClient, HttpClientModule} from "@angular/common/http";
-import {TranslateHttpLoader} from "@ngx-translate/http-loader";
-import {AuthGuardService} from "./auth-guard.service";
-import {appReducer, metaReducers} from "@redux/index";
-import {StoreModule} from "@ngrx/store";
+import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {StoreModule} from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {appReducer, metaReducers} from '@redux/index';
+import {AuthGuardService} from './auth-guard.service';
 
-import {ProvidersModule} from "@providers/providers.module";
-import {MatIconRegistry} from "@angular/material";
-import env from "../environments";
+import {MatIconRegistry} from '@angular/material';
+import {ProvidersModule} from '@providers/providers.module';
+import env from '../environments';
 
 export function httpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -54,7 +54,7 @@ export function httpLoaderFactory(http: HttpClient) {
         NgxWebstorageModule.forRoot({
             prefix: 'tron-wallet',
             separator: '.',
-            caseSensitive:true
+            caseSensitive: true
         }),
         TranslateModule.forRoot({
             loader: {
@@ -72,40 +72,39 @@ export function httpLoaderFactory(http: HttpClient) {
     bootstrap: [AppComponent],
     schemas: [ CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA ],
 })
-export class AppModule
-{
+export class AppModule {
     constructor(
         private matIconRegistry: MatIconRegistry,
         private domSanitizer: DomSanitizer
     ) {
         this.matIconRegistry.addSvgIcon(
-            "c-refresh",
-            this.domSanitizer.bypassSecurityTrustResourceUrl("assets/svg/mat-icon/refresh.svg")
+            'c-refresh',
+            this.domSanitizer.bypassSecurityTrustResourceUrl('assets/svg/mat-icon/refresh.svg')
         );
 
         this.matIconRegistry.addSvgIcon(
-            "trx-send",
-            this.domSanitizer.bypassSecurityTrustResourceUrl("assets/svg/mat-icon/send.svg")
+            'trx-send',
+            this.domSanitizer.bypassSecurityTrustResourceUrl('assets/svg/mat-icon/send.svg')
         );
 
         this.matIconRegistry.addSvgIcon(
-            "trx-receive",
-            this.domSanitizer.bypassSecurityTrustResourceUrl("assets/svg/mat-icon/receive.svg")
+            'trx-receive',
+            this.domSanitizer.bypassSecurityTrustResourceUrl('assets/svg/mat-icon/receive.svg')
         );
 
         this.matIconRegistry.addSvgIcon(
-            "trx-freeze",
-            this.domSanitizer.bypassSecurityTrustResourceUrl("assets/svg/mat-icon/freeze.svg")
+            'trx-freeze',
+            this.domSanitizer.bypassSecurityTrustResourceUrl('assets/svg/mat-icon/freeze.svg')
         );
 
         this.matIconRegistry.addSvgIcon(
-            "trx-unfreeze",
-            this.domSanitizer.bypassSecurityTrustResourceUrl("assets/svg/mat-icon/unfreeze.svg")
+            'trx-unfreeze',
+            this.domSanitizer.bypassSecurityTrustResourceUrl('assets/svg/mat-icon/unfreeze.svg')
         );
 
         this.matIconRegistry.addSvgIcon(
-            "trx-contract",
-            this.domSanitizer.bypassSecurityTrustResourceUrl("assets/svg/mat-icon/contract.svg")
+            'trx-contract',
+            this.domSanitizer.bypassSecurityTrustResourceUrl('assets/svg/mat-icon/contract.svg')
         );
 
         this.matIconRegistry.addSvgIcon(
@@ -114,8 +113,8 @@ export class AppModule
         );
 
         this.matIconRegistry.addSvgIcon(
-            "trx-copy",
-            this.domSanitizer.bypassSecurityTrustResourceUrl("assets/svg/mat-icon/copy.svg")
+            'trx-copy',
+            this.domSanitizer.bypassSecurityTrustResourceUrl('assets/svg/mat-icon/copy.svg')
         );
 
         this.matIconRegistry.addSvgIcon(

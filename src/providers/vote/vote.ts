@@ -1,9 +1,9 @@
-import { Injectable } from "@angular/core";
-import * as _ from "lodash";
+import { Injectable } from '@angular/core';
+import * as _ from 'lodash';
 
 // Providers
-import { TronProvider } from "@providers/tron/tron";
-import {Logger} from "@providers/logger/logger";
+import {Logger} from '@providers/logger/logger';
+import { TronProvider } from '@providers/tron/tron';
 
 // Interface votes
 export interface VoteHistoryProposal {
@@ -16,8 +16,7 @@ export interface TransactionVoteProposal {
 }
 
 @Injectable()
-export class VoteProvider
-{
+export class VoteProvider {
     /**
      * Object creation VoteProvider
      *
@@ -42,27 +41,25 @@ export class VoteProvider
      * @param {string} accountAddress - Sender's address
      * @returns {Promise} Promise object containing the newly created transaction id
      */
-    createVoteTx(txp: Partial<TransactionVoteProposal>, accountAddress: string)
-    {
+    createVoteTx(txp: Partial<TransactionVoteProposal>, accountAddress: string) {
         return new Promise((resolve, reject) => {
             // Checking important parameters
-            if (_.isEmpty(txp)) return reject('MISSING_PARAMETER');
+            if (_.isEmpty(txp)) { return reject('MISSING_PARAMETER'); }
 
             // A temporary measure, we will soon add
             // the ability to vote on several positions
-            let votes: any = {};
+            const votes: any = {};
             votes[ txp.srAddress ] = txp.voteCount;
 
             this.tron.createVoteProposal(votes, accountAddress,
                 (err: any, createdTxp: any) => {
-                    if (err) return reject(err);
-                    else {
+                    if (err) { return reject(err); } else {
                         this.logger.debug('Transaction Vote created');
                         return resolve(createdTxp);
                     }
-                })
+                });
         });
-    };
+    }
 
 
     /**
@@ -74,27 +71,25 @@ export class VoteProvider
      * @param {VoteHistoryProposal} options.endingAddress - Closing address
      * @return {Promise} return votes
      */
-    getVotesFromServer(options: Partial<VoteHistoryProposal>): Promise<any>
-    {
+    getVotesFromServer(options: Partial<VoteHistoryProposal>): Promise<any> {
         return new Promise((resolve, reject) => {
             let res: any = [];
 
-            let result = {
+            const result = {
                 res,
                 total: 0,
                 totalVotes: 0,
                 topRating: null
             };
 
-            this.tron.getVoteHistory((err: any, historyVote: any) =>
-            {
+            this.tron.getVoteHistory((err: any, historyVote: any) => {
                 // In case of problems, we don’t continue
-                if (err) return reject(err);
+                if (err) { return reject(err); }
 
                 // If you received an empty response from the server, do not continue
-                if (_.isEmpty(historyVote['data'])) return resolve(result);
+                if (_.isEmpty(historyVote['data'])) { return resolve(result); }
 
-                //Returns all votes to the address, if the "endingAddress" is filled in,
+                // Returns all votes to the address, if the "endingAddress" is filled in,
                 // in this case, we will not receive data beyond this id
                 res = _.takeWhile(historyVote['data'], (vote: any) => {
                     return vote.address != options.endingAddress;

@@ -13,25 +13,23 @@ import { RateProvider } from '@providers/rate/rate';
     name: 'fiatToUnit',
     pure: false
 })
-export class FiatToUnitPipe implements PipeTransform
-{
+export class FiatToUnitPipe implements PipeTransform {
 
     constructor(
         private rateProvider: RateProvider,
         private decimalPipe: DecimalPipe
     ) {}
-    transform(amount: number, coin: string, isDecimal: boolean = true)
-    {
-        if(coin.toUpperCase() == 'TRX') {
+    transform(amount: number, coin: string, isDecimal: boolean = true) {
+        if (coin.toUpperCase() == 'TRX') {
             return amount;
         }
 
-        let amount_ = this.rateProvider.fromFiat(
+        const amount_ = this.rateProvider.fromFiat(
             amount,
             coin.toUpperCase()
         );
 
-        if(isDecimal == false) {
+        if (isDecimal == false) {
             return (amount_ / 1e6 || 0).toFixed(6);
         }
 

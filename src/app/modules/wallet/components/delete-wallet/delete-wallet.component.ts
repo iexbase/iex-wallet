@@ -5,28 +5,27 @@
  * --------------------------------------------------------------------------------------------
  */
 
-import { Component, Inject } from "@angular/core";
-import { Router } from "@angular/router";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
-import { Store } from "@ngrx/store";
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 
 // LocalStorage
-import { LocalStorage } from "ngx-webstorage";
+import { LocalStorage } from 'ngx-webstorage';
 
 // Redux
-import * as WalletActions from "@redux/wallet//wallet.actions";
-import * as fromWallet from "@redux/wallet/wallet.reducer";
+import * as WalletActions from '@redux/wallet//wallet.actions';
+import * as fromWallet from '@redux/wallet/wallet.reducer';
 
 // Providers
-import {WalletProvider} from "@providers/wallet/wallet";
+import {WalletProvider} from '@providers/wallet/wallet';
 
 @Component({
     selector: 'delete-wallet',
     templateUrl: './delete-wallet.component.html',
     styleUrls: ['./delete-wallet.component.scss'],
 })
-export class DeleteWalletComponent
-{
+export class DeleteWalletComponent {
     /**
      * Active account
      *
@@ -60,10 +59,9 @@ export class DeleteWalletComponent
      *
      *  @return void
      */
-    deleteWallet(): void
-    {
+    deleteWallet(): void {
         // Get information about a deleted account
-        let wallet = this.walletProvider.getWallet(this.data.address);
+        const wallet = this.walletProvider.getWallet(this.data.address);
         this.walletProvider.deleteWallet(this.data.address)
             .then(() => {
                 this.store.dispatch(
@@ -85,6 +83,6 @@ export class DeleteWalletComponent
      * @return void
      */
     onClose(): void {
-        this.dialogRef.close()
+        this.dialogRef.close();
     }
 }

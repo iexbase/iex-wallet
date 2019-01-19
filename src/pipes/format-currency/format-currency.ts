@@ -14,9 +14,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class FormatCurrencyPipe implements PipeTransform {
     constructor(private decimalPipe: DecimalPipe) {}
 
-    transform(amount: number, currencyCode: string, customPrecision?: number, hideCode?: boolean)
-    {
-        let precision =
+    transform(amount: number, currencyCode: string, customPrecision?: number, hideCode?: boolean) {
+        const precision =
             customPrecision || customPrecision === 0
                 ? customPrecision : this.getPrecision(currencyCode);
 

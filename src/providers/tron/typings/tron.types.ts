@@ -6,8 +6,7 @@
  */
 
 /// <reference types="node" />
-declare module "tronweb"
-{
+declare module 'tronweb' {
 
     export class TronWeb {
         constructor(e: any, r: any, ...args: any[]);
@@ -40,10 +39,8 @@ declare module "tronweb"
     }
 
 
-    export namespace TronWeb
-    {
-        export namespace trx
-        {
+    export namespace TronWeb {
+        export namespace trx {
             function parseToken(token: any): any;
             function getCurrentBlock(callback?: any): Promise<any>;
             function getBlock(block: any, callback?: any): Promise<any>;
@@ -57,7 +54,7 @@ declare module "tronweb"
             function getTransactionsToAddress(address: any, limit: number, offset: number, callback?: any): Promise<any>;
             function getTransactionsFromAddress(address: any, limit: number, offset: number, callback?: any): Promise<any>;
             function getTransactionsRelated(address: any, direction: any, limit: number, offset: number, callback?: any): Promise<any>;
-            function getAccount(address:any, callback?: any): Promise<any>;
+            function getAccount(address: any, callback?: any): Promise<any>;
             function getBalance(address: any, callback?: any): Promise<any>;
             function getUnconfirmedAccount(address: any, callback?: any): Promise<any>;
             function getUnconfirmedBalance(address: any, callback?: any): Promise<any>;
@@ -93,8 +90,7 @@ declare module "tronweb"
             function listExchangesPaginated(limit: number, offset: number, callback?: any): Promise<any>;
         }
 
-        namespace transactionBuilder
-        {
+        namespace transactionBuilder {
             function sendTrx(to: any, amount: any, from: any, callback?: any): Promise<any>;
             function sendToken(to: any, amount: any, tokenID: any, from: any, callback?: any): Promise<any>;
             function purchaseToken(issuerAddress: any, tokenID: any, amount: any, buyer: any, callback?: any): Promise<any>;

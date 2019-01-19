@@ -18,8 +18,7 @@ import { Pipe, PipeTransform } from '@angular/core';
  *		Multidimensional Array Sort on multiple columns: *ngFor="#todo of todoService.todos | orderBy : ['status', '-title']"
  *    With an object with objects: *ngFor="let item of (itemsObject | keys : 'date') | orderBy : ['-order']"
  */
-export class OrderByPipe implements PipeTransform
-{
+export class OrderByPipe implements PipeTransform {
     static _orderByComparator(a, b): number {
         if (
             isNaN(parseFloat(a)) ||
@@ -27,26 +26,26 @@ export class OrderByPipe implements PipeTransform
             (isNaN(parseFloat(b)) || !isFinite(b))
         ) {
             // Isn't a number so lowercase the string to properly compare
-            if (a.toLowerCase() < b.toLowerCase()) return -1;
-            if (a.toLowerCase() > b.toLowerCase()) return 1;
+            if (a.toLowerCase() < b.toLowerCase()) { return -1; }
+            if (a.toLowerCase() > b.toLowerCase()) { return 1; }
         } else {
             // Parse strings as numbers to compare properly
-            if (parseFloat(a) < parseFloat(b)) return -1;
-            if (parseFloat(a) > parseFloat(b)) return 1;
+            if (parseFloat(a) < parseFloat(b)) { return -1; }
+            if (parseFloat(a) > parseFloat(b)) { return 1; }
         }
 
         return 0; // equal each other
     }
 
     transform(input, [config = '+']) {
-        if (!Array.isArray(input)) return input;
+        if (!Array.isArray(input)) { return input; }
 
         if (
             !Array.isArray(config) ||
             (Array.isArray(config) && config.length == 1)
         ) {
-            var propertyToCheck: string = !Array.isArray(config) ? config : config[0];
-            var desc = propertyToCheck.substr(0, 1) == '-';
+            let propertyToCheck: string = !Array.isArray(config) ? config : config[0];
+            let desc = propertyToCheck.substr(0, 1) == '-';
 
             // Basic array
             if (
@@ -56,7 +55,7 @@ export class OrderByPipe implements PipeTransform
             ) {
                 return !desc ? input.sort() : input.sort().reverse();
             } else {
-                var property: string =
+                let property: string =
                     propertyToCheck.substr(0, 1) == '+' ||
                     propertyToCheck.substr(0, 1) == '-'
                         ? propertyToCheck.substr(1)
@@ -71,19 +70,19 @@ export class OrderByPipe implements PipeTransform
         } else {
             // Loop over property of the array in order and sort
             return input.sort((a, b) => {
-                for (var i: number = 0; i < config.length; i++) {
-                    var desc = config[i].substr(0, 1) == '-';
-                    var property =
+                for (let i = 0; i < config.length; i++) {
+                    let desc = config[i].substr(0, 1) == '-';
+                    let property =
                         config[i].substr(0, 1) == '+' || config[i].substr(0, 1) == '-'
                             ? config[i].substr(1)
                             : config[i];
 
-                    var comparison = !desc
+                    let comparison = !desc
                         ? OrderByPipe._orderByComparator(a[property], b[property])
                         : -OrderByPipe._orderByComparator(a[property], b[property]);
 
                     // Don't return 0 yet in case of needing to sort by next property
-                    if (comparison != 0) return comparison;
+                    if (comparison != 0) { return comparison; }
                 }
 
                 return 0; // equal each other

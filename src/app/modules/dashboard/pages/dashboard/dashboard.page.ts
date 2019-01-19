@@ -5,25 +5,24 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Component, OnInit} from "@angular/core";
-import { Chart } from "angular-highcharts";
-import { HttpClient } from "@angular/common/http";
-import env from "../../../../../environments";
-import * as _ from "lodash";
+import { HttpClient } from '@angular/common/http';
+import {Component, OnInit} from '@angular/core';
+import { Chart } from 'angular-highcharts';
+import * as _ from 'lodash';
+import env from '../../../../../environments';
 
 @Component({
     selector: 'dashboard-page',
     templateUrl: './dashboard.page.html',
     styleUrls: ['./dashboard.page.scss'],
 })
-export class DashboardPage implements OnInit
-{
+export class DashboardPage implements OnInit {
     /**
      * Ad graphics for TRON
      *
      * @var Chart
      */
-    chart_trx:Chart;
+    chart_trx: Chart;
 
     /**
      * Options charts
@@ -38,14 +37,14 @@ export class DashboardPage implements OnInit
      * @var any
      */
     public tronData: any = {
-        rank: <number> 0,
-        price:<number> 0,
-        volume_24h: <number> 0,
-        market_cap: <number> 0,
-        circulating_supply: <number> 0
+        rank: 0 as number,
+        price: 0 as number,
+        volume_24h: 0 as number,
+        market_cap: 0 as number,
+        circulating_supply: 0 as number
     };
 
-    public isLoadingChart: boolean = true;
+    public isLoadingChart = true;
 
     /**
      * Data to filters
@@ -68,7 +67,7 @@ export class DashboardPage implements OnInit
      *
      * @var string
      */
-    filterValue: string = '1Y';
+    filterValue = '1Y';
 
     /**
      * Create a new DashboardPage object
@@ -85,7 +84,7 @@ export class DashboardPage implements OnInit
      * @return void
      */
     ngOnInit() {
-        this.loading().then(() => {})
+        this.loading().then(() => {});
     }
 
     /**
@@ -103,8 +102,7 @@ export class DashboardPage implements OnInit
      *
      * @return Promise
      */
-    private async loadingTRXInfo(): Promise<any>
-    {
+    private async loadingTRXInfo(): Promise<any> {
         this.httpClient.get('https://api.coinmarketcap.com/v2/ticker/1958/').subscribe(tron => {
             this.tronData = {
                 'rank': tron['data']['rank'],
@@ -112,7 +110,7 @@ export class DashboardPage implements OnInit
                 'volume_24h': tron['data']['quotes']['USD']['volume_24h'],
                 'market_cap': tron['data']['quotes']['USD']['market_cap'],
                 'circulating_supply': tron['data']['circulating_supply'],
-            }
+            };
         });
     }
 
@@ -122,20 +120,19 @@ export class DashboardPage implements OnInit
      * @param type - Filter type
      * @return void
      */
-    private _loadGraphData(type:string): void
-    {
-        let url = this.filterTimes.find(
+    private _loadGraphData(type: string): void {
+        const url = this.filterTimes.find(
             filter => filter.name == type
         );
 
         this.httpClient.get(url['link'])
             .subscribe((result: any) => {
-                if(_.isEmpty(result['Data'])) return;
+                if (_.isEmpty(result['Data'])) { return; }
 
                 this.isLoadingChart = false;
                 this.loadCharts((result['Data'])
                     .map(data => {
-                        return [data.time * 1000, data.close]
+                        return [data.time * 1000, data.close];
                     }));
                 this.chart_trx = new Chart(this.highChartsOptions);
             });
@@ -147,7 +144,7 @@ export class DashboardPage implements OnInit
      * @var void
      */
     setOptionSelected(type: string): void {
-        if(type) this.filterValue = type;
+        if (type) { this.filterValue = type; }
         this._loadGraphData(!type ? this.filterValue : type);
     }
 
@@ -156,8 +153,7 @@ export class DashboardPage implements OnInit
      *
      * @var void
      */
-    private loadCharts(data: any): void
-    {
+    private loadCharts(data: any): void {
         this.highChartsOptions = {
             chart: {
                 height: 300,
@@ -167,7 +163,7 @@ export class DashboardPage implements OnInit
                     fontFamily: 'Roboto, self'
                 }
             },
-            series: [{ data: data }],
+            series: [{ data }],
             colors: ['#1e88e5'],
             legend: {
                 enabled: false
@@ -192,7 +188,7 @@ export class DashboardPage implements OnInit
             },
             yAxis: {
                 labels: {
-                    enabled:false
+                    enabled: false
                 },
                 title: {
                     text: null
@@ -203,7 +199,7 @@ export class DashboardPage implements OnInit
             credits: {
                 enabled: false
             },
-            plotOptions:<any> {
+            plotOptions: {
                 series: {
                     fillColor: 'rgba(0, 0, 0, 0.35)'
                 },
@@ -213,7 +209,7 @@ export class DashboardPage implements OnInit
                     },
                     enableMouseTracking: false
                 }
-            },
-        }
+            } as any,
+        };
     }
 }

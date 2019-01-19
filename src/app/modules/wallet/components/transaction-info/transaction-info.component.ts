@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Component, Input, OnDestroy, OnInit } from "@angular/core";
-import { MatSnackBar} from "@angular/material";
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { MatSnackBar} from '@angular/material';
 
 import { TimerObservable } from 'rxjs/observable/TimerObservable';
-import { takeWhile } from "rxjs/operators";
+import { takeWhile } from 'rxjs/operators';
 
 // env
-import env from "../../../../../environments";
+import env from '../../../../../environments';
 
 // Providers
-import { ElectronProvider } from "@providers/electron/electron";
-import { WalletProvider } from "@providers/wallet/wallet";
+import { ElectronProvider } from '@providers/electron/electron';
+import { WalletProvider } from '@providers/wallet/wallet';
 
 
 @Component({
@@ -24,8 +24,7 @@ import { WalletProvider } from "@providers/wallet/wallet";
     templateUrl: './transaction-info.component.html',
     styleUrls: ['./transaction-info.component.scss'],
 })
-export class TransactionInfoComponent implements OnInit, OnDestroy
-{
+export class TransactionInfoComponent implements OnInit, OnDestroy {
     /**
      * Transaction details
      *
@@ -55,11 +54,11 @@ export class TransactionInfoComponent implements OnInit, OnDestroy
      * @var any
      */
     detail: any = {
-        txID:<string> null,
-        status: <boolean> false,
-        block: <number> undefined,
-        timestamp: <number> 0,
-        amount: <number> 0
+        txID: null as string,
+        status: false as boolean,
+        block: undefined as number,
+        timestamp: 0 as number,
+        amount: 0 as number
     };
 
     /**
@@ -67,21 +66,21 @@ export class TransactionInfoComponent implements OnInit, OnDestroy
      *
      * @var boolean
      */
-    alive: boolean = true;
+    alive = true;
 
     /**
      * Use counter
      *
      * @var number
      */
-    useCount: number = 0;
+    useCount = 0;
 
     /**
      * Max count update
      *
      * @var number
      */
-    userMaxCount: number = 20;
+    userMaxCount = 20;
 
     /**
      * Create a new TransactionInfoComponent object
@@ -104,8 +103,7 @@ export class TransactionInfoComponent implements OnInit, OnDestroy
      *
      * @return void
      */
-    ngOnInit()
-    {
+    ngOnInit() {
         this.lottieConfig = {
             path: 'assets/animations/ripple_loading_animation.json',
             renderer: 'canvas',
@@ -124,25 +122,24 @@ export class TransactionInfoComponent implements OnInit, OnDestroy
         TimerObservable.create(0, 5000).pipe(
             takeWhile(() => this.alive)).subscribe(() => {
 
-            if(this.useCount > this.userMaxCount) {
+            if (this.useCount > this.userMaxCount) {
                 this.alive = false;
             }
 
-            this.walletProvider.getTx(this.transaction.txID).then((tx: any) =>
-            {
+            this.walletProvider.getTx(this.transaction.txID).then((tx: any) => {
                 this.useCount++;
                 this.detail.status = tx.confirmed;
                 this.detail.block = tx.block;
 
-                //If confirmation is received,
+                // If confirmation is received,
                 // force updates.
-                if(tx.confirmed === true) {
+                if (tx.confirmed === true) {
                     this.alive = false;
                 }
             }).catch(() => {
                 console.log('Transaction not found');
-            })
-        })
+            });
+        });
     }
 
     /**
@@ -150,8 +147,7 @@ export class TransactionInfoComponent implements OnInit, OnDestroy
      *
      * @return void
      */
-    copyId(hash: string): void
-    {
+    copyId(hash: string): void {
         this.electronProvider.writeToClipboard(`${env.explorer.url}/transaction/${hash}`);
         this.snackBar.open('Tronscan url for this transaction copied to the clipboard',
             null, {
@@ -166,6 +162,6 @@ export class TransactionInfoComponent implements OnInit, OnDestroy
      * @return void
      */
     ngOnDestroy() {
-        this.alive = false
+        this.alive = false;
     }
 }

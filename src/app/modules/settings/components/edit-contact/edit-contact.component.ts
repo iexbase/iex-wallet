@@ -5,28 +5,27 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Component, Inject, OnInit} from "@angular/core";
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from "@angular/forms";
-import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from "@angular/material";
+import {Component, Inject, OnInit} from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from '@angular/material';
 
 // Validators
-import { AddressValidator } from "@validators/address";
+import { AddressValidator } from '@validators/address';
 
 // Providers
-import { Logger } from "@providers/logger/logger";
-import { AddressProvider } from "@providers/address/address";
-import { AddressBookProvider } from "@providers/address-book/address-book";
+import { AddressBookProvider } from '@providers/address-book/address-book';
+import { AddressProvider } from '@providers/address/address';
+import { Logger } from '@providers/logger/logger';
 
 // Modules
-import { AddressBookPage } from "@modules/settings/pages/address-book/address-book.page";
+import { AddressBookPage } from '@modules/settings/pages/address-book/address-book.page';
 
 @Component({
     selector: 'edit-contact',
     templateUrl: './edit-contact.component.html',
     styleUrls: ['./edit-contact.component.scss'],
 })
-export class EditContactComponent implements OnInit
-{
+export class EditContactComponent implements OnInit {
     /**
      * Create a form group
      *
@@ -99,8 +98,7 @@ export class EditContactComponent implements OnInit
      *
      * @return void
      */
-    save(): void
-    {
+    save(): void {
         this.addressBookProvider.edit(this.addressBookEdit.value)
             .then(() => {
                 this.onClose();
@@ -108,7 +106,7 @@ export class EditContactComponent implements OnInit
             .catch(err => {
                 this.snackBar.open(err, null, {
                     duration: 2000
-                })
+                });
             });
 
     }

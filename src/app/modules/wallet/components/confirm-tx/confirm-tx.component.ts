@@ -5,18 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Component, Input } from "@angular/core";
+import { Component, Input } from '@angular/core';
 
 // Providers
-import { AddressProvider } from "@providers/address/address";
+import { AddressProvider } from '@providers/address/address';
 
 @Component({
     selector: 'confirm-tx',
     templateUrl: './confirm-tx.component.html',
     styleUrls: ['./confirm-tx.component.scss'],
 })
-export class ConfirmTxComponent
-{
+export class ConfirmTxComponent {
     /**
      * Transaction Details
      *

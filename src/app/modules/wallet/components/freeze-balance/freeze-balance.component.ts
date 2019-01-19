@@ -5,21 +5,21 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Component, Inject, OnInit} from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from "@angular/material";
+import {Component, Inject, OnInit} from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
 
-import { Update } from "@ngrx/entity";
-import { select, Store } from "@ngrx/store";
-import {AppState} from "@redux/index";
+import { Update } from '@ngrx/entity';
+import { select, Store } from '@ngrx/store';
+import {AppState} from '@redux/index';
 
 
 // Redux
-import * as fromWallet from "@redux/wallet/wallet.reducer";
-import * as WalletActions from "@redux/wallet/wallet.actions";
+import * as WalletActions from '@redux/wallet/wallet.actions';
+import * as fromWallet from '@redux/wallet/wallet.reducer';
 
 // Providers
-import { TronProvider } from "@providers/tron/tron";
-import { WalletProvider } from "@providers/wallet/wallet";
+import { TronProvider } from '@providers/tron/tron';
+import { WalletProvider } from '@providers/wallet/wallet';
 
 // Available Freeze types
 enum FreezeType {
@@ -34,16 +34,15 @@ enum FreezeType {
     templateUrl: './freeze-balance.component.html',
     styleUrls: ['./freeze-balance.component.scss'],
 })
-export class FreezeBalanceComponent implements OnInit
-{
+export class FreezeBalanceComponent implements OnInit {
     /**
      * Fields list
      *
      * @var any
      */
     fields = {
-        amount: <number> undefined,
-        resource: <string> 'BANDWIDTH'
+        amount: undefined as number,
+        resource: 'BANDWIDTH' as string
     };
 
     /**
@@ -67,49 +66,49 @@ export class FreezeBalanceComponent implements OnInit
      *
      * @var number
      */
-    userTotalPower: number = 0;
+    userTotalPower = 0;
 
     /**
      * New total power
      *
      * @var number
      */
-    newTotalPower: number = 0;
+    newTotalPower = 0;
 
     /**
      * Expire Time frozen
      *
      * @var number
      */
-    expireTime: number = 0;
+    expireTime = 0;
 
     /**
      * Custom energy
      *
      * @var number
      */
-    energyBalance: number = 0;
+    energyBalance = 0;
 
     /**
      * Expire Time Energy
      *
      * @var number
      */
-    expireEnergyTime: number = 0;
+    expireEnergyTime = 0;
 
     /**
      * Freeze Confirmation
      *
      * @var boolean
      */
-    isConfirm: boolean = false;
+    isConfirm = false;
 
     /**
      * Freeze Successful
      *
      * @var boolean
      */
-    isSuccess: boolean = false;
+    isSuccess = false;
 
     /**
      * Current time
@@ -170,24 +169,22 @@ export class FreezeBalanceComponent implements OnInit
      *
      * @return void
      */
-    ngOnInit()
-    {
+    ngOnInit() {
         // Account balance update
         this.findAndUpdateBalance();
-        this.walletProvider.getAccount(this.data.address).then((result: any) =>
-        {
-            if(result['frozen'] && result['frozen'][0]['frozen_balance']) {
+        this.walletProvider.getAccount(this.data.address).then((result: any) => {
+            if (result['frozen'] && result['frozen'][0]['frozen_balance']) {
                 this.userTotalPower = Number(this.tron.fromSun(result['frozen'][0]['frozen_balance']));
                 this.newTotalPower = this.userTotalPower;
-                this.expireTime = result['frozen'][0]['expire_time']
+                this.expireTime = result['frozen'][0]['expire_time'];
             }
 
-            if(result['account_resource'] && result['account_resource']['frozen_balance_for_energy']) {
-                let resource = result['account_resource']['frozen_balance_for_energy'];
+            if (result['account_resource'] && result['account_resource']['frozen_balance_for_energy']) {
+                const resource = result['account_resource']['frozen_balance_for_energy'];
                 this.energyBalance = this.tron.fromSun(resource['frozen_balance']);
-                this.expireEnergyTime = resource['expire_time']
+                this.expireEnergyTime = resource['expire_time'];
             }
-        })
+        });
     }
 
     /**
@@ -215,34 +212,32 @@ export class FreezeBalanceComponent implements OnInit
      *
      *  @return void
      */
-    goToFreeze(): void
-    {
+    goToFreeze(): void {
         this.tron.freezeBalance(this.fields.amount,
             3,
             this.fields.resource,
             this.data.address).then((freeze: any) => {
 
             this.walletProvider.signTx(freeze).then(signTx => {
-                this.walletProvider.broadcastTx(signTx).then(broadcastTX =>
-                {
-                    if(broadcastTX.result == true) {
+                this.walletProvider.broadcastTx(signTx).then(broadcastTX => {
+                    if (broadcastTX.result == true) {
                         // determine the type of freezing
                         this.type = this.fields.resource.toUpperCase() == 'BANDWIDTH'
                             ? FreezeType.FreezeBandwidth : FreezeType.FreezeEnergy;
 
                         this.isSuccess = true;
                     }
-                })
+                });
             }).catch(err => {
                 this.snackBar.open(err, null, {
                     duration: 2000, panelClass: ['snackbar-theme-dialog', 'custom-width'],
                 });
-            })
+            });
         }).catch(err => {
             this.snackBar.open(err, null, {
                 duration: 2000, panelClass: ['snackbar-theme-dialog', 'custom-width'],
             });
-        })
+        });
     }
 
     /**
@@ -251,10 +246,8 @@ export class FreezeBalanceComponent implements OnInit
      *  @param {string} resource - Resource type
      *  @returns {any | void}
      */
-    goToUnfreeze(resource: string): any | void
-    {
-        if(!['ENERGY', 'BANDWIDTH'].includes(resource.toUpperCase()))
-        {
+    goToUnfreeze(resource: string): any | void {
+        if (!['ENERGY', 'BANDWIDTH'].includes(resource.toUpperCase())) {
             return this.snackBar.open('Invalid resource provided: Expected "BANDWIDTH" or "ENERGY"',
                 null, {
                     duration: 2000,
@@ -262,31 +255,29 @@ export class FreezeBalanceComponent implements OnInit
                 });
         }
 
-        this.tron.unfreezeBalance(resource.toUpperCase(), this.data.address).then(unfreeze =>
-        {
+        this.tron.unfreezeBalance(resource.toUpperCase(), this.data.address).then(unfreeze => {
             this.walletProvider.signTx(unfreeze)
                 .then(signTX => {
-                    this.walletProvider.broadcastTx(signTX).then(broadcastTX =>
-                    {
-                        if(broadcastTX.result == true) {
+                    this.walletProvider.broadcastTx(signTX).then(broadcastTX => {
+                        if (broadcastTX.result == true) {
                             // determine the type of freezing
                             this.type = resource.toUpperCase() == 'BANDWIDTH'
                                 ? FreezeType.UnfreezeBandwidth : FreezeType.UnfreezeEnergy;
                             this.isSuccess = true;
                         }
-                    })
+                    });
                 })
                 .catch(err => {
                     this.snackBar.open(err, null, {
                         duration: 2000, panelClass: ['snackbar-theme-dialog', 'custom-width'],
                     });
-                })
+                });
         }).catch(err => {
             this.snackBar.open(err,
                 null, {
                     duration: 2000, panelClass: ['snackbar-theme-dialog', 'custom-width'],
                 });
-        })
+        });
     }
 
     /**
@@ -294,12 +285,11 @@ export class FreezeBalanceComponent implements OnInit
      *
      * @return boolean
      */
-    enabledBalance(): boolean
-    {
+    enabledBalance(): boolean {
         return this.fields.amount == 0 ||
             this.fields.amount == undefined ||
             !this.isConfirm ||
-            Number(this.fields.amount) > Number(this.walletId.balance / 1e6)
+            Number(this.fields.amount) > Number(this.walletId.balance / 1e6);
     }
 
     /**
@@ -307,8 +297,7 @@ export class FreezeBalanceComponent implements OnInit
      *
      * @return void
      */
-    private findAndUpdateBalance(): void
-    {
+    private findAndUpdateBalance(): void {
         this.walletProvider.getBalance(this.data.address).then(result => {
             this.walletProvider.updateWallet(this.data.address, {
                 balance: result
@@ -324,7 +313,7 @@ export class FreezeBalanceComponent implements OnInit
                 this.store.dispatch(
                     new WalletActions.UpdateWallet({ wallet: update})
                 );
-            })
+            });
         });
 
         // Get find wallet by Address
@@ -340,6 +329,6 @@ export class FreezeBalanceComponent implements OnInit
      * @return void
      */
     onClose(): void {
-        this.dialogRef.close()
+        this.dialogRef.close();
     }
 }

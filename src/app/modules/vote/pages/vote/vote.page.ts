@@ -5,29 +5,28 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Component, OnInit } from "@angular/core";
-import { MatDialog } from "@angular/material";
-import { LocalStorage } from "ngx-webstorage";
-import { select, Store } from "@ngrx/store";
-import { Observable } from "rxjs";
-import * as _ from "lodash";
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { select, Store } from '@ngrx/store';
+import * as _ from 'lodash';
+import { LocalStorage } from 'ngx-webstorage';
+import { Observable } from 'rxjs';
 
 // Redux
-import * as fromWallet from "@redux/wallet/wallet.reducer";
+import * as fromWallet from '@redux/wallet/wallet.reducer';
 
 // Modules
-import { VoteDetailComponent } from "@modules/vote/components/vote-detail/vote-detail.component";
+import { VoteDetailComponent } from '@modules/vote/components/vote-detail/vote-detail.component';
 
 // Providers
-import { VoteProvider } from "@providers/vote/vote";
+import { VoteProvider } from '@providers/vote/vote';
 
 @Component({
     selector: 'vote-page',
     templateUrl: './vote.page.html',
     styleUrls: ['./vote.page.scss']
 })
-export class VotePage implements OnInit
-{
+export class VotePage implements OnInit {
     /**
      * Selected account
      *
@@ -49,7 +48,7 @@ export class VotePage implements OnInit
      * @var any
      */
     wallet: any = {
-        color:<string> null
+        color: null as string
     };
 
     /**
@@ -71,7 +70,7 @@ export class VotePage implements OnInit
      *
      * @var number
      */
-    public totalVotes: number = 0;
+    public totalVotes = 0;
 
     /**
      * Empty votes list
@@ -86,8 +85,8 @@ export class VotePage implements OnInit
      * @var any
      */
     public topRating: any = {
-        name: <string> null,
-        change_cycle: <number> 0
+        name: null as string,
+        change_cycle: 0 as number
     };
 
     /**
@@ -95,7 +94,7 @@ export class VotePage implements OnInit
      *
      * @var boolean
      */
-    isLoading: boolean = true;
+    isLoading = true;
 
     /**
      * Object creation VotePage
@@ -117,8 +116,7 @@ export class VotePage implements OnInit
      *
      * @return void
      */
-    ngOnInit()
-    {
+    ngOnInit() {
         // Get the data of the selected account
         this.initSelectedWallet();
 
@@ -133,7 +131,7 @@ export class VotePage implements OnInit
 
                 // If everything is successful, hide the update.
                 this.isLoading = false;
-            })
+            });
     }
 
     /**
@@ -142,8 +140,7 @@ export class VotePage implements OnInit
      * @param {any} item - vote detail
      * @return void
      */
-    openDetail(item: any): void
-    {
+    openDetail(item: any): void {
         const dialogRef = this.dialog.open(VoteDetailComponent, {
             width: '450px',
             panelClass: ['dialog-background', this.wallet.color],
@@ -168,13 +165,14 @@ export class VotePage implements OnInit
         // and activates the cached wallet
         this.activeAccount  && this.wallets.subscribe((data: any[]) => {
             // From the array, select the required
-            let selected = data.filter(
+            const selected = data.filter(
                 selected => selected.address == this.activeAccount
             );
 
             // If the array is not empty
-            if(selected[0] && !_.isEmpty(selected))
+            if (selected[0] && !_.isEmpty(selected)) {
                 this.wallet = selected[0];
+            }
         });
     }
 
@@ -184,15 +182,14 @@ export class VotePage implements OnInit
      * @param {any} event - event search
      * @return void
      */
-    public getItems(event: any): void
-    {
+    public getItems(event: any): void {
         // set val to the value of the searchbar
-        let val = event.target.value;
+        const val = event.target.value;
 
         // if the value is an empty string don't filter the items
         if (val && val.trim() != '') {
-            let result = _.filter(this.votes, item => {
-                let name = item['name'];
+            const result = _.filter(this.votes, item => {
+                const name = item['name'];
                 return _.includes(name.toLowerCase(), val.toLowerCase());
             });
             this.filteredVotes = result;

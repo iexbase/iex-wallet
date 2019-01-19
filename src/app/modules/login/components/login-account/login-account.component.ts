@@ -5,22 +5,21 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Component} from "@angular/core";
-import {WalletProvider} from "@providers/wallet/wallet";
-import {Router} from "@angular/router";
-import {AppProvider} from "@providers/app/app";
-import {Store} from "@ngrx/store";
-import {AppState} from "@redux/index";
-import * as WalletActions from "@redux/wallet/wallet.actions";
+import {Component} from '@angular/core';
+import {Router} from '@angular/router';
+import {Store} from '@ngrx/store';
+import {AppProvider} from '@providers/app/app';
+import {WalletProvider} from '@providers/wallet/wallet';
+import {AppState} from '@redux/index';
+import * as WalletActions from '@redux/wallet/wallet.actions';
 
 @Component({
     selector: 'login-account',
     templateUrl: './login-account.component.html',
     styleUrls: ['./login-account.component.scss']
 })
-export class LoginAccountComponent
-{
-    changeInputType: boolean = false;
+export class LoginAccountComponent {
+    changeInputType = false;
 
     /**
      * Password (ngModel)
@@ -34,14 +33,14 @@ export class LoginAccountComponent
      *
      * @var boolean
      */
-    isVisibilityPassword: boolean = false;
+    isVisibilityPassword = false;
 
     /**
      * Check the status of clicking on authorization buttons
      *
      * @var boolean
      */
-    isSubmit: boolean = false;
+    isSubmit = false;
 
     /**
      * In case of errors
@@ -70,23 +69,22 @@ export class LoginAccountComponent
      *
      * @return void
      */
-    goToLogin(): void
-    {
+    goToLogin(): void {
         this.isSubmit = true;
         this.errorMessage = null;
         this.walletProvider.hasPassword(this.password)
             .then(password => {
-                if(password.result == true) {
+                if (password.result == true) {
                     this.store.dispatch(
                         new WalletActions.AddWallets({
                             wallets: this.walletProvider.getWallets()
                         })
                     );
-                    this.router.navigate(['/', 'dashboard'])
+                    this.router.navigate(['/', 'dashboard']);
                 }
 
             }).catch(err => {
             this.errorMessage = err;
-        })
+        });
     }
 }

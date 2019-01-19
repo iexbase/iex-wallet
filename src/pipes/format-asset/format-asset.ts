@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Pipe, PipeTransform} from "@angular/core";
-import {TronProvider} from "@providers/tron/tron";
+import {Pipe, PipeTransform} from '@angular/core';
+import {TronProvider} from '@providers/tron/tron';
 
 @Pipe({
     name: 'formatAsset',
@@ -18,12 +18,13 @@ export class FormatAssetPipe implements PipeTransform {
     ) {}
 
     transform(key?: string) {
-        let filter = this.tron.getListTokens().filter(c =>
+        const filter = this.tron.getListTokens().filter(c =>
             c.id == key
         ) || [];
 
-        if (filter.length > 0)
+        if (filter.length > 0) {
             return (key == '0' ? 'TRX' : filter[ 0 ].name);
+        }
         return 'NaN';
     }
 }

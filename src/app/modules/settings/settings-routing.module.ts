@@ -5,19 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import { NgModule } from '@angular/core';
 import {
     RouterModule,
     Routes
-} from "@angular/router";
-import { NgModule } from "@angular/core";
+} from '@angular/router';
 
-import { SettingsPage } from "@modules/settings/pages/settings/settings.page";
-import { AltCurrencyPage } from "@modules/settings/pages/alt-currency/alt-currency.page";
-import { LanguagePage } from "@modules/settings/pages/language/language.page";
-import { SessionLogPage } from "@modules/settings/pages/session-log/session-log.page";
-import { SkinsPage } from "@modules/settings/pages/skins/skins.page";
-import { AddressBookPage } from "@modules/settings/pages/address-book/address-book.page";
-import { NodePage } from "@modules/settings/pages/node/node.page";
+import { AddressBookPage } from '@modules/settings/pages/address-book/address-book.page';
+import { AltCurrencyPage } from '@modules/settings/pages/alt-currency/alt-currency.page';
+import { LanguagePage } from '@modules/settings/pages/language/language.page';
+import { NodePage } from '@modules/settings/pages/node/node.page';
+import { SessionLogPage } from '@modules/settings/pages/session-log/session-log.page';
+import { SettingsPage } from '@modules/settings/pages/settings/settings.page';
+import { SkinsPage } from '@modules/settings/pages/skins/skins.page';
 
 const routes: Routes = [{
         path: '', component: SettingsPage,

@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {RouterModule, Routes} from "@angular/router";
-import {NgModule} from "@angular/core";
-import {DashboardPage} from "./pages/dashboard/dashboard.page";
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {DashboardPage} from './pages/dashboard/dashboard.page';
 
 const dashboardRoutes: Routes = [{
         path: '',

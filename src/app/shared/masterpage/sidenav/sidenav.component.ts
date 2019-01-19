@@ -14,19 +14,18 @@ import { Subscription } from 'rxjs';
     templateUrl: './sidenav.component.html',
     styleUrls: ['./sidenav.component.scss']
 })
-export class SidenavComponent implements OnInit, OnDestroy
-{
+export class SidenavComponent implements OnInit, OnDestroy {
     @Output() onMenuToggle = new EventEmitter();
 
     watcher: Subscription;
     activeMediaQuery: boolean;
 
-    navigation: {
+    navigation: Array<{
         icon: string;
         link: string;
         name: string;
         separator: boolean;
-    }[];
+    }>;
 
     /**
      * Create a new SidenavComponent object
@@ -46,8 +45,7 @@ export class SidenavComponent implements OnInit, OnDestroy
      *
      * @return void
      */
-    ngOnInit()
-    {
+    ngOnInit() {
         this.navigation = [
             { icon: 'home', link: '/dashboard', name: 'Shared.Navigation.Dashboard', separator: false },
             { icon: 'thumb_up', link: '/vote', name: 'Shared.Navigation.Votes', separator: false },

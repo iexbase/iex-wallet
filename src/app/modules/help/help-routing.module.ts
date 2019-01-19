@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {RouterModule, Routes} from "@angular/router";
-import {NgModule} from "@angular/core";
-import {HelpPage} from "./pages/help/help.page";
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {HelpPage} from './pages/help/help.page';
 
 const helpRoutes: Routes = [
     { path: '', component: HelpPage }

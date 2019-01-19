@@ -1,12 +1,12 @@
-import { Injectable } from "@angular/core";
-import { LocalStorage } from "ngx-webstorage";
+import { Injectable } from '@angular/core';
+import { LocalStorage } from 'ngx-webstorage';
 
 // Lodash
 import * as _ from 'lodash';
 
 // Providers
-import { Logger } from "@providers/logger/logger";
-import { AddressProvider } from "@providers/address/address";
+import { AddressProvider } from '@providers/address/address';
+import { Logger } from '@providers/logger/logger';
 
 
 // Interface Address Book
@@ -17,8 +17,7 @@ export interface AddressBookInterface {
 }
 
 @Injectable()
-export class AddressBookProvider
-{
+export class AddressBookProvider {
     /**
      * Contact Store
      *
@@ -45,18 +44,19 @@ export class AddressBookProvider
      *
      * @returns {AddressBookInterface} list contracts
      */
-    public getAddressBooks(): Promise<any>
-    {
+    public getAddressBooks(): Promise<any> {
         return new Promise((resolve) => {
             // In case storage is empty, create an empty array
-            if(!this.addressBook)
-                this.addressBook = JSON.stringify({}); // default data
+            if (!this.addressBook) {
+                this.addressBook = JSON.stringify({});
+            } // default data
 
-            if(this.addressBook && _.isString(this.addressBook))
+            if (this.addressBook && _.isString(this.addressBook)) {
                 return resolve(JSON.parse(this.addressBook) || {});
+            }
 
             return resolve({}); // As addition
-        })
+        });
     }
 
     /**
@@ -66,13 +66,12 @@ export class AddressBookProvider
      *
      * @returns {Promise} find details
      */
-    public get(address: string): Promise<AddressBookInterface>
-    {
-        return new Promise((resolve, reject) =>
-        {
+    public get(address: string): Promise<AddressBookInterface> {
+        return new Promise((resolve, reject) => {
             this.getAddressBooks().then(ab => {
-                if (ab && ab[address])
+                if (ab && ab[address]) {
                     return resolve(ab[address]);
+                }
 
             }).catch(() => {
                 return reject();
@@ -86,19 +85,19 @@ export class AddressBookProvider
      * @param {AddressBookInterface} entry - data to add
      * @returns {Promise} details of the added contact
      */
-    public add(entry: AddressBookInterface): Promise<any>
-    {
-        return new Promise((resolve, reject) =>
-        {
+    public add(entry: AddressBookInterface): Promise<any> {
+        return new Promise((resolve, reject) => {
             // Validate TRON Address
-            if(!this.addressProvider.validateAddress(entry.address))
+            if (!this.addressProvider.validateAddress(entry.address)) {
                 return reject('Invalid Tron address');
+            }
 
             // Check if the address exists in the contact list
             this.getAddressBooks()
                 .then(ab => {
-                    if(ab[entry.address])
+                    if (ab[entry.address]) {
                         return reject('Entry already exist');
+                    }
 
                     // Add a new address to the list
                     ab[entry.address] = entry;
@@ -115,13 +114,12 @@ export class AddressBookProvider
      * @param {AddressBookInterface} entry - data to add
      * @returns {Promise} details of the added contact
      */
-    public edit(entry: AddressBookInterface): Promise<any>
-    {
-        return new Promise((resolve, reject) =>
-        {
+    public edit(entry: AddressBookInterface): Promise<any> {
+        return new Promise((resolve, reject) => {
             // Validate TRON Address
-            if(!this.addressProvider.validateAddress(entry.address))
+            if (!this.addressProvider.validateAddress(entry.address)) {
                 return reject('Invalid Tron address');
+            }
 
             // Check if the address exists in the contact list
             this.getAddressBooks()
@@ -141,29 +139,30 @@ export class AddressBookProvider
      * @param {string} address - tron address
      * @returns {Promise} all contacts
      */
-    remove(address: string): Promise<AddressBookInterface[]>
-    {
+    remove(address: string): Promise<AddressBookInterface[]> {
         return new Promise((resolve, reject) => {
             // Validate Tron address
-            if(!this.addressProvider.validateAddress(address))
+            if (!this.addressProvider.validateAddress(address)) {
                 return reject('Invalid Tron address');
+            }
 
             this.getAddressBooks()
-                .then(ab =>
-                {
+                .then(ab => {
                     // Check if there are any contacts in the list.
-                    if(_.isEmpty(ab))
+                    if (_.isEmpty(ab)) {
                         return reject('Addressbook is empty');
+                    }
 
                     // Check if the address exists in the list
-                    if(!ab[address])
+                    if (!ab[address]) {
                         return reject('Entry does not exist');
+                    }
 
                     // Exclude remote address from list
                     delete ab[address];
 
                     this.addressBook = JSON.stringify(ab);
-                    return resolve(ab)
+                    return resolve(ab);
                 }).catch(err => {
                 return reject(err);
             });
@@ -175,8 +174,7 @@ export class AddressBookProvider
      *
      *  @returns {Promise} - return empty data
      */
-    public removeAll(): Promise<any>
-    {
+    public removeAll(): Promise<any> {
         return new Promise(() => {
             this.addressBook = JSON.stringify({});
         });

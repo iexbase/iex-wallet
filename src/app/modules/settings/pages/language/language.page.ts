@@ -5,17 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit} from '@angular/core';
 
-import {LanguageProvider} from "@providers/language/language";
+import {LanguageProvider} from '@providers/language/language';
 
 @Component({
     selector: 'language',
     templateUrl: './language.page.html',
     styleUrls: ['./language.page.scss'],
 })
-export class LanguagePage implements OnInit
-{
+export class LanguagePage implements OnInit {
     /**
      * Selected language
      *

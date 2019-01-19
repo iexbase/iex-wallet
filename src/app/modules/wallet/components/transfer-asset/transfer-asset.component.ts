@@ -5,32 +5,31 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Component, Inject, OnInit} from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from "@angular/material";
-import {LocalStorage} from "ngx-webstorage";
-import { Store } from "@ngrx/store";
+import {Component, Inject, OnInit} from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
+import { Store } from '@ngrx/store';
+import {LocalStorage} from 'ngx-webstorage';
 
-import * as _ from "lodash";
+import * as _ from 'lodash';
 
 // Redux
-import { AppState } from "@redux/index";
+import { AppState } from '@redux/index';
 
 // Providers
-import { AddressProvider } from "@providers/address/address";
-import { ConfigProvider } from "@providers/config/config";
-import { ElectronProvider } from "@providers/electron/electron";
-import { WalletProvider } from "@providers/wallet/wallet";
-import { RateProvider } from "@providers/rate/rate";
-import { FilterProvider } from "@providers/filter/filter";
-import {AddressBookProvider} from "@providers/address-book/address-book";
+import {AddressBookProvider} from '@providers/address-book/address-book';
+import { AddressProvider } from '@providers/address/address';
+import { ConfigProvider } from '@providers/config/config';
+import { ElectronProvider } from '@providers/electron/electron';
+import { FilterProvider } from '@providers/filter/filter';
+import { RateProvider } from '@providers/rate/rate';
+import { WalletProvider } from '@providers/wallet/wallet';
 
 @Component({
     selector: 'transfer-asset',
     templateUrl: './transfer-asset.component.html',
     styleUrls: ['./transfer-asset.component.scss'],
 })
-export class TransferAssetComponent implements OnInit
-{
+export class TransferAssetComponent implements OnInit {
     /**
      * Filtered tokens
      *
@@ -65,35 +64,35 @@ export class TransferAssetComponent implements OnInit
      *
      * @var any
      */
-    wallet:any = {};
+    wallet: any = {};
 
     /**
      * Transaction Confirmation Status
      *
      * @var boolean
      */
-    isConfirmed: boolean = false;
+    isConfirmed = false;
 
     /**
      * Button lock status
      *
      * @var boolean
      */
-    isButtonDisabled: boolean = false;
+    isButtonDisabled = false;
 
     /**
      * Transaction Successful Transaction Status
      *
      * @var boolean
      */
-    isSuccess:boolean = false;
+    isSuccess = false;
 
     /**
      * Status of receipt of transaction details
      *
      * @var boolean
      */
-    isTransactionInfo: boolean = false;
+    isTransactionInfo = false;
 
     /**
      * Alternative Unit code
@@ -108,10 +107,10 @@ export class TransferAssetComponent implements OnInit
      * @var any
      */
     fields: any = {
-        token: <string> '0',
-        toAddress: <string> '',
-        amount: <number> 0,
-        type: <string> 'TRX'
+        token: '0' as string,
+        toAddress: '' as string,
+        amount: 0 as number,
+        type: 'TRX' as string
     };
 
     /**
@@ -140,7 +139,7 @@ export class TransferAssetComponent implements OnInit
      *
      * @var any[]
      */
-    filteredListTokens: any = <any>[];
+    filteredListTokens: any = [] as any;
 
     /**
      * Search input (ngModel)
@@ -168,7 +167,7 @@ export class TransferAssetComponent implements OnInit
      *
      * @var number
      */
-    private unitToSun: number = 1e6;
+    private unitToSun = 1e6;
 
     /**
      * Convert sun to unit
@@ -233,8 +232,7 @@ export class TransferAssetComponent implements OnInit
      *
      * @return void
      */
-    ngOnInit()
-    {
+    ngOnInit() {
         this.wallet = this.data;
         this.fiatCode = this.data.altCode;
 
@@ -257,7 +255,7 @@ export class TransferAssetComponent implements OnInit
         });
 
         this.filteredListTokens = _.clone(this.listTokens);
-        //Getting a list of contact addresses
+        // Getting a list of contact addresses
         this.updateContactsList();
         this.onTokenChange();
     }
@@ -267,16 +265,14 @@ export class TransferAssetComponent implements OnInit
      *
      * @return void
      */
-    private updateContactsList(): void
-    {
+    private updateContactsList(): void {
         this.addressBookProvider.getAddressBooks()
             .then(ab => {
                 this.hasContacts = !_.isEmpty(ab);
-                if (!this.hasContacts) return;
+                if (!this.hasContacts) { return; }
 
-                let contactsList = [];
-                _.each(ab, (v, k: string) =>
-                {
+                const contactsList = [];
+                _.each(ab, (v, k: string) => {
                     contactsList.push({
                         name: _.isObject(v) ? v.name : v,
                         address: k,
@@ -295,7 +291,7 @@ export class TransferAssetComponent implements OnInit
      * @return void
      */
     onTokenChange(): void {
-        this.getTokenAmount()
+        this.getTokenAmount();
     }
 
     /**
@@ -305,7 +301,7 @@ export class TransferAssetComponent implements OnInit
      * @return void
      */
     chooseAddress(address: string): void {
-        if(!address) return null;
+        if (!address) { return null; }
         this.fields.toAddress = address;
     }
 
@@ -314,13 +310,12 @@ export class TransferAssetComponent implements OnInit
      *
      * @return void
      */
-    getTokenAmount(): void
-    {
-        let filter = this.listTokens.find(c =>
+    getTokenAmount(): void {
+        const filter = this.listTokens.find(c =>
             c.key == this.fields.token
         );
         this.tokenBalance = (filter.name.toLowerCase() == 'trx' ? filter.value / 1e6 : filter.value);
-        this.tokenName = (filter.name.toLowerCase() == 'trx' ? 'TRX' : filter.name)
+        this.tokenName = (filter.name.toLowerCase() == 'trx' ? 'TRX' : filter.name);
     }
 
     /**
@@ -328,16 +323,15 @@ export class TransferAssetComponent implements OnInit
      *
      * @return void
      */
-    public sendMax(): void
-    {
+    public sendMax(): void {
         this.useSendMax = true;
-        let item = this.listTokens.find(c =>
+        const item = this.listTokens.find(c =>
                 c.key == this.fields.token
             );
 
-        if(this.fields.token == '0') {
+        if (this.fields.token == '0') {
             this.fields.amount = item.value / 1e6;
-            this.processAmount('trx')
+            this.processAmount('trx');
         } else {
             this.fields.amount = item.value;
         }
@@ -349,20 +343,19 @@ export class TransferAssetComponent implements OnInit
      * @param {string} type - type amount
      * @return void
      */
-    processAmount(type: string): void
-    {
-        if(this.fields.token != '0') return;
-        if(type == 'trx') {
+    processAmount(type: string): void {
+        if (this.fields.token != '0') { return; }
+        if (type == 'trx') {
             return this.alternativeAmount = (
                 this.fiatCode.toLowerCase() != 'btc' ?
                     this.filterProvider.formatFiatAmount(
                         this.toFiat(this.fields.amount)
-                    ):
+                    ) :
                     this.toFiat(this.fields.amount)
             );
         }
 
-        this.fields.amount = this.fromFiat(this.alternativeAmount)
+        this.fields.amount = this.fromFiat(this.alternativeAmount);
     }
 
     /**
@@ -371,9 +364,8 @@ export class TransferAssetComponent implements OnInit
      * @param {number} val - amount
      * @returns {number}
      */
-    private toFiat(val: number): number
-    {
-        if (!this.rateProvider.getRate(this.fiatCode)) return undefined;
+    private toFiat(val: number): number {
+        if (!this.rateProvider.getRate(this.fiatCode)) { return undefined; }
 
         return parseFloat(
             this.rateProvider
@@ -391,8 +383,7 @@ export class TransferAssetComponent implements OnInit
      * @param {number} val - amount
      * @returns {number}
      */
-    private fromFiat(val): number
-    {
+    private fromFiat(val): number {
         return parseFloat((
                 this.rateProvider.fromFiat(val, this.fiatCode) * this.sunToUnit
             ).toFixed(5)
@@ -404,8 +395,7 @@ export class TransferAssetComponent implements OnInit
      *
      * @return void
      */
-    public goToConfirm(): void
-    {
+    public goToConfirm(): void {
         this.isButtonDisabled = true;
         this.walletProvider.createTx({
             tokenID: this.fields.token,
@@ -432,7 +422,7 @@ export class TransferAssetComponent implements OnInit
                 duration: 2000, panelClass: ['snackbar-theme-dialog', 'custom-width'],
             });
             this.isButtonDisabled = false;
-        })
+        });
     }
 
     /**
@@ -440,8 +430,7 @@ export class TransferAssetComponent implements OnInit
      *
      * @return void
      */
-    public submitTransaction()
-    {
+    public submitTransaction() {
         this.isButtonDisabled = true;
         this.isConfirmed = true;
         this.walletProvider.signTx(this.signedTransaction)
@@ -449,16 +438,16 @@ export class TransferAssetComponent implements OnInit
                 this.walletProvider.broadcastTx(signed)
                     .then(broadcast => {
                         // If the transaction is successfully sent to the network
-                        if(broadcast.result == true) {
+                        if (broadcast.result == true) {
                             this.walletProvider.fullUpdateAccount(this.wallet.address).then(() => {});
 
                             this.isButtonDisabled = false;
                             this.isSuccess = true;
                             setTimeout(() => {
                                 this.isTransactionInfo = true;
-                            }, 2000)
+                            }, 2000);
                         }
-                    })
+                    });
             })
             .catch(err => {
                 this.snackBar.open(err, null, {
@@ -473,15 +462,14 @@ export class TransferAssetComponent implements OnInit
      * @param {any} event - event search
      * @return void
      */
-    public getItems(event: any): void
-    {
+    public getItems(event: any): void {
         // set val to the value of the searchbar
-        let val = event.target.value;
+        const val = event.target.value;
 
         // if the value is an empty string don't filter the items
         if (val && val.trim() != '') {
-            let result = _.filter(this.listTokens, item => {
-                let name = item['name'];
+            const result = _.filter(this.listTokens, item => {
+                const name = item['name'];
                 return _.includes(name.toLowerCase(), val.toLowerCase());
             });
             this.filteredListTokens = result;
@@ -506,12 +494,11 @@ export class TransferAssetComponent implements OnInit
      *
      * @return boolean
      */
-    enabledSend(): boolean
-    {
+    enabledSend(): boolean {
         return this.isButtonDisabled == true ||
             !this.addressProvider.validateAddress(this.fields.toAddress) ||
             this.fields.amount == 0 ||
-            this.fields.amount > this.tokenBalance
+            this.fields.amount > this.tokenBalance;
     }
 
     /**

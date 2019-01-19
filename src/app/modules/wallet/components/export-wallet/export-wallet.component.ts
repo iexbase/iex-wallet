@@ -5,29 +5,28 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Component, Inject, OnInit } from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from "@angular/material";
-import { Store } from "@ngrx/store";
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
+import { Store } from '@ngrx/store';
 
 // Redux
-import { AppState } from "@redux/index";
+import { AppState } from '@redux/index';
 
 // Providers
-import { BackupProvider } from "@providers/backup/backup";
-import { ElectronProvider } from "@providers/electron/electron";
-import { Logger } from "@providers/logger/logger";
-import { WalletProvider } from "@providers/wallet/wallet";
+import { BackupProvider } from '@providers/backup/backup';
+import { ElectronProvider } from '@providers/electron/electron';
+import { Logger } from '@providers/logger/logger';
+import { WalletProvider } from '@providers/wallet/wallet';
 
 @Component({
     selector: 'export-wallet',
     templateUrl: './export-wallet.component.html',
     styleUrls: ['./export-wallet.component.scss'],
 })
-export class ExportWalletComponent implements OnInit
-{
+export class ExportWalletComponent implements OnInit {
     public wallet;
     public password: string;
-    public isNotIncludePrivateKey: boolean = false;
+    public isNotIncludePrivateKey = false;
 
     /**
      * Object creation ExportWalletComponent
@@ -69,11 +68,10 @@ export class ExportWalletComponent implements OnInit
      *
      * @return void
      */
-    downloadJSON(): void
-    {
+    downloadJSON(): void {
         this.backup.walletDownload(this.walletProvider.password, {
             privateKey: (!this.isNotIncludePrivateKey)
-        }, this.data.address).then(() => {})
+        }, this.data.address).then(() => {});
     }
 
     /**
@@ -81,18 +79,16 @@ export class ExportWalletComponent implements OnInit
      *
      * @return void
      */
-    goToClipboard(): void
-    {
+    goToClipboard(): void {
         this.backup.walletBackup(this.walletProvider.password, {
             privateKey: (!this.isNotIncludePrivateKey)
-        }, this.data.address).then(result =>
-        {
+        }, this.data.address).then(result => {
             this.electron.writeToClipboard(JSON.stringify(result));
-            this.snackBar.open('Data copied', null,{
+            this.snackBar.open('Data copied', null, {
                 duration: 2000,
                 panelClass: ['snackbar-theme-dialog']
-            })
-        })
+            });
+        });
     }
 
     /**
@@ -101,6 +97,6 @@ export class ExportWalletComponent implements OnInit
      * @return void
      */
     onClose(): void {
-        this.dialogRef.close()
+        this.dialogRef.close();
     }
 }

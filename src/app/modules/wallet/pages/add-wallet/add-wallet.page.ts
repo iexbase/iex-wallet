@@ -5,18 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit} from '@angular/core';
 
 // Providers
-import { Logger } from "@providers/logger/logger";
+import { Logger } from '@providers/logger/logger';
 
 @Component({
     selector: 'add-wallet-page',
     templateUrl: './add-wallet.page.html',
     styleUrls: ['./add-wallet.page.scss'],
 })
-export class AddWalletPage implements OnInit
-{
+export class AddWalletPage implements OnInit {
     /**
      * Create a new AddWalletPage object
      *

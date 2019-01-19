@@ -9,15 +9,15 @@ import {
     Component,
     OnInit,
     ViewChild
-} from "@angular/core";
-import { MatAccordion } from "@angular/material";
-import { Store } from "@ngrx/store";
-import * as SkinActions from "@redux/skins/skins.actions";
-import { Update } from "@ngrx/entity";
-import * as fromSkin from "@redux/skins/skins.reducer";
+} from '@angular/core';
+import { MatAccordion } from '@angular/material';
+import { Update } from '@ngrx/entity';
+import { Store } from '@ngrx/store';
+import * as SkinActions from '@redux/skins/skins.actions';
+import * as fromSkin from '@redux/skins/skins.reducer';
 
 // Providers
-import {ConfigProvider} from "@providers/config/config";
+import {ConfigProvider} from '@providers/config/config';
 
 
 @Component({
@@ -25,8 +25,7 @@ import {ConfigProvider} from "@providers/config/config";
     templateUrl: './skins.page.html',
     styleUrls: ['./skins.page.scss'],
 })
-export class SkinsPage implements OnInit
-{
+export class SkinsPage implements OnInit {
     @ViewChild('skinsaccordion') myPanels: MatAccordion;
 
     /**
@@ -54,14 +53,14 @@ export class SkinsPage implements OnInit
         protected store: Store<fromSkin.State>,
     ) {
         this.skins = [{
-            name: "colors",
+            name: 'colors',
             themes: [
                 {'name': 'default', 'class': 'skin-default'},
                 {'name': 'barlow', 'class': 'skin-barlow'},
                 {'name': 'midnight', 'class': 'skin-midnight'}
             ]
         }, {
-            name: "textures",
+            name: 'textures',
             themes: [
                 {'name': 'Mosaic', 'class': 'skin-mosaic'},
                 {'name': 'Mamba', 'class': 'skin-mamba'},
@@ -74,7 +73,7 @@ export class SkinsPage implements OnInit
                 {'name': 'Dark Linen', 'class': 'skin-darklinen'}
             ]
         }, {
-            name: "themes",
+            name: 'themes',
             themes: [
                 {'name': 'Endless Space', 'class': 'skin-endless-space'},
                 {'name': 'Vessel', 'class': 'skin-vessel'},
@@ -89,7 +88,7 @@ export class SkinsPage implements OnInit
      * @return void
      */
     ngOnInit() {
-        this.selectedSkin = this.configProvider.get('skins.name')
+        this.selectedSkin = this.configProvider.get('skins.name');
     }
 
     /**
@@ -98,20 +97,19 @@ export class SkinsPage implements OnInit
      * @param {string} name - Skin name
      * @return void
      */
-    save(name: string)
-    {
+    save(name: string) {
         this.configProvider.set('skins.name', name);
         this.selectedSkin = name;
         const update: Update<any> = {
             id: 1,
             changes: {
-                name: name
+                name
             }
         };
 
         this.store.dispatch(
             new SkinActions.UpdateSkin({skin: update})
-        )
+        );
     }
 
     /**
@@ -121,7 +119,7 @@ export class SkinsPage implements OnInit
      * @return boolean
      */
     expandedOpen(group: string): boolean {
-        return this.configProvider.get('skins.settings.'+group) || false;
+        return this.configProvider.get('skins.settings.' + group) || false;
     }
 
     /**
@@ -131,7 +129,7 @@ export class SkinsPage implements OnInit
      * @return boolean
      */
     openExpansion(group: string) {
-        this.configProvider.set('skins.settings.'+group, true)
+        this.configProvider.set('skins.settings.' + group, true);
     }
 
     /**
@@ -141,6 +139,6 @@ export class SkinsPage implements OnInit
      * @return boolean
      */
     closeExpansion(group: string) {
-        this.configProvider.set('skins.settings.'+group, false)
+        this.configProvider.set('skins.settings.' + group, false);
     }
 }

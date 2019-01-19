@@ -11,15 +11,14 @@ import { Pipe, PipeTransform } from '@angular/core';
     name: 'urlToTitle',
     pure: false
 })
-export class UrlToTitlePipe implements PipeTransform
-{
+export class UrlToTitlePipe implements PipeTransform {
     constructor() {}
 
     transform(url: string) {
         let tempUrl = url.replace(/^(?:https?:\/\/)?(?:www\.)?/i, '');
         if (tempUrl.length > 35) {
-            tempUrl = `${tempUrl.slice(0, 28)}...`
+            tempUrl = `${tempUrl.slice(0, 28)}...`;
         }
-        return tempUrl
+        return tempUrl;
     }
 }

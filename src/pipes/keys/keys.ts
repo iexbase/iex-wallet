@@ -10,16 +10,15 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({
     name: 'keys'
 })
-export class KeysPipe implements PipeTransform
-{
+export class KeysPipe implements PipeTransform {
     /*
      * Example use
      *  Simple: *ngFor="let item of giftCards | keys"
      *	With an object with objects: *ngFor="let item of (itemsObject | keys : 'date') | orderBy : ['-order']"
      */
     transform(value, orderBy?: string) {
-        let keys = [];
-        for (let key in value) {
+        const keys = [];
+        for (const key in value) {
             keys.push({
                 key,
                 value: value[key],

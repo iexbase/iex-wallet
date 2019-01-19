@@ -5,21 +5,20 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Component, Inject, OnInit} from "@angular/core";
-import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from "@angular/material";
+import {Component, Inject, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from '@angular/material';
 
-import {SignedMessageComponent} from "../signed-message/signed-message.component";
+import {SignedMessageComponent} from '../signed-message/signed-message.component';
 
 // Providers
-import {WalletProvider} from "@providers/wallet/wallet";
+import {WalletProvider} from '@providers/wallet/wallet';
 
 @Component({
     selector: 'verify-message',
     templateUrl: './verify-message.component.html',
     styleUrls: ['./verify-message.component.scss'],
 })
-export class VerifyMessageComponent implements OnInit
-{
+export class VerifyMessageComponent implements OnInit {
     /**
      * Tron address
      *
@@ -46,14 +45,14 @@ export class VerifyMessageComponent implements OnInit
      *
      * @var boolean
      */
-    verifiedSignature:boolean = false;
+    verifiedSignature = false;
 
     /**
      * Status active button
      *
      * @var boolean
      */
-    isButton:boolean = false;
+    isButton = false;
 
     /**
      * Create a new PreferencesComponent object
@@ -86,8 +85,7 @@ export class VerifyMessageComponent implements OnInit
      *
      * @return void
      */
-    checkVerify(): void
-    {
+    checkVerify(): void {
         this.isButton = true;
         try {
             this.walletProvider.verifySignature({
@@ -103,8 +101,8 @@ export class VerifyMessageComponent implements OnInit
                 this.snackBar.open(err, null, {
                     duration: 2000, panelClass: ['snackbar-theme-dialog', 'custom-width'],
                 });
-            })
-        }catch (e) {
+            });
+        } catch (e) {
             this.verifiedSignature = false;
         }
     }
@@ -117,6 +115,6 @@ export class VerifyMessageComponent implements OnInit
     isDisabled(): boolean {
         return (
             (!this.verifySignature || !this.verifyMessage || !this.accountAddress)
-        )
+        );
     }
 }

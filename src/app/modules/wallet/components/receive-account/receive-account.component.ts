@@ -5,29 +5,28 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Component, Inject, OnInit} from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from "@angular/material";
+import {Component, Inject, OnInit} from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
 
 // env config
-import env from "../../../../../environments";
+import env from '../../../../../environments';
 
 // Providers
-import { ConfigProvider } from "@providers/config/config";
-import { ElectronProvider } from "@providers/electron/electron";
+import { ConfigProvider } from '@providers/config/config';
+import { ElectronProvider } from '@providers/electron/electron';
 
 @Component({
     selector: 'receive-account',
     templateUrl: './receive-account.component.html',
     styleUrls: ['./receive-account.component.scss'],
 })
-export class ReceiveAccountComponent implements OnInit
-{
+export class ReceiveAccountComponent implements OnInit {
     /**
      * Receive request
      *
      * @var boolean
      */
-    isGenerateRequest:boolean = false;
+    isGenerateRequest = false;
 
     /**
      * Current wallet id
@@ -53,10 +52,10 @@ export class ReceiveAccountComponent implements OnInit
      * @var any
      */
     fields = {
-        amount: <any> undefined,
-        data: <string> "",
-        token: <string> 'USD',
-        address: <string> null
+        amount: undefined as any,
+        data: '' as string,
+        token: 'USD' as string,
+        address: null as string
     };
 
     /**
@@ -114,8 +113,8 @@ export class ReceiveAccountComponent implements OnInit
      */
     emailAccount(): void {
         this.electron.openExternalLink(
-            'mailto:?subject=iEXWallet TRON Address&body=My iEXWallet TRON address is: '+ this.wallet.address
-        )
+            'mailto:?subject=iEXWallet TRON Address&body=My iEXWallet TRON address is: ' + this.wallet.address
+        );
     }
 
     /**

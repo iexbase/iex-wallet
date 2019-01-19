@@ -1,11 +1,10 @@
 
-import { FormControl } from "@angular/forms";
+import { FormControl } from '@angular/forms';
 
 // Providers
-import { AddressProvider } from "@providers/address/address";
+import { AddressProvider } from '@providers/address/address';
 
-export class AddressValidator
-{
+export class AddressValidator {
     /**
      * Static address provider
      *

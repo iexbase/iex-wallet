@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { RouterModule } from "@angular/router";
-import { NgModule } from "@angular/core";
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 // Modules
-import { VotePage } from "@modules/vote/pages/vote/vote.page";
+import { VotePage } from '@modules/vote/pages/vote/vote.page';
 
 @NgModule({
     imports: [RouterModule.forChild([

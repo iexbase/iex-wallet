@@ -5,13 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { NgModule } from "@angular/core";
-import { PERFECT_SCROLLBAR_CONFIG,
-    PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
-import { MasterpageComponent } from "./masterpage/masterpage.component";
-import { InfiniteScrollModule } from "ngx-infinite-scroll";
-import { MomentModule } from "ngx-moment";
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
     MatButtonModule,
     MatButtonToggleModule,
@@ -28,16 +25,19 @@ import {
     MatSidenavModule,
     MatTabsModule,
     MatToolbarModule
-} from "@angular/material";
-import { SidenavComponent } from "./masterpage/sidenav/sidenav.component";
-import { RouterModule } from "@angular/router";
-import { FlexLayoutModule } from "@angular/flex-layout";
-import { PipesModule } from "@pipes/pipes.module";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { TranslateModule } from "@ngx-translate/core";
-import { CommonModule } from "@angular/common";
-import { TimeAgoPipe } from "time-ago-pipe";
-import {DirectivesModule} from "@directives/directives.module";
+} from '@angular/material';
+import { RouterModule } from '@angular/router';
+import {DirectivesModule} from '@directives/directives.module';
+import { TranslateModule } from '@ngx-translate/core';
+import { PipesModule } from '@pipes/pipes.module';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { MomentModule } from 'ngx-moment';
+import { PERFECT_SCROLLBAR_CONFIG,
+    PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { TimeAgoPipe } from 'time-ago-pipe';
+import { MasterpageComponent } from './masterpage/masterpage.component';
+import { SidenavComponent } from './masterpage/sidenav/sidenav.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true

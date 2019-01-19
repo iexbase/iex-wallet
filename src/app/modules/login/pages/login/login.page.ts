@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
-import { WalletProvider } from "@providers/wallet/wallet";
-import {HttpClient} from "@angular/common/http";
-import {AppProvider} from "@providers/app/app";
-import {ElectronProvider} from "@providers/electron/electron";
+import {HttpClient} from '@angular/common/http';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import {AppProvider} from '@providers/app/app';
+import {ElectronProvider} from '@providers/electron/electron';
+import { WalletProvider } from '@providers/wallet/wallet';
 
 @Component({
     selector: 'login-page',
@@ -17,14 +17,13 @@ import {ElectronProvider} from "@providers/electron/electron";
     styleUrls: ['./login.page.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class LoginPage implements OnInit
-{
+export class LoginPage implements OnInit {
     /**
      * Update check
      *
      * @var boolean
      */
-    isUpdate: boolean = false;
+    isUpdate = false;
 
     /**
      * Create a new LoginPage object
@@ -48,12 +47,12 @@ export class LoginPage implements OnInit
      *
      * @return void
      */
-    ngOnInit()
-    {
+    ngOnInit() {
         this.httpClient.get('https://raw.githubusercontent.com/iexbase/iex-wallet/master/iex-wallet.json', {
         }).subscribe((resp: any) => {
-            if(this.appProvider.info.version < resp.version)
-                this.isUpdate = true
+            if (this.appProvider.info.version < resp.version) {
+                this.isUpdate = true;
+            }
         });
     }
 

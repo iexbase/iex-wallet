@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
 
-import { Store } from "@ngrx/store";
-import { AppState } from "@redux/index";
+import { Store } from '@ngrx/store';
+import { AppState } from '@redux/index';
 import * as WalletActions from '@redux/wallet/wallet.actions';
 
 // Providers
-import { BackupProvider } from "@providers/backup/backup";
+import { BackupProvider } from '@providers/backup/backup';
 import { Logger } from '@providers/logger/logger';
 import { WalletProvider } from '@providers/wallet/wallet';
 
@@ -22,8 +22,7 @@ import { WalletProvider } from '@providers/wallet/wallet';
     templateUrl: './create-wallet.component.html',
     styleUrls: ['./create-wallet.component.scss'],
 })
-export class CreateWalletComponent
-{
+export class CreateWalletComponent {
     /**
      * Account name
      *
@@ -36,7 +35,7 @@ export class CreateWalletComponent
      *
      *  @var boolean
      */
-    public isSuccess: boolean = false;
+    public isSuccess = false;
 
     /**
      * Created account data
@@ -67,14 +66,13 @@ export class CreateWalletComponent
      *
      * @return void
      */
-    public doCreateWallet(): void
-    {
+    public doCreateWallet(): void {
         this.walletProvider.createWallet({
             name: this.accountName
         }).then(wallet => {
             this.store.dispatch(
                 new WalletActions.AddWallet(
-                    { wallet: wallet }
+                    { wallet }
                 )
             );
             this.isSuccess = true;
@@ -96,9 +94,9 @@ export class CreateWalletComponent
      *  @param {any} options - Additions options
      *  @return void
      */
-    onDownload(options:any): void {
+    onDownload(options: any): void {
         this.backupProvider.walletDownload(
             this.walletProvider.password, {}, options.address
-        ).then(() => {})
+        ).then(() => {});
     }
 }

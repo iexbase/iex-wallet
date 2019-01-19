@@ -5,19 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Component} from "@angular/core";
+import {Component} from '@angular/core';
 
 // Providers
-import { ElectronProvider } from "@providers/electron/electron";
-import { AppProvider } from "@providers/app/app";
+import { AppProvider } from '@providers/app/app';
+import { ElectronProvider } from '@providers/electron/electron';
 
 @Component({
     selector: 'help-page',
     templateUrl: './help.page.html',
     styleUrls: ['./help.page.scss'],
 })
-export class HelpPage
-{
+export class HelpPage {
     /**
      * Create a new HelpPage object
      *
@@ -37,6 +36,6 @@ export class HelpPage
      * @return boolean
      */
     openExternalLink(url: string): boolean {
-        return this.electronProvider.openExternalLink(url)
+        return this.electronProvider.openExternalLink(url);
     }
 }

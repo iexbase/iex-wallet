@@ -5,28 +5,27 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Component, OnInit } from "@angular/core";
-import { MatSnackBar } from "@angular/material";
+import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 
-import { Store } from "@ngrx/store";
+import { Store } from '@ngrx/store';
 
 // Redux
-import * as WalletActions from "@redux/wallet/wallet.actions";
-import { AppState } from "@redux/index";
+import { AppState } from '@redux/index';
+import * as WalletActions from '@redux/wallet/wallet.actions';
 
 
 // Providers
-import { Logger } from "@providers/logger/logger";
-import { WalletProvider } from "@providers/wallet/wallet";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { Logger } from '@providers/logger/logger';
+import { WalletProvider } from '@providers/wallet/wallet';
 
 @Component({
     selector: 'import-wallet',
     templateUrl: './import-wallet.component.html',
     styleUrls: ['./import-wallet.component.scss'],
 })
-export class ImportWalletComponent implements OnInit
-{
+export class ImportWalletComponent implements OnInit {
     /**
      * Wallet Import Fields
      *
@@ -39,7 +38,7 @@ export class ImportWalletComponent implements OnInit
      *
      *  @var boolean
      */
-    public isSuccess: boolean = false;
+    public isSuccess = false;
 
     /**
      * Configuration animate lottie
@@ -77,8 +76,7 @@ export class ImportWalletComponent implements OnInit
      *
      * @return void
      */
-    ngOnInit(): void
-    {
+    ngOnInit(): void {
         this.importForm = this.fb.group({
             name: [null],
             privateKey: [null, Validators.compose([
@@ -94,20 +92,19 @@ export class ImportWalletComponent implements OnInit
      *
      * @return void
      */
-    doImportWallet(): void
-    {
+    doImportWallet(): void {
         this.walletProvider.importWallet(this.importForm.value)
             .then(wallet => {
                 // Add to dispatcher
                 this.store.dispatch(
-                    new WalletActions.AddWallet({ wallet: wallet })
+                    new WalletActions.AddWallet({ wallet })
                 );
                 // After the addition, we do a full update.
                 this.walletProvider.fullUpdateAccount(wallet.address).then(() => {});
                 this.isSuccess = true;
             })
             .catch(err => {
-                this.snackBar.open(err,null, {
+                this.snackBar.open(err, null, {
                     duration: 3000,
                     panelClass: ['snackbar-theme-dialog']
                 });

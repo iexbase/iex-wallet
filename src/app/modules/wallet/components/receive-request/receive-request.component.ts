@@ -5,15 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Component, Input } from "@angular/core";
+import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'receive-request',
     templateUrl: './receive-request.component.html',
     styleUrls: ['./receive-request.component.scss'],
 })
-export class ReceiveRequestComponent
-{
+export class ReceiveRequestComponent {
     /**
      * Obtained parameters for generating generation QRCode
      *

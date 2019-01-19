@@ -1,11 +1,11 @@
-import { Directive, Inject } from "@angular/core";
-import { DOCUMENT} from "@angular/common";
-import { MatSnackBar } from "@angular/material";
-import { TranslateService } from "@ngx-translate/core";
+import { DOCUMENT} from '@angular/common';
+import { Directive, Inject } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
+import { TranslateService } from '@ngx-translate/core';
 
 // Providers
-import { ClipboardProvider } from "@providers/clipboard/clipboard";
-import { Logger } from "@providers/logger/logger";
+import { ClipboardProvider } from '@providers/clipboard/clipboard';
+import { Logger } from '@providers/logger/logger';
 
 @Directive({
     selector: '[copy-to-clipboard]', // Attribute selector
@@ -14,8 +14,7 @@ import { Logger } from "@providers/logger/logger";
         '(click)': 'copy()'
     }
 })
-export class CopyToClipboard
-{
+export class CopyToClipboard {
     public value: string;
     public hideToast: boolean;
     private dom: Document;
@@ -46,9 +45,8 @@ export class CopyToClipboard
      *
      * @return void
      */
-    private copyBrowser(): void
-    {
-        let textarea:any = this.dom.createElement('textarea');
+    private copyBrowser(): void {
+        const textarea: any = this.dom.createElement('textarea');
         this.dom.body.appendChild(textarea);
         textarea.value = this.value;
         textarea.select();
@@ -61,22 +59,21 @@ export class CopyToClipboard
      *
      * Copied to clipboard
      */
-    public copy(): void
-    {
-        if (!this.value) return;
+    public copy(): void {
+        if (!this.value) { return; }
         try {
             this.clipboardProvider.copy(this.value);
         } catch (e) {
-            if (e) this.logger.warn(e.message);
+            if (e) { this.logger.warn(e.message); }
             this.copyBrowser();
         }
-        if (this.hideToast) return;
+        if (this.hideToast) { return; }
 
         // notification
         this.snackBar.open(
             this.translate.instant('copyToClipboard'), null, {
             duration: 2000,
             panelClass: ['snackbar-theme-dialog']
-        })
+        });
     }
 }

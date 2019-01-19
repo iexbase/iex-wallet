@@ -5,21 +5,21 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Component, Inject, OnInit } from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from "@angular/material";
-import { Store } from "@ngrx/store";
-import { Update } from "@ngrx/entity";
-import { LocalStorage } from "ngx-webstorage";
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
+import { Update } from '@ngrx/entity';
+import { Store } from '@ngrx/store';
+import { LocalStorage } from 'ngx-webstorage';
 
-import * as _ from "lodash";
+import * as _ from 'lodash';
 
 // Redux
-import * as WalletActions from "@redux/wallet/wallet.actions";
-import * as fromWallet from "@redux/wallet/wallet.reducer";
+import * as WalletActions from '@redux/wallet/wallet.actions';
+import * as fromWallet from '@redux/wallet/wallet.reducer';
 
 
 // Providers
-import { WalletProvider } from "@providers/wallet/wallet";
+import { WalletProvider } from '@providers/wallet/wallet';
 
 // Interface colors
 export interface TronColorInterface {
@@ -34,8 +34,7 @@ export interface TronColorInterface {
     templateUrl: './preferences.component.html',
     styleUrls: ['./preferences.component.scss'],
 })
-export class PreferencesComponent implements OnInit
-{
+export class PreferencesComponent implements OnInit {
     /**
      * Filtered tokens
      *
@@ -133,14 +132,13 @@ export class PreferencesComponent implements OnInit
      *
      * @return void
      */
-    ngOnInit()
-    {
+    ngOnInit() {
         // Account Information
-        let getWallet = this.walletProvider.getWallet(this.data.address);
+        const getWallet = this.walletProvider.getWallet(this.data.address);
         this.walletName = getWallet.name;
         this.balanceHidden = getWallet.balanceHidden;
 
-        let tokens = getWallet.tokens || [];
+        const tokens = getWallet.tokens || [];
         this.listTokens = tokens.filter(({ name }) => name !== 'TRX')
             .map(({ key, name }) => ({ id: key, name }));
 
@@ -160,12 +158,10 @@ export class PreferencesComponent implements OnInit
      *
      * @return void
      */
-    nameChanged(): void
-    {
+    nameChanged(): void {
         this.walletProvider.updateWallet(this.data.address, {
             name: this.walletName
-        }).then(result =>
-        {
+        }).then(result => {
             // Parameters for update
             const update: Update<any> = {
                 id: result.id,
@@ -192,12 +188,10 @@ export class PreferencesComponent implements OnInit
      *
      * @return void
      */
-    colorChanged(): void
-    {
+    colorChanged(): void {
         this.walletProvider.updateWallet(this.data.address, {
             color: this.colorIndex.class
-        }).then(result =>
-        {
+        }).then(result => {
             // Parameters for update
             const update: Update<any> = {
                 id: result.id,
@@ -215,11 +209,9 @@ export class PreferencesComponent implements OnInit
      *
      * @return void
      */
-    toggleBalanceHidden(): void
-    {
+    toggleBalanceHidden(): void {
         this.walletProvider.toggleHideBalanceFlag(this.data.address, this.balanceHidden)
-            .then(wallet =>
-            {
+            .then(wallet => {
                 // Parameters for update
                 const update: Update<any> = {
                     id: wallet.id,
@@ -231,7 +223,7 @@ export class PreferencesComponent implements OnInit
                 this.store.dispatch(
                     new WalletActions.UpdateWallet({ wallet: update})
                 );
-            })
+            });
     }
 
     /**
@@ -240,7 +232,7 @@ export class PreferencesComponent implements OnInit
      * @return boolean
      */
     disabledButton(): boolean {
-        return (!this.walletName && this.walletName.length == 0)
+        return (!this.walletName && this.walletName.length == 0);
     }
 
     /**

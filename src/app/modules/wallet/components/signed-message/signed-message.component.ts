@@ -5,25 +5,24 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Component, Inject, OnInit } from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 // Providers
-import {WalletProvider} from "@providers/wallet/wallet";
+import {WalletProvider} from '@providers/wallet/wallet';
 
 @Component({
     selector: 'signed-message',
     templateUrl: './signed-message.component.html',
     styleUrls: ['./signed-message.component.scss'],
 })
-export class SignedMessageComponent implements OnInit
-{
+export class SignedMessageComponent implements OnInit {
     /**
      * Source text
      *
      * @var string
      */
-    messageSigned:string;
+    messageSigned: string;
 
     /**
      * Signed message
@@ -69,7 +68,7 @@ export class SignedMessageComponent implements OnInit
      * @return void
      */
     encryptedMessage(): void {
-        this.handler()
+        this.handler();
     }
 
     /**
@@ -77,15 +76,14 @@ export class SignedMessageComponent implements OnInit
      *
      * @return void
      */
-    handler(): void
-    {
-        if(this.messageSigned && this.messageSigned.startsWith(' ', 1) == false &&  this.messageSigned.length > 1) {
+    handler(): void {
+        if (this.messageSigned && this.messageSigned.startsWith(' ', 1) == false &&  this.messageSigned.length > 1) {
             this.walletProvider.signTx(this.messageSigned).then(result => {
-                this.encryptedData = result
+                this.encryptedData = result;
             });
             return;
         }
-        this.encryptedData = ''
+        this.encryptedData = '';
     }
 
     /**

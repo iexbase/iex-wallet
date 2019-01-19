@@ -12,19 +12,18 @@ import { Pipe, PipeTransform } from '@angular/core';
     name: 'sunToUnit',
     pure: false
 })
-export class SunToUnitPipe implements PipeTransform
-{
+export class SunToUnitPipe implements PipeTransform {
     constructor(
         private decimalPipe: DecimalPipe) {
     }
 
     transform(amount: number, coin?: string) {
 
-        if (!coin)
+        if (!coin) {
             return this.decimalPipe.transform(amount / 1e6, '1.2-6');
-        else {
+        } else {
             if (coin.toUpperCase() == 'TRX') {
-                return this.decimalPipe.transform(amount / 1e6, '1.2-6')
+                return this.decimalPipe.transform(amount / 1e6, '1.2-6');
             } else {
                 return amount;
             }

@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { RouterModule } from "@angular/router";
-import { NgModule } from "@angular/core";
-import { LoginPage } from "@modules/login/pages/login/login.page";
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { LoginPage } from '@modules/login/pages/login/login.page';
 
 @NgModule({
     imports: [RouterModule.forChild([

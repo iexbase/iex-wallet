@@ -9,11 +9,10 @@ import { Injectable } from '@angular/core';
 import { timer } from 'rxjs';
 
 // Providers
-import {Logger} from "@providers/logger/logger";
+import {Logger} from '@providers/logger/logger';
 
 @Injectable()
-export class DownloadProvider
-{
+export class DownloadProvider {
     /**
      * Object creation DownloadProvider
      *
@@ -23,13 +22,12 @@ export class DownloadProvider
         this.logger.debug('DownloadProvider initialized');
     }
 
-    public download(ew, fileName: string): Promise<any>
-    {
+    public download(ew, fileName: string): Promise<any> {
         return new Promise(async resolve => {
             await timer(1000).toPromise();
-            let a: HTMLAnchorElement = document.createElement('a') as HTMLAnchorElement;
-            let blob = this.newBlob(ew, 'text/plain;charset=utf-8');
-            let url = window.URL.createObjectURL(blob);
+            const a: HTMLAnchorElement = document.createElement('a') as HTMLAnchorElement;
+            const blob = this.newBlob(ew, 'text/plain;charset=utf-8');
+            const url = window.URL.createObjectURL(blob);
 
             document.body.appendChild(a);
 
@@ -42,8 +40,7 @@ export class DownloadProvider
         });
     }
 
-    public newBlob(data, datatype: string)
-    {
+    public newBlob(data, datatype: string) {
         let out;
         try {
             this.logger.debug('Trying to blob data');

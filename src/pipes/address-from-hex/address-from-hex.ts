@@ -5,22 +5,21 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Pipe, PipeTransform} from "@angular/core";
+import {Pipe, PipeTransform} from '@angular/core';
 
-import {AddressProvider} from "@providers/address/address";
+import {AddressProvider} from '@providers/address/address';
 
 @Pipe({
     name: 'addressFromHex',
     pure: false
 })
-export class AddressFromHexPipe implements PipeTransform
-{
+export class AddressFromHexPipe implements PipeTransform {
     constructor(
         private addressProvider: AddressProvider,
     ) {
 
     }
     transform(address: string) {
-        return this.addressProvider.toBase58(address)
+        return this.addressProvider.toBase58(address);
     }
 }

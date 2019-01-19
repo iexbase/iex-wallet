@@ -6,18 +6,18 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { Logger } from "@providers/logger/logger";
-import {Store} from "@ngrx/store";
-import * as os from "os";
+import {Store} from '@ngrx/store';
+import { Logger } from '@providers/logger/logger';
+import * as os from 'os';
 
 // redux
-import {AppState} from "@redux/index";
-import * as SkinActions from "@redux/skins/skins.actions";
+import {AppState} from '@redux/index';
+import * as SkinActions from '@redux/skins/skins.actions';
 
 // Providers
-import { AppProvider } from "@providers/app/app";
-import { ConfigProvider } from "@providers/config/config";
-import { TronProvider } from "@providers/tron/tron";
+import { AppProvider } from '@providers/app/app';
+import { ConfigProvider } from '@providers/config/config';
+import { TronProvider } from '@providers/tron/tron';
 
 // As the handleOpenURL handler kicks in before the App is started,
 // declare the handler function at the top of app.component.ts (outside the class definition)
@@ -94,7 +94,7 @@ export class AppComponent implements OnInit {
                 } catch (error) {
                     message = 'Unknown error';
                 }
-                this.logger.error(message)
+                this.logger.error(message);
             });
     }
 

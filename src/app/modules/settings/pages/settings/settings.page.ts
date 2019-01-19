@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Component, OnInit } from "@angular/core";
-import { LocalStorage } from "ngx-webstorage";
-import { Router } from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { LocalStorage } from 'ngx-webstorage';
 
 
 // Interface navigation
@@ -23,15 +23,14 @@ export interface NavigationInterface {
     styleUrls: ['./settings.page.scss'],
 })
 
-export class SettingsPage implements OnInit
-{
+export class SettingsPage implements OnInit {
     /**
      *  Active page in settings
      *
      *  @var string
      */
     @LocalStorage()
-    private settingsView:string;
+    private settingsView: string;
 
     /**
      *  Navigation Settings
@@ -56,8 +55,7 @@ export class SettingsPage implements OnInit
      *
      * @return void
      */
-    ngOnInit(): void
-    {
+    ngOnInit(): void {
         this.navs = [{
             link: '/settings/alt-currency',
             name: 'Settings.Navigation.Currency',
@@ -92,6 +90,6 @@ export class SettingsPage implements OnInit
      * @return void
      */
     onClick(name: string): void {
-        this.settingsView = name.split('/',3)[2]
+        this.settingsView = name.split('/', 3)[2];
     }
 }

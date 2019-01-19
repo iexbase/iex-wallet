@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { NgModule } from "@angular/core";
-import { SharedModule } from "@shared/shared.module";
-import { FlexLayoutModule } from "@angular/flex-layout";
-import { LottieAnimationViewModule } from "ng-lottie";
+import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { SharedModule } from '@shared/shared.module';
+import { LottieAnimationViewModule } from 'ng-lottie';
 
 
 // Modules
-import { VotePage } from "@modules/vote/pages/vote/vote.page";
-import { VoteRoutingModule } from "@modules/vote/vote-routing.module";
-import { VoteDetailComponent } from "@modules/vote/components/vote-detail/vote-detail.component";
-import { VoteConfirmComponent } from "@modules/vote/components/vote-confirm/vote-confirm.component";
+import { VoteConfirmComponent } from '@modules/vote/components/vote-confirm/vote-confirm.component';
+import { VoteDetailComponent } from '@modules/vote/components/vote-detail/vote-detail.component';
+import { VotePage } from '@modules/vote/pages/vote/vote.page';
+import { VoteRoutingModule } from '@modules/vote/vote-routing.module';
 
 @NgModule({
     imports: [

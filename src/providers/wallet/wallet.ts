@@ -355,7 +355,7 @@ export class WalletProvider {
             }).then(walletClient => {
                 const showOpts = _.clone(walletClient);
                 // Delete keys
-                if (showOpts.privateKey) delete showOpts['privateKey'];
+                if (showOpts.privateKey) { delete showOpts['privateKey']; }
 
                 this.logger.debug('Creating Wallet:', showOpts.id);
                 return resolve(showOpts);

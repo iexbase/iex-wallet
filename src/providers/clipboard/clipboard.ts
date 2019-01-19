@@ -1,10 +1,9 @@
-import {Logger} from "@providers/logger/logger";
-import {ElectronProvider} from "@providers/electron/electron";
-import {Injectable} from "@angular/core";
+import {Injectable} from '@angular/core';
+import {ElectronProvider} from '@providers/electron/electron';
+import {Logger} from '@providers/logger/logger';
 
 @Injectable()
-export class ClipboardProvider
-{
+export class ClipboardProvider {
     /**
      * Check that the action is made from the platform "Electron"
      *
@@ -42,8 +41,7 @@ export class ClipboardProvider
      *
      * @return void
      */
-    public copy(value: string): void
-    {
+    public copy(value: string): void {
         if (this.isElectron) {
             this.electronProvider.writeToClipboard(value);
         } else {
@@ -58,8 +56,7 @@ export class ClipboardProvider
      *
      * @returns {Promise}
      */
-    private async paste(): Promise<any>
-    {
+    private async paste(): Promise<any> {
         if (this.isElectron) {
             return this.electronProvider.readFromClipboard();
         } else {
@@ -75,8 +72,7 @@ export class ClipboardProvider
      *
      * @return void
      */
-    public clear(): void
-    {
+    public clear(): void {
         if (this.isElectron) {
             this.electronProvider.clearClipboard();
         }

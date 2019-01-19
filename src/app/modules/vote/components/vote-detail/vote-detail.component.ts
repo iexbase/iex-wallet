@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Component, Inject, OnInit } from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from "@angular/material";
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
 
 // Providers
-import { VoteProvider } from "@providers/vote/vote";
-import { WalletProvider } from "@providers/wallet/wallet";
+import { VoteProvider } from '@providers/vote/vote';
+import { WalletProvider } from '@providers/wallet/wallet';
 
 // Objects of votes
-const voteOptions:any = {
+const voteOptions: any = {
     1: 1,
     5: 5,
     10: 10,
@@ -29,8 +29,7 @@ const voteOptions:any = {
     templateUrl: './vote-detail.component.html',
     styleUrls: ['./vote-detail.component.scss'],
 })
-export class VoteDetailComponent implements OnInit
-{
+export class VoteDetailComponent implements OnInit {
     /**
      * Animation configure (Lottie)
      *
@@ -43,14 +42,14 @@ export class VoteDetailComponent implements OnInit
      *
      * @var any
      */
-    wallet:any = {};
+    wallet: any = {};
 
     /**
      * Received data from the main source
      *
      * @var any
      */
-    vote:any = {};
+    vote: any = {};
 
     /**
      * Voice List (for button)
@@ -64,21 +63,21 @@ export class VoteDetailComponent implements OnInit
      *
      * @var number
      */
-    totalRemaining: number = 0;
+    totalRemaining = 0;
 
     /**
      * Indicated votes
      *
      * @var number
      */
-    amountToVote: number = 0;
+    amountToVote = 0;
 
     /**
      *  Transaction Confirmation Status
      *
      * @var number
      */
-    isConfirmed:boolean = false;
+    isConfirmed = false;
 
     /**
      * Details for confirmation
@@ -99,14 +98,14 @@ export class VoteDetailComponent implements OnInit
      *
      * @var boolean
      */
-    isSuccess: boolean = false;
+    isSuccess = false;
 
     /**
      * Button lock status
      *
      * @var boolean
      */
-    isButtonDisabled: boolean = false;
+    isButtonDisabled = false;
 
     /**
      * Create a new VoteDetailComponent object
@@ -139,8 +138,7 @@ export class VoteDetailComponent implements OnInit
      *
      * @return void
      */
-    ngOnInit()
-    {
+    ngOnInit() {
         // Putting an array for the voices button
         this.voteButton = Object.keys(voteOptions).map((voteKey) => {
             return voteOptions[voteKey];
@@ -182,8 +180,7 @@ export class VoteDetailComponent implements OnInit
     /**
      * Create vote transaction
      */
-    createVote(): void
-    {
+    createVote(): void {
         this.voteProvider.createVoteTx({
             srAddress: this.vote.address,
             voteCount: this.amountToVote
@@ -209,7 +206,7 @@ export class VoteDetailComponent implements OnInit
                 });
                 this.isButtonDisabled = false;
                 this.isConfirmed = false;
-            })
+            });
     }
 
     /**
@@ -217,18 +214,15 @@ export class VoteDetailComponent implements OnInit
      *
      * @return void
      */
-    submitTransaction(): void
-    {
+    submitTransaction(): void {
         this.isButtonDisabled = true;
         this.isConfirmed = true;
 
         this.walletProvider.signTx(this.signedTransaction)
-            .then(signed =>
-            {
-                if('signature' in signed) {
-                    this.walletProvider.broadcastTx(signed).then(broadcast =>
-                    {
-                        if(broadcast.result == true) {
+            .then(signed => {
+                if ('signature' in signed) {
+                    this.walletProvider.broadcastTx(signed).then(broadcast => {
+                        if (broadcast.result == true) {
                             // Global update data
                             this.walletProvider.fullUpdateAccount(this.wallet.address).then(() => {});
 
@@ -236,10 +230,10 @@ export class VoteDetailComponent implements OnInit
                             this.isSuccess = true;
                             // After a few seconds, automatically close the window
                             setTimeout(() => {
-                                this.onClose()
+                                this.onClose();
                             }, 2000);
                         }
-                    })
+                    });
                 }
             })
             .catch(err => {
@@ -255,6 +249,6 @@ export class VoteDetailComponent implements OnInit
      * @return void
      * */
     onClose(): void {
-        this.dialogRef.close()
+        this.dialogRef.close();
     }
 }

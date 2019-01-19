@@ -6,14 +6,13 @@
  */
 
 import { Pipe, PipeTransform } from '@angular/core';
-import {TronProvider} from "@providers/tron/tron";
+import {TronProvider} from '@providers/tron/tron';
 
 @Pipe({
     name: 'toSun',
     pure: false
 })
-export class ToSunPipe implements PipeTransform
-{
+export class ToSunPipe implements PipeTransform {
     /**
      * Create a new ToSunPipe object
      *

@@ -15,8 +15,7 @@ import * as _ from 'lodash';
  */
 
 @Injectable()
-export class ReplaceParametersProvider
-{
+export class ReplaceParametersProvider {
     /**
      * Object creation ReplaceParametersProvider
      */
@@ -24,10 +23,9 @@ export class ReplaceParametersProvider
 
     }
 
-    public replace(stringToReplace: string, params: any[]): string
-    {
-        let processedParams = [];
-        for (let key in params) {
+    public replace(stringToReplace: string, params: any[]): string {
+        const processedParams = [];
+        for (const key in params) {
             processedParams.push({ key, value: params[key] });
         }
 

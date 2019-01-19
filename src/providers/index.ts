@@ -7,10 +7,10 @@
 
 export { AddressProvider } from '@providers/address/address';
 export { AppProvider } from '@providers/app/app';
-export { AddressBookProvider } from '@providers/address-book/address-book'
+export { AddressBookProvider } from '@providers/address-book/address-book';
 export { BackupProvider } from '@providers/backup/backup';
 export { ConfigProvider } from '@providers/config/config';
-export { DomProvider } from '@providers/dom/dom'
+export { DomProvider } from '@providers/dom/dom';
 export { DownloadProvider } from '@providers/download/download';
 export { ElectronProvider } from '@providers/electron/electron';
 export { ExternalLinkProvider } from '@providers/external-link/external-link';
@@ -20,7 +20,7 @@ export { Logger } from '@providers/logger/logger';
 export { RateProvider } from '@providers/rate/rate';
 export { ReplaceParametersProvider } from '@providers/replace-parameters/replace-parameters';
 export { TimeProvider } from '@providers/time/time';
-export { TronProvider } from '@providers/tron/tron'
+export { TronProvider } from '@providers/tron/tron';
 export { WalletProvider } from '@providers/wallet/wallet';
-export { ClipboardProvider } from '@providers/clipboard/clipboard'
-export { VoteProvider } from '@providers/vote/vote'
+export { ClipboardProvider } from '@providers/clipboard/clipboard';
+export { VoteProvider } from '@providers/vote/vote';

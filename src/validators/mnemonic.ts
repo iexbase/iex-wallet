@@ -1,11 +1,10 @@
 
-import { FormControl } from "@angular/forms";
+import { FormControl } from '@angular/forms';
 
 // Providers
-import { WalletProvider } from "@providers/wallet/wallet";
+import { WalletProvider } from '@providers/wallet/wallet';
 
-export class MnemonicValidator
-{
+export class MnemonicValidator {
     /**
      * Static wallet provider
      *

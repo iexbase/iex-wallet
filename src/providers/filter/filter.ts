@@ -12,8 +12,7 @@ import { Injectable } from '@angular/core';
 import { Logger } from '@providers/logger/logger';
 
 @Injectable()
-export class FilterProvider
-{
+export class FilterProvider {
     public formats;
 
     /**
@@ -34,8 +33,7 @@ export class FilterProvider
         };
     }
 
-    formatFiatAmount(amount: number)
-    {
+    formatFiatAmount(amount: number) {
         let value;
         let sep;
         let group;
@@ -44,12 +42,11 @@ export class FilterProvider
         let finalValue;
 
         value = this.decimalPipe.transform(amount);
-        if (!value) return 0;
+        if (!value) { return 0; }
         sep = value.indexOf(this.formats.DECIMAL_SEP);
         group = value.indexOf(this.formats.GROUP_SEP);
 
-        if (amount >= 0)
-        {
+        if (amount >= 0) {
             if (group > 0) {
                 if (sep < 0) {
                     return value;

@@ -5,21 +5,20 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Component, OnInit} from "@angular/core";
-import {AddressBookProvider} from "@providers/address-book/address-book";
+import {Component, OnInit} from '@angular/core';
+import {AddressBookProvider} from '@providers/address-book/address-book';
 
+import {MatDialog, MatSnackBar} from '@angular/material';
+import {AddContactComponent} from '@modules/settings/components/add-contact/add-contact.component';
+import {EditContactComponent} from '@modules/settings/components/edit-contact/edit-contact.component';
 import * as _ from 'lodash';
-import {MatDialog, MatSnackBar} from "@angular/material";
-import {AddContactComponent} from "@modules/settings/components/add-contact/add-contact.component";
-import {EditContactComponent} from "@modules/settings/components/edit-contact/edit-contact.component";
 
 @Component({
     selector: 'address-book-page',
     templateUrl: './address-book.page.html',
     styleUrls: ['./address-book.page.scss'],
 })
-export class AddressBookPage implements OnInit
-{
+export class AddressBookPage implements OnInit {
     /**
      * Address Book List
      *
@@ -70,14 +69,13 @@ export class AddressBookPage implements OnInit
      *
      * @return void
      */
-    private initAddressbook(): void
-    {
+    private initAddressbook(): void {
         this.addressbookProvider
             .getAddressBooks()
             .then(addressBook => {
                 this.isEmptyList = _.isEmpty(addressBook);
 
-                let contacts: object[] = [];
+                const contacts: object[] = [];
                 _.each(addressBook, (contact, k: string) => {
                     contacts.push({
                         name: _.isObject(contact) ? contact.name : contact,
@@ -95,8 +93,7 @@ export class AddressBookPage implements OnInit
      *
      * @return void
      */
-    addEntry(): void
-    {
+    addEntry(): void {
         const dialogRef = this.dialog.open(AddContactComponent, {
             width: '650px',
             panelClass: ['dialog-background']
@@ -112,8 +109,7 @@ export class AddressBookPage implements OnInit
      *
      * @return void
      */
-    editEntry(item: any): void
-    {
+    editEntry(item: any): void {
         const dialogRef = this.dialog.open(EditContactComponent, {
             width: '650px',
             panelClass: ['dialog-background'],
@@ -131,14 +127,13 @@ export class AddressBookPage implements OnInit
      * @param {string} address - Tron address
      * @return void
      */
-    deleteEntry(address: string): void
-    {
+    deleteEntry(address: string): void {
         this.addressbookProvider.remove(address).then(() => {
             this.snackBar.open('Address Successfully deleted', null, {
                 duration: 2000,
                 panelClass: ['snackbar-theme-dialog']
             });
-            this.initAddressbook()
+            this.initAddressbook();
         });
     }
 
@@ -148,15 +143,14 @@ export class AddressBookPage implements OnInit
      * @param {any} event - event search
      * @return void
      */
-    public getItems(event: any): void
-    {
+    public getItems(event: any): void {
         // set val to the value of the searchbar
-        let val = event.target.value;
+        const val = event.target.value;
 
         // if the value is an empty string don't filter the items
         if (val && val.trim() != '') {
-            let result = _.filter(this.addressbook, item => {
-                let name = item['name'];
+            const result = _.filter(this.addressbook, item => {
+                const name = item['name'];
                 return _.includes(name.toLowerCase(), val.toLowerCase());
             });
             this.filteredAddressbook = result;

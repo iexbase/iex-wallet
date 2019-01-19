@@ -2,14 +2,13 @@ import { AfterViewInit, Directive, ElementRef, OnDestroy } from '@angular/core';
 import { timer } from 'rxjs';
 
 // Providers
-import { ExternalLinkProvider } from "@providers/external-link/external-link";
+import { ExternalLinkProvider } from '@providers/external-link/external-link';
 
 
 @Directive({
     selector: '[externalize-links]'
 })
-export class ExternalizeLinks implements AfterViewInit, OnDestroy
-{
+export class ExternalizeLinks implements AfterViewInit, OnDestroy {
     /**
      * Create a new ExternalizeLinks object
      *

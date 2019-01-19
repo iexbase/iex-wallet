@@ -5,28 +5,27 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Component, OnInit} from "@angular/core";
-import { Router } from "@angular/router";
-import { Store } from "@ngrx/store";
+import {Component, OnInit} from '@angular/core';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 
 // Redux
-import { AppState } from "@redux/index";
-import * as WalletActions from "@redux/wallet/wallet.actions";
+import { AppState } from '@redux/index';
+import * as WalletActions from '@redux/wallet/wallet.actions';
 
 // Providers
-import { WalletProvider } from "@providers/wallet/wallet";
-import {BehaviorSubject} from "rxjs";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {MnemonicValidator} from "@validators/mnemonic";
-import {MatSnackBar} from "@angular/material";
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MatSnackBar} from '@angular/material';
+import { WalletProvider } from '@providers/wallet/wallet';
+import {MnemonicValidator} from '@validators/mnemonic';
+import {BehaviorSubject} from 'rxjs';
 
 @Component({
     selector: 'import-mnemonic',
     templateUrl: './import-mnemonic.component.html',
     styleUrls: ['./import-mnemonic.component.scss'],
 })
-export class ImportMnemonicComponent implements OnInit
-{
+export class ImportMnemonicComponent implements OnInit {
     /**
      * Wallet Mnemonic Fields
      *
@@ -39,14 +38,14 @@ export class ImportMnemonicComponent implements OnInit
      *
      * @var boolean
      */
-    public nextToSelectWallet: boolean = false;
+    public nextToSelectWallet = false;
 
     /**
      * Test button click
      *
      * @var boolean
      */
-    isDisabledButton: boolean = false;
+    isDisabledButton = false;
 
     /**
      * List available addresses
@@ -79,8 +78,7 @@ export class ImportMnemonicComponent implements OnInit
      *
      * @return void
      */
-    ngOnInit(): void
-    {
+    ngOnInit(): void {
         this.importForm = this.fb.group({
             name: [null],
             privateKey: [null],
@@ -97,14 +95,13 @@ export class ImportMnemonicComponent implements OnInit
      *
      * @return void
      */
-    goToImport(): void
-    {
+    goToImport(): void {
         this.nextToSelectWallet = true;
         for (let i = 0; i < 10; i++) {
             const address = this.walletProvider.addByMnemonic(
                 this.importForm.controls['mnemonic'].value, i
             );
-            this.addresses.next(this.addresses.getValue().concat([address]))
+            this.addresses.next(this.addresses.getValue().concat([address]));
         }
     }
 
@@ -113,8 +110,7 @@ export class ImportMnemonicComponent implements OnInit
      *
      *  @param {any} walletId - Wallet details
      */
-    finishImport(walletId: any)
-    {
+    finishImport(walletId: any) {
         this.isDisabledButton = true;
         // Filling in the remaining positions
         this.importForm.controls['privateKey'].setValue(walletId.privateKey);
@@ -124,7 +120,7 @@ export class ImportMnemonicComponent implements OnInit
             .then(wallet => {
                 // Add to dispatcher
                 this.store.dispatch(
-                    new WalletActions.AddWallet({wallet: wallet})
+                    new WalletActions.AddWallet({wallet})
                 );
 
                 // After the addition, we do a full update.
@@ -132,7 +128,7 @@ export class ImportMnemonicComponent implements OnInit
                 this.router.navigate(['/', 'wallet']);
             })
             .catch(err => {
-                this.snackBar.open(err,null, {
+                this.snackBar.open(err, null, {
                     duration: 3000,
                     panelClass: ['snackbar-theme-dialog']
                 });

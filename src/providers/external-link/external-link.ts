@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 
 // Providers
-import { Logger } from "@providers/logger/logger";
-import { ElectronProvider } from "@providers/electron/electron";
+import { ElectronProvider } from '@providers/electron/electron';
+import { Logger } from '@providers/logger/logger';
 
 @Injectable()
-export class ExternalLinkProvider
-{
+export class ExternalLinkProvider {
     /**
      * Object creation ExternalLinkProvider
      *
@@ -26,9 +25,8 @@ export class ExternalLinkProvider
      * @param {string} url - link
      * @return void
      */
-    public open(url: string): void
-    {
-        let old = (window as any).handleOpenURL;
+    public open(url: string): void {
+        const old = (window as any).handleOpenURL;
 
         (window as any).handleOpenURL = url => {
             // Ignore external URLs
@@ -39,8 +37,7 @@ export class ExternalLinkProvider
         this.restoreHandleOpenURL(old);
     }
 
-    private restoreHandleOpenURL(old: string): void
-    {
+    private restoreHandleOpenURL(old: string): void {
         setTimeout(() => {
             (window as any).handleOpenURL = old;
         }, 500);

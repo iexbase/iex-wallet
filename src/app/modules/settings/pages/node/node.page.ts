@@ -5,24 +5,23 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Component, OnInit } from "@angular/core";
-import { MatDialog, MatSnackBar } from "@angular/material";
+import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatSnackBar } from '@angular/material';
 
-import * as _ from "lodash";
+import * as _ from 'lodash';
 
 // modules
-import { AddNodeComponent } from "@modules/settings/components/add-node/add-node.component";
+import { AddNodeComponent } from '@modules/settings/components/add-node/add-node.component';
 
 // Providers
-import { TronProvider } from "@providers/tron/tron";
+import { TronProvider } from '@providers/tron/tron';
 
 @Component({
     selector: 'node-page',
     templateUrl: './node.page.html',
     styleUrls: ['./node.page.scss'],
 })
-export class NodePage implements OnInit
-{
+export class NodePage implements OnInit {
     /**
      * Get a list of nodes
      *
@@ -42,7 +41,7 @@ export class NodePage implements OnInit
      *
      * @var boolean
      */
-    public isEmptyList: boolean = false;
+    public isEmptyList = false;
 
     /**
      *  Object creation NodePage
@@ -65,7 +64,7 @@ export class NodePage implements OnInit
      * @return void
      */
     ngOnInit() {
-        this.initNodeClient()
+        this.initNodeClient();
     }
 
     /**
@@ -73,14 +72,12 @@ export class NodePage implements OnInit
      *
      * @return void
      */
-    private initNodeClient(): void
-    {
+    private initNodeClient(): void {
         this.tronProvider
             .getNodes()
             .then(n => {
-                let nodes: object[] = [];
-                _.each(n, (node, k: string) =>
-                {
+                const nodes: object[] = [];
+                _.each(n, (node, k: string) => {
                     nodes.push({
                         name: _.isObject(node) ? node.name : node,
                         fullNode: _.isObject(node) ? node.fullNode : node,
@@ -103,8 +100,7 @@ export class NodePage implements OnInit
      * @param {string} nodeId - ID node
      * @return void
      */
-    deleteNode(nodeId: string): void
-    {
+    deleteNode(nodeId: string): void {
         this.tronProvider.removeNode(nodeId)
             .then(() => {
                 this.initNodeClient();
@@ -130,15 +126,14 @@ export class NodePage implements OnInit
      *
      * @return void
      */
-    addNode(): void
-    {
+    addNode(): void {
         const dialogRef = this.dialog.open(AddNodeComponent, {
             width: '650px',
             panelClass: ['dialog-background']
         });
 
         dialogRef.afterClosed().subscribe(() => {
-            this.initNodeClient()
+            this.initNodeClient();
         });
     }
 
@@ -148,15 +143,14 @@ export class NodePage implements OnInit
      * @param {any} event - event search
      * @return void
      */
-    public getItems(event: any): void
-    {
+    public getItems(event: any): void {
         // set val to the value of the searchbar
-        let val = event.target.value;
+        const val = event.target.value;
 
         // if the value is an empty string don't filter the items
         if (val && val.trim() != '') {
-            let result = _.filter(this.nodes, item => {
-                let name = item['name'];
+            const result = _.filter(this.nodes, item => {
+                const name = item['name'];
                 return _.includes(name.toLowerCase(), val.toLowerCase());
             });
             this.filteredNodes = result;

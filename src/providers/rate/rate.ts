@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
 
-import env from "../../environments";
+import env from '../../environments';
 
 // Providers
 import { Logger } from '@providers/logger/logger';
@@ -23,8 +23,7 @@ export interface RateInterface {
 }
 
 @Injectable()
-export class RateProvider
-{
+export class RateProvider {
     /**
      * Array where the list of courses received is stored
      *
@@ -58,7 +57,7 @@ export class RateProvider
      *
      * @var boolean
      */
-    private ratesTrxAvailable: boolean = false;
+    private ratesTrxAvailable = false;
 
     /**
      * List of available alternative currencies
@@ -110,18 +109,17 @@ export class RateProvider
      *
      * @return Promise
      */
-    public updateRatesTrx(): Promise<any>
-    {
+    public updateRatesTrx(): Promise<any> {
         return new Promise((resolve, reject) => {
             this.getTrx()
                 .then(dataTRX => {
                     this.rates = dataTRX;
                     _.each(dataTRX, (rate, code) => {
                         this.alternatives.map((maps) => {
-                            if(maps.isoCode === code) {
-                                maps.rate = rate
+                            if (maps.isoCode === code) {
+                                maps.rate = rate;
                             }
-                        })
+                        });
                     });
 
                     this.ratesTrxAvailable = true;
@@ -130,7 +128,7 @@ export class RateProvider
                     this.logger.error(errorTRX);
                     reject(errorTRX);
             });
-        })
+        });
     }
 
     /**
@@ -181,7 +179,7 @@ export class RateProvider
      * @return number
      */
     public toFiat(sun: number, code: string): number {
-        if (!this.isTrxAvailable()) return null;
+        if (!this.isTrxAvailable()) { return null; }
         return sun * this.SUN_TO_TRX * this.getRate(code);
     }
 
@@ -193,7 +191,7 @@ export class RateProvider
      * @return number
      */
     public fromFiat(amount: number, code: string): number {
-        if (!this.isTrxAvailable()) return null;
+        if (!this.isTrxAvailable()) { return null; }
         return (amount / this.getRate(code)) * this.TRX_TO_SUN;
     }
 
@@ -203,9 +201,8 @@ export class RateProvider
      * @param sort - sorting
      * @return any[]
      */
-    public listAlternatives(sort: boolean): any[]
-    {
-        let alternatives = _.map(this.getAlternatives(), (item: any) => {
+    public listAlternatives(sort: boolean): any[] {
+        const alternatives = _.map(this.getAlternatives(), (item: any) => {
             return {
                 name: item.name,
                 isoCode: item.isoCode,
@@ -226,10 +223,9 @@ export class RateProvider
      *
      * @return Promise
      */
-    public whenRatesAvailable(): Promise<any>
-    {
+    public whenRatesAvailable(): Promise<any> {
         return new Promise(resolve => {
-            if(this.ratesTrxAvailable) {
+            if (this.ratesTrxAvailable) {
                 resolve();
             } else {
                 this.updateRatesTrx().then(() => {

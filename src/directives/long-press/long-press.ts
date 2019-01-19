@@ -1,25 +1,24 @@
 import {Directive, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output} from '@angular/core';
 
+import {interval} from 'rxjs';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import {interval} from "rxjs";
 
 import 'rxjs/add/observable/interval';
-import 'rxjs/add/operator/takeUntil';
+import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switch';
-import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/repeat';
+import 'rxjs/add/operator/switch';
+import 'rxjs/add/operator/takeUntil';
 
 
 @Directive({
     selector: '[longPress]'
 })
-export class LongPress implements OnInit, OnDestroy
-{
+export class LongPress implements OnInit, OnDestroy {
     @Input()
-    public longPress: number = 500;
+    public longPress = 500;
     @Output()
     public onRelease: EventEmitter<MouseEvent> = new EventEmitter();
 

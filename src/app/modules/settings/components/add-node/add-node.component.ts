@@ -5,23 +5,22 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MatDialogRef, MatSnackBar } from "@angular/material";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MatSnackBar } from '@angular/material';
 
 // Modules
-import { NodePage } from "@modules/settings/pages/node/node.page";
+import { NodePage } from '@modules/settings/pages/node/node.page';
 
 // Providers
-import { TronProvider } from "@providers/tron/tron";
+import { TronProvider } from '@providers/tron/tron';
 
 @Component({
     selector: 'add-node',
     templateUrl: './add-node.component.html',
     styleUrls: ['./add-node.component.scss'],
 })
-export class AddNodeComponent implements OnInit
-{
+export class AddNodeComponent implements OnInit {
     /**
      * Create a form group
      *
@@ -51,8 +50,7 @@ export class AddNodeComponent implements OnInit
      *
      * @return void
      */
-    ngOnInit()
-    {
+    ngOnInit() {
         // configure
         this.nodeAdd = this.formBuilder.group({
             name: [
@@ -85,15 +83,14 @@ export class AddNodeComponent implements OnInit
      *
      * @return void
      */
-    save(): void
-    {
+    save(): void {
         this.tron.addNode(this.nodeAdd.value).then(() => {
-            this.onClose()
+            this.onClose();
         }).catch(err => {
             this.snackBar.open(err, null, {
                 duration: 2000,
                 panelClass: ['snackbar-theme-dialog']
-            })
+            });
         });
     }
 
@@ -103,6 +100,6 @@ export class AddNodeComponent implements OnInit
      * @return void
      */
     onClose(): void {
-        this.dialogRef.close()
+        this.dialogRef.close();
     }
 }

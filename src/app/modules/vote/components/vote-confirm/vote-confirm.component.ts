@@ -5,15 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Component, Input } from "@angular/core";
+import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'vote-confirm',
     templateUrl: './vote-confirm.component.html',
     styleUrls: ['./vote-confirm.component.scss'],
 })
-export class VoteConfirmComponent
-{
+export class VoteConfirmComponent {
     /**
      * Transaction Details
      *

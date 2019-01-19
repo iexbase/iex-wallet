@@ -5,22 +5,21 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Component, OnInit} from "@angular/core";
-import {LocalStorage} from "ngx-webstorage";
+import {Component, OnInit} from '@angular/core';
 import * as _ from 'lodash';
+import {LocalStorage} from 'ngx-webstorage';
 
 // Providers
 import { ConfigProvider } from '@providers/config/config';
+import { Logger } from '@providers/logger/logger';
 import { RateProvider } from '@providers/rate/rate';
-import { Logger } from "@providers/logger/logger";
 
 @Component({
     selector: 'alt-currency',
     templateUrl: './alt-currency.page.html',
     styleUrls: ['./alt-currency.page.scss'],
 })
-export class AltCurrencyPage implements OnInit
-{
+export class AltCurrencyPage implements OnInit {
     /**
      * Frequently used alternative currencies
      *
@@ -93,15 +92,14 @@ export class AltCurrencyPage implements OnInit
      *
      * @return void
      */
-    ngOnInit()
-    {
+    ngOnInit() {
         // Get all available currencies
         this.rate
             .whenRatesAvailable()
             .then(() => {
                 this.completeAlternativeList = this.rate.listAlternatives(true);
-                let idx = _.keyBy(this.unusedCurrencyList, 'isoCode');
-                let idx2 = _.keyBy(this.lastUsedAltCurrencyList, 'isoCode');
+                const idx = _.keyBy(this.unusedCurrencyList, 'isoCode');
+                const idx2 = _.keyBy(this.lastUsedAltCurrencyList, 'isoCode');
 
                 this.completeAlternativeList = _.reject(
                     this.completeAlternativeList,
@@ -142,15 +140,14 @@ export class AltCurrencyPage implements OnInit
      * @param {any} newAltCurrency - New currency options
      * @return void
      */
-    private saveLastUsed(newAltCurrency): void
-    {
+    private saveLastUsed(newAltCurrency): void {
         this.lastUsedAltCurrencyList.unshift(newAltCurrency);
         this.lastUsedAltCurrencyList = _.uniqBy(
             this.lastUsedAltCurrencyList,
             'isoCode'
         );
         this.lastUsedAltCurrencyList = this.lastUsedAltCurrencyList.slice(0, 3);
-        this.lastUsedAltCurrency = JSON.stringify(this.lastUsedAltCurrencyList)
+        this.lastUsedAltCurrency = JSON.stringify(this.lastUsedAltCurrencyList);
     }
 
     /**
@@ -159,11 +156,10 @@ export class AltCurrencyPage implements OnInit
      * @param {string} searchedAltCurrency - Search text
      * @return void
      */
-    public findCurrency(searchedAltCurrency: string): void
-    {
+    public findCurrency(searchedAltCurrency: string): void {
         this.altCurrencyList = _.filter(this.completeAlternativeList, item => {
-            let val = item.name;
-            let val2 = item.symbol;
+            const val = item.name;
+            const val2 = item.symbol;
             return (
                 _.includes(val.toLowerCase(), searchedAltCurrency.toLowerCase()) ||
                 _.includes(val2.toLowerCase(), searchedAltCurrency.toLowerCase())

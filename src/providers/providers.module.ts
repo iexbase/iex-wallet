@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {NgModule} from "@angular/core";
 import { DecimalPipe } from '@angular/common';
+import {NgModule} from '@angular/core';
 
 import {
     AddressBookProvider,
@@ -28,7 +28,7 @@ import {
     TronProvider,
     VoteProvider,
     WalletProvider
-} from "../providers";
+} from '../providers';
 
 
 

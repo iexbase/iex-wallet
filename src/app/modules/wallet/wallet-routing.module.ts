@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {RouterModule, Routes} from "@angular/router";
-import {NgModule} from "@angular/core";
-import {AddWalletPage} from "./pages/add-wallet/add-wallet.page";
-import {WalletPage} from "./pages/wallet/wallet.page";
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {AddWalletPage} from './pages/add-wallet/add-wallet.page';
+import {WalletPage} from './pages/wallet/wallet.page';
 
 const routes: Routes = [{
     path: '',
     component: WalletPage
-},{
+}, {
     path: 'add-wallet',
     component: AddWalletPage
-},{
+}, {
     path: ':wallet',
     component: WalletPage
 }

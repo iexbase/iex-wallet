@@ -5,38 +5,37 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Component, HostListener, OnInit } from "@angular/core";
-import { LocalStorage } from "ngx-webstorage";
-import {Observable} from "rxjs";
-import {MatDialog, MatSnackBar} from "@angular/material";
-import { select, Store } from "@ngrx/store";
+import { Component, HostListener, OnInit } from '@angular/core';
+import {MatDialog, MatSnackBar} from '@angular/material';
+import { select, Store } from '@ngrx/store';
 import * as _ from 'lodash';
+import { LocalStorage } from 'ngx-webstorage';
+import {Observable} from 'rxjs';
 
 // Redux
-import * as fromWallet from "@redux/wallet/wallet.reducer";
+import * as fromWallet from '@redux/wallet/wallet.reducer';
 
 // Env
-import env from "../../../../../environments";
+import env from '../../../../../environments';
 
 // Providers
-import { WalletProvider } from "@providers/wallet/wallet";
-import { ConfigProvider } from "@providers/config/config";
-import { ElectronProvider } from "@providers/electron/electron";
-import {AddressBookProvider} from "@providers/address-book/address-book";
-import {Logger} from "@providers/logger/logger";
-import {TransferAssetComponent} from "@modules/wallet/components/transfer-asset/transfer-asset.component";
-import {ReceiveAccountComponent} from "@modules/wallet/components/receive-account/receive-account.component";
-import {FreezeBalanceComponent} from "@modules/wallet/components/freeze-balance/freeze-balance.component";
-import {Update} from "@ngrx/entity";
-import * as WalletActions from "@redux/wallet/wallet.actions";
+import {FreezeBalanceComponent} from '@modules/wallet/components/freeze-balance/freeze-balance.component';
+import {ReceiveAccountComponent} from '@modules/wallet/components/receive-account/receive-account.component';
+import {TransferAssetComponent} from '@modules/wallet/components/transfer-asset/transfer-asset.component';
+import {Update} from '@ngrx/entity';
+import {AddressBookProvider} from '@providers/address-book/address-book';
+import { ConfigProvider } from '@providers/config/config';
+import { ElectronProvider } from '@providers/electron/electron';
+import {Logger} from '@providers/logger/logger';
+import { WalletProvider } from '@providers/wallet/wallet';
+import * as WalletActions from '@redux/wallet/wallet.actions';
 
 @Component({
     selector: 'wallet-page',
     templateUrl: './wallet.page.html',
     styleUrls: ['./wallet.page.scss'],
 })
-export class WalletPage implements OnInit
-{
+export class WalletPage implements OnInit {
     /**
      * Selected account
      *
@@ -64,7 +63,7 @@ export class WalletPage implements OnInit
      *
      * @var boolean
      */
-    miniHeader: boolean  = false;
+    miniHeader  = false;
 
     /**
      * Wallet detail
@@ -72,7 +71,7 @@ export class WalletPage implements OnInit
      * @var any
      */
     wallet: any = {
-        color:<string> null
+        color: null as string
     };
 
     /**
@@ -115,21 +114,21 @@ export class WalletPage implements OnInit
      *
      * @var boolean
      */
-    isLoading:boolean = false;
+    isLoading = false;
 
     /**
      * Wallet opening
      *
      * @var boolean
      */
-    private primaryWalletOpening:boolean = false;
+    private primaryWalletOpening = false;
 
     /**
      * Status hover update
      *
      * @var boolean
      */
-    enabledOn: boolean = false;
+    enabledOn = false;
 
     /**
      * Create a new PreferencesComponent object
@@ -161,24 +160,22 @@ export class WalletPage implements OnInit
      *
      * @return void
      */
-    ngOnInit()
-    {
+    ngOnInit() {
         // List all accounts
         this.wallets = this.store.pipe(select(fromWallet.selectAllWallets));
         // Check the presence of the recorded wallet
         // and activates the cached wallet
-        this.activeAccount != null && this.wallets.subscribe((data: any[]) =>
-        {
+        this.activeAccount != null && this.wallets.subscribe((data: any[]) => {
             this.isEmptyWallet = _.isEmpty(data);
 
             // From the array, select the required
-            let selected = data.filter(
+            const selected = data.filter(
                 selected => selected.address == this.activeAccount);
 
             // If the array is not empty
-            if(selected[0] && !_.isEmpty(selected)) {
+            if (selected[0] && !_.isEmpty(selected)) {
                 (this.primaryWalletOpening == false ?
-                    this.openWalletDetails(selected[0], true):
+                    this.openWalletDetails(selected[0], true) :
                     this.wallet = selected[0]);
             }
         });
@@ -187,10 +184,10 @@ export class WalletPage implements OnInit
         this.addressBookProvider
             .getAddressBooks()
             .then(ab => {
-                this.addressbook = ab
+                this.addressbook = ab;
             }).catch(err => {
                 this.logger.error(err);
-        })
+        });
     }
 
     /**
@@ -199,9 +196,9 @@ export class WalletPage implements OnInit
      * @return void
      */
     @HostListener('scroll', ['$event'])
-    public onScroll($event:Event): void {
+    public onScroll($event: Event): void {
         this.miniHeader = $event.srcElement.scrollTop > 200;
-    };
+    }
 
     /**
      * Account change
@@ -210,12 +207,12 @@ export class WalletPage implements OnInit
      * @param {boolean} hidden - multi update
      * @return void
      */
-    openWalletDetails(item: any, hidden: boolean = false): void | boolean
-    {
+    openWalletDetails(item: any, hidden: boolean = false): void | boolean {
         this.wallet = item;
         // Exclude the possibility of updating the same wallet
-        if(this.wallet.address == this.activeAccount && hidden == false)
+        if (this.wallet.address == this.activeAccount && hidden == false) {
             return false;
+        }
 
         this.activeAccount = this.wallet.address;
         this.primaryWalletOpening = true;
@@ -228,7 +225,7 @@ export class WalletPage implements OnInit
 
         this.activeAccount = this.wallet.address;
         this.scrollDisabled = false;
-        this.getTransactions(this.currentPage, (items:any) => {
+        this.getTransactions(this.currentPage, (items: any) => {
             this.transactions = this.transactions.concat(items.res);
             this.isLoading = false;
         });
@@ -240,9 +237,9 @@ export class WalletPage implements OnInit
      * @return void
      */
     public onScrollDown(): void {
-        this.getTransactions(this.currentPage, (items:any) => {
+        this.getTransactions(this.currentPage, (items: any) => {
             this.transactions = this.transactions.concat(items.res);
-        })
+        });
     }
 
     /**
@@ -252,14 +249,13 @@ export class WalletPage implements OnInit
      * @param {any} saveResultsCallback - callback result
      * @return void
      */
-    private getTransactions(page: number = 0, saveResultsCallback: (items: any) => void)
-    {
+    private getTransactions(page: number = 0, saveResultsCallback: (items: any) => void) {
         this.walletProvider.getTxsFromServer({
             address: this.wallet.address,
             limit: 20,
             start: page,
             total: this.totalTransaction
-        }).then((data:any) => {
+        }).then((data: any) => {
                 this.currentPage += 20;
                 this.totalTransaction = data['total'];
 
@@ -272,8 +268,7 @@ export class WalletPage implements OnInit
      *
      * @return void
      */
-    toggleBalance()
-    {
+    toggleBalance() {
         this.wallet.balanceHidden = !this.wallet.balanceHidden;
         this.walletProvider.toggleHideBalanceFlag(this.wallet.address, this.wallet.balanceHidden)
             .then(wallet => {
@@ -286,7 +281,7 @@ export class WalletPage implements OnInit
                 this.store.dispatch(
                     new WalletActions.UpdateWallet({ wallet: update})
                 );
-            })
+            });
     }
 
     /**
@@ -294,13 +289,12 @@ export class WalletPage implements OnInit
      *
      *  @return void
      */
-    updateWallet(): void
-    {
+    updateWallet(): void {
         this.walletProvider.fullUpdateAccount(this.wallet.address).then(() => {
 
             this.currentPage = 0;
-            //this.transactions = [];
-            this.getTransactions(this.currentPage, (items:any) => {
+            // this.transactions = [];
+            this.getTransactions(this.currentPage, (items: any) => {
                 this.transactions = items.res;
                 this.isLoading = false;
             });
@@ -310,7 +304,7 @@ export class WalletPage implements OnInit
         this.snackBar.open('Account updated successfully', null, {
             duration: 2000,
             panelClass: ['snackbar-theme-dialog']
-        })
+        });
     }
 
     /**
@@ -318,8 +312,7 @@ export class WalletPage implements OnInit
      *
      * @return void
      */
-    transferModal(): void
-    {
+    transferModal(): void {
         const dialogRef = this.dialog.open(TransferAssetComponent, {
             width: '650px',
             panelClass: ['dialog-background', this.wallet.color],
@@ -337,8 +330,7 @@ export class WalletPage implements OnInit
      *
      * @return void
      */
-    receiveModal(): void
-    {
+    receiveModal(): void {
         const dialogRef = this.dialog.open(ReceiveAccountComponent, {
             width: '650px',
             panelClass: ['dialog-background', this.wallet.color],
@@ -353,8 +345,7 @@ export class WalletPage implements OnInit
      *
      * @return void
      */
-    freezeModal(): void
-    {
+    freezeModal(): void {
         const dialogRef = this.dialog.open(FreezeBalanceComponent, {
             width: '650px',
             panelClass: ['dialog-background', this.wallet.color],
@@ -369,6 +360,6 @@ export class WalletPage implements OnInit
      * @return boolean
      */
     openExternalLink(url: string, type: string): boolean {
-        return this.electronProvider.openExternalLink((`${env.explorer.url}/${type}/${url}`))
+        return this.electronProvider.openExternalLink((`${env.explorer.url}/${type}/${url}`));
     }
 }

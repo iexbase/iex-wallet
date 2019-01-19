@@ -5,17 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Component } from "@angular/core";
-import { MatDialogRef } from "@angular/material";
-import { TransferAssetComponent } from "../transfer-asset/transfer-asset.component";
+import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material';
+import { TransferAssetComponent } from '../transfer-asset/transfer-asset.component';
 
 @Component({
     selector: 'no-funds-trx',
     templateUrl: './no-funds-trx.component.html',
     styleUrls: ['./no-funds-trx.component.scss'],
 })
-export class NoFundsTrxComponent
-{
+export class NoFundsTrxComponent {
 
     /**
      * Object creation NoFundsTrxComponent

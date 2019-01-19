@@ -5,22 +5,21 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 
 // Providers
-import { AppProvider } from '@providers/app/app'
-import { ConfigProvider } from '@providers/config/config'
-import { DownloadProvider } from '@providers/download/download'
-import { Logger } from '@providers/logger/logger'
+import { AppProvider } from '@providers/app/app';
+import { ConfigProvider } from '@providers/config/config';
+import { DownloadProvider } from '@providers/download/download';
+import { Logger } from '@providers/logger/logger';
 
 @Component({
     selector: 'session-log',
     templateUrl: './session-log.page.html',
     styleUrls: ['./session-log.page.scss'],
 })
-export class SessionLogPage implements OnInit
-{
+export class SessionLogPage implements OnInit {
     /**
      * Available log types
      *
@@ -65,8 +64,7 @@ export class SessionLogPage implements OnInit
      *
      * @return void
      */
-    ngOnInit(): void
-    {
+    ngOnInit(): void {
         // Log level
         const selectedLevel = _.has(this.configProvider.getDefaults(), 'log.weight')
             ? this.logger.getWeight(this.configProvider.get('log.weight'))
@@ -103,8 +101,7 @@ export class SessionLogPage implements OnInit
      *
      * @return string
      */
-    private prepareSessionLogs(): string
-    {
+    private prepareSessionLogs(): string {
         let log: string =
             this.appProvider.info.nameCase +
             ' Session Logs.\nBe careful, this could contain sensitive private data\n\n';
@@ -131,7 +128,7 @@ export class SessionLogPage implements OnInit
     public download(): void {
         const logs = this.prepareSessionLogs();
         const now = new Date().toISOString();
-        const filename =  this.appProvider.info.nameCase+'-logs-' + now + '.txt';
+        const filename =  this.appProvider.info.nameCase + '-logs-' + now + '.txt';
         this.downloadProvider.download(logs, filename).then(() => {});
     }
 }
