@@ -12,16 +12,15 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 
 // Providers
-import { Logger } from '@providers/logger/logger';
 import { ConfigProvider } from '@providers/config/config';
+import { Logger } from '@providers/logger/logger';
 
 // Interface
-import {LanguageInterface} from "./language.interface";
+import {LanguageInterface} from './language.interface';
 
 
 @Injectable()
-export class LanguageProvider
-{
+export class LanguageProvider {
     /**
      * List of available languages
      *
@@ -67,9 +66,8 @@ export class LanguageProvider
      *
      *  @return void
      */
-    public load(): void
-    {
-        let lang = this.configProvider.get('wallet.settings.defaultLanguage');
+    public load(): void {
+        const lang = this.configProvider.get('wallet.settings.defaultLanguage');
         if (!_.isEmpty(lang)) {
             this.current = lang;
         } else {
@@ -89,8 +87,7 @@ export class LanguageProvider
      * @param {string} lang - new lang
      * @return void
      */
-    public set(lang: string): void
-    {
+    public set(lang: string): void {
         this.current = lang;
         this.translate.use(lang);
         moment.locale(lang);
@@ -99,7 +96,7 @@ export class LanguageProvider
         this.configProvider.set(
             'wallet.settings.defaultLanguage',
             lang
-        )
+        );
     }
 
     /**
@@ -108,8 +105,7 @@ export class LanguageProvider
      * @param {string} lang - language iso code
      * @return string
      */
-    public getName(lang: string): string
-    {
+    public getName(lang: string): string {
         return _.result(
             _.find(this.languages, {
                 isoCode: lang

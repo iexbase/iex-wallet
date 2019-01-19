@@ -16,11 +16,12 @@
         <span>{{'Settings.SessionLog.Empty' | translate}}</span>.
     </div>
 
-    <div *ngIf="filteredLogs && filteredLogs.length > 0">
-        <div class="log-items" *ngFor="let l of filteredLogs">
+    <div *ngIf="filteredLogs && filteredLogs.length > 0" fxLayout="column">
+        <div class="log-items" *ngFor="let l of filteredLogs" fxFlex>
             <div [ngClass]="{'energized': l.level=='warn', 'royal': l.level=='debug', 'info-color': l.level=='info', 'assertive': l.level=='error'}">
                 <span class="log-timestamp">{{l.timestamp  | amDateFormat:'MMM Do YYYY, h:mm:ss a'}}</span>
-                <span class="log-level">&nbsp; [{{l.level}}]</span>&nbsp; {{l.msg}}
+                <span class="log-level">&nbsp; [{{l.level}}]</span>&nbsp;
+                <span class="log-text">{{l.msg}}</span>
             </div>
         </div>
     </div>

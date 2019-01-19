@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Action} from "@ngrx/store";
-import {Update} from "@ngrx/entity";
+import {Update} from '@ngrx/entity';
+import {Action} from '@ngrx/store';
 
 export enum SkinActionTypes {
     ADD_SKIN = '[Skins] Add Skin',
@@ -37,5 +37,5 @@ export class DeleteSkin implements Action {
 export type SkinActionsUnion =
     | AddSkin
     | UpdateSkin
-    | DeleteSkin
+    | DeleteSkin;
 

@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Action} from "@ngrx/store";
-import {Update} from "@ngrx/entity";
+import {Update} from '@ngrx/entity';
+import {Action} from '@ngrx/store';
 
 export enum WalletActionTypes {
     LOAD_WALLETS = '[Wallet] Load Wallets',
@@ -60,7 +60,7 @@ export class UpdateWallet implements Action {
 export class UpdateWallets implements Action {
     readonly type = WalletActionTypes.UPDATE_WALLETS;
 
-    constructor(public payload: { wallets: Update<any>[] }) {}
+    constructor(public payload: { wallets: Array<Update<any>> }) {}
 }
 
 export class DeleteWallet implements Action {

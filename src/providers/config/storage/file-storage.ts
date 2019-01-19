@@ -5,12 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Inject} from "@angular/core";
+import {Inject} from '@angular/core';
 
 // StorageService to persist data in local json store
 // Class uses electron-store module from https://github.com/sindresorhus/electron-store
-export class FileStorage
-{
+export class FileStorage {
     /**
      * The electron store object.
      *
@@ -43,7 +42,7 @@ export class FileStorage
      */
     isElectron = () => {
         return window && window.process && window.process.type;
-    };
+    }
 
     /**
      * Get an item or defaultValue if the item does not exist.
@@ -59,12 +58,12 @@ export class FileStorage
      *
      *  @return void
      * */
-    set(key: any, value?: any ): void
-    {
-        if(typeof(key) == 'object')
+    set(key: any, value?: any ): void {
+        if (typeof(key) == 'object') {
             return this.store.set(key);
+        }
 
-        this.store.set(key, value)
+        this.store.set(key, value);
     }
 
     /**
@@ -73,7 +72,7 @@ export class FileStorage
      * @return boolean
      */
     has(key: any): boolean {
-        return this.store.has(key)
+        return this.store.has(key);
     }
 
     /**

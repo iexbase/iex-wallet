@@ -21,9 +21,9 @@
  */
 
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import {MasterpageComponent} from "@shared/masterpage/masterpage.component";
-import {AuthGuardService} from "./auth-guard.service";
+import { RouterModule, Routes } from '@angular/router';
+import {MasterpageComponent} from '@shared/masterpage/masterpage.component';
+import {AuthGuardService} from './auth-guard.service';
 
 
 

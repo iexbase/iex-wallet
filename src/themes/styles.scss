@@ -521,15 +521,15 @@ button.button-circle {
     will-change: opacity;
     margin-bottom: 10px;
 
-    /deep/ .mat-form-field-underline {
+    .mat-form-field-underline {
         display: none;
     }
 
-    /deep/ .mat-form-field-wrapper {
+    .mat-form-field-wrapper {
         padding-bottom: .8em;
     }
 
-    /deep/ .mat-form-field-suffix {
+    .mat-form-field-suffix {
         mat-icon {
             float: right;
             padding-top: 5px;
@@ -558,16 +558,16 @@ button.button-circle {
     background: rgba(255, 255, 255, 0.07);
     height: 45px;
     margin-bottom: 18px;
-    /deep/ .mat-form-field-flex {
+    .mat-form-field-flex {
         padding: 0 .75em;
     }
 
-    /deep/ .mat-form-field-underline {
+    .mat-form-field-underline {
         display: none;
     }
 
 
-    /deep/ &.mat-focused {
+    &.mat-focused {
         .mat-form-field-label {
             color: rgba(255, 255, 255, 0.3);
         }

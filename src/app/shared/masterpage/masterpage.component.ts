@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
-import { BreakpointObserver, Breakpoints, BreakpointState } from "@angular/cdk/layout";
-import { Observable, of } from "rxjs";
-import { select, Store } from "@ngrx/store";
+import { select, Store } from '@ngrx/store';
+import { Observable, of } from 'rxjs';
 
 // redux
-import * as fromSkin from "@redux/skins/skins.reducer";
-import { AppState } from "@redux/index";
+import { AppState } from '@redux/index';
+import * as fromSkin from '@redux/skins/skins.reducer';
 
 // Interface selected skin
 export interface SelectedSkin {
@@ -25,8 +25,7 @@ export interface SelectedSkin {
     templateUrl: './masterpage.component.html',
     styleUrls: ['./masterpage.component.scss']
 })
-export class MasterpageComponent implements OnInit
-{
+export class MasterpageComponent implements OnInit {
     /**
      * Mode of the drawer; one of 'over', 'push' or 'side'.
      *
@@ -67,8 +66,7 @@ export class MasterpageComponent implements OnInit
      *
      * @return void
      */
-    ngOnInit()
-    {
+    ngOnInit() {
         this.store.pipe(select(fromSkin.findSkinById(1))).subscribe(result => {
             this.selectedSkin = result;
         });

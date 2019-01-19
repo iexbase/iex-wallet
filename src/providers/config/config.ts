@@ -5,22 +5,21 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Injectable} from "@angular/core";
+import {Injectable} from '@angular/core';
 
 // Providers
-import {FileStorage} from "./storage/file-storage";
-import {Logger} from "@providers/logger/logger";
-import {ElectronProvider} from "@providers/electron/electron";
+import {ElectronProvider} from '@providers/electron/electron';
+import {Logger} from '@providers/logger/logger';
+import {FileStorage} from './storage/file-storage';
 
 /**
  * Configuration file interface
  */
-export interface Config
-{
+export interface Config {
     meta: {
         createdAt?: string,
         updatedAt?: string
-    }
+    };
 
     wallet: {
         reconnectDelay: number;
@@ -32,7 +31,7 @@ export interface Config
             alternativeIsoCode: string;
             defaultLanguage: string;
         }
-    }
+    };
 
     skins: {
         name: string;
@@ -41,7 +40,7 @@ export interface Config
             textures: boolean;
             themes: boolean;
         }
-    }
+    };
 
     download: {
         iexbase: {
@@ -57,8 +56,7 @@ export interface Config
 }
 
 @Injectable()
-export class ConfigProvider
-{
+export class ConfigProvider {
     /**
      * Storage driver
      *
@@ -129,16 +127,15 @@ export class ConfigProvider
      *
      * @return void
      */
-    public loadConfig(): void
-    {
+    public loadConfig(): void {
         this.logger.debug('File system started: ', 'wallet.conf');
         this.fileStorage = new FileStorage(
             this.electron.getLocalPath(),
             'wallet.conf'
         );
 
-        if(!this.fileStorage.has('meta')) {
-            this.fileStorage.set(this.getDefaults())
+        if (!this.fileStorage.has('meta')) {
+            this.fileStorage.set(this.getDefaults());
         }
     }
 
@@ -149,10 +146,9 @@ export class ConfigProvider
      * @param value - Data
      * @return void
      */
-    public set(key: string, value: any): void
-    {
+    public set(key: string, value: any): void {
         this.fileStorage.set('updatedAt', new Date().toISOString());
-        this.fileStorage.set(key, value)
+        this.fileStorage.set(key, value);
     }
 
     /**
@@ -163,13 +159,13 @@ export class ConfigProvider
      *
      * @return string | any
      */
-    public get(key?: string, defaultValue?: any): any
-    {
+    public get(key?: string, defaultValue?: any): any {
         // In case there is no key, we get all the data.
-        if (key == undefined)
+        if (key == undefined) {
             return this.fileStorage.getStore();
+        }
 
-        return this.fileStorage.get(key, defaultValue)
+        return this.fileStorage.get(key, defaultValue);
     }
 
     /**

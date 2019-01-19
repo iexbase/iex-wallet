@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import { Update } from '@ngrx/entity';
 import { Action } from '@ngrx/store';
-import { Update } from "@ngrx/entity";
 
 export enum RateActionTypes {
     ADD_RATE = '[Rate] Add Rate',
@@ -39,7 +39,7 @@ export class UpdateRate implements Action {
 export class UpdateRates implements Action {
     readonly type = RateActionTypes.UPDATE_RATES;
 
-    constructor(public payload: { rates: Update<any>[] }) {}
+    constructor(public payload: { rates: Array<Update<any>> }) {}
 }
 
 export class DeleteRate implements Action {

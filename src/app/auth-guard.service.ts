@@ -12,14 +12,13 @@ import { ActivatedRouteSnapshot,
     RouterStateSnapshot
 } from '@angular/router';
 
-import { Observable } from "rxjs";
+import { Observable } from 'rxjs';
 
 // Providers
-import { WalletProvider } from "@providers/wallet/wallet";
+import { WalletProvider } from '@providers/wallet/wallet';
 
 @Injectable({providedIn: 'root'})
-export class AuthGuardService implements CanActivate
-{
+export class AuthGuardService implements CanActivate {
     /**
      * Contains the information about a route associated with a component loaded in an
      * outlet at a particular moment in time. ActivatedRouteSnapshot can also be used to
@@ -51,14 +50,13 @@ export class AuthGuardService implements CanActivate
      * @return Observable<boolean> | Promise<boolean> | boolean
      */
     canActivate(route: ActivatedRouteSnapshot,
-                state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean
-    {
+                state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
         this.activatedRoute = route;
 
         // check if user wallet is present
         const isLoggedIn = (this.walletProvider.password != undefined);
         // logged in so return true
-        if (isLoggedIn) return true;
+        if (isLoggedIn) { return true; }
 
         // not logged in so redirect to login page with the return url
         this.router.navigate(['/login'], {

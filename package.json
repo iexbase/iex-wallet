@@ -1,7 +1,7 @@
 {
     "name": "iexwallet",
     "description": "Secure Tron Wallet",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "author": {
         "name": "Shamsudin Serderov",
         "email": "iexbase@protonmail.com"
@@ -31,21 +31,21 @@
         "postinstall:electron": "node ./bin/postinstall",
         "ng": "ng",
         "start": "npm run postinstall:electron && npm-run-all -p ng:serve electron:serve",
-        "build": "npm run postinstall:electron && npm run electron:serve-tsc && npm run electron:tsc && ng build",
-        "build:dev": "npm run build -- -c dev",
-        "build:prod": "npm run build -- -c production",
+        "build": "npm run postinstall:electron && npm run electron:serve-tsc && npm run electron:tsc",
+        "build:dev": "npm run build && npm run env:dev && ng build",
+        "build:prod": "npm run build && npm run env:prod && ng build --prod --aot --build-optimizer",
         "ng:serve": "ng serve",
         "ng:serve:web": "npm run postinstall:web && ng serve -o",
         "electron:serve-tsc": "tsc -p tsconfig.json",
         "electron:tsc": "tsc main.ts",
-        "electron:serve": "wait-on http-get://localhost:4200/ && npm run electron:serve-tsc && electron . --serve",
-        "electron:local": "npm run build:prod && electron .",
-        "electron:linux": "npm run build:prod && npx electron-builder build --linux",
-        "electron:windows": "npm run build:prod && npx electron-builder build --windows",
-        "electron:mac": "npm run build:prod && npx electron-builder build --mac",
+        "electron:serve": "wait-on http-get://localhost:4200/ && npm run electron:serve-tsc && npm run env:dev && electron . --serve",
+        "build:linux-release": "npm run build:prod && npx electron-builder build --linux",
+        "build:windows-release": "npm run build:prod && npx electron-builder build --windows",
+        "build:mac-release": "npm run build:prod && npx electron-builder build --mac",
         "test": "npm run postinstall:web && ng test",
         "e2e": "npm run postinstall:web && ng e2e",
-        "version": "conventional-changelog -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
+        "fix:tslint": "tslint --fix --project . && tslint --fix '{test,electron,src}/**/*.ts'",
+        "fix:prettier": "prettier --write '{*,**/*}.{js,ts,md,json,scss}'",
         "extract": "ngx-translate-extract -i ./src -o ./src/assets/i18n/{ru,en}.json",
         "env:prod": "rm -f src/environments/index.ts && cp src/environments/prod.ts src/environments/index.ts \n\n# Environment set to: prod\n\n",
         "env:dev": "rm -f src/environments/index.ts && cp src/environments/dev.ts src/environments/index.ts \n\n# Environment set to: dev\n\n",
@@ -138,10 +138,15 @@
         "ngrx-store-logger": "^0.2.2",
         "npm-run-all": "^4.1.5",
         "npx": "^10.2.0",
+        "prettier": "^1.15.3",
         "protractor": "^5.4.2",
         "ts-node": "~7.0.1",
         "tslint": "~5.12.0",
+        "tslint-config-prettier": "^1.17.0",
         "typescript": "~3.2.2",
         "wait-on": "^3.2.0"
+    },
+    "prettier": {
+        "singleQuote": true
     }
 }

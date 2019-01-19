@@ -6,30 +6,30 @@
  */
 
 
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
 // Advanced Packages
-import { LocalStorage } from "ngx-webstorage";
-import { Store } from "@ngrx/store";
+import { Store } from '@ngrx/store';
+import { LocalStorage } from 'ngx-webstorage';
 
-import { Update } from "@ngrx/entity";
+import { Update } from '@ngrx/entity';
 import bip39 from 'bip39';
+import * as CryptoJS from 'crypto-js';
 import hdkey from 'hdkey';
 import * as _ from 'lodash';
-import * as CryptoJS from "crypto-js";
 
 // Import from app ngrx
-import * as WalletActions from "@redux/wallet/wallet.actions";
+import * as WalletActions from '@redux/wallet/wallet.actions';
 
 // Providers
 import { AddressProvider } from '@providers/address/address';
-import { TronProvider } from '@providers/tron/tron';
 import { Logger } from '@providers/logger/logger';
+import { TronProvider } from '@providers/tron/tron';
 
 // utils
-import {isHex} from "@utils/bytes";
-import {AppState} from "@redux/index";
-import env from "../../environments";
+import {AppState} from '@redux/index';
+import {isHex} from '@utils/bytes';
+import env from '../../environments';
 
 // List Coins (Standard TRON)
 export enum Coin {
@@ -56,20 +56,18 @@ export interface TrxHistoryProposal {
 }
 
 // Interface Create new wallet
-export interface CreateWalletInterface
-{
+export interface CreateWalletInterface {
     balance?: number;
     privateKey: string;
     publicKey: string;
     address: {
         base58: string;
         hex: string;
-    }
+    };
 }
 
 // Interface Storage wallet ID
-export interface WalletOptions
-{
+export interface WalletOptions {
     id?: string;
     position?: number;
     mnemonic?: string;
@@ -92,8 +90,7 @@ export interface WalletOptions
 }
 
 // Interface Update wallet ID data
-export interface UpdateWalletModel
-{
+export interface UpdateWalletModel {
     name?: string;
     position?: number;
     balance?: number;
@@ -118,8 +115,45 @@ export interface TransactionProposal {
 
 
 @Injectable()
-export class WalletProvider
-{
+export class WalletProvider {
+
+    /**
+     * Object creation WalletProvider
+     *
+     * @param {Logger} logger - Logger
+     * @param {AddressProvider} addressProvider - Address provider
+     * @param {Store} store - Reactive store
+     * @param {TronProvider} tron - Tron provider
+     */
+    constructor(
+        private logger: Logger,
+        private addressProvider: AddressProvider,
+        protected store: Store<AppState>,
+        private tron: TronProvider) {
+        this.logger.debug('WalletProvider initialized');
+    }
+
+    /**
+     * setPassword
+     *
+     * Write the entered password to the variable.
+     *
+     * @param {string} val - Password
+     */
+    set password(val: string) {
+        this._password = val;
+    }
+
+    /**
+     * getPassword
+     *
+     * Get the password you entered
+     *
+     * @return string
+     */
+    get password(): string {
+        return this._password;
+    }
     /**
      * Storage where all accounts are located (Data is encrypted)
      *
@@ -149,7 +183,7 @@ export class WalletProvider
      *
      * @var number
      */
-    private countAttempted: number = 0;
+    private countAttempted = 0;
 
     /**
      * Lock time
@@ -171,14 +205,14 @@ export class WalletProvider
      *
      * @var number
      */
-    bandwidth: number = 0;
+    bandwidth = 0;
 
     /**
      * Energy selected account
      *
      * @var number
      */
-    energy: number = 0;
+    energy = 0;
 
     /**
      * Balance selected account
@@ -195,20 +229,41 @@ export class WalletProvider
     lastUpdated: number = Date.now();
 
     /**
-     * Object creation WalletProvider
+     * encryptPassword
      *
-     * @param {Logger} logger - Logger
-     * @param {AddressProvider} addressProvider - Address provider
-     * @param {Store} store - Reactive store
-     * @param {TronProvider} tron - Tron provider
+     * For added security, encrypt the password when registering a wallet
      */
-    constructor(
-        private logger: Logger,
-        private addressProvider: AddressProvider,
-        protected store: Store<AppState>,
-        private tron: TronProvider)
-    {
-        this.logger.debug('WalletProvider initialized');
+    static encryptPassword(password: string) {
+        return CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
+    }
+
+    /**
+     * Getting a list of types
+     *
+     * @param {number} number - Contract type
+     * @returns {string}
+     */
+    private static getContractType(number: number) {
+        switch (number) {
+            case 1:
+                return 'Transfer';
+            case 2:
+                return 'Transfer Asset';
+            case 4:
+                return 'Vote';
+            case 6:
+                return 'Create';
+            case 9:
+                return 'Participate';
+            case 11:
+                return 'Freeze';
+            case 12:
+                return 'Unfreeze';
+            case 44:
+                return 'Exchange';
+            default:
+                return 'Unregistred Name';
+        }
     }
 
     /**
@@ -217,17 +272,15 @@ export class WalletProvider
      * @param {any} options - the options of the account being imported
      * @returns {Promise} Promise object containing details - if imported successfully or not
      */
-    importWallet(options: any): Promise<any>
-    {
-        return new Promise((resolve, reject) =>
-        {
-            if(options.privateKey.match(/[0-9a-fA-F]{64}/) == false)
+    importWallet(options: any): Promise<any> {
+        return new Promise((resolve, reject) => {
+            if (options.privateKey.match(/[0-9a-fA-F]{64}/) == false) {
                 return reject('Invalid private key');
+            }
 
             // check if private key valid
-            if (AddressProvider.validatePrivateKey(options.privateKey))
-            {
-                let addr = this.addressProvider.fromPrivateKey(options.privateKey);
+            if (AddressProvider.validatePrivateKey(options.privateKey)) {
+                const addr = this.addressProvider.fromPrivateKey(options.privateKey);
                 this.logger.info('Importing Wallet:', addr);
 
                 // wallet adding process
@@ -239,13 +292,13 @@ export class WalletProvider
                 }).then(walletClient => {
                     const showOpts = _.clone(walletClient);
                     // Delete private key (secure)
-                    if(showOpts.privateKey) delete showOpts['privateKey'];
+                    if (showOpts.privateKey) { delete showOpts['privateKey']; }
                     // Delete public key
-                    if(showOpts.publicKey) delete showOpts['publicKey'];
+                    if (showOpts.publicKey) { delete showOpts['publicKey']; }
 
                     return resolve(showOpts);
                 }).catch(err => {
-                    return reject(err)
+                    return reject(err);
                 });
             } else {
                 return reject('Invalid private key.');
@@ -259,10 +312,8 @@ export class WalletProvider
      * @param {any} options - the options of the account being imported
      * @returns {Promise} Promise object containing details - if imported successfully or not
      */
-    importMnemonic(options: any): Promise<any>
-    {
-        return new Promise<any>((resolve, reject) =>
-        {
+    importMnemonic(options: any): Promise<any> {
+        return new Promise<any>((resolve, reject) => {
             this.logger.info('Importing Wallet Mnemonic');
             // wallet adding process
             this.addWallet({
@@ -274,15 +325,15 @@ export class WalletProvider
             }).then(walletClient => {
                 const showOpts = _.clone(walletClient);
                 // Delete private key (secure)
-                if(showOpts.privateKey) delete showOpts['privateKey'];
+                if (showOpts.privateKey) { delete showOpts['privateKey']; }
                 // Delete public key
-                if(showOpts.publicKey) delete showOpts['publicKey'];
+                if (showOpts.publicKey) { delete showOpts['publicKey']; }
                 // hide mnemonic
-                if(showOpts.mnemonic) delete showOpts['mnemonic'];
+                if (showOpts.mnemonic) { delete showOpts['mnemonic']; }
 
                 return resolve(showOpts);
             }).catch(err => {
-                return reject(err)
+                return reject(err);
             });
         });
     }
@@ -292,12 +343,10 @@ export class WalletProvider
      *
      * @returns {CreateWalletInterface} details
      */
-    createWallet(opts): Promise<CreateWalletInterface>
-    {
-        return new Promise((resolve, reject) =>
-        {
-            let wallet = this.addressProvider.generatePrivateKey();
-            if(!wallet) reject('Error creating private key');
+    createWallet(opts): Promise<CreateWalletInterface> {
+        return new Promise((resolve, reject) => {
+            const wallet = this.addressProvider.generatePrivateKey();
+            if (!wallet) { reject('Error creating private key'); }
 
             this.addWallet({
                 ...opts,
@@ -306,10 +355,9 @@ export class WalletProvider
             }).then(walletClient => {
                 const showOpts = _.clone(walletClient);
                 // Delete keys
-                if(showOpts.privateKey)
-                    delete showOpts['privateKey'];
+                if (showOpts.privateKey) delete showOpts['privateKey'];
 
-                this.logger.debug('Creating Wallet:', JSON.stringify(showOpts));
+                this.logger.debug('Creating Wallet:', showOpts.id);
                 return resolve(showOpts);
             }).catch(err => {
                 return reject(err);
@@ -322,12 +370,12 @@ export class WalletProvider
      *
      * @return any[]
      */
-    listWallets(): any[]
-    {
-        let wallets = this.decryptWallet(this.password) || [];
+    listWallets(): any[] {
+        const wallets = this.decryptWallet(this.password) || [];
         // Verify password entry
-        if (wallets == null && wallets == undefined)
+        if (wallets == null && wallets == undefined) {
             throw new Error('Invalid password');
+        }
         return wallets;
     }
 
@@ -338,8 +386,7 @@ export class WalletProvider
      * @param {number} index - position
      * @return void
      */
-    public setWalletPosition(walletId: string, index: number): void
-    {
+    public setWalletPosition(walletId: string, index: number): void {
         this.updateWallet(walletId, {
             position: index
         }).then(() => {
@@ -347,7 +394,7 @@ export class WalletProvider
                 'Wallet new order stored for ' + walletId + ': ' + index
             );
         });
-        if (this.getWallet(walletId)) this.getWallet(walletId)['position'] = index;
+        if (this.getWallet(walletId)) { this.getWallet(walletId)['position'] = index; }
     }
 
     /**
@@ -378,13 +425,12 @@ export class WalletProvider
      * @param {boolean} balanceHidden - Hidden balance
      * @returns {Promise}
      */
-    toggleHideBalanceFlag(walletId: string, balanceHidden: boolean): Promise<any>
-    {
+    toggleHideBalanceFlag(walletId: string, balanceHidden: boolean): Promise<any> {
         return new Promise<any>(resolve => {
             this.updateWallet(walletId, {
-                balanceHidden: balanceHidden
+                balanceHidden
             }).then(wallet => {
-                return resolve(wallet)
+                return resolve(wallet);
             });
         });
     }
@@ -395,9 +441,8 @@ export class WalletProvider
      * @param {string} walletId - Wallet address
      * @returns {string}
      */
-    getWalletMnemonic(walletId: string): string
-    {
-        let wallet = this.listWallets()
+    getWalletMnemonic(walletId: string): string {
+        const wallet = this.listWallets()
             .find(c => c.address == walletId);
         return (wallet.mnemonic ? wallet.mnemonic : undefined);
     }
@@ -408,11 +453,10 @@ export class WalletProvider
      * @param {string} walletAddress - Tron address
      * @return boolean
      */
-    hasWallet(walletAddress: string): boolean
-    {
+    hasWallet(walletAddress: string): boolean {
         return this.listWallets().some(
             filter => filter.address === walletAddress
-        )
+        );
     }
 
     /**
@@ -423,18 +467,17 @@ export class WalletProvider
      * @param {string} privateKey - hex-encoded private key
      * @returns {string} - the corresponing address, computer from the private key.
      */
-    addByPrivateKey(privateKey: string): CreateWalletInterface
-    {
-        let publicKey = AddressProvider.getPubKeyFromPrivateKey(privateKey);
-        let address = AddressProvider.getAddressFromPrivateKey(privateKey);
+    addByPrivateKey(privateKey: string): CreateWalletInterface {
+        const publicKey = AddressProvider.getPubKeyFromPrivateKey(privateKey);
+        const address = AddressProvider.getAddressFromPrivateKey(privateKey);
 
         return {
-            publicKey: publicKey,
+            publicKey,
             address: {
                 base58: this.addressProvider.toBase58(address),
                 hex: address
             },
-            privateKey: privateKey
+            privateKey
         };
     }
 
@@ -446,23 +489,21 @@ export class WalletProvider
      * @param {WalletOptions} wallet - Details wallet
      * @return void
      */
-    addWallet(wallet: Partial<WalletOptions>): Promise<any>
-    {
-        return new Promise((resolve, reject) =>
-        {
-            let allWallets = this.listWallets();
-            if(this.hasWallet(wallet.address)) {
+    addWallet(wallet: Partial<WalletOptions>): Promise<any> {
+        return new Promise((resolve, reject) => {
+            const allWallets = this.listWallets();
+            if (this.hasWallet(wallet.address)) {
                 this.logger.error(`Already added: Wallet ${wallet.address}`);
-                return reject('Account already added')
+                return reject('Account already added');
             }
 
             // If the name is not specified, manually register
-            if(!wallet.name) wallet.name = 'Personal wallet';
+            if (!wallet.name) { wallet.name = 'Personal wallet'; }
 
-            let lastTime = Math.round(
+            const lastTime = Math.round(
                 new Date().getTime() / 1000
             );
-            let newWallet = <WalletOptions> {
+            const newWallet = {
                 id: wallet.address,
                 position: 0,
                 coin: Coin.TRX,
@@ -472,12 +513,12 @@ export class WalletProvider
                 balanceHidden: false,
                 color: 'theme-wallet-thunderbird',
                 ...wallet
-            };
+            } as WalletOptions;
             allWallets.push(newWallet);
             // Updating data in the repository
             this.encryptWallet(allWallets, this.password);
-            resolve(newWallet)
-        })
+            resolve(newWallet);
+        });
     }
 
     /**
@@ -486,8 +527,7 @@ export class WalletProvider
      * @param {string} walletAddress - TRON address
      * @return any
      */
-    getWallet(walletAddress: string): any
-    {
+    getWallet(walletAddress: string): any {
         return this.getWallets().find(
             c => c.address == walletAddress
         ) || {};
@@ -499,14 +539,13 @@ export class WalletProvider
      * @param {string} walletAddress - TRON address
      * @return any
      */
-    getWalletAndPrivateKey(walletAddress:string): any
-    {
+    getWalletAndPrivateKey(walletAddress: string): any {
         this.logger.debug(`Get Wallet ID ${walletAddress} with private key`);
         try {
             return this.listWallets().find(
                 c => c.address == walletAddress
             );
-        }catch (e) {
+        } catch (e) {
             throw new Error(`Invalid wallet ID ${walletAddress}`);
         }
     }
@@ -521,23 +560,22 @@ export class WalletProvider
      *
      * @return Promise
      */
-    updateWallet(walletAddress: string, options: any | UpdateWalletModel): Promise<any>
-    {
+    updateWallet(walletAddress: string, options: any | UpdateWalletModel): Promise<any> {
         return new Promise((resolve, reject) => {
             // We do not allow the possibility of changing important parameters.
             // If these parameters change, the account will be disrupted.
-            if(['createdOn','privateKey','address','id','mnemonic'].includes(options))
+            if (['createdOn', 'privateKey', 'address', 'id', 'mnemonic'].includes(options)) {
                 return reject('Something went wrong');
+            }
 
             // If the name is not specified, manually register
-            if(!options.name) options.name = 'Personal wallet';
+            if (!options.name) { options.name = 'Personal wallet'; }
 
             try {
                 this.logger.debug(`Update Wallet ID ${walletAddress}`);
                 // Data update wallet ID
-                let updateWalletId = this.listWallets().map(c => {
-                    if(c.address != walletAddress) return c;
-                    else {
+                const updateWalletId = this.listWallets().map(c => {
+                    if (c.address != walletAddress) { return c; } else {
                         return {
                             ...c,
                             ...options
@@ -548,10 +586,10 @@ export class WalletProvider
                 // Update the purse store and make new changes
                 this.encryptWallet(updateWalletId, this.password);
                 return resolve(this.getWallet(walletAddress));
-            }catch (e) {
+            } catch (e) {
                 return reject(e);
             }
-        })
+        });
     }
 
     /**
@@ -562,18 +600,17 @@ export class WalletProvider
      * @param {string} walletAddress - TRON Address
      * @return: void
      */
-    deleteWallet(walletAddress: string): Promise<any>
-    {
-        return new Promise<any>((resolve, reject) =>
-        {
+    deleteWallet(walletAddress: string): Promise<any> {
+        return new Promise<any>((resolve, reject) => {
             // To begin to check whether the exists selected wallet
-            if (!this.hasWallet(walletAddress))
+            if (!this.hasWallet(walletAddress)) {
                 return reject('account not found');
+            }
 
             this.logger.info('Deleting Wallet:', walletAddress);
 
             // Exclude from the list the purse to be deleted
-            let updatedWallet = this.listWallets().filter(
+            const updatedWallet = this.listWallets().filter(
                 filter => filter.address != walletAddress
             );
 
@@ -602,12 +639,12 @@ export class WalletProvider
      *
      * @return any[]
      */
-    public getWallets(): any[]
-    {
+    public getWallets(): any[] {
         let wallets = this.decryptWallet(this.password) || [];
         // Verify password entry
-        if (wallets == null && wallets == undefined)
+        if (wallets == null && wallets == undefined) {
             throw new Error('Invalid password');
+        }
 
         wallets = wallets.filter(f => delete f['privateKey']);
         return wallets;
@@ -622,12 +659,11 @@ export class WalletProvider
      * @param {string} password - Password
      * @return void
      */
-    public encryptWallet(wallet: any, password: string): void
-    {
+    public encryptWallet(wallet: any, password: string): void {
         try {
             this.wallet = CryptoJS.AES.encrypt(JSON.stringify(wallet), password).toString();
-        }catch (e) {
-            throw new Error(e)
+        } catch (e) {
+            throw new Error(e);
         }
     }
 
@@ -639,17 +675,17 @@ export class WalletProvider
      * @param {string} password - Password
      * @return any
      */
-    public decryptWallet(password: string): any
-    {
+    public decryptWallet(password: string): any {
         // If there is no data, create an empty array
-        if(this.wallet == null)
+        if (this.wallet == null) {
             this.encryptWallet([], password);
+        }
 
         try {
-            let wallet = CryptoJS.AES.decrypt(this.wallet, password).toString(CryptoJS.enc.Utf8);
+            const wallet = CryptoJS.AES.decrypt(this.wallet, password).toString(CryptoJS.enc.Utf8);
             return JSON.parse(wallet) || [];
-        }catch (e) {
-            throw new Error(e)
+        } catch (e) {
+            throw new Error(e);
         }
     }
 
@@ -664,11 +700,10 @@ export class WalletProvider
      * @param {string} accountAddress - Sender's address
      * @returns {Promise} Promise object containing the newly created transaction id
      */
-    createTx(txp: Partial<TransactionProposal>, accountAddress: string): Promise<any>
-    {
+    createTx(txp: Partial<TransactionProposal>, accountAddress: string): Promise<any> {
         return new Promise((resolve, reject) => {
             // Checking important parameters
-            if (_.isEmpty(txp)) return reject('MISSING_PARAMETER');
+            if (_.isEmpty(txp)) { return reject('MISSING_PARAMETER'); }
 
             this.tron.createTxProposal(
                 txp.toAddress,
@@ -676,13 +711,12 @@ export class WalletProvider
                 txp.tokenID,
                 accountAddress,
                 (err: any, createdTxp: any) => {
-                    if (err) return reject(err);
-                    else {
+                    if (err) { return reject(err); } else {
                         this.logger.debug('Transaction created');
                         return resolve(createdTxp);
                     }
                 });
-        })
+        });
     }
 
     /**
@@ -693,12 +727,12 @@ export class WalletProvider
      * @param {any} transaction - Transaction not signed
      * @return {Promise} - Signed transaction
      */
-    signTx(transaction: any): Promise<any>
-    {
+    signTx(transaction: any): Promise<any> {
         return new Promise((resolve, reject) => {
             // We check the received parameters before signing
-            if(!this.activeAccount || !transaction)
+            if (!this.activeAccount || !transaction) {
                 reject('MISSING_PARAMETER');
+            }
 
             // If the main parameters are verified successfully,
             // then proceed to signing the transaction.
@@ -709,8 +743,8 @@ export class WalletProvider
                         reject(err);
                     }
                     resolve(signedTxp);
-                })
-            }catch (e) {
+                });
+            } catch (e) {
                 this.logger.error('Error at signTxProposal:', e);
                 reject(e);
             }
@@ -725,38 +759,24 @@ export class WalletProvider
      * @param {any} transaction - Transaction details (with signature)
      * @return {Promise} - If successful that "result: true"
      */
-    broadcastTx(transaction: any): Promise<any>
-    {
+    broadcastTx(transaction: any): Promise<any> {
         return new Promise((resolve, reject) => {
 
             // Check whether transactions are signed
-            if(!transaction.signature)
+            if (!transaction.signature) {
                 reject('Transaction not signed');
+            }
 
             // If there are no serious problems, send the transaction to the network
             this.tron.broadcastTxProposal(transaction, {}, (err: any, broadcastedTxp: any) => {
                 // If you have problems sending a transaction
-                if(err) {
+                if (err) {
                     return reject(err);
                 }
                 this.logger.info('Transaction broadcasted');
                 return resolve(broadcastedTxp);
-            })
+            });
         });
-
-
-        // return new Promise((resolve, reject) => {
-        //     if (lodash.isEmpty(txp))
-        //         return reject('MISSING_PARAMETER');
-        //
-        //     this.tronWeb.trx.sendRawTransaction(txp, {}, (err, broadcastedTxp) => {
-        //         if (err) {
-        //             return reject(err);
-        //         }
-        //         this.logger.info('Transaction broadcasted');
-        //         return resolve(broadcastedTxp);
-        //     });
-        // });
     }
 
     /**
@@ -770,14 +790,14 @@ export class WalletProvider
      * @param {VerifySignatureProposal} options.address - Tron address
      * @return Promise
      */
-    verifySignature(options: Partial<VerifySignatureProposal>): Promise<any>
-    {
+    verifySignature(options: Partial<VerifySignatureProposal>): Promise<any> {
         return new Promise((resolve, reject) => {
 
             // Before the main checks, we affirm that the signature
             // complies with the rules
-            if(!isHex(options.signature))
+            if (!isHex(options.signature)) {
                 reject('Invalid signature');
+            }
 
             try {
                 this.tron.verifyMessage(options.message, options.signature, options.address,
@@ -790,7 +810,7 @@ export class WalletProvider
                         }
                         resolve(verifySig);
                 });
-            }catch (e) {
+            } catch (e) {
                 this.logger.error('Error at message Verify:', e);
                 reject(e);
             }
@@ -805,18 +825,17 @@ export class WalletProvider
      * @param {string} account - TRON Address (Recommend base58)
      * @return {Promise} - In case of luck, we get the balance in "number"
      */
-    public getBalance(account: string): Promise<number>
-    {
+    public getBalance(account: string): Promise<number> {
         return new Promise((resolve, reject) => {
             // Convert to base58
             account = this.addressProvider.toBase58(account);
 
             // Send a request to the node to get the current balance
-            this.tron.getBalance(account, (err: any, balanceAddr: any) =>{
+            this.tron.getBalance(account, (err: any, balanceAddr: any) => {
                 // If you're having trouble checking your balance
-                if(err) reject(err);
-                resolve(balanceAddr)
-            })
+                if (err) { reject(err); }
+                resolve(balanceAddr);
+            });
         });
     }
 
@@ -829,16 +848,15 @@ export class WalletProvider
      * @param {string} account - TRON Address
      * @return {Promise} - return account information
      */
-    public getAccount(account: string): Promise<any>
-    {
+    public getAccount(account: string): Promise<any> {
         return new Promise((resolve, reject) => {
             // Convert to base58
             account = this.addressProvider.toBase58(account);
 
             this.tron.getUnconfirmedAccount(account, (err: any, addrInfo: any) => {
                 // If you're having trouble checking your account
-                if(err) reject(err);
-                resolve(addrInfo)
+                if (err) { reject(err); }
+                resolve(addrInfo);
             });
         });
     }
@@ -851,16 +869,15 @@ export class WalletProvider
      * @param {string} account - TRON Address
      * @return {Promise} - return account's bandwidth and energy resources.
      */
-    public getAccountResources(account: string): Promise<any>
-    {
+    public getAccountResources(account: string): Promise<any> {
         return new Promise((resolve, reject) => {
             // Convert to base58
             account = this.addressProvider.toBase58(account);
 
             this.tron.getAccountResources(account, (err: any, resourceAddr: any) => {
                 // If you're having trouble checking your account resources
-                if(err) reject(err);
-                resolve(resourceAddr)
+                if (err) { reject(err); }
+                resolve(resourceAddr);
             });
         });
     }
@@ -873,15 +890,14 @@ export class WalletProvider
      * @param {string} account - TRON Address
      * @return {Promise} - return account's bandwidth
      */
-    public getBandwidth(account: string): Promise<any>
-    {
+    public getBandwidth(account: string): Promise<any> {
         return new Promise((resolve, reject) => {
             this.tron.getBandwidth(account, (err: any, bandWidthAddr: any) => {
                 // If you're having trouble checking your account bandwidth
-                if(err) reject(err);
-                resolve(bandWidthAddr)
+                if (err) { reject(err); }
+                resolve(bandWidthAddr);
             });
-        })
+        });
     }
 
     /**
@@ -892,29 +908,19 @@ export class WalletProvider
      * @param {string} password - Auth password
      * @return {Promise} - return hash password
      */
-    public prepare(password: string): Promise<any>
-    {
+    public prepare(password: string): Promise<any> {
         return new Promise((resolve, reject) => {
             try {
-                let wallet = CryptoJS.AES.decrypt(
+                const wallet = CryptoJS.AES.decrypt(
                     this.wallet,
                     password).toString(CryptoJS.enc.Utf8);
                 // If the storage is empty, we return an error
-                if(wallet == '') reject('PASSWORD_CANCELLED');
+                if (wallet == '') { reject('PASSWORD_CANCELLED'); }
                 resolve(password);
-            }catch (e) {
-                return reject(new Error('WRONG_PASSWORD'))
+            } catch (e) {
+                return reject(new Error('WRONG_PASSWORD'));
             }
         });
-    }
-
-    /**
-     * encryptPassword
-     *
-     * For added security, encrypt the password when registering a wallet
-     */
-    static encryptPassword(password: string) {
-        return CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex)
     }
 
     /**
@@ -925,11 +931,9 @@ export class WalletProvider
      *  @param {string} password - user password
      *  @return {Promise} - If everything successfully returns the password hash
      */
-    createPassword(password: string): Promise<any>
-    {
+    createPassword(password: string): Promise<any> {
         return new Promise((resolve, reject) => {
-            if(!this.hashPassword)
-            {
+            if (!this.hashPassword) {
                 this.hashPassword = WalletProvider.encryptPassword(password);
                 this.encryptWallet([], this.hashPassword);
                 this._password = this.hashPassword;
@@ -937,7 +941,7 @@ export class WalletProvider
                     'result': true
                 });
             }
-            reject('Password has already been created')
+            reject('Password has already been created');
         });
     }
 
@@ -948,45 +952,43 @@ export class WalletProvider
      *
      * @param {string} password - password
      */
-    hasPassword(password: string): Promise<any>
-    {
+    hasPassword(password: string): Promise<any> {
         return new Promise((resolve, reject) => {
             // If no password is specified
-            if(password && password.length < 1)
+            if (password && password.length < 1) {
                 return reject('Password not specified');
+            }
 
             // Blocking due to multiple authorizations
             // Useful feature for security at the entrance
-            if(this.unlockTime && this.unlockTime != 0)
-            {
-                let endDate = new Date(this.unlockTime);
-                let minutes = new Date((endDate.getTime() - new Date().getTime())).getMinutes();
+            if (this.unlockTime && this.unlockTime != 0) {
+                const endDate = new Date(this.unlockTime);
+                const minutes = new Date((endDate.getTime() - new Date().getTime())).getMinutes();
 
                 // If the lock time exceeds the current time,
                 // then remove the lock
-                if(new Date().getTime() > new Date(this.unlockTime).getTime()) {
+                if (new Date().getTime() > new Date(this.unlockTime).getTime()) {
                     this.unlockTime = 0;
                     return this.countAttempted = 0;
                 }
 
-                return reject(`Too many login attempts. Please try again in ${minutes} minutes.`)
+                return reject(`Too many login attempts. Please try again in ${minutes} minutes.`);
             }
 
             // If the number of non-daily attempts exceeds the set,
             // temporarily block the authorization
             // Note: The number of unsuccessful attempts must be greater than 2.
-            if(this.countAttempted > (env.login.failedLogin < 2 ? 5 : env.login.failedLogin))
-            {
-                if(this.unlockTime == null || this.unlockTime == 0) {
-                    let ex = new Date(Date.now());
+            if (this.countAttempted > (env.login.failedLogin < 2 ? 5 : env.login.failedLogin)) {
+                if (this.unlockTime == null || this.unlockTime == 0) {
+                    const ex = new Date(Date.now());
                     ex.setMinutes(ex.getMinutes() + env.login.lockedMinutes);
                     this.unlockTime = Math.floor(ex.getTime());
                 }
-                return reject('Too many failed attempts, repeat later.')
+                return reject('Too many failed attempts, repeat later.');
             }
 
             // If the passwords do not match
-            if(WalletProvider.encryptPassword(password) != this.hashPassword) {
+            if (WalletProvider.encryptPassword(password) != this.hashPassword) {
                 this.countAttempted += 1; // Authorization Attempt Counter
                 this.logger.info('Attempts to unlock: ', this.countAttempted);
                 return reject('Invalid password');
@@ -997,8 +999,8 @@ export class WalletProvider
             resolve({
                 result: true,
                 hash: this.password
-            })
-        })
+            });
+        });
     }
 
     /**
@@ -1008,43 +1010,21 @@ export class WalletProvider
      *
      * @return {Buffer} - return buffer private key
      */
-    getPrivateKey(): Buffer
-    {
+    getPrivateKey(): Buffer {
         // If there are no active wallets, we return an error
-        if(!this.activeAccount)
+        if (!this.activeAccount) {
             throw new Error('Invalid selected account');
+        }
 
         try {
-            let find = this.listWallets().find(
+            const find = this.listWallets().find(
                 f => f.address == this.activeAccount
             );
 
             return Buffer.from(find['privateKey'], 'hex');
-        }catch (e) {
-            throw new Error(e)
+        } catch (e) {
+            throw new Error(e);
         }
-    }
-
-    /**
-     * setPassword
-     *
-     * Write the entered password to the variable.
-     *
-     * @param {string} val - Password
-     */
-    set password(val: string) {
-        this._password = val;
-    }
-
-    /**
-     * getPassword
-     *
-     * Get the password you entered
-     *
-     * @return string
-     */
-    get password(): string {
-        return this._password
     }
 
     /**
@@ -1060,12 +1040,11 @@ export class WalletProvider
      * @param {TransactionProposal} options.endingTxID - Closing txID
      * @return {Promise} return transactions
      */
-    getTxsFromServer(options: Partial<TrxHistoryProposal>): Promise<any>
-    {
+    getTxsFromServer(options: Partial<TrxHistoryProposal>): Promise<any> {
         return new Promise((resolve, reject) => {
             let res: any = [];
 
-            let result = {
+            const result = {
                 res,
                 total: 0,
                 shouldContinue: res.length || 0 >= options.limit
@@ -1076,35 +1055,33 @@ export class WalletProvider
                 options.start,
                 options.limit,
                 options.total,
-                (err: any, historyTx: any) =>
-                {
+                (err: any, historyTx: any) => {
                     // In case of problems, we don’t continue
-                    if (err) return reject(err);
+                    if (err) { return reject(err); }
                     // If you received an empty response from the server, do not continue
-                    if (_.isEmpty(historyTx['data'])) return resolve(result);
+                    if (_.isEmpty(historyTx['data'])) { return resolve(result); }
 
-                    //Returns all transactions to the address, if the "endingTxID" is filled in,
+                    // Returns all transactions to the address, if the "endingTxID" is filled in,
                     // in this case, we will not receive data beyond this id
                     res = _.takeWhile(historyTx['data'], (tx: any) => {
                         return tx.hash != options.endingTxID;
                     });
 
                     // Turning off unnecessary contractual transactions.
-                    res = _.filter(historyTx['data'], (tx: any) =>
-                    {
+                    res = _.filter(historyTx['data'], (tx: any) => {
                         // If the token is an integer, then convert it to the name of the token
-                        if(Number(tx['contractData']['asset_name'])) {
+                        if (Number(tx['contractData']['asset_name'])) {
                             const filter = this.tron.getListTokens().filter(
                                 v => v.id === tx['contractData']['asset_name']
                             );
-                            if (filter.length) tx['contractData']['asset_name'] = filter[ 0 ].name
+                            if (filter.length) { tx['contractData']['asset_name'] = filter[ 0 ].name; }
                         }
-                        return ![10,30,31].includes(tx.contractType);
+                        return ![10, 30, 31].includes(tx.contractType);
                     });
 
                     // Set types for transactions
                     res = res.map(tx => {
-                        return {...tx, type: WalletProvider.getContractType(tx.contractType)}
+                        return {...tx, type: WalletProvider.getContractType(tx.contractType)};
                     });
 
                     result.res = res;
@@ -1112,8 +1089,8 @@ export class WalletProvider
                     result.shouldContinue = res.length >= options.limit;
 
                     return resolve(result);
-                })
-        })
+                });
+        });
     }
 
     /**
@@ -1124,19 +1101,18 @@ export class WalletProvider
      * @param {string} txHash - Transaction ID
      * @return {Promise} - transaction into
      */
-    getTx(txHash: string): Promise<any>
-    {
+    getTx(txHash: string): Promise<any> {
         return new Promise((resolve, reject) => {
-            this.tron.getTransaction(txHash, (err: any, txHistory: any) =>
-            {
+            this.tron.getTransaction(txHash, (err: any, txHistory: any) => {
                 // If errors occur, do not skip any further.
-                if(err) return reject(err);
+                if (err) { return reject(err); }
                 // If "hash" is empty, then we consider it as an error
-                if(_.isEmpty(txHistory['hash']))
+                if (_.isEmpty(txHistory['hash'])) {
                     return reject('Could not get transaction');
+                }
 
                 resolve(txHistory);
-            })
+            });
         });
     }
 
@@ -1149,10 +1125,10 @@ export class WalletProvider
      * @param {number} index=0 - the number of the child key to add
      * @returns {string} - the corresponding address
      */
-    addByMnemonic(phrase: string, index: number = 0)
-    {
-        if (!this.isValidMnemonic(phrase))
+    addByMnemonic(phrase: string, index: number = 0) {
+        if (!this.isValidMnemonic(phrase)) {
             throw new Error(`Invalid mnemonic phrase: ${phrase}`);
+        }
 
         const seed = bip39.mnemonicToSeed(phrase);
         const hdKey = hdkey.fromMasterSeed(seed);
@@ -1169,7 +1145,7 @@ export class WalletProvider
      * @return boolean
      * */
     isValidMnemonic(phrase: string): boolean {
-        if(!phrase) return false;
+        if (!phrase) { return false; }
         if (phrase.trim().split(/\s+/g).length < 12) {
             return false;
         }
@@ -1184,8 +1160,7 @@ export class WalletProvider
      * @param {string} account - Tron Address
      * @return void
      */
-    async updateAccount(account: string)
-    {
+    async updateAccount(account: string) {
         await this.getAccountResources(account)
             .then(({freeNetUsed = 0, freeNetLimit = 0, NetUsed = 0, NetLimit = 0, EnergyLimit = 0}) => {
                 this.bandwidth  = (freeNetLimit - freeNetUsed) + (NetLimit - NetUsed);
@@ -1201,8 +1176,7 @@ export class WalletProvider
      * @param {string} walletAddress - Tron Address
      * @return void
      */
-    async fullUpdateAccount(walletAddress: string)
-    {
+    async fullUpdateAccount(walletAddress: string) {
         // Update bandwidth and energy
         await this.updateAccount(walletAddress);
         // Update account balance
@@ -1213,12 +1187,12 @@ export class WalletProvider
             this.lastUpdated = Date.now();
 
             // This condition is necessary for new accounts.
-            let tronPower = (account && account['frozen'] ?
+            const tronPower = (account && account['frozen'] ?
                 Number(this.tron.fromSun(account['frozen'][0]['frozen_balance'])) : 0);
 
             // Before adding a token, check and change keys
-            let tokens = (account.assetV2 || []).filter(({ value }) => {
-                return value > 0
+            const tokens = (account.assetV2 || []).filter(({ value }) => {
+                return value > 0;
             }).map(({ key, value }) => {
                 // We are looking for a token in the list of all downloaded
                 const filter = this.tron.getListTokens().filter(
@@ -1226,7 +1200,7 @@ export class WalletProvider
                 );
 
                 // In case the token is found
-                if(filter.length > 0) {
+                if (filter.length > 0) {
                     const name = filter[ 0 ].name;
                     const precision = filter[ 0 ].precision ? filter[ 0 ].precision : 0;
                     const v = value / Math.pow(10, precision);
@@ -1261,37 +1235,7 @@ export class WalletProvider
                 this.store.dispatch(
                     new WalletActions.UpdateWallet({ wallet: update})
                 );
-            })
+            });
         });
-    }
-
-    /**
-     * Getting a list of types
-     *
-     * @param {number} number - Contract type
-     * @returns {string}
-     */
-    private static getContractType(number: number)
-    {
-        switch (number) {
-            case 1:
-                return 'Transfer';
-            case 2:
-                return 'Transfer Asset';
-            case 4:
-                return 'Vote';
-            case 6:
-                return 'Create';
-            case 9:
-                return 'Participate';
-            case 11:
-                return 'Freeze';
-            case 12:
-                return 'Unfreeze';
-            case 44:
-                return 'Exchange';
-            default:
-                return 'Unregistred Name';
-        }
     }
 }

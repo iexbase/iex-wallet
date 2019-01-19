@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createEntityAdapter, EntityAdapter, EntityState} from "@ngrx/entity";
-import {WalletActionsUnion, WalletActionTypes} from "./wallet.actions";
-import {createFeatureSelector, createSelector} from "@ngrx/store";
+import {createEntityAdapter, EntityAdapter, EntityState} from '@ngrx/entity';
+import {createFeatureSelector, createSelector} from '@ngrx/store';
+import {WalletActionsUnion, WalletActionTypes} from './wallet.actions';
 
 export interface State extends EntityState<any> {
     // additional entities state properties

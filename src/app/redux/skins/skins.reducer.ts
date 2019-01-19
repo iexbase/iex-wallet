@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createEntityAdapter, EntityAdapter, EntityState} from "@ngrx/entity";
-import {SkinActionsUnion, SkinActionTypes} from "./skins.actions";
-import {createFeatureSelector, createSelector} from "@ngrx/store";
+import {createEntityAdapter, EntityAdapter, EntityState} from '@ngrx/entity';
+import {createFeatureSelector, createSelector} from '@ngrx/store';
+import {SkinActionsUnion, SkinActionTypes} from './skins.actions';
 
 export interface State extends EntityState<any> {}
 export const adapter: EntityAdapter<any> = createEntityAdapter<any>();

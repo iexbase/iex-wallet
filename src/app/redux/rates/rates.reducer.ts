@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { createEntityAdapter, EntityState, EntityAdapter } from '@ngrx/entity';
-import {RateActionTypes, RateActionsUnion} from "../rates/rates.actions";
-import {createFeatureSelector} from "@ngrx/store";
+import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
+import {createFeatureSelector} from '@ngrx/store';
+import {RateActionsUnion, RateActionTypes} from '../rates/rates.actions';
 
 
 export interface State extends EntityState<any> {}

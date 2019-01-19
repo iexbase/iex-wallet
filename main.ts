@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { app, screen, BrowserWindow } from 'electron';
+import { app, BrowserWindow, screen } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 
@@ -24,8 +24,7 @@ const appConfig = require(path.join(
 console.log('Desktop: ' + appConfig.nameCase + ' v' + appConfig.version);
 
 
-function createWindow()
-{
+function createWindow() {
     // Get screen size
     const size = screen.getPrimaryDisplay().workAreaSize;
 
@@ -34,7 +33,7 @@ function createWindow()
     const browser: any = (isDevMode ? {
         width: size.width,
         height: size.height
-    }: {
+    } : {
         width: 1064,
         height: 650
     });
@@ -64,7 +63,7 @@ function createWindow()
     win.setMenu(null);
 
     // Open the DevTools.
-    if(isDevMode) {
+    if (isDevMode) {
         win.webContents.openDevTools();
     }
 

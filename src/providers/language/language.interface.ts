@@ -6,7 +6,7 @@
  */
 
 export interface LanguageInterface {
-    name:string;
+    name: string;
     isoCode: string;
     useIdeograms?: boolean;
 }

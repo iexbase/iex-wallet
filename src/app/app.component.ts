@@ -31,8 +31,7 @@ import { TronProvider } from "@providers/tron/tron";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit
-{
+export class AppComponent implements OnInit {
     /**
      * Create a new AppComponent object
      *
@@ -53,15 +52,28 @@ export class AppComponent implements OnInit
     }
 
     /**
+     * platform check on agent "electron"
+     *
+     * @returns {boolean | null}
+     */
+    private static isElectronPlatform(): boolean | null {
+        const userAgent =
+            navigator && navigator.userAgent
+                ? navigator.userAgent.toLowerCase()
+                : null;
+        return userAgent && userAgent.indexOf(' electron/') > -1;
+    }
+
+    /**
      * We start object life cycle
      *
      * @return void
      */
-    ngOnInit()
-    {
+    ngOnInit() {
         // The project is allowed to run only through "Electron"
-        if (!AppComponent.isElectronPlatform())
+        if (!AppComponent.isElectronPlatform()) {
             throw new Error('Web version is not available');
+        }
 
         this.onPlatformReady();
     }
@@ -69,8 +81,7 @@ export class AppComponent implements OnInit
     /**
      * We load providers
      */
-    private onPlatformReady(): void
-    {
+    private onPlatformReady(): void {
         this.appProvider
             .load()
             .then(() => {
@@ -90,8 +101,7 @@ export class AppComponent implements OnInit
     /**
      * Write to the log details of the project
      */
-    onAppLoad(): void
-    {
+    onAppLoad(): void {
         const deviceInfo = os.platform();
 
         this.logger.info(
@@ -122,20 +132,6 @@ export class AppComponent implements OnInit
      */
     private async onLoadListTokens(): Promise<any> {
         this.tron.loadListTokens().then(() => {});
-    }
-
-    /**
-     * platform check on agent "electron"
-     *
-     * @returns {boolean | null}
-     */
-    private static isElectronPlatform(): boolean | null
-    {
-        const userAgent =
-            navigator && navigator.userAgent
-                ? navigator.userAgent.toLowerCase()
-                : null;
-        return userAgent && userAgent.indexOf(' electron/') > -1;
     }
 }
 

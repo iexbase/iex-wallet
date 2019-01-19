@@ -7,20 +7,20 @@ export interface EnvironmentSchema {
     ratesAPI: {
         trx: string;
         data: string
-    },
+    };
 
     explorer: {
         url: string;
         api: string;
-    },
+    };
 
     shasta: {
         url: string;
         api: string;
-    }
+    };
 
     login: {
         lockedMinutes: number,
         failedLogin: number
-    }
+    };
 }

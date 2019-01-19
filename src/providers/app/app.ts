@@ -5,49 +5,47 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {Store} from "@ngrx/store";
-import {AppState} from "@redux/index";
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Store} from '@ngrx/store';
+import {AppState} from '@redux/index';
 
 // Providers
-import { Logger } from "@providers/logger/logger";
-import { ConfigProvider } from "@providers/config/config";
-import { LanguageProvider } from "@providers/language/language";
+import { ConfigProvider } from '@providers/config/config';
+import { LanguageProvider } from '@providers/language/language';
+import { Logger } from '@providers/logger/logger';
 
 
 // Interface app config
-interface App
-{
-    packageName: string,
-    packageDescription: string,
-    appUri: string,
-    name: string,
-    nameCase: string,
-    gitReleases: string,
-    gitHubRepoUrl: string,
-    gitHubRepoBugs: string,
-    version: string,
+interface App {
+    packageName: string;
+    packageDescription: string;
+    appUri: string;
+    name: string;
+    nameCase: string;
+    gitReleases: string;
+    gitHubRepoUrl: string;
+    gitHubRepoBugs: string;
+    version: string;
 }
 
 @Injectable()
-export class AppProvider
-{
+export class AppProvider {
     /**
      * We declare a variable with static parameters.
      *
      * @var App
      */
     public info: App = {
-        packageName: <string> null,
-        packageDescription: <string> null,
-        appUri: <string> null,
-        name: <string> null,
-        nameCase: <string> null,
-        gitReleases: <string> null,
-        gitHubRepoUrl: <string> null,
-        gitHubRepoBugs: <string> null,
-        version: <string> null,
+        packageName: null as string,
+        packageDescription: null as string,
+        appUri: null as string,
+        name: null as string,
+        nameCase: null as string,
+        gitReleases: null as string,
+        gitHubRepoUrl: null as string,
+        gitHubRepoBugs: null as string,
+        version: null as string,
     };
 
     /**
@@ -55,7 +53,7 @@ export class AppProvider
      *
      * @var string
      */
-    private jsonPathApp: string = 'assets/appConfig.json';
+    private jsonPathApp = 'assets/appConfig.json';
 
     /**
      * Object creation AppProvider

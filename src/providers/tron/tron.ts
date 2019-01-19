@@ -5,19 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { LocalStorage } from "ngx-webstorage";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { LocalStorage } from 'ngx-webstorage';
 
-import * as _ from "lodash";
+import * as _ from 'lodash';
 import { v4 as uuid } from 'uuid';
 
 // TronWeb declare module
-import TronWeb from "tronweb";
-import env from "../../environments";
+import TronWeb from 'tronweb';
+import env from '../../environments';
 
 // Providers
-import { Logger } from "@providers/logger/logger";
+import { Logger } from '@providers/logger/logger';
 
 // Interface API Nodes
 export interface TronNodesInterface {
@@ -28,8 +28,7 @@ export interface TronNodesInterface {
 }
 
 @Injectable()
-export class TronProvider
-{
+export class TronProvider {
     /**
      * Selected account
      *
@@ -84,12 +83,12 @@ export class TronProvider
         /**
          * Tron MainNet Network
          */
-        '493e0017-66e5-44d0-9eb2-1f454d13cf3e': <TronNodesInterface> {
+        '493e0017-66e5-44d0-9eb2-1f454d13cf3e': {
             name: 'Mainnet',
             fullNode: 'https://api.trongrid.io',
             solidityNode: 'https://api.trongrid.io',
             eventServer: 'https://api.trongrid.io'
-        },
+        } as TronNodesInterface,
 
         /**
          * Test Network
@@ -98,12 +97,12 @@ export class TronProvider
          * with all the developer tools,
          * explorer and services you'll need for your next project.
          */
-        '532a9484-31eb-4046-a8a2-3488285e4c1b': <TronNodesInterface> {
+        '532a9484-31eb-4046-a8a2-3488285e4c1b': {
             name: 'Shasta Testnet',
             fullNode: 'https://api.shasta.trongrid.io',
             solidityNode: 'https://api.shasta.trongrid.io',
             eventServer: 'https://api.shasta.trongrid.io'
-        },
+        } as TronNodesInterface,
     };
 
     /**
@@ -121,10 +120,11 @@ export class TronProvider
         // The most important thing:
         // In the event that there is no default data in the local storage,
         // we load several nodes
-        if(!this.nodes)
+        if (!this.nodes) {
             this.nodes = JSON.stringify(this.defaultNodes);
+        }
 
-        this.selectNode(this.selectedNode)
+        this.selectNode(this.selectedNode);
     }
 
     /**
@@ -132,8 +132,7 @@ export class TronProvider
      *
      * @return {Promise}
      */
-    updateTronClient(): Promise<any>
-    {
+    updateTronClient(): Promise<any> {
         return new Promise<any>(() => {
             this.getCurrentNode()
                 .then(n => {
@@ -143,7 +142,7 @@ export class TronProvider
                         n.solidityNode,
                         n.eventServer
                     );
-                })
+                });
 
         });
     }
@@ -153,13 +152,13 @@ export class TronProvider
      *
      * @return {Promise}
      */
-    getCurrentNode(): Promise<any>
-    {
+    getCurrentNode(): Promise<any> {
         return new Promise<any>((resolve, reject) => {
             this.getNodes()
                 .then(node => {
-                    if (node && node[this.selectedNode])
-                        return resolve(node[this.selectedNode])
+                    if (node && node[this.selectedNode]) {
+                        return resolve(node[this.selectedNode]);
+                    }
                 })
                 .catch(() => {
                     return reject();
@@ -172,14 +171,14 @@ export class TronProvider
      *
      * @return {Promise}
      */
-    getNodes(): Promise<any>
-    {
+    getNodes(): Promise<any> {
         return new Promise((resolve) => {
-            if(this.nodes && _.isString(this.nodes))
+            if (this.nodes && _.isString(this.nodes)) {
                 resolve(JSON.parse(this.nodes) || {});
+            }
 
             return resolve({}); // As addition
-        })
+        });
     }
 
     /**
@@ -188,10 +187,8 @@ export class TronProvider
      * @param {TronNodesInterface} node - node detail
      * @return {Promise}
      */
-    public addNode(node: TronNodesInterface): Promise<any>
-    {
-        return new Promise((resolve, reject) =>
-        {
+    public addNode(node: TronNodesInterface): Promise<any> {
+        return new Promise((resolve, reject) => {
             // Check if the address exists in the contact list
             this.getNodes()
                 .then(n => {
@@ -200,12 +197,14 @@ export class TronProvider
                     ));
 
                     // Name verification before adding
-                    if(nameState)
+                    if (nameState) {
                         reject('Name is busy, use another');
+                    }
 
                     // If "Event Server" is not specified, we write from the default list.
-                    if(!node.eventServer)
+                    if (!node.eventServer) {
                         node.eventServer = this.defaultNodes[this.defaultNodeID].eventServer;
+                    }
 
                     // Add a new nodes to the list
                     n[uuid()] = node;
@@ -214,7 +213,7 @@ export class TronProvider
                     return resolve(n);
                 })
                 .catch(err => {
-                    return reject(err)
+                    return reject(err);
                 });
         });
     }
@@ -225,34 +224,35 @@ export class TronProvider
      * @param {string} nodeId - node id
      * @return {Promise}
      */
-    public removeNode(nodeId: string): Promise<any>
-    {
-        return new Promise((resolve, reject) =>
-        {
+    public removeNode(nodeId: string): Promise<any> {
+        return new Promise((resolve, reject) => {
             // Check if the id exists in the nodes list
             this.getNodes()
                 .then(n => {
                     // Check if there are any nodes in the list.
-                    if(_.isEmpty(n))
+                    if (_.isEmpty(n)) {
                         return reject('Nodes is empty');
+                    }
 
                     // Check if the node exists in the list
-                    if(!n[nodeId])
+                    if (!n[nodeId]) {
                         return reject('Node does not exist');
+                    }
 
-                    //In case of deleting the active node,
+                    // In case of deleting the active node,
                     // switch to the node which is available by default.
-                    if(nodeId == this.selectedNode)
+                    if (nodeId == this.selectedNode) {
                         this.selectNode(this.defaultNodeID);
+                    }
 
                     // Exclude remote node from list
                     delete n[nodeId];
 
                     this.nodes = JSON.stringify(n);
-                    return resolve(n)
+                    return resolve(n);
                 })
                 .catch(err => {
-                    return reject(err)
+                    return reject(err);
                 });
         });
     }
@@ -263,11 +263,11 @@ export class TronProvider
      * @param {string} nodeID - id node
      * @return void
      */
-    selectNode(nodeID: string): void
-    {
+    selectNode(nodeID: string): void {
         // If the node is not selected, manually activate
-        if(!this.selectedNode)
+        if (!this.selectedNode) {
             nodeID = this.defaultNodeID;
+        }
 
         this.selectedNode = nodeID;
         this.updateTronClient().then(() => {});
@@ -288,7 +288,7 @@ export class TronProvider
      * @returns {string}
      */
     getExplorer(): string {
-        return (this.isShasta() ? env.shasta.api : env.explorer.api)
+        return (this.isShasta() ? env.shasta.api : env.explorer.api);
     }
 
     /**
@@ -319,12 +319,11 @@ export class TronProvider
      *
      * @return Promise
      */
-    public freezeBalance(amount:number = 0, duration:number = 3, resource:string = "BANDWIDTH", address:string): Promise<any>
-    {
+    public freezeBalance(amount: number = 0, duration: number = 3, resource: string = 'BANDWIDTH', address: string): Promise<any> {
         try {
             return this.client.transactionBuilder.freezeBalance(this.toSun(amount), duration, resource, address);
-        }catch (e) {
-            throw new Error(e)
+        } catch (e) {
+            throw new Error(e);
         }
     }
 
@@ -339,12 +338,11 @@ export class TronProvider
      *
      * @return Promise
      */
-    public unfreezeBalance(resource:string = "BANDWIDTH", address:string): Promise<any>
-    {
+    public unfreezeBalance(resource: string = 'BANDWIDTH', address: string): Promise<any> {
         try {
             return this.client.transactionBuilder.unfreezeBalance(resource, address);
-        }catch (e) {
-            throw new Error(e)
+        } catch (e) {
+            throw new Error(e);
         }
     }
 
@@ -360,23 +358,22 @@ export class TronProvider
      * @param {any} callback - callback result
      * @return {Promise} - return signed transaction
      */
-    async createTxProposal(toAddress: string, amount: number, tokenID: string, fromAddress?: string, callback?: any): Promise<any>
-    {
-        //If the sender is not specified, then we take it from the selected.
-        if(fromAddress == null) fromAddress = this.activeAccount;
+    async createTxProposal(toAddress: string, amount: number, tokenID: string, fromAddress?: string, callback?: any): Promise<any> {
+        // If the sender is not specified, then we take it from the selected.
+        if (fromAddress == null) { fromAddress = this.activeAccount; }
 
-        if(tokenID == 'TRX' || tokenID == '0') {
-            return await this.client.transactionBuilder.sendTrx(
+        if (tokenID == 'TRX' || tokenID == '0') {
+            return this.client.transactionBuilder.sendTrx(
                 toAddress,
                 this.toSun(amount),
                 fromAddress,
                 callback
-            )
+            );
         }
 
 
 
-        return await this.client.transactionBuilder.sendToken(
+        return this.client.transactionBuilder.sendToken(
             toAddress,
             amount,
             tokenID,
@@ -395,16 +392,16 @@ export class TronProvider
      * @param {any} callback - Callback result
      * @return {Promise} - return signed transaction
      */
-    async signTxProposal(transaction: any | string, privateKey: Buffer, callback?: any): Promise<any>
-    {
+    async signTxProposal(transaction: any | string, privateKey: Buffer, callback?: any): Promise<any> {
         try {
             // If the "transaction" string, then sign the message and not the transaction
-            if(typeof transaction == 'string')
+            if (typeof transaction == 'string') {
                 transaction = this.client.toHex(transaction);
+            }
 
             return await this.client.trx.sign(transaction, privateKey.toString('hex'), true, callback);
-        }catch (e) {
-            throw new Error(e)
+        } catch (e) {
+            throw new Error(e);
         }
     }
 
@@ -418,12 +415,11 @@ export class TronProvider
      * @param {any} callback - Callback result
      * @return {Promise} - If successful that "result: true"
      */
-    async broadcastTxProposal(transaction: any, options: Object = {}, callback?: any): Promise<any>
-    {
+    async broadcastTxProposal(transaction: any, options: Object = {}, callback?: any): Promise<any> {
         try {
             return await this.client.trx.sendRawTransaction(transaction, options, callback);
         } catch (e) {
-            throw new Error(e)
+            throw new Error(e);
         }
     }
 
@@ -438,16 +434,15 @@ export class TronProvider
      * @param {any} callback - callback result
      * @return Promise
      */
-    async verifyMessage(message: string, signature:string, address: string, callback?: any): Promise<any>
-    {
+    async verifyMessage(message: string, signature: string, address: string, callback?: any): Promise<any> {
         try {
             return await this.client.trx.verifyMessage(
                 this.client.toHex(message),
                 signature,
                 address,
                 callback);
-        }catch (e) {
-            throw new Error(e)
+        } catch (e) {
+            throw new Error(e);
         }
     }
 
@@ -460,12 +455,11 @@ export class TronProvider
      * @param {any} callback - callback result
      * @return {Promise} - In case of luck, we get the balance in "number"
      */
-    async getBalance(address: string, callback?: any): Promise<number>
-    {
+    async getBalance(address: string, callback?: any): Promise<number> {
         try {
             return await this.client.trx.getBalance(address, callback);
-        }catch (e) {
-            throw new Error(e)
+        } catch (e) {
+            throw new Error(e);
         }
     }
 
@@ -478,12 +472,11 @@ export class TronProvider
      * @param {any} callback - callback result
      * @return {Promise} - return account information
      */
-    async getAccount(address: string, callback?: any): Promise<any>
-    {
+    async getAccount(address: string, callback?: any): Promise<any> {
         try {
             return await this.client.trx.getAccount(address, callback);
-        }catch (e) {
-            throw new Error(e)
+        } catch (e) {
+            throw new Error(e);
         }
     }
 
@@ -496,12 +489,11 @@ export class TronProvider
      * @param {any} callback - callback result
      * @return {Promise} - return account information
      */
-    async getUnconfirmedAccount(address: string, callback?: any): Promise<any>
-    {
+    async getUnconfirmedAccount(address: string, callback?: any): Promise<any> {
         try {
             return await this.client.trx.getUnconfirmedAccount(address, callback);
-        }catch (e) {
-            throw new Error(e)
+        } catch (e) {
+            throw new Error(e);
         }
     }
 
@@ -514,12 +506,11 @@ export class TronProvider
      * @param {any} callback - callback result
      * @return {Promise} - return account's bandwidth and energy resources.
      */
-    async getAccountResources(address: string, callback?: any): Promise<any>
-    {
+    async getAccountResources(address: string, callback?: any): Promise<any> {
         try {
             return await this.client.trx.getAccountResources(address, callback);
-        }catch (e) {
-            throw new Error(e)
+        } catch (e) {
+            throw new Error(e);
         }
     }
 
@@ -532,12 +523,11 @@ export class TronProvider
      * @param {any} callback - callback result
      * @return {Promise} - return account's bandwidth
      */
-    async getBandwidth(address: string, callback?: any): Promise<any>
-    {
+    async getBandwidth(address: string, callback?: any): Promise<any> {
         try {
             return await this.client.trx.getBandwidth(address, callback);
-        }catch (e) {
-            throw new Error(e)
+        } catch (e) {
+            throw new Error(e);
         }
     }
 
@@ -554,13 +544,12 @@ export class TronProvider
      * @param {any} callback - callback result
      * @return {Promise} return transactions
      */
-    async getTxHistory(address: string, start: number = 0, limit: number = 20, total: number = 0, callback?: any): Promise<any>
-    {
-        let scan = `${this.getExplorer()}/transaction?count=true&sort=-timestamp&limit=${limit}&start=${start}&total=${total}&address=${address}`;
-        return await this.http.get(scan)
+    async getTxHistory(address: string, start: number = 0, limit: number = 20, total: number = 0, callback?: any): Promise<any> {
+        const scan = `${this.getExplorer()}/transaction?count=true&sort=-timestamp&limit=${limit}&start=${start}&total=${total}&address=${address}`;
+        return this.http.get(scan)
             .subscribe(
                 result => {
-                    callback(null, result)
+                    callback(null, result);
                 },
                 error => callback(error)
             );
@@ -575,15 +564,14 @@ export class TronProvider
      * @param {any} callback - callback return
      * @return {Promise} - transaction into
      */
-    async getTransaction(txHash: string, callback?: any): Promise<any>
-    {
+    async getTransaction(txHash: string, callback?: any): Promise<any> {
         try {
             return await this.http.get(`${this.getExplorer()}/transaction-info?hash=${txHash}`).subscribe(
                 result => callback(null, result),
                 error => callback(error)
-            )
-        }catch (e) {
-            throw new Error(e)
+            );
+        } catch (e) {
+            throw new Error(e);
         }
     }
 
@@ -597,13 +585,12 @@ export class TronProvider
      * @param {any} callback - callback result
      * @return {Promise} - return signed transaction
      */
-    async createVoteProposal(votes: any = {}, voterAddress: string, callback?: any)
-    {
-        //If the sender is not specified, then we take it from the selected.
-        if(voterAddress == null) voterAddress = this.activeAccount;
+    async createVoteProposal(votes: any = {}, voterAddress: string, callback?: any) {
+        // If the sender is not specified, then we take it from the selected.
+        if (voterAddress == null) { voterAddress = this.activeAccount; }
 
-        return await this.client.transactionBuilder
-            .vote(votes, voterAddress, callback)
+        return this.client.transactionBuilder
+            .vote(votes, voterAddress, callback);
     }
 
     /**
@@ -614,15 +601,14 @@ export class TronProvider
      * @param {any} callback - callback return
      * @return {Promise} - votes into
      */
-    async getVoteHistory(callback?: any): Promise<any>
-    {
+    async getVoteHistory(callback?: any): Promise<any> {
         try {
             return await this.http.get(`${this.getExplorer()}/vote/witness`).subscribe(
                 result => callback(null, result),
                 error => callback(error)
-            )
-        }catch (e) {
-            throw new Error(e)
+            );
+        } catch (e) {
+            throw new Error(e);
         }
     }
 
@@ -652,11 +638,10 @@ export class TronProvider
      * @param {string} address - TRON Address
      * @return string
      */
-    addressFromHex(address: string): string
-    {
+    addressFromHex(address: string): string {
         try {
             return this.client.address.fromHex(address);
-        }catch (e) {
+        } catch (e) {
             throw new Error(e);
         }
     }
@@ -667,11 +652,10 @@ export class TronProvider
      * @param {string} address - TRON Address
      * @return string
      */
-    addressToHex(address: string): string
-    {
+    addressToHex(address: string): string {
         try {
             return this.client.address.toHex(address);
-        }catch (e) {
+        } catch (e) {
             throw new Error(e);
         }
     }
@@ -682,11 +666,10 @@ export class TronProvider
      * @param {string} privateKey - Private Key
      * @return string
      */
-    fromPrivateKey(privateKey: string): string
-    {
+    fromPrivateKey(privateKey: string): string {
         try {
             return this.client.address.fromPrivateKey(privateKey);
-        }catch (e) {
+        } catch (e) {
             throw new Error(e);
         }
     }
@@ -697,11 +680,10 @@ export class TronProvider
      * @param {string} address - TRON Address
      * @return boolean
      */
-    isAddress(address: string): boolean
-    {
+    isAddress(address: string): boolean {
         try {
             return this.client.isAddress(address);
-        }catch (e) {
+        } catch (e) {
             return false;
         }
     }

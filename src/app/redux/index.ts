@@ -5,24 +5,24 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import * as fromWallet from "./wallet/wallet.reducer";
-import * as fromRate from "./rates/rates.reducer";
-import * as fromSkin from "./skins/skins.reducer";
+import * as fromRate from './rates/rates.reducer';
+import * as fromSkin from './skins/skins.reducer';
+import * as fromWallet from './wallet/wallet.reducer';
 
 import {
     ActionReducer,
     ActionReducerMap,
     MetaReducer
-} from "@ngrx/store";
+} from '@ngrx/store';
 
 import env from '../../environments';
 
-import { storeLogger } from "ngrx-store-logger";
+import { storeLogger } from 'ngrx-store-logger';
 
 export interface AppState {
-    readonly wallets: fromWallet.State,
+    readonly wallets: fromWallet.State;
     readonly rates: fromRate.State;
-    readonly skins: fromSkin.State
+    readonly skins: fromSkin.State;
 }
 
 export const appReducer: ActionReducerMap<AppState> = {
@@ -38,7 +38,7 @@ export function logger(reducer: ActionReducer<AppState>): any {
 }
 
 // redux config
-export const metaReducers: MetaReducer<AppState>[] = (env.name != 'production')
+export const metaReducers: Array<MetaReducer<AppState>> = (env.name != 'production')
     ? [logger]
     : [];
 

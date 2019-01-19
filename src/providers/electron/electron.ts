@@ -11,17 +11,16 @@ import { Injectable } from '@angular/core';
 // If you import a module but never use any of the imported values other than as TypeScript types,
 // the resulting javascript file will look as if you never imported the module at all.
 import * as Electron from 'electron';
-import {ElectronWindow} from "./typings/electron.window";
+import {ElectronWindow} from './typings/electron.window';
 
 // Providers
-import {Logger} from "@providers/logger/logger";
+import {Logger} from '@providers/logger/logger';
 
 
 declare let window: ElectronWindow;
 
 @Injectable()
-export class ElectronProvider
-{
+export class ElectronProvider {
     private _electron: Electron.RendererInterface;
 
     /**

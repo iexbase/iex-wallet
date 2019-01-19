@@ -10,8 +10,7 @@ import { Injectable, isDevMode } from '@angular/core';
 import * as _ from 'lodash';
 
 @Injectable()
-export class Logger
-{
+export class Logger {
     public levels: any[];
     public weight: any;
     public logs: any;
@@ -19,8 +18,7 @@ export class Logger
     /**
      * Object creation Logger
      */
-    constructor()
-    {
+    constructor() {
         this.logs = [];
         this.levels = [
             { level: 'error', weight: 1, label: 'Error', def: false },
@@ -36,48 +34,39 @@ export class Logger
         }
     }
 
-    private getMessage(message: any): string
-    {
+    private getMessage(message: any): string {
         const isUndefined = _.isUndefined(message);
         const isNull = _.isNull(message);
         const isError = _.isError(message);
         const isObject = _.isObject(message);
-        if (isUndefined) return 'undefined';
-        else if (isNull) return 'null';
-        else if (isError) return message.message;
-        else if (isObject) return JSON.stringify(message);
-        else return message;
+        if (isUndefined) { return 'undefined'; } else if (isNull) { return 'null'; } else if (isError) { return message.message; } else if (isObject) { return JSON.stringify(message); } else { return message; }
     }
 
-    public error(_message?: any, ..._optionalParams: any[]): void
-    {
+    public error(_message?: any, ..._optionalParams: any[]): void {
         const type = 'error';
         const args = this.processingArgs(arguments);
         this.log(`[${type}] ${args}`);
         this.add(type, args);
     }
 
-    public debug(_message?: any, ..._optionalParams: any[]): void
-    {
+    public debug(_message?: any, ..._optionalParams: any[]): void {
         const type = 'debug';
         const args = this.processingArgs(arguments);
-        if (isDevMode()) this.log(`[${type}] ${args}`);
+        if (isDevMode()) { this.log(`[${type}] ${args}`); }
         this.add(type, args);
     }
 
-    public info(_message?, ..._optionalParams): void
-    {
+    public info(_message?, ..._optionalParams): void {
         const type = 'info';
         const args = this.processingArgs(arguments);
-        if (isDevMode()) this.log(`[${type}] ${args}`);
+        if (isDevMode()) { this.log(`[${type}] ${args}`); }
         this.add(type, args);
     }
 
-    public warn(_message?: any, ..._optionalParams: any[]): void
-    {
+    public warn(_message?: any, ..._optionalParams: any[]): void {
         const type = 'warn';
         const args = this.processingArgs(arguments);
-        if (isDevMode()) this.log(`[${type}] ${args}`);
+        if (isDevMode()) { this.log(`[${type}] ${args}`); }
         this.add(type, args);
     }
 
@@ -85,22 +74,19 @@ export class Logger
         return this.levels;
     }
 
-    public getWeight(weight: any)
-    {
+    public getWeight(weight: any) {
         return _.find(this.levels, l => {
             return l.weight == weight;
         });
     }
 
-    public getDefaultWeight()
-    {
+    public getDefaultWeight() {
         return _.find(this.levels, l => {
             return l.def;
         });
     }
 
-    public add(level: any, msg: any): void
-    {
+    public add(level: any, msg: any): void {
         msg = msg.replace('/privateKey.*/', '[...]');
         msg = msg.replace('/PrivateKey.*/', '[...]');
         msg = msg.replace('/password.*/', '[...]');
@@ -117,8 +103,7 @@ export class Logger
      * Returns logs of <= to filteredWeight
      * @param filterWeight
      */
-    public get(filterWeight?: number)
-    {
+    public get(filterWeight?: number) {
         let filteredLogs = this.logs;
         if (filterWeight != undefined) {
             filteredLogs = _.filter(this.logs, (l: any) => {
@@ -128,8 +113,7 @@ export class Logger
         return filteredLogs;
     }
 
-    public processingArgs(argsValues: any)
-    {
+    public processingArgs(argsValues: any) {
         let args = Array.prototype.slice.call(argsValues);
         args = args.map((v: any) => {
             try {
