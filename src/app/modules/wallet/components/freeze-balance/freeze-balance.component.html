@@ -37,8 +37,8 @@
             <mat-button-toggle-group
                 #group="matButtonToggleGroup" [value]="fields.resource"
                 (change)="onResourceChange(group.value)"
-                class="select-freeze" appearance="legacy">
-                <mat-button-toggle *ngFor="let fr of freezes" [value]="fr.key">
+                class="button-group-options" appearance="legacy">
+                <mat-button-toggle fxFlex="50" *ngFor="let fr of freezes" [value]="fr.key">
                     {{fr.value}}
                 </mat-button-toggle>
             </mat-button-toggle-group>
@@ -56,6 +56,13 @@
                 <mat-hint *ngIf="fields.resource == 'BANDWIDTH'">Tron Power: {{newTotalPower}}</mat-hint>
                 <mat-hint *ngIf="fields.resource == 'ENERGY'">Energy Balance: {{energyBalance}}</mat-hint>
             </mat-form-field>
+
+            <mat-button-toggle-group #percent="matButtonToggleGroup" (change)="onPercentageChange(percent.value)"
+                                     class="button-group-options" appearance="legacy">
+                <mat-button-toggle fxFlex="25" *ngFor="let percent of percentage_options" [value]="percent.value">
+                    {{percent.label}}
+                </mat-button-toggle>
+            </mat-button-toggle-group>
         </div>
 
         <div id="action-freeze">

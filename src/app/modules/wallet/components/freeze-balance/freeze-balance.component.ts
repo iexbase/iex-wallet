@@ -35,6 +35,19 @@ enum FreezeType {
     styleUrls: ['./freeze-balance.component.scss'],
 })
 export class FreezeBalanceComponent implements OnInit {
+
+    /**
+     * Interest array
+     *
+     * @var any[]
+     */
+    percentage_options = [
+        { label: '25%', value: 0.25 },
+        { label: '50%', value: 0.5 },
+        { label: '75%', value: 0.75 },
+        { label: '100%', value: 1.00 }
+    ] as any;
+
     /**
      * Fields list
      *
@@ -205,6 +218,17 @@ export class FreezeBalanceComponent implements OnInit {
      */
     onResourceChange(value: string): void {
         this.fields.resource = value;
+    }
+
+    /**
+     * Specify by percentage
+     *
+     * @param {number} percentage - percentage
+     * @return void
+     */
+    onPercentageChange(percentage: number): void {
+        const balance = this.walletId.balance / 1e6;
+        this.fields.amount = Math.floor(balance * percentage);
     }
 
     /**

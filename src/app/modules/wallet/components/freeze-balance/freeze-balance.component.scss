@@ -58,8 +58,7 @@
 
         mat-form-field {
             width: 100%;
-
-
+            padding-bottom: 10px;
             mat-hint {
                 text-transform: uppercase;
                 margin-left: -10px;
@@ -99,40 +98,3 @@
     }
 }
 
-
-.select-freeze
-{
-    background: #1f1f2f;
-    border: none;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    box-shadow: none !important;
-
-    .mat-button-toggle
-    {
-        color: #fff;
-        background: #3f415a;
-        margin: 2px 5px;
-        border-radius: 5px;
-        font-size: 12px;
-        border: none;
-
-        /deep/ .mat-button-toggle-button {
-            padding-left: 54px;
-            padding-right: 54px;
-            line-height: 3;
-            text-transform: uppercase;
-        }
-
-        &.mat-button-toggle-checked {
-            background-color: #696a98;
-        }
-
-        /deep/ .mat-button-toggle-label-content {
-            line-height: 30px !important;
-            padding: 0 12px;
-        }
-    }
-}
