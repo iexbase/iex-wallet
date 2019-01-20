@@ -249,7 +249,7 @@ export class TransferAssetComponent implements OnInit {
 
         // move "TRX" to the first position
         this.listTokens.unshift({
-            'key': '0',  // default key
+            'key': '1',  // default key
             'name': 'TRX',
             'value': this.wallet.balance
         });
@@ -329,7 +329,7 @@ export class TransferAssetComponent implements OnInit {
                 c.key == this.fields.token
             );
 
-        if (this.fields.token == '0') {
+        if (this.fields.token == '1') {
             this.fields.amount = item.value / 1e6;
             this.processAmount('trx');
         } else {
@@ -344,7 +344,7 @@ export class TransferAssetComponent implements OnInit {
      * @return void
      */
     processAmount(type: string): void {
-        if (this.fields.token != '0') { return; }
+        if (this.fields.token != '1') { return; }
         if (type == 'trx') {
             return this.alternativeAmount = (
                 this.fiatCode.toLowerCase() != 'btc' ?

@@ -362,7 +362,7 @@ export class TronProvider {
         // If the sender is not specified, then we take it from the selected.
         if (fromAddress == null) { fromAddress = this.activeAccount; }
 
-        if (tokenID == 'TRX' || tokenID == '0') {
+        if (tokenID == 'TRX' || tokenID == '1') {
             return this.client.transactionBuilder.sendTrx(
                 toAddress,
                 this.toSun(amount),
