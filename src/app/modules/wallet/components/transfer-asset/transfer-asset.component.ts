@@ -470,7 +470,8 @@ export class TransferAssetComponent implements OnInit {
         if (val && val.trim() != '') {
             const result = _.filter(this.listTokens, item => {
                 const name = item['name'];
-                return _.includes(name.toLowerCase(), val.toLowerCase());
+                return _.includes(name.toLowerCase(), val.toLowerCase()) ||
+                    _.includes(item['key'], val);
             });
             this.filteredListTokens = result;
         } else {
