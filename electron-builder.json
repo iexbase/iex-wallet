@@ -1,8 +1,8 @@
 {
-  "productName": "iEXWallet",
-  "directories": {
-    "output": "releases/"
-  },
+    "productName": "iEXWallet",
+    "directories": {
+        "output": "releases/"
+    },
     "files": [
         "**/*",
         "!**/*.ts",
@@ -19,22 +19,22 @@
         "!tsconfig.json",
         "!tslint.json"
     ],
-  "win": {
-    "icon": "dist/assets/icons",
-    "target": [
-      "portable"
-    ]
-  },
-  "mac": {
-    "icon": "dist/assets/icons",
-    "target": [
-      "dmg"
-    ]
-  },
-  "linux": {
-    "icon": "dist/assets/icons",
-    "target": [
-      "AppImage"
-    ]
-  }
+    "win": {
+        "icon": "dist/assets/icons",
+        "target": [
+            "portable"
+        ]
+    },
+    "mac": {
+        "icon": "dist/assets/icons",
+        "target": [
+            "dmg"
+        ]
+    },
+    "linux": {
+        "icon": "dist/assets/icons",
+        "target": [
+            "AppImage"
+        ]
+    }
 }
