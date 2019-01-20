@@ -107,7 +107,7 @@ export class TransferAssetComponent implements OnInit {
      * @var any
      */
     fields: any = {
-        token: '0' as string,
+        token: '1' as string,
         toAddress: '' as string,
         amount: 0 as number,
         type: 'TRX' as string

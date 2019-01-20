@@ -96,7 +96,7 @@
             "Close": "Close",
             "Balance": "Balance",
             "FreezeAmount": "Freeze Amount",
-            "ConfirmFreeze": "I confirm to freeze <b>{amount} TRX</b> for at least of 3 days",
+            "ConfirmFreeze": "I confirm to freeze <b>{{amount}} TRX</b> for at least of 3 days",
             "Freeze": "Freeze",
             "UnfreezeExpire": "You can unfreeze your TRX in",
             "UnfreezeEnable": "You can unfreeze your TRX now",

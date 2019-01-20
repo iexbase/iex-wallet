@@ -68,7 +68,7 @@
         <div id="action-freeze">
             <mat-checkbox [(ngModel)]="isConfirm">
                 <span class="account-name"
-                      [innerHtml]="'Wallet.FreezeBalance.ConfirmFreeze' | translate:{amount: (!fields.amount ? 0 : fields.amount)}"></span>
+                      [innerHtml]="'Wallet.FreezeBalance.ConfirmFreeze' | translate:{ amount: (!fields.amount ? 0 : fields.amount) }"></span>
             </mat-checkbox>
             <button mat-button class="tron-button red-bg" (click)="goToFreeze()" [disabled]="enabledBalance()">
                 {{'Wallet.FreezeBalance.Freeze' | translate}}
