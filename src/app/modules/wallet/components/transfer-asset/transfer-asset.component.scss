@@ -12,6 +12,13 @@
 /deep/.token-select-list {
     overflow: hidden !important;
     max-height: none !important;
+
+    .token-id {
+        font-size: 13px;
+        margin-right: 5px;
+        opacity: .6;
+        font-weight: 100;
+    }
 }
 
 .token-select-search {

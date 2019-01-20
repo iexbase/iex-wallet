@@ -44,7 +44,10 @@
             <mat-form-field appearance="outline" *ngIf="!isEmptyList">
                 <mat-label>{{'Wallet.Preferences.FilterTokens' | translate}}</mat-label>
                 <mat-select [(ngModel)]="selectedTokens" (selectionChange)="filterTokenChanged()" class="settings-list" [multiple]="true">
-                    <mat-option *ngFor="let item of listTokens" [value]="item.id">{{ item.name }}</mat-option>
+                    <mat-option *ngFor="let item of listTokens" [value]="item.id">
+                        <span class="select-token-id">[{{ item.id }}]</span>
+                        {{ item.name }}
+                    </mat-option>
                 </mat-select>
             </mat-form-field>
 

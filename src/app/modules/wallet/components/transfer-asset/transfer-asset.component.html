@@ -77,7 +77,9 @@
                                     </div>
 
                                     <ng-container *ngFor="let asset of filteredListTokens">
-                                        <mat-option [value]="asset.key" fxLayout="row">{{ asset.name }}
+                                        <mat-option [value]="asset.key" fxLayout="row">
+                                            <span class="token-id">[{{asset.key}}]</span>
+                                            {{ asset.name }}
                                             <span fxFlex></span>
                                             <span [style.fontSize]="'12px'" [style.color]="'#ffffff8c'">
                                                 {{asset.value  | sunToUnit:asset.name}} available
