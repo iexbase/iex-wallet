@@ -151,7 +151,9 @@ export class AddressBookPage implements OnInit {
         if (val && val.trim() != '') {
             const result = _.filter(this.addressbook, item => {
                 const name = item['name'];
-                return _.includes(name.toLowerCase(), val.toLowerCase());
+                const address = item['address'];
+                return _.includes(name.toLowerCase(), val.toLowerCase()) ||
+                    _.includes(address.toLowerCase(), val.toLowerCase())
             });
             this.filteredAddressbook = result;
         } else {
