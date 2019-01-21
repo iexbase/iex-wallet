@@ -360,9 +360,11 @@ export class TronProvider {
      */
     async createTxProposal(toAddress: string, amount: number, tokenID: string, fromAddress?: string, callback?: any): Promise<any> {
         // If the sender is not specified, then we take it from the selected.
-        if (fromAddress == null) { fromAddress = this.activeAccount; }
+        if (fromAddress == null) {
+            fromAddress = this.activeAccount;
+        }
 
-        if (tokenID == 'TRX' || tokenID == '1') {
+        if (['TRX', '1'].includes(tokenID)) {
             return this.client.transactionBuilder.sendTrx(
                 toAddress,
                 this.toSun(amount),
@@ -370,8 +372,6 @@ export class TronProvider {
                 callback
             );
         }
-
-
 
         return this.client.transactionBuilder.sendToken(
             toAddress,
