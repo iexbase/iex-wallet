@@ -15,6 +15,7 @@ import { AddNodeComponent } from '@modules/settings/components/add-node/add-node
 
 // Providers
 import { TronProvider } from '@providers/tron/tron';
+import { Logger } from "@providers/logger/logger";
 
 @Component({
     selector: 'node-page',
@@ -49,11 +50,13 @@ export class NodePage implements OnInit {
      *  @param {TronProvider} tronProvider - Tron Provider
      *  @param {MatDialog} dialog - Service to open Material Design modal dialogs.
      *  @param {MatSnackBar} snackBar - Service to dispatch Material Design snack bar messages.
+     *  @param {Logger} logger - Log provider
      */
     constructor(
         public tronProvider: TronProvider,
         public dialog: MatDialog,
-        private snackBar: MatSnackBar
+        private snackBar: MatSnackBar,
+        private logger: Logger
     ) {
         //
     }
@@ -103,6 +106,8 @@ export class NodePage implements OnInit {
     deleteNode(nodeId: string): void {
         this.tronProvider.removeNode(nodeId)
             .then(() => {
+                this.logger.info('Deleting node', nodeId);
+
                 this.initNodeClient();
                 this.snackBar.open('Node Successfully deleted', null, {
                     duration: 2000,
@@ -118,6 +123,7 @@ export class NodePage implements OnInit {
      * @return void
      */
     selectedNode(nodeId: string): void {
+        this.logger.info('Saving selected node', nodeId);
         this.tronProvider.selectNode(nodeId);
     }
 
