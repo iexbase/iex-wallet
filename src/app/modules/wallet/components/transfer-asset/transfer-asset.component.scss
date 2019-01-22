@@ -12,6 +12,8 @@
 /deep/.token-select-list {
     overflow: hidden !important;
     max-height: none !important;
+    min-height: 45px;
+    line-height: 2.5;
 
     .token-id {
         font-size: 13px;

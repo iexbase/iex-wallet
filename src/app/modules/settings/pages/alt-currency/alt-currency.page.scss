@@ -11,10 +11,10 @@
 }
 
 .alt-currency-list {
-    max-height: 200px;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    margin-top: -18px;
+    overflow: hidden !important;
+    max-height: none !important;
+    min-height: 45px;
+    line-height: 2.5;
 
     /deep/.mat-optgroup-label {
         text-align: center;
@@ -34,5 +34,11 @@
     &::-webkit-scrollbar-thumb {
         background-color: rgba(255, 255, 255, 0.2);
         border-radius: 8px;
+    }
+
+    .symbol {
+        font-size: 12px;
+        opacity: .5;
+        font-weight: 100;
     }
 }

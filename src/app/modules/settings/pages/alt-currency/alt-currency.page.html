@@ -26,6 +26,8 @@
                     <mat-option *ngFor="let lastUsedAltCurrency of lastUsedAltCurrencyList" (click)="onChangeCurrency(lastUsedAltCurrency)"
                                 [value]="lastUsedAltCurrency.isoCode">
                         {{ lastUsedAltCurrency.name }}
+                        <span fxFlex></span>
+                        <span class="symbol">{{ lastUsedAltCurrency.symbol }}</span>
                     </mat-option>
                     <mat-divider></mat-divider>
                 </ng-container>
@@ -35,7 +37,11 @@
                     <ng-container *ngIf="altCurrencyList.length == 0">
                         <mat-spinner class="loading" [diameter]="30" [strokeWidth]="2"></mat-spinner>
                     </ng-container>
-                    <mat-option *ngFor="let alt of altCurrencyList" [value]="alt.isoCode" (click)="onChangeCurrency(alt)">{{alt.name}}</mat-option>
+                    <mat-option *ngFor="let alt of altCurrencyList" [value]="alt.isoCode" (click)="onChangeCurrency(alt)">
+                        {{alt.name}}
+                        <span fxFlex></span>
+                        <span class="symbol">{{ alt.symbol }}</span>
+                    </mat-option>
                 </ng-container>
             </mat-selection-list>
 
