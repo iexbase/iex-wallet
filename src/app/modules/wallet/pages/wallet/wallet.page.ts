@@ -161,16 +161,18 @@ export class WalletPage implements OnInit {
      * @return void
      */
     ngOnInit() {
+
         // List all accounts
         this.wallets = this.store.pipe(select(fromWallet.selectAllWallets));
         // Check the presence of the recorded wallet
         // and activates the cached wallet
-        this.activeAccount != null && this.wallets.subscribe((data: any[]) => {
+        this.wallets.subscribe((data: any[]) =>
+        {
             this.isEmptyWallet = _.isEmpty(data);
 
             // From the array, select the required
             const selected = data.filter(
-                selected => selected.address == this.activeAccount);
+                selected => selected.address == this.activeAccount || null);
 
             // If the array is not empty
             if (selected[0] && !_.isEmpty(selected)) {
@@ -207,7 +209,8 @@ export class WalletPage implements OnInit {
      * @param {boolean} hidden - multi update
      * @return void
      */
-    openWalletDetails(item: any, hidden: boolean = false): void | boolean {
+    openWalletDetails(item: any, hidden: boolean = false): void | boolean
+    {
         this.wallet = item;
         // Exclude the possibility of updating the same wallet
         if (this.wallet.address == this.activeAccount && hidden == false) {
