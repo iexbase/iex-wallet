@@ -30,7 +30,10 @@
     <div *ngIf="!isSuccess" mat-dialog-content fxLayout="column" fxLayoutAlign="center center">
         <div class="header">
             <div class="balance-label">{{'Wallet.FreezeBalance.Balance' | translate}}</div>
-            <div class="balance-value">{{walletId.balance | sunToUnit}} TRX</div>
+            <div class="balance-value" fxLayout="row" fxLayoutAlign="center center">
+                <span>{{walletId.balance | sunToUnit}}</span>
+                <span class="unit">TRX</span>
+            </div>
         </div>
         <div id="content">
 
@@ -53,7 +56,7 @@
                        (ngModelChange)="onChangePower()"
                        name="amount">
                 <mat-icon matSuffix>lock</mat-icon>
-                <mat-hint *ngIf="fields.resource == 'BANDWIDTH'">Tron Power: {{newTotalPower}}</mat-hint>
+                <mat-hint *ngIf="fields.resource == 'BANDWIDTH'">Tron Power: {{newTotalPower | formatCurrency:'':0}}</mat-hint>
                 <mat-hint *ngIf="fields.resource == 'ENERGY'">Energy Balance: {{energyBalance}}</mat-hint>
             </mat-form-field>
 
