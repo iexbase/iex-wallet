@@ -19,7 +19,7 @@
     }
 }
 
-.address-share
+#address-share
 {
     .address-text-info {
         text-transform: uppercase;
@@ -38,12 +38,23 @@
         line-height: 1.2em;
         margin-top: 0;
     }
+
+    #actions {
+        button {
+            transition: all 100ms ease-in-out;
+
+            &:hover {
+                transform: scale(1.05, 1.05);
+                box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.2);
+            }
+        }
+    }
 }
 
 
 .tab-content {
-    padding: 20px;
     overflow: hidden;
+    padding: 20px 20px 40px;
 
     .mat-dialog-content
     {

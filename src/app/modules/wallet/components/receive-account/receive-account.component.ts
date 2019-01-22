@@ -59,6 +59,13 @@ export class ReceiveAccountComponent implements OnInit {
     };
 
     /**
+     * Additional comments on the buttons
+     *
+     * @var number
+     */
+    isActiveComment: number;
+
+    /**
      * Object creation ReceiveAccountComponent
      *
      * @param {MatDialogRef} dialogRef - Stream that emits when a dialog has been opened.
@@ -73,7 +80,6 @@ export class ReceiveAccountComponent implements OnInit {
         private electron: ElectronProvider,
         public config: ConfigProvider,
         @Inject(MAT_DIALOG_DATA) public data: any) {
-        //
     }
 
     /**

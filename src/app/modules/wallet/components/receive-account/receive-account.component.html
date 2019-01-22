@@ -7,26 +7,35 @@
 <div class="receive-window">
     <mat-tab-group animationDuration="0ms" [dynamicHeight] mat-stretch-tabs>
         <mat-tab [label]="'Wallet.ReceiveAccount.Share' | translate">
-            <div class="tab-content">
-                <div mat-dialog-content class="address-share">
+            <div class="tab-content" id="address-share">
+                <div mat-dialog-content>
                     <div class="address-qr-code-wrapper">
                         <qrcode [allowEmptyString]="true" [qrdata]="wallet.address" [level]="'M'" [usesvg]="true"></qrcode>
                     </div>
-                    <p class="address-text-info">{{'Wallet.ReceiveAccount.YourTronAddress' | translate}}</p>
+                    <p class="address-text-info" [ngSwitch]="isActiveComment">
+                        <span *ngSwitchCase="1">{{'Wallet.ReceiveAccount.ViewOnBlockchain' | translate}}</span>
+                        <span *ngSwitchCase="2">{{'Wallet.ReceiveAccount.EmailAddress' | translate}}</span>
+                        <span *ngSwitchDefault>{{'Wallet.ReceiveAccount.YourTronAddress' | translate}}</span>
+                    </p>
                     <p class="address-data">{{wallet.address}}</p>
-                    <div id="actions" fxLayout="row">
-                        <button mat-icon-button="" class="button-circle" [copy-to-clipboard]="wallet.address">
-                            <mat-icon svgIcon="trx-copy"></mat-icon>
-                        </button>
+                </div>
+                <div mat-dialog-actions id="actions" fxLayout="row" fxLayoutAlign="center center">
+                    <!-- Your tron address -->
+                    <button mat-icon-button class="button-circle" [copy-to-clipboard]="wallet.address">
+                        <mat-icon svgIcon="trx-copy"></mat-icon>
+                    </button>
 
-                        <button mat-icon-button="" class="button-circle" (click)="addressInExplorer()">
-                            <mat-icon svgIcon="trx-link"></mat-icon>
-                        </button>
+                    <!-- View on blockchain -->
+                    <button mat-icon-button (mouseover)="isActiveComment=1" (mouseout)="isActiveComment=0"
+                            class="button-circle" (click)="addressInExplorer()">
+                        <mat-icon svgIcon="trx-link"></mat-icon>
+                    </button>
 
-                        <button mat-icon-button="" class="button-circle" (click)="emailAccount()">
-                            <mat-icon svgIcon="email-icon"></mat-icon>
-                        </button>
-                    </div>
+                    <!-- Email this address -->
+                    <button mat-icon-button (mouseover)="isActiveComment=2" (mouseout)="isActiveComment=0"
+                            class="button-circle" (click)="emailAccount()">
+                        <mat-icon svgIcon="email-icon"></mat-icon>
+                    </button>
                 </div>
             </div>
         </mat-tab>
@@ -40,8 +49,7 @@
                     <div mat-dialog-content class="address-request">
 
                         <p class="default-text">{{'Wallet.ReceiveAccount.SelectCurrency' | translate}}</p>
-                        <mat-button-toggle-group
-                            #group="matButtonToggleGroup" [value]="fields.token"
+                        <mat-button-toggle-group #group="matButtonToggleGroup" [value]="fields.token"
                             (change)="onCurrencyChange(group.value)"
                             class="select-currency" appearance="legacy">
                             <mat-button-toggle *ngFor="let currency of currencies" [value]="currency.key">

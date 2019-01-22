@@ -37,11 +37,10 @@
         min-width: 200px;
         max-width: 230px;
         color: #222;
+        padding: 0 !important;
 
         button {
             font-size: 14px;
-            line-height: 2.5rem;
-            height: 2.5rem;
             color: #999bb5;
 
             &.delete {

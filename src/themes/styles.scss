@@ -365,17 +365,25 @@ button.button-circle {
     transition: all 100ms ease-in-out;
 }
 
+.mat-dialog-title {
+    font-weight: 100;
+}
 
 .mat-select-panel .mat-option.mat-selected:not(.mat-option-multiple) {
     background: rgba(70, 70, 70, 0.14);
 }
 
 .mat-menu-panel {
-    background: #15191d;
+    background: #181a29;
+
+    .mat-divider {
+        border-top-color: rgba(255, 255, 255, 0.05);
+    }
 }
 
+
 .mat-select-panel {
-    background: #15191d;
+    background: #181a29;
 
     .mat-option {
         font-size: 14px !important;

@@ -142,6 +142,8 @@
         "ReceiveAccount": {
             "Share": "Поделиться",
             "YourTronAddress": "Ваш TRON адрес",
+            "ViewOnBlockchain": "Открыть в blockchain",
+            "EmailAddress": "Отправить по Email",
             "SelectCurrency": "Выберите валюту",
             "Amount": "Сумма",
             "Description": "Описание (необязательно)",

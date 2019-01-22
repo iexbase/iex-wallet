@@ -141,6 +141,8 @@
         "ReceiveAccount": {
             "Share": "Share",
             "YourTronAddress": "Your TRON Address",
+            "ViewOnBlockchain": "View on blockchain",
+            "EmailAddress": "Email this address",
             "SelectCurrency": "Select the reference currency",
             "Amount": "Amount",
             "Description": "Description (optional)",
