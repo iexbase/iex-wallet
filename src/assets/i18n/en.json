@@ -222,7 +222,8 @@
                 "Unfreeze": "Unfreeze",
                 "SmartContract": "Smart Contract",
                 "Vote": "Vote",
-                "TriggerSmartContract": "Trigger Smart Contract"
+                "TriggerSmartContract": "Trigger Smart Contract",
+                "Exchange": "Exchange"
             },
             "Status": "Status",
             "Confirmed": "Confirmed",

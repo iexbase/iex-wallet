@@ -123,6 +123,11 @@ export class AppModule {
         );
 
         this.matIconRegistry.addSvgIcon(
+            'trx-exchange',
+            this.domSanitizer.bypassSecurityTrustResourceUrl('assets/svg/mat-icon/exchange.svg')
+        );
+
+        this.matIconRegistry.addSvgIcon(
             'preferences',
             this.domSanitizer.bypassSecurityTrustResourceUrl('assets/svg/mat-icon/preferences.svg')
         );
@@ -156,6 +161,7 @@ export class AppModule {
             'telegram-icon',
             this.domSanitizer.bypassSecurityTrustResourceUrl('assets/svg/mat-icon/telegram.svg')
         );
+
 
         this.matIconRegistry.addSvgIcon(
             'round-delete',

@@ -223,7 +223,8 @@
                 "Unfreeze": "Разморозить",
                 "SmartContract": "Контракт",
                 "Vote": "Голосовать",
-                "TriggerSmartContract": "Триггер контракта"
+                "TriggerSmartContract": "Триггер контракта",
+                "Exchange": "Обмен"
             },
             "Status": "Статус",
             "Confirmed": "Подтверждено",
