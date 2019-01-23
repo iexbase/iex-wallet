@@ -56,7 +56,9 @@ export class OverallBalance implements OnInit {
             select(fromConfig.findConfigById(1))
         ).subscribe(result => {
 
-            this.alternativeSymbol = (result.alternativeIsoCode != 'BTC' ? result.alternativeSymbol: null);
+            this.alternativeSymbol = (
+                result.alternativeIsoCode != 'BTC' ? result.alternativeSymbol: null
+            );
             this.alternativeIsoCode = result.alternativeIsoCode;
 
             // List all accounts
