@@ -45,7 +45,7 @@ export class ImportWalletComponent implements OnInit {
      *
      * @var Object
      */
-    lottieConfig: Object;
+    lottieConfig: object;
 
     /**
      * Object creation ImportWalletComponent

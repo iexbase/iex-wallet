@@ -168,10 +168,8 @@ export class WalletPage implements OnInit {
         this.wallets.subscribe((data: any[]) =>
         {
             this.isEmptyWallet = _.isEmpty(data);
-
             // From the array, select the required
-            const selected = data.filter(
-                selected => selected.address == this.activeAccount || null);
+            const selected = data.filter(f => f.address == this.activeAccount || null);
 
             // If the array is not empty
             if (selected[0] && !_.isEmpty(selected)) {

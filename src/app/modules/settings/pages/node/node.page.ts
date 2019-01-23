@@ -14,8 +14,8 @@ import * as _ from 'lodash';
 import { AddNodeComponent } from '@modules/settings/components/add-node/add-node.component';
 
 // Providers
-import { TronProvider } from '@providers/tron/tron';
 import { Logger } from "@providers/logger/logger";
+import { TronProvider } from '@providers/tron/tron';
 
 @Component({
     selector: 'node-page',

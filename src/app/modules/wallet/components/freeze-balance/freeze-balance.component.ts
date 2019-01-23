@@ -135,7 +135,7 @@ export class FreezeBalanceComponent implements OnInit {
      *
      * @var any
      */
-    lottieConfig: Object;
+    lottieConfig: object;
 
     /**
      * Details of the selected wallet
@@ -322,23 +322,23 @@ export class FreezeBalanceComponent implements OnInit {
      * @return void
      */
     private findAndUpdateBalance(): void {
-        this.walletProvider.getBalance(this.data.address).then(result => {
-            this.walletProvider.updateWallet(this.data.address, {
-                balance: result
-            }).then(result => {
+        this.walletProvider.getBalance(this.data.address)
+            .then(balance => {
+                this.walletProvider.updateWallet(this.data.address, {
+                    balance
+                }).then(result => {
+                    const update: Update<any> = {
+                        id: result.id,
+                        changes: {
+                            balance: result.balance
+                        }
+                    };
 
-                const update: Update<any> = {
-                    id: result.id,
-                    changes: {
-                        balance: result.balance
-                    }
-                };
-
-                this.store.dispatch(
-                    new WalletActions.UpdateWallet({ wallet: update})
-                );
+                    this.store.dispatch(
+                        new WalletActions.UpdateWallet({ wallet: update})
+                    );
+                });
             });
-        });
 
         // Get find wallet by Address
         this.store.pipe(select(fromWallet.findWalletByAddress(this.data.address)))

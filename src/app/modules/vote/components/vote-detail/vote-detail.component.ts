@@ -12,8 +12,10 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
 import { VoteProvider } from '@providers/vote/vote';
 import { WalletProvider } from '@providers/wallet/wallet';
 
-// Objects of votes
-const voteOptions: any = {
+/**
+ * Objects of votes
+ */
+const voteOptions = {
     1: 1,
     5: 5,
     10: 10,
@@ -22,7 +24,7 @@ const voteOptions: any = {
     100: 100,
     500: 500,
     1000: 1000
-};
+} as any;
 
 @Component({
     selector: 'vote-detail',
@@ -33,9 +35,9 @@ export class VoteDetailComponent implements OnInit {
     /**
      * Animation configure (Lottie)
      *
-     * @var Object
+     * @var object
      */
-    lottieConfig: Object;
+    lottieConfig: object;
 
     /**
      * Received data from the main source

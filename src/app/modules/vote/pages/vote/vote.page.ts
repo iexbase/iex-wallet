@@ -163,11 +163,9 @@ export class VotePage implements OnInit {
         this.wallets = this.store.pipe(select(fromWallet.selectAllWallets));
         // Check the presence of the recorded wallet
         // and activates the cached wallet
-        this.activeAccount  && this.wallets.subscribe((data: any[]) => {
+        this.activeAccount && this.wallets.subscribe((data: any[]) => {
             // From the array, select the required
-            const selected = data.filter(
-                selected => selected.address == this.activeAccount
-            );
+            const selected = data.filter(f => f.address == this.activeAccount);
 
             // If the array is not empty
             if (selected[0] && !_.isEmpty(selected)) {

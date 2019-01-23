@@ -11,7 +11,9 @@ import * as url from 'url';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let win, isDevMode;
+let win;
+let isDevMode;
+
 const args = process.argv.slice(1);
 isDevMode = args.some(val => val === '--serve');
 

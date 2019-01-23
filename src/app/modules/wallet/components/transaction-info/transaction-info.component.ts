@@ -46,7 +46,7 @@ export class TransactionInfoComponent implements OnInit, OnDestroy {
      *
      * @var Object
      */
-    lottieConfig: Object;
+    lottieConfig: object;
 
     /**
      * Interface details

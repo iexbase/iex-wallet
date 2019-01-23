@@ -57,7 +57,7 @@ export class TransferAssetComponent implements OnInit {
      *
      * @var Object
      */
-    lottieConfig: Object;
+    lottieConfig: object;
 
     /**
      * Received data from the main source
