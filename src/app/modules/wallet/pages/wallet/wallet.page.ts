@@ -161,7 +161,6 @@ export class WalletPage implements OnInit {
      * @return void
      */
     ngOnInit() {
-
         // List all accounts
         this.wallets = this.store.pipe(select(fromWallet.selectAllWallets));
         // Check the presence of the recorded wallet

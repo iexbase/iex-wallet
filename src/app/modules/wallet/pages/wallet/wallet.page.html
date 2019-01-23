@@ -167,6 +167,9 @@
                                                 <span class="amount" *ngSwitchDefault>{{ tx['contractData']['amount'] | formatCurrency:'TRX':'':false }}</span>
                                             </ng-container>
                                             <!-- Get contact code -->
+                                            <span class="unit" *ngIf="tx['contractData'] && tx.contractType == 4">
+                                                TP
+                                            </span>
                                             <span class="unit" *ngIf="tx['contractData'] && ![4, 12, 31].includes(tx.contractType)">
                                                 {{tx['contractData']['asset_name'] || 'TRX'}}
                                             </span>

@@ -131,6 +131,7 @@ export class AltCurrencyPage implements OnInit {
     onChangeCurrency(newAltCurrency: any): void {
         this.configProvider.set('wallet.settings.alternativeName', newAltCurrency.name);
         this.configProvider.set('wallet.settings.alternativeIsoCode', newAltCurrency.isoCode);
+        this.configProvider.set('wallet.settings.alternativeSymbol', newAltCurrency.symbol);
         this.saveLastUsed(newAltCurrency);
     }
 

@@ -7,7 +7,7 @@
 
 import { Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
-import { Subscription } from 'rxjs';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-sidenav',
@@ -45,7 +45,8 @@ export class SidenavComponent implements OnInit, OnDestroy {
      *
      * @return void
      */
-    ngOnInit() {
+    ngOnInit()
+    {
         this.navigation = [
             { icon: 'home', link: '/dashboard', name: 'Shared.Navigation.Dashboard', separator: false },
             { icon: 'thumb_up', link: '/vote', name: 'Shared.Navigation.Votes', separator: false },
