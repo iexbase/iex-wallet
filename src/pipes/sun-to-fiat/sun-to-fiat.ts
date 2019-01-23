@@ -28,10 +28,12 @@ export class SunToFiatPipe implements PipeTransform {
         private rateProvider: RateProvider,
         private decimalPipe: DecimalPipe
     ) {
-        // this.configProvider.loadConfig();
         this.unit = this.configProvider.get('wallet.settings.alternativeIsoCode');
     }
-    transform(amount: number, isoCode: boolean = false) {
+    transform(amount: number, isoCode: boolean = false, unit?: string) {
+
+        if(unit) this.unit = unit.toUpperCase();
+
         const amount_ = this.rateProvider.toFiat(amount, this.unit);
         return (
             this.decimalPipe.transform(amount_ || 0,

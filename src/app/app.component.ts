@@ -13,6 +13,7 @@ import * as os from 'os';
 // redux
 import {AppState} from '@redux/index';
 import * as SkinActions from '@redux/skins/skins.actions';
+import * as ConfigActions from '@redux/settings/settings.actions';
 
 // Providers
 import { AppProvider } from '@providers/app/app';
@@ -120,6 +121,16 @@ export class AppComponent implements OnInit {
                     id: 1,
                     name: this.config.get('skins.name')
                 }})
+        );
+
+        this.store.dispatch(
+            new ConfigActions.AddConfig({
+                config: {
+                    id: 1,
+                    alternativeIsoCode: this.config.get('wallet.settings.alternativeIsoCode'),
+                    alternativeSymbol: this.config.get('wallet.settings.alternativeSymbol')
+                }
+            })
         );
 
         this.onLoadListTokens();

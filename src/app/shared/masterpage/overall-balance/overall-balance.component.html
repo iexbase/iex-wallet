@@ -1,0 +1,4 @@
+<div id="overall-balance" fxLayout="row" fxLayoutAlign="center center">
+    <div class="symbol" *ngIf="alternativeSymbol">{{alternativeSymbol}}</div>
+    <div class="amount">{{fullBalance | sunToFiat:false:alternativeIsoCode}}</div>
+</div>

@@ -40,6 +40,7 @@ import {
 import { TimeAgoPipe } from 'time-ago-pipe';
 import { MasterpageComponent } from './masterpage/masterpage.component';
 import { SidenavComponent } from './masterpage/sidenav/sidenav.component';
+import { OverallBalanceComponent } from "@shared/masterpage/overall-balance/overall-balance.component";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
@@ -79,7 +80,8 @@ const sharedMaterialModules = [
 
 const sharedComponents = [
     MasterpageComponent,
-    SidenavComponent
+    SidenavComponent,
+    OverallBalanceComponent
 ];
 
 const sharedPipes = [

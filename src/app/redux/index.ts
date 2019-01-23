@@ -8,6 +8,7 @@
 import * as fromRate from './rates/rates.reducer';
 import * as fromSkin from './skins/skins.reducer';
 import * as fromWallet from './wallet/wallet.reducer';
+import * as fromSettings from './settings/settings.reducer';
 
 import {
     ActionReducer,
@@ -23,12 +24,14 @@ export interface AppState {
     readonly wallets: fromWallet.State;
     readonly rates: fromRate.State;
     readonly skins: fromSkin.State;
+    readonly settings: fromSettings.State
 }
 
 export const appReducer: ActionReducerMap<AppState> = {
     wallets: fromWallet.reducer,
     rates: fromRate.reducer,
-    skins: fromSkin.reducer
+    skins: fromSkin.reducer,
+    settings: fromSettings.reducer
 };
 
 

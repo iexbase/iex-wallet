@@ -8,6 +8,12 @@
 import {Component, OnInit} from '@angular/core';
 import * as _ from 'lodash';
 import {LocalStorage} from 'ngx-webstorage';
+import {Update} from "@ngrx/entity";
+import {Store} from "@ngrx/store";
+
+// redux
+import * as fromConfig from "@redux/settings/settings.reducer";
+import * as ConfigActions from "@redux/settings/settings.actions";
 
 // Providers
 import { ConfigProvider } from '@providers/config/config';
@@ -76,11 +82,13 @@ export class AltCurrencyPage implements OnInit {
      * @param {ConfigProvider} configProvider - Config provider
      * @param {RateProvider} rate - Rate provider
      * @param {Logger} logger - Logger provider
+     * @param {Store} store - Reactive service
      */
     constructor(
         private configProvider: ConfigProvider,
         private rate: RateProvider,
-        private logger: Logger
+        private logger: Logger,
+        protected store: Store<fromConfig.State>,
     ) {
         this.completeAlternativeList = [];
         this.altCurrencyList = [];
@@ -132,6 +140,19 @@ export class AltCurrencyPage implements OnInit {
         this.configProvider.set('wallet.settings.alternativeName', newAltCurrency.name);
         this.configProvider.set('wallet.settings.alternativeIsoCode', newAltCurrency.isoCode);
         this.configProvider.set('wallet.settings.alternativeSymbol', newAltCurrency.symbol);
+
+        const update: Update<any> = {
+            id: 1,
+            changes: {
+                alternativeIsoCode: newAltCurrency.isoCode,
+                alternativeSymbol: newAltCurrency.symbol
+            }
+        };
+
+        this.store.dispatch(
+            new ConfigActions.UpdateConfig({config: update})
+        );
+
         this.saveLastUsed(newAltCurrency);
     }
 
