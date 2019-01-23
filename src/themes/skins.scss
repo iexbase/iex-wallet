@@ -1,3 +1,10 @@
+$skin-mosaic-bg: #1b1b1db8;
+$skin-mamba-bg: #1b1b1db8;
+$skin-midnight-bg: rgba(255, 255, 255, 0.05);
+$skin-darklinen-bg: rgba(255, 255, 255, 0.05);
+$skin-vessel-bg: rgba(255, 255, 255, 0.05);
+
+
 .skin-default {
     background-image: linear-gradient(40deg, #10101A 0%, #191A2A 100%);
 }
@@ -10,12 +17,16 @@
     background-image: url("assets/images/skins/mosaic.png");
 
     .sidenav-menu {
+        .overall-balance {
+            background: $skin-mosaic-bg !important;
+        }
+
         .mat-toolbar {
-            background-color: #1b1b1db8 !important;
+            background: $skin-mosaic-bg !important;
         }
 
         .menu-mat-list {
-            background-color: #1b1b1db8 !important;
+            background: $skin-mosaic-bg !important;
         }
     }
 }
@@ -48,12 +59,16 @@
     background-image: url("assets/images/skins/black_mamba.png");
 
     .sidenav-menu {
+        .overall-balance {
+            background: $skin-mamba-bg !important;
+        }
+
         .mat-toolbar {
-            background-color: #1b1b1db8 !important;
+            background: $skin-mamba-bg !important;
         }
 
         .menu-mat-list {
-            background-color: #1b1b1db8 !important;
+            background: $skin-mamba-bg !important;
         }
     }
 
@@ -65,12 +80,16 @@
     background-image: linear-gradient(-177deg, transparent 30%, rgba(0, 0, 0, 0.4) 99%);
 
     .sidenav-menu {
+        .overall-balance {
+            background: $skin-midnight-bg !important;
+        }
+
         .mat-toolbar {
-            background: rgba(255, 255, 255, 0.05) !important;
+            background: $skin-midnight-bg !important;
         }
 
         .menu-mat-list {
-            background: rgba(255, 255, 255, 0.05) !important;
+            background: $skin-midnight-bg !important;
         }
     }
 }
@@ -79,12 +98,16 @@
     background-image: linear-gradient(-177deg, transparent 30%, rgba(0, 0, 0, 0.1) 99%), url('assets/images/skins/linen-dark.png');
 
     .sidenav-menu {
+        .overall-balance {
+            background: $skin-darklinen-bg !important;
+        }
+
         .mat-toolbar {
-            background-color: rgba(255, 255, 255, 0.05) !important;
+            background: $skin-darklinen-bg !important;
         }
 
         .menu-mat-list {
-            background-color: rgba(255, 255, 255, 0.05) !important;
+            background: $skin-darklinen-bg !important;
         }
 
         .mat-nav-list .mat-list-item {
@@ -108,12 +131,16 @@
     background-image: linear-gradient(-177deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 100%), url("assets/images/themes/vessel-bg.jpg");
 
     .sidenav-menu {
+        .overall-balance {
+            background: $skin-vessel-bg !important;
+        }
+
         .mat-toolbar {
-            background-color: rgba(255, 255, 255, 0.05) !important;
+            background: $skin-vessel-bg !important;
         }
 
         .menu-mat-list {
-            background-color: rgba(255, 255, 255, 0.05) !important;
+            background: $skin-vessel-bg !important;
         }
 
         .mat-nav-list .mat-list-item {

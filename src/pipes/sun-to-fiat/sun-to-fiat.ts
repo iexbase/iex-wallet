@@ -32,7 +32,7 @@ export class SunToFiatPipe implements PipeTransform {
     }
     transform(amount: number, isoCode: boolean = false, unit?: string) {
 
-        if(unit) this.unit = unit.toUpperCase();
+        if(unit) { this.unit = unit.toUpperCase(); }
 
         const amount_ = this.rateProvider.toFiat(amount, this.unit);
         return (

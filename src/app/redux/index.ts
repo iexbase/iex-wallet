@@ -6,9 +6,9 @@
  */
 
 import * as fromRate from './rates/rates.reducer';
+import * as fromSettings from './settings/settings.reducer';
 import * as fromSkin from './skins/skins.reducer';
 import * as fromWallet from './wallet/wallet.reducer';
-import * as fromSettings from './settings/settings.reducer';
 
 import {
     ActionReducer,

@@ -12,8 +12,8 @@ import * as os from 'os';
 
 // redux
 import {AppState} from '@redux/index';
-import * as SkinActions from '@redux/skins/skins.actions';
 import * as ConfigActions from '@redux/settings/settings.actions';
+import * as SkinActions from '@redux/skins/skins.actions';
 
 // Providers
 import { AppProvider } from '@providers/app/app';

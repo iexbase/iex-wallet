@@ -28,6 +28,7 @@ import {
 } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import {DirectivesModule} from '@directives/directives.module';
+import {OverallBalance} from "@includes/overall-balance/overall-balance";
 import { TranslateModule } from '@ngx-translate/core';
 import { PipesModule } from '@pipes/pipes.module';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
@@ -40,7 +41,6 @@ import {
 import { TimeAgoPipe } from 'time-ago-pipe';
 import { MasterpageComponent } from './masterpage/masterpage.component';
 import { SidenavComponent } from './masterpage/sidenav/sidenav.component';
-import { OverallBalanceComponent } from "@shared/masterpage/overall-balance/overall-balance.component";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
@@ -81,7 +81,7 @@ const sharedMaterialModules = [
 const sharedComponents = [
     MasterpageComponent,
     SidenavComponent,
-    OverallBalanceComponent
+    OverallBalance
 ];
 
 const sharedPipes = [

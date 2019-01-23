@@ -7,11 +7,11 @@ import {Observable} from "rxjs";
 
 
 @Component({
-    selector: 'app-overall-balance',
-    templateUrl: './overall-balance.component.html',
-    styleUrls: ['./overall-balance.component.scss']
+    selector: 'overall-balance',
+    templateUrl: './overall-balance.html',
+    styleUrls: ['./overall-balance.scss']
 })
-export class OverallBalanceComponent implements OnInit {
+export class OverallBalance implements OnInit {
 
     /**
      * Display total wallet balance

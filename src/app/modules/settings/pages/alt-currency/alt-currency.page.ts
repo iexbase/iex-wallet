@@ -6,14 +6,14 @@
  */
 
 import {Component, OnInit} from '@angular/core';
-import * as _ from 'lodash';
-import {LocalStorage} from 'ngx-webstorage';
 import {Update} from "@ngrx/entity";
 import {Store} from "@ngrx/store";
+import * as _ from 'lodash';
+import {LocalStorage} from 'ngx-webstorage';
 
 // redux
-import * as fromConfig from "@redux/settings/settings.reducer";
 import * as ConfigActions from "@redux/settings/settings.actions";
+import * as fromConfig from "@redux/settings/settings.reducer";
 
 // Providers
 import { ConfigProvider } from '@providers/config/config';
