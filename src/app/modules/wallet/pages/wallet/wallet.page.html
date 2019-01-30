@@ -54,7 +54,7 @@
                     </div>
                 </div>
 
-                <div id="header-balance" [longPress]="2000" (onRelease)="toggleBalance()">
+                <div id="header-balance" longPress (onRelease)="toggleBalance()">
                     <div class="balance-trx" *ngIf="!wallet.balanceHidden">
                         <span class="balance">{{wallet.balance | sunToUnit}}</span>
                         <span class="display-unit">TRX</span>
