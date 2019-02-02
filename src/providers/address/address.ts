@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 // Providers
 import { Logger } from '@providers/logger/logger';
@@ -120,7 +120,7 @@ export class AddressProvider {
      * @param {string} address - Tron address
      * @return string
      */
-    toHex(address: string) {
+    toHex(address: string): string {
         return this.tronProvider.addressToHex(address);
     }
 
@@ -130,7 +130,7 @@ export class AddressProvider {
      * @param address - Tron address
      * @return string
      */
-    toBase58(address: string) {
+    toBase58(address: string): string {
         return this.tronProvider.addressFromHex(address);
     }
 
@@ -140,7 +140,7 @@ export class AddressProvider {
      * @param {string} address - Tron address
      * @return string
      */
-    fromPrivateKey(address: string) {
+    fromPrivateKey(address: string): string {
         return this.tronProvider.fromPrivateKey(address);
     }
 

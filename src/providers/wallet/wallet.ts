@@ -110,7 +110,7 @@ export interface TransactionProposal {
     amount: any;
     toAddress: string;
     tokenID: string;
-    message ?: string;
+    message?: string;
 }
 
 
