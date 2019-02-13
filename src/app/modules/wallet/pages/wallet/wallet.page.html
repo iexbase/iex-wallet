@@ -164,12 +164,10 @@
                                                 <span class="amount" *ngSwitchCase="11">{{ tx['contractData']['frozen_balance'] / 1e6 }}</span>
                                                 <span class="amount" *ngSwitchCase="12">~</span>
                                                 <span class="amount" *ngSwitchCase="31">~</span>
-                                                <span class="amount" *ngSwitchDefault>{{ tx['contractData']['amount'] | formatCurrency:'TRX':'':false }}</span>
+                                                <span class="amount" *ngSwitchDefault>{{ tx['contractData']['amount'] }}</span>
                                             </ng-container>
                                             <!-- Get contact code -->
-                                            <span class="unit" *ngIf="tx['contractData'] && tx.contractType == 4">
-                                                TP
-                                            </span>
+                                            <span class="unit" *ngIf="tx['contractData'] && tx.contractType == 4">TP</span>
                                             <span class="unit" *ngIf="tx['contractData'] && ![4, 12, 31].includes(tx.contractType)">
                                                 {{tx['contractData']['asset_name'] || 'TRX'}}
                                             </span>

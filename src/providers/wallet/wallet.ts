@@ -1071,6 +1071,7 @@ export class WalletProvider {
                     res = _.filter(historyTx['data'], (tx: any) => {
                         // If the token is an integer, then convert it to the name of the token
                         if (Number(tx['contractData']['asset_name'])) {
+
                             const filter = this.tron.getListTokens().filter(
                                 v => v.id === tx['contractData']['asset_name']
                             );
