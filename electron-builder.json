@@ -12,7 +12,6 @@
         "!package-lock.json",
         "!src/",
         "!e2e/",
-        "!hooks/",
         "!angular.json",
         "!_config.yml",
         "!karma.conf.js",
